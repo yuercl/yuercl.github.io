@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2016/08/01/JVM/</loc>
+    <loc>http://yoursite.com/2016/08/10/JVM/</loc>
     
-    <lastmod>2016-08-17T04:53:33.000Z</lastmod>
+    <lastmod>2016-08-17T05:03:49.000Z</lastmod>
     
   </url>
   
@@ -65,35 +65,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2012/03/31/markdown-syntax/</loc>
-    
-    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2013/11/01/linux-first-learn-curl-sed-awk/</loc>
-    
-    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2013/06/01/linux-how-to-get-hotel-list/</loc>
-    
-    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2012/03/31/markdown-basics/</loc>
-    
-    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2012/04/13/best-web-default-fonts/</loc>
     
     <lastmod>2016-08-16T09:16:32.000Z</lastmod>
     
@@ -107,7 +79,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2012/04/13/can-you-do-the-login-function-on-the-web/</loc>
+    <loc>http://yoursite.com/2013/06/01/linux-how-to-get-hotel-list/</loc>
     
     <lastmod>2016-08-16T09:16:32.000Z</lastmod>
     
@@ -121,9 +93,30 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/08/16/hello/</loc>
+    <loc>http://yoursite.com/2012/04/13/can-you-do-the-login-function-on-the-web/</loc>
     
-    <lastmod>2016-08-16T09:10:46.000Z</lastmod>
+    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2012/04/13/best-web-default-fonts/</loc>
+    
+    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2012/03/31/markdown-basics/</loc>
+    
+    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2012/03/31/markdown-syntax/</loc>
+    
+    <lastmod>2016-08-16T09:16:32.000Z</lastmod>
     
   </url>
   
