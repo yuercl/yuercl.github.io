@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="本文将介绍OpenCV+Windowsvisualstudio2010安装过程，以及第一个例子。目录openCV基本介绍OpenCV下载、安装和配置Windowsvisualstudio2010安装过程和配置安装过程遇到的问题第一个例子Quicksta"><meta name="keywords" content="OpenCV安装教程, 图像处理"><title>OpenCV安装教程，配置，注意事项 · Hexo</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2014/01/08/opencv-installation-and-configuration/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"></head><body><div id="main"><header><a href="/." class="logo">Hexo</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">OpenCV安装教程，配置，注意事项</h1><span class="post-time">2014年1月8日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenCV基本介绍"><span class="toc-text">OpenCV基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenCV下载以及安装"><span class="toc-text">OpenCV下载以及安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-visual-studio-2010安装过程和配置"><span class="toc-text">Windows visual studio 2010安装过程和配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第一个例子Quickstart-cpp"><span class="toc-text">第一个例子Quickstart.cpp</span></a></li></ol></li></ol></div><div class="post-content"><p>本文将介绍OpenCV + Windows visual studio 2010安装过程，以及第一个例子。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>openCV基本介绍</li>
+<li>OpenCV下载、安装和配置</li>
+<li>Windows visual studio 2010安装过程和配置</li>
+<li>安装过程遇到的问题</li>
+<li>第一个例子Quickstart.cpp</li>
+</ul>
+<h3 id="OpenCV基本介绍"><a href="#OpenCV基本介绍" class="headerlink" title="OpenCV基本介绍"></a>OpenCV基本介绍</h3><p><a href="http://opencv.org/" target="_blank" rel="external">OpenCV</a>(open source computer vision library)是一个基于C/C++语言的开源图像函数处理库。<br>可以运行在Linux、Windows和Mac OS操作系统上。它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。它的主要模块包括：</p>
+<ul>
+<li>cv —— 核心函数库</li>
+<li>cvaux —— 辅助函数库</li>
+<li>cxcore —— 数据结构与线性代数库</li>
+<li>highgui —— GUI函数库</li>
+<li>ml —— 机器学习函数库</li>
+</ul>
+<p>opencv是跨平台的，支持包括windows、unix以及android等平台。关于opencv的一系列功能以及特性，本文不再赘述，如果要了解，请购买书籍O’Reilly：<a href="http://item.jd.com/10080298.html" target="_blank" rel="external">学习OpenCV（中文版）</a></p>
+<h3 id="OpenCV下载以及安装"><a href="#OpenCV下载以及安装" class="headerlink" title="OpenCV下载以及安装"></a>OpenCV下载以及安装</h3><p>OpenCV提供Windows、Linux/Mac、Android、IOS安装工具，可直接前往<a href="http://opencv.org/" target="_blank" rel="external">OpenCV官网</a>下载，这里以下载Windows版本为例，进行说明。</p>
+<ul>
+<li>前往<a href="http://opencv.org/" target="_blank" rel="external">OpenCV官网</a>下载Windows版本,目前最新版本为2.4.8。这种方式很傻瓜，直接双击解压到%opencv%（凡是出现%opencv%的地方均替换为你自己opencv的路径全名，如D:\opencv）。</li>
+<li>配置OpenCV环境变量。<br>计算机-&gt;（右键）属性-&gt;高级系统设置-&gt;高级（标签）-&gt;环境变量-&gt;（双击）path（用户，系统里面的path任选其一）-&gt;在变量值里面添加” %opencv%\build\x86\vc10\bin”和”%opencv%\build\common\tbb\ia32\vc10”（里面的%opencv%记得换成自己的opencv路径)。注意如果是系统的环境变量，可能需要重新启动机器，不然设置的path变量不会立即生效。<h3 id="Windows-visual-studio-2010安装过程和配置"><a href="#Windows-visual-studio-2010安装过程和配置" class="headerlink" title="Windows visual studio 2010安装过程和配置"></a>Windows visual studio 2010安装过程和配置</h3>直接下载，不断Next就行了。微软的东西基本都是Next。这里忽略<br>配置工程的opencv依赖（每次新建工程都要重新配置，要执行此步骤请先跳到第4步建立工程）</li>
+</ul>
+<ol>
+<li>项目（菜单项）-&gt;…属性-&gt;VC++目录：需要配置“包含目录”和“库目录”两项。<img src="/assets/images/2014010801.png" alt="alt text" title="Title"></li>
+<li>配置“包含目录”项：添加行”%opencv%\build\include”即可。<br>但在运行别人的opencv项目时，可能别人直接引用了上述目录的子目录路径，如果出现include错误，则再添加”%opencv%\build\include\opencv”和（或）”%opencv%\build\include\opencv2”，即可解决问题。<img src="/assets/images/2014010802.png" alt="alt text" title="Title"></li>
+<li>配置“库目录”项：添加行”%opencv%\build\x86\vc10\lib”即可。<img src="/assets/images/2014010803.png" alt="alt text" title="Title"></li>
+<li><p>配置连接器：项目（菜单项）-&gt;…属性-&gt;连接器-&gt;输入-&gt;附加依赖项<br>针对debug配置添加以下库： <code>find ./ -name &#39;*d.lib&#39; -type f | sed &#39;s/\.\///g&#39;</code></p>
+<pre><code>opencv_calib3d248d.lib
+opencv_contrib248d.lib
+opencv_core248d.lib
+opencv_features2d248d.lib
+opencv_flann248d.lib
+opencv_gpu248d.lib
+opencv_highgui248d.lib
+opencv_imgproc248d.lib
+opencv_legacy248d.lib
+opencv_ml248d.lib
+opencv_nonfree248d.lib
+opencv_objdetect248d.lib
+opencv_ocl248d.lib
+opencv_photo248d.lib
+opencv_stitching248d.lib
+opencv_superres248d.lib
+opencv_ts248d.lib
+opencv_video248d.lib
+opencv_videostab248d.lib
+</code></pre><p> 如果是release配置（以后再说，只需要添加上面的debug配置就行了现在），则添加：<code>find ./ -name &#39;*8.lib&#39; -type f | sed &#39;s/\.\///g&#39;</code></p>
+<pre><code>opencv_calib3d248.lib
+opencv_contrib248.lib
+opencv_core248.lib
+opencv_features2d248.lib
+opencv_flann248.lib
+opencv_gpu248.lib
+opencv_highgui248.lib
+opencv_imgproc248.lib
+opencv_legacy248.lib
+opencv_ml248.lib
+opencv_nonfree248.lib
+opencv_objdetect248.lib
+opencv_ocl248.lib
+opencv_photo248.lib
+opencv_stitching248.lib
+opencv_superres248.lib
+opencv_ts248.lib
+opencv_video248.lib
+opencv_videostab248.lib
+</code></pre><p><img src="/assets/images/2014010804.png" alt="alt text" title="Title"><br>注意：</p>
+<ul>
+<li><p>每个lib文件的文件名都是以248结尾的，这里248应该是代表版本号，不同的版本是不一样的，不然添加到VS里面一样提示找不到lib文件。</p>
+</li>
+<li><p>如果仍旧提示找不到lib文件，可尝试重启VS或者重启电脑。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="第一个例子Quickstart-cpp"><a href="#第一个例子Quickstart-cpp" class="headerlink" title="第一个例子Quickstart.cpp"></a>第一个例子Quickstart.cpp</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#include &quot;StdAfx.h&quot;</div><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;string&gt;</div><div class="line">#include &lt;opencv2\opencv.hpp&gt;</div><div class="line">#include &quot;cv.h&quot;</div><div class="line">#include &quot;highgui.h&quot;</div><div class="line">using namespace cv;</div><div class="line">using namespace std;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	IplImage *img = cvLoadImage(&quot;hello-long.jpg&quot;);//图片文件地址，支持绝对路径</div><div class="line">	cvNamedWindow(&quot;龙哥&quot;,1);//1是不可拖动，0为可拖动窗口</div><div class="line">	cvShowImage(&quot;龙哥&quot;,img);//显示图片</div><div class="line">	cvWaitKey(0);//阻塞在此，直到按下一个键，运行</div><div class="line">	cvReleaseImage(&amp;img);//释放内存</div><div class="line">	cvDestroyWindow(&quot;龙哥&quot;);//销毁窗口</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>照片就不贴了。。。</p>
+</div></article><div class="tags"><a href="/tags/OpenCV/">OpenCV</a><a href="/tags/图像处理/">图像处理</a></div><div class="paginator"><a href="/2014/01/23/linux-diff-and-patch-intro/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2013/12/24/Magic-or-Trick/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2014/01/08/opencv-installation-and-configuration/';
+    this.page.identifier = '2014/01/08/opencv-installation-and-configuration/';
+    this.page.title = 'OpenCV安装教程，配置，注意事项';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>

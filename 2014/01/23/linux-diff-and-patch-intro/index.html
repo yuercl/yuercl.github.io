@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="GNUdiff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。最常用的功能莫过于生成patch文件了：diff-urNold/new/&amp;gt;mysoft.patch参数-u表示使用unified格式，-"><meta name="keywords" content="linux, diff ,patch"><title>diff命令的好用功能 · Hexo</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2014/01/23/linux-diff-and-patch-intro/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"></head><body><div id="main"><header><a href="/." class="logo">Hexo</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">diff命令的好用功能</h1><span class="post-time">2014年1月23日</span><div class="post-content"><p>GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。</p>
+<p>最常用的功能莫过于生成patch文件了：</p>
+<pre><code>diff -urN old/ new/ &gt; mysoft.patch
+</code></pre><p>参数 <code>-u</code> 表示使用 <code>unified</code>格式，<code>-r</code> 表示比较目录，<code>-N</code> 表示将不存在的文件当作空文件处理， 这样新添加的文件也会出现在patch文件中。</p>
+<p>然后在需要应用patch的地方使用下述命令即可：</p>
+<pre><code>patch -p0 &lt; mysoft.patch
+</code></pre><p>diff的 <code>-y</code> 命令（长格式为<code>--side-by-side</code>）可以将屏幕分成左右两部分，来比较两个文件之间的差异。<br>许多图形化的比较工具都有这个功能，但如果只能使用命令行，这个参数就相当有用了。 如果要改变左右各部分的宽度，可以通过<code>-W（--width）</code>参数来指定。  </p>
+<p>此外，<code>--strip-trailing-cr</code> 参数可以去除行尾的换行，这样DOS格式和Unix格式的文件互相比较时， 就不至于因为换行符不一致而出现大量的差异。</p>
+<p>patch</p>
+<pre><code>－－－－－－－－－－－－－－－－－－
+NAME
+   patch - apply a diff file to an original
+SYNOPSIS
+   patch [options] [originalfile [patchfile]]
+   but usually just
+   patch -pnum &lt;patchfile&gt;
+－－－－－－－－－－－－－－－－－－
+</code></pre><p>简单的说，patch就是利用diff制作的补丁来实现源文件（夹）和目的文件（夹）的转换。这样说就意味着你可以有源文件（夹）–&gt; 目的文件（夹），也可以目的文件（夹）–&gt; 源文件（夹）。下面介绍几个最常用选项：</p>
+<pre><code>-p0 选项要从当前目录查找目的文件（夹）
+-p1 选项要忽略掉第一层目录，从当前目录开始查找。
+</code></pre><p>####patch文件的结构</p>
+<p>#####补丁头<br>补丁头是分别由—/+++开头的两行，用来表示要打补丁的文件。—开头表示旧文件，+++开头表示新文件。</p>
+<p>一个补丁文件中的多个补丁</p>
+<p>一个补丁文件中可能包含以—/+++开头的很多节，每一节用来打一个补丁。所以在一个补丁文件中可以包含好多个补丁。</p>
+<p>#####块<br>块是补丁中要修改的地方。它通常由一部分不用修改的东西开始和结束。他们只是用来表示要修改的位置。他们通常以@@开始，结束于另一个块的开始或者一个新的补丁头。</p>
+<p>#####块的缩进<br>块会缩进一列，而这一列是用来表示这一行是要增加还是要删除的。<br>块的第一列</p>
+<p>+号表示这一行是要加上的。</p>
+<p>-号表示这一行是要删除的。</p>
+<p>没有加号也没有减号表示这里只是引用的而不需要修改。</p>
+<hr>
+<pre><code>用法：diff [选项]... FILES
+逐行比较文件。
+
+  -i  --ignore-case  忽略文件内容大小写的区别。
+  --ignore-file-name-case  忽略文件名大小写的区别。
+  --no-ignore-file-name-case  不忽略文件名大小写的区别。
+  -E  --ignore-tab-expansion  忽略由制表符宽度造成的差异。
+  -b  --ignore-space-change  忽略由空格数不同造成的差异。
+  -w  --ignore-all-space   忽略所有空格。
+  -B  --ignore-blank-lines  忽略任何因空行而造成的差异。
+  -I RE  --ignore-matching-lines=RE  如果某行匹配正则表达式，则忽略由该行造成的差异。
+  --strip-trailing-cr  去除输入内容每行末端的 carriage return 字符。
+  -a  --text  所有文件都以文本方式处理。
+
+  -c  -C 行数  --context[=行数]  显示指定&lt;行数&gt;(默认 3 行)copied 格式的上下文
+  -u  -U 行数  --unified[=行数]  显示指定&lt;行数&gt;(默认 3 行)unified 格式的上下文
+     --label 标识                       使用&lt;标识&gt;代替文件名称。
+     -p  --show-c-function           显示和每个差异有关的 C 函数名称。
+ -F RE  --show-function-line=RE  显示最接近而符合&lt;正则表示式&gt;的一行。
+  -q  --brief  只显示文件是否不同。
+  -e  --ed 以 ed script 方式输出。
+  --normal 以正常的 diff 方式输出。
+  -n  --rcs  以 RCS diff 格式输出。
+  -y  --side-by-side         以两列并排的方式显示。
+    -W NUM  --width=NUM      每行显示最多 NUM (默认 130) 个字符。
+    --left-column            当有两行相同时只显示左边的一行。
+    --suppress-common-lines  当有两行相同时不会显示。
+  -D NAME  --ifdef=NAME  输出的内容以‘#ifdef NAME’方式标明差异。
+  --GTYPE-group-format=GFMT  效果类似，但会以 GFMT 格式处理 GTYPE 输入的行。
+  --line-format=LFMT  效果类似，但会以 LFMT 格式处理每一行资料。
+  --LTYPE-line-format=LFMT   效果类似，但会以 LFMT 格式处理 LTYPE 输入的行。
+    LTYPE 可以是‘old’、‘new’或‘unchanged’。GTYPE 可以是 LTYPE 的选择
+    或是‘changed’。
+    GFMT 可包括：
+      %&lt;  该组中每行属于 FILE1 的差异
+      %&gt;  该组中每行属于 FILE2 的差异
+      %=  该组中同时在 FILE1 和 FILE2 出现的每一行
+      %[-][宽度][.[精确度]]{doxX}字符  以 printf 格式表示该&lt;字符&gt;代表的内容
+        大写&lt;字符&gt;表示属于新的文件，小写表示属于旧的文件。&lt;字符&gt;的意义如下：
+          F  行组中第一行的行号
+          L  行组中最后一行的行号
+          N  行数 ( =L-F+1 )
+          E  F-1
+          M  L+1
+    LFMT 可包括：
+      %L  该行的内容
+      %l  该行的内容，但不包括结束的 newline 字符
+      %[-][宽度][.[精确度]]{doxX}n  以 printf 格式表示的输入资料行号
+    GFMT 或 LFMT 可包括：
+      %%        %
+      %c&apos;C&apos;     字符 C
+      %c&apos;\OOO&apos;  八进制数字OOO所代表的字符
+
+  -l  --paginate 将输出送至‘pr’指令来分页。
+  -t  --expand-tabs  将输出中的 tab 转换成空格。
+  -T  --initial-tab  每行先加上 tab 字符，使 tab 字符可以对齐。
+
+  -r  --recursive  连同所有子目录一起比较。
+  -N  --new-file  不存在的文件以空文件方式处理。
+  --unidirectional-new-file  若第一文件案不存在，以空文件处理。
+  -s  --report-identical-files   当两个一样时仍然显示结果。
+  -x PAT  --exclude=PAT  排除匹配 PAT 的文件。
+  -X FILE  --exclude-from=FILE   排除所有匹配在 FILE 中列出的模式的文件。
+  -S FILE  --starting-file=FILE  当比较目录時，由 FILE 开始比较。
+  --from-file=FILE1  将 FILE1 和操作数中的所有文件/目录作比较。FILE1 可以是目录。
+  --to-file=FILE2    将操作数中的所有文件/目录和 FILE2 作比较。FILE2 可以是目录。
+
+  --horizon-lines=NUM      (此选项不做处理)
+  -d  --minimal  尽可能找出最小的差异。
+  --speed-large-files     假设文件十分大而且其中含有许多微小的差异。
+
+  -v  --version  输出版本信息。
+  --help  输入本帮助。
+
+  FILES 的格式可以是‘FILE1 FILE2’、‘DIR1 DIR2’、‘DIR FILE...’或
+      ‘FILE... DIR’。
+如果使用 --from-file 或 --to-file 选项，FILES 的格式则不受限制。
+如果 FILE 是‘-’，则由标准输入读取内容。
+
+请向 &lt;bug-gnu-utils@gnu.org&gt; 报告错误。
+</code></pre></div></article><div class="tags"><a href="/tags/linux/">linux</a><a href="/tags/diff/">diff</a><a href="/tags/patch/">patch</a></div><div class="paginator"><a href="/2016/08/01/JVM/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2014/01/08/opencv-installation-and-configuration/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2014/01/23/linux-diff-and-patch-intro/';
+    this.page.identifier = '2014/01/23/linux-diff-and-patch-intro/';
+    this.page.title = 'diff命令的好用功能';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>

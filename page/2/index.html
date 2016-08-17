@@ -1,0 +1,771 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description"><title>Hexo</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/page/2/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"></head><body><div id="main"><header><a href="/." class="logo">Hexo</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2013/05/31/Map-Offset-Problem/" class="post-link">Map Offset Problem(Why use En.,you know)</a></h2><span class="post-time">2013年5月31日</span><div class="post-content"><p>偏移的起因：天朝测绘局以国家安全为理由，用法律的形式对所有在天朝发行的地图类产品加了强制性规范，要求所有地图类产品都必须使用国家测绘局的一种加偏移的算法，对地图的真实坐标进行加偏移处理，之后才可能通过审批准许上市。因此，天朝的所有官方及商用地图的坐标都是偏移的，这种偏移属于非线性的，偏移量在300至500米不等，偏移方向也不定。这种加过偏移的地图坐标就是所谓“火星坐标”。</p>
+<p>GPS接收机本身接收卫星的信号，计算出本机所在位置的经纬度，在没有做特别处理的时候，这个经纬度是正确的。但是如果GPS支持加载地图的话，这个GPS中的地图就得受上述第一条法规的约束了，所以正式在天朝销售的行货GPS设备中的地图必须也得加偏移，处理成火星坐标。</p>
+<p>问题来了，如果仅仅是地图搞成火星坐标，但GPS仍然输出真实坐标的话，就会发生GPS的定位（及导航）跟地图不能吻合的问题。于是，只好在GPS软件中设置一个使用同样算法的加偏移功能。GPS先从卫星上得到真实坐标，然后经过加偏移程序转换成火星坐标，由于是同一个算法，所以经过软件加偏移的坐标能跟同样加了偏移的地图吻合，就是“歪到一起”了。这样就可以用GPS正常导航了——但这台GPS设备输出的坐标仍然是火星坐标，放到Google Earth上面是没法正常吻合的。</p>
+<p>由于Google Earth属于卫星照片，它不是地图，所以不受天朝测绘法的约束，因此Google Earth的坐标是真实坐标。这样，问题又来了，当你使用天朝处理过的GPS导出火星坐标（或航迹），企图把它放到Google Earth上面看看自己都走了哪些路的时候，因为Google Earth照片的坐标是真实的，而你的GPS导出的坐标是火星坐标，二者就对不上号了，你也许会看到在google Earth上，你开着车从别人的楼顶上飞过去，或者打湖里面漂过去。</p>
+<p>水货GPS因为是洋鬼子的产品，原本并非销往天朝的，洋鬼子不会玩这种加偏移的买卖，所以水货GPS设备，如果使用机器原带的地图的话，得到的坐标（或者航迹）是真实正确的，这就是水货机器的无偏地图。但是洋鬼子的设备中一般没有中文地图，如果你把天朝的官方或者正式发布的商用地图放到水货GPS设备里面的话，就会发生第3条前面说的问题：设备的真实坐标跟天朝特殊地图的火星坐标不吻合——出现偏移——无法正常导航。</p>
+<p>由于火星坐标的一系列问题，众民间人士根据那个加偏移算法自行折腾出了很多纠正了偏移的地图，这些地图的坐标是正确的。这样的地图拿到水货GPS设备上，因为水货GPS输出的坐标是真实的，所以可以完美配合工作，正确导航定位，并且输出正确的坐标——放到Google Earth上也是正确的。</p>
+<p>天朝行货GPS设备软件中的加偏移功能，是通过一个所谓空心地图文件（或者28类地图，或者快拼模块）来触发启动偏移程序的，如果用户安装非本机自带的，但属于天朝官方或者正式发布的商用地图，那要配合空心地图文件（或者把地图类别设置为28），从而让GPS软件中的加偏移程序启动，使得GPS输出火星坐标，跟地图的火星坐标吻合，如此才能正常导航——但这台GPS设备输出的坐标仍然是火星坐标，放到Google Earth上面是没法正常吻合的。</p>
+<p>天朝行货GPS设备，如果要得到真实坐标，使用民间的纠偏地图，就得把那个空心地图文件移除（或把原机自带的28类地图移除/取消，或把同样作用的快拼弄掉），这样GPS设备输出真实的坐标，才能跟纠偏地图的正确坐标吻合，实现正确导航定位，并且输出正确的坐标——放到Google Earth上也是正确的。不过，在天朝行货GPS上不能同时使用火星坐标地图和纠偏地图，否则必然有一个没法正常导航定位。</p>
+<p>水货GPS设备用民间的简体中文刷机，一般来说也没有那个加偏移程序，所以要使用纠偏地图或者无偏地图。不能使用天朝官方的火星坐标地图，不然就对不上号。</p>
+<p>国家 Bao Mi 插件，也叫做加密插件或者加偏或者SM模组，其实就是对真实坐标系统进行人为的加偏处理，按照几行代码的算法，将真实的坐标加密成虚假的坐标，而这个加偏并不是线性的加偏，所以各地的偏移情况都会有所不同。而加密后的坐标也常被人称为火星坐标系统，这是我们的国家又一个伟大的发明，让国外的 Zheng Fu 和企业等，都看不懂我们的坐标系统。 </p>
+<p>其实很少有人知道国家 Bao Mi 插件问题，但作为导航电子地图产业或者汽车导航产业中的人，多多少少都会了解到这个问题。国家是出于国家安全考虑，将我们看到的真实的坐标变成假的虚拟的坐标，这样，我们的国家就安全了，不会被恐怖分子破坏了。最简单的举例来说，比如鸟巢吧，你真实的坐标是这个，加密后就成了那个，导航电子地图上看到的就是那个，那么人家导弹要是攻击那个的时候，那么导弹就打不中我们的鸟巢啦，我们的鸟巢就安全了。不过，个人担心这样加密后没有打中鸟巢，会不会打中水立方呢，可能是无心插柳柳成荫了。 </p>
+<p>具体说说这个 Bao Mi 插件的问题吧，是如何运作的呢？ </p>
+<p>现在，所有的电子地图所有的导航设备，都需要加入国家 Bao Mi 插件。第一步，地图公司测绘地图,测绘完成后,送到国家测绘局，将真实坐标的电子地图，加密成“火星坐标”，这样的地图才是可以出版和发布的，然后才可以让GPS公司处理。第二步，所有的GPS公司，只要需要汽车导航的，需要用到导航电子地图的，统统需要在软件中加入国家 Bao Mi 算法，将COM口读出来的真实的坐标信号，加密转换成国家要求的 Bao Mi 的坐标，这样，GPS导航仪和导航电子地图就可以完全匹配啦，GPS也就可以正常工作啦。 </p>
+<p>所以，所有的导航电子地图公司，像四维图新、瑞图、易图通、高德等等，都需要将自己的电子地图拿到国家测绘局进行加密处理，而所有的导航软件公司，都需要将自己的导航软件中加入国家测绘局提供的加密算法的代码。而这一段代码，就是国家的机密，不是公开的，每次去国家测绘局加密处理都需要预约并在封闭的环境中进行，编译完成后需要是在主程序的exe中，而不能编译在外部dll等文件中。 </p>
+<p>当然，国家的 Bao Mi 插件，是需要收费的，早期的时候，一个导航仪就需要10块钱的 Bao Mi 插件许可费，恩， Bao Mi 插件也不是白用的，毕竟国家花了很多的钱和人力和物力才做出来的保护国家安全的 Bao Mi 东西怎么可以随便送你用呢，收点钱也就算是正常也算是在预料之中啦。现在的话，好像已经下放到地图数据公司了，就是看这个地图数据公司的经营状况，大概会出货多少份电子地图，然后一次性收取地图数据公司多少钱，可能是多少百万，然后这个钱呢，你们数据公司就自己找你们的导航软件公司的客户收吧，算在每一台设备中的许可费，恩，国家的办事效率变高了，一次直接从导航电子地图公司收费比逐个收取导航软件公司的钱要来的容易和不那么麻烦。 </p>
+<p>现阶段，有些人或者组织，为了自己的利益，将导航软件和导航地图进行XX，并发现了导航电子地图中存在的地图偏差，所以就采取人为的手段，将地图反加密，将虚假的坐标转换成标准的WGS84坐标，最笨的方法就是线性的平移，大概偏差的距离为500米，基本上能够反回来，但误差较大，特别是南北距离加大的情况下，而聪明一点的方法，用matlab等工具计算出其中的曲线，然后反转回来。多么的可怕那，这是触犯国家法律的行为，国家的安全就这样被你们破坏了，这是一个刑事问题，而不是简单的XX软件XX地图的经济犯罪问题了。请大家务必务必遵守国家的法律，不要干出这样的傻事出来，出了事谁都保不了你，毕竟你将成为国家的敌人。 </p>
+<p>最后，说说 Bao Mi 插件带来的弊端，好处不容忽视，国家为了安全考虑， Bao Mi 了就安全了，但弊端是，制造了人为的障碍，非常的不好用，比如导航软件出来的坐标，不能和Google Earth等国际软件匹配，Google Earth和Map在国内基本上就是废物。进一步带来的导航问题是，寻宝、分享等许多好玩的GPS活动，都无法在大陆地区展开，这一点真的让人很无奈。当然，也有一些时候，由于导航软件的 Bao Mi 插件问题，导致不能导航等等。 Bao Mi 插件，是一个让人哭笑不得的东西，就如同国际的WGS84坐标对我们的54坐标或者80坐标，就如同最近的国家部门准备开发“影像中国”反制google earth的泄密问题。等等种种，法律不可逾越，但我们也不希望人为的制造麻烦，或者为了更深入的经济利益。<br>这就是国家的导航 Bao Mi 插件问题吧，希望大家能够理解。</p>
+<p>######参考文献：</p>
+<ul>
+<li>rticle from <a href="http://www.gpshk.cc/forum.php?mod=viewthread&amp;tid=136780" target="_blank" rel="external">http://www.gpshk.cc/forum.php?mod=viewthread&amp;tid=136780</a></li>
+<li>All Maps in China are Transformed.<a href="http://home.wangjianshuo.com/archives/20081109_all_maps_in_china_are_transformed.htm" target="_blank" rel="external">http://home.wangjianshuo.com/archives/20081109_all_maps_in_china_are_transformed.htm </a></li>
+<li>ios-dev-map-offset-in-china.<a href="http://stackoverflow.com/questions/7262459/ios-dev-map-offset-in-china" target="_blank" rel="external">http://stackoverflow.com/questions/7262459/ios-dev-map-offset-in-china</a></li>
+<li>OFFSET MAPPING ISSUE IN CHINA. <a href="http://productforums.google.com/forum/#!topic/maps/zVmRao1Im3w" target="_blank" rel="external">http://productforums.google.com/forum/#!topic/maps/zVmRao1Im3w</a></li>
+<li>more ,google it…</li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2013/05/25/java-zhihu-source-code/" class="post-link">清水河畔知乎机器人源码正式开源</a></h2><span class="post-time">2013年5月25日</span><div class="post-content"><p>#清水河畔知乎机器人源码正式开源 </p>
+<p>知乎机器人源码JAVA重量级版正式放到Github上面了，Git地址：<a href="https://github.com/yuercl/" target="_blank" rel="external">https://github.com/yuercl/</a>myNews</p>
+<p>整个知乎机器人构建于Springside4，详情参考：<a href="https://github.com/springside/springside4" target="_blank" rel="external">https://github.com/springside/springside4</a><br>注意：本源码做学习用，请勿扰乱河畔，欢迎大家拓展，登录复杂的可以找校花要key，@xsjswt# 参考：校花的河畔一键登录接口小范围公测  <a href="http://bbs.qshpan.com/read.php?tid=1319124&amp;fpage=0&amp;page=1" target="_blank" rel="external">http://bbs.qshpan.com/read.php?tid=1319124&amp;fpage=0&amp;page=1</a></p>
+<p>第一步下载源码：git下来</p>
+<p>第二步依赖：jdk版本大于6，本机安装maven，并配置好本地仓库，mysql数据库</p>
+<p>第三部 config：</p>
+<pre><code>config.properties，中按要求设置用户名和密码
+application.properties，数据库用户名和密码
+hibernate.cfg.xml，数据库信息，用户自动生成数据库，自己导入sql也行，那么这个文件就没用了
+applicationContext.xml，设置crontab，发布频率
+</code></pre><p>第四步 run：运行jetty脚本，等待吧，第一次运行会下载依赖包。                </p>
+<pre><code>eclipse_rebuild.bat 用于生成eclipse项目
+jetty.bat 内嵌jetty容器，喜欢tomcat的走开
+dependency.bat 依赖
+package.bat 打包成war，可用户发布到tomcat、jboss等
+refresh-db.bat 用户刷新数据库，一般不怎么用，也就是执行scheme下面的sql文件，在pom.xml里面有配置。
+</code></pre><p>技术是死的，优质的内容才是价值所在。不建议大家都来转发知乎，或者是转发糗百。。。<br>顺便说一下，springside是个不错的框架。</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/04/13/can-you-do-the-login-function-on-the-web/" class="post-link">你会做Web上的用户登录功能吗</a></h2><span class="post-time">2012年4月13日</span><div class="post-content"><p>Web上的用户登录功能应该是最基本的功能了，可是在我看过一些站点的用户登录功能后，我觉得很有必要写一篇文章教大家怎么来做用户登录功能。下面的文章告诉大家这个功能可能并没有你所想像的那么简单，这是一个关系到用户安全的功能，希望大家能从下面的文章中能知道什么样的方法才是一个好的用户登录功能。以下内容，转载时请保持原文一致，并请注明作者和出处。</p>
+
+<h2>用户名和口令</h2>
+
+<p>首先，我们先来说说用户名和口令的事。这并不是本站第一次谈论这个事了。如何管理自己的口令让你知道怎么管理自己的口令，破解你的口令让你知道在现代这样速度的计算速度下，用穷举法破解你的口令可能会是一件很轻松的事。在这里我想告诉从开发者的角度上来做设计这个用户名和口令的事。下面一几件规则：</p>
+
+<ul><br><li><p><strong>限制用户输入一些非常容易被破解的口令</strong>。<br>如什么qwert，123456, password之类，就像twitter限制用户的口令一样做一个口令的黑名单。<br>另外，你可以限制用户口令的长度，是否有大小写，是否有数字，你可以用你的程序做一下校验。<br>当然，这可能会让用户感到很不爽，所以，现在很多网站都提供了UX让用户知道他的口<br>令强度是什么样的（比如这个有趣的UX），这样可以让用户有一个选择，<br>目的就是告诉用户——要想安全，先把口令设得好一点。</p></li><br><li><p><strong>千万不要明文保存用户的口令</strong>。<br>正如如何管理自己的口令所说的一样，很多时候，用户都会用相同的ID相同的口令来登录很多网站。<br>所以，如果你的网站明文保存的话，那么，如果你的数据被你的不良员工流传出去那对用户是灾难性的。<br>所以，用户的口令一定要加密保存，最好是用不可逆的加密，如MD5或是SHA1之类的有hash算法的不可逆的加密算法。<br>CSDN曾明文保存过用户的口令。<br>（另，对于国内公司的品行以及有关部门的管理方式，我不敢保证国内网站以加密的方式保存你的口令。<br>我觉得，做为一个有良知的人，我们应该加密保存用户的口令）</p></li><br><li><p><strong>是否让浏览器保存口令</strong>。<br>我们有N多的方法可以不让浏览器保存用户名和口令。<br>但是这可能对用户来说很不爽。因为在真实世界里谁也记得不住那么多的口令。<br>很多用户可能会使用一些密码管理工具来保存密码，浏览器只是其中一种。<br>是否让浏览器保存这个需要你做决定，重点是看一下你的系统的安全级别是否要求比较高，<br>如果是的话，则不要让浏览器保存密码，并在网站明显的位置告诉用户——保存口令最安全的地方只有你的大脑。</p></li><br><li><p><strong>口令在网上的传输</strong>。<br>因为HTTP是明文协议，所以，用户名和口令在网上也是明文发送的，这个很不安全。<br>你可以看看这篇文章你就明白了。要做到加密传输就必需使用HTTPS协议。<br>但是，在中国还是有很多网站的Web登录方式还在使用ActiveX控件，这可能成为IE6还大量存在的原因。<br>我通常理解为这些ActiveX控件是为了反键盘记录程序的。<br>不过，我依然觉ActiveX控件不应该存在，因为在国外的众多安全很重要的站点上都看不到ActiveX的控件的身影。</p></li><br></ul><h2>用户登录状态</h2><br><br><p>首先，我想告诉大家的是，因为HTTP是无状态的协议，也就是说，这个协议是无法记录用户访问状态的，<br>其每次请求都是独立的无关联的，一笔是一笔。<br>而我们的网站都是设计成多个页面的，所在页面跳转过程中我们需要知道用户的状态，<br>尤其是用户登录的状态，这样我们在页面跳转后我们才知道是否可以让用户有权限来操作一些功能或是查看一些数据。</p><br><br><p><strong>所以，我们每个页面都需要对用户的身份进行认证</strong>。<br>当然，我们不可能让用户在每个页面上输入用户名和口令，这会让用户觉得我们的网站相当的SB。<br>为了实现这一功能，用得最多的技术就是浏览器的cookie，我们会把用户登录的信息存放在客户端的cookie里，<br>这样，我们每个页面都从这个cookie里获得用户是否登录的信息，从而达到记录状态，验证用户的目的。<br>但是，你真的会用cookie吗？下面是使用cookie的一些原则。</p><br><br><ul><br><li><p><strong>千万不要在cookie中存放用户的密码</strong>。<br>加密的密码都不行。因为这个密码可以被人获取并尝试离线穷举。<br>所以，你一定不能把用户的密码保存在cookie中。<br>我看到太多的站点这么干了。</p></li><br><li><br><p><strong>正确设计“记住密码”</strong>。<br>这个功能简直就是一个安全隐患，我觉得并不是所有的程序员都知道怎么设计这个事。<br>一般的设计 是——一时用户勾选了这个功能，系统会生成一个cookie，cookie包括用户名和一个固定的散列值，<br>这个固定的散列值一直使用。<br>这样，你就可以在所有的设备和客户上都可以登录，而且可以有多个用户同时登录。<br>这个并不是很安全。下面是一些更为安全的方法供你参考：</p><br><br><ul><br><li> 在cookie中，保存三个东西——<strong>用户名，登录序列，登录token</strong>。<br><strong>用户名</strong>：明文存放。<br><strong>登录序列</strong>：一个被MD5散列过的随机数，仅当强制用户输入口令时更新（如：用户修改了口令）。<br><strong>登录token</strong>：一个被MD5散列过的随机数，仅一个登录session内有效，新的登录session会更新它。</li><br><li> 上述三个东西会存在服务器上，服务器的验证用户需要验证客户端cookie里的这三个事。</li><br><li> 这样的设计会有什么样的效果，会有下面的效果，<br><ul><br><li>a) <strong>登录token</strong> 是单实例登录。意思就是一个用户只能有一个登录实例。</li><br><li>b) <strong>登录序列</strong> 是用来做盗用行为检测的。<br>    如果用户的cookie被盗后，盗用者使用这个cookie访问网站时，我们的系统是以为是合法用户，<br>    然后更新“登录token”，而真正的用户回来访问时，系统发现只有“用户名”和“登录序列”相同，<br>    但是“登录token” 不对，这样的话，系统就知道，这个用户可能出现了被盗用的情况，<br>    于是，系统可以清除并更改登录序列 和 登录token，这样就可以令所有的cookie失效，并要求用户输入口令。<br>    并给警告用户系统安全。</li><br>    </ul>
+
+<pre><code>&lt;/li&gt;
+</code></pre><p><li> 当然，<strong>上述这样的设计还是会有一些问题，比如：同一用户的不同设备登录，甚至在同一个设备上使用不同的浏览器保登录</strong>。一个设备会让另一个设备的登录token和登录序列失效，从而让其它设备和浏览器需要重新登录，并会造成cookie被盗用的假象。所以，你在服务器服还需要考虑- IP 地址，</li></p>
+<p><ul></ul></p>
+<p><li>a) 如果以口令方式登录，我们无需更新服务器的“登录序列”和 “登录token”（但需要更新cookie）。因为我们认为口令只有真正的用户知道。</li></p>
+<p><li>b) 如果 <strong>IP相同</strong> ，那么，我们无需更新服务器的“登录序列”和 “登录token”（但需要更新cookie）。因为我们认为是同一用户有同一IP（当然，同一个局域网里也有同一IP，但我们认为这个局域网是用户可以控制的。网吧内并不推荐使用这一功能）。</li></p>
+<p><li>c) 如果 （<strong>IP不同 &amp;&amp; 没有用口令登录</strong>），那么，“登录token” 就会在多个IP间发生变化（登录token在两个或多个ip间被来来回回的变换），当在一定时间内达到一定次数后，系统才会真正觉得被盗用的可能性很高，此时系统在后台清除“登录序列”和“登录token“，让Cookie失效，强制用户输入口令（或是要求用户更改口令），以保证多台设备上的cookie一致。</li><br></p></li></ul><br></li><br></ul><br><p></p>
+<p><li></li></p>
+<p><strong>不要让cookie有权限访问所有的操作</strong>。<br>否则就是XSS攻击，这个功能请参看新浪微博的XSS攻击。<br>下面的这些功能一定要用户输入口令：</p>
+
+<p><ul></ul></p>
+<p><li> 修改口令。</li></p>
+<p><li> 修改电子邮件。（电子邮件通常用来找回用户密码，最好通发邮件或是发手机短信的方式修改，或者干脆就不让改一一用电子邮件做帐号名）</li></p>
+<p><li> 用户的隐私信息。</li></p>
+<p><li> 用户消费功能。</li><br><br></p>
+<p><li><p><strong>权衡Cookie的过期时间</strong>。<br>如果是永不过期，会有很不错的用户体验，但是这也会让用户很快就忘了登录密码。<br>如果设置上过期期限，比如2周，一个月，那么可能会好一点，但是2周和一个月后，用户依然会忘了密码。<br>尤其是用户在一些公共电脑上，如果保存了永久cookie的话，等于泄露了帐号。<br>所以，对于cookie的过期时间我们还需要权衡。</p></li><br></p><h2>找回口令的功能</h2><p></p>
+<p>找回口令的功能一定要提供。<br>但是很多朋友并不知道怎么来设计这个功能。<br>我们有很多找回口令的设计，下面我逐个点评一下。</p>
+
+<p><ul></ul></p>
+<p><li><p><strong>千万不要使用安全问答</strong>。<br>事实证明，这个环节很烦人，而且用户并不能很好的设置安全问答。<br>什么，我的生日啊，我母亲的生日，等等。<br>因为今天的互联网和以前不一样了，因为SNS，今天的互联比以前更真实了，<br>我可以上facebook，开心，人人网，LinkedIn查到你的很多的真实的信息。<br>通过这些信息我可以使用安全问答来重设你的口令。<br>这里需要说一下 Facebook，Facebook的安全问答很强大，还要你通过照片认人，呵呵。</p></li></p>
+<p><li><p><strong>不要重置用户的密码</strong>。<br>因为这有可能让用户的密码遭到恶意攻击。<br>当然，你要发个邮件给用户让其确认，用户点击邮件中的一个链接，你再重置。<br>我并不推荐这样的方法，因为用户一般都会用笔记下来这个很难记的口令，<br>然后登录系统，因为登录系统时使用了“记住密码”的功能，所以导致用户不会去修改密码，<br>从而要么导到被写下来的密码被人盗取，要么又忘记了密码。</p></li></p>
+<p><li><p><strong>好一点的做法</strong>——通过邮件自行重置。<br>当用户申请找回口令功能的时候，系统生成一个MD5唯一的随机字串（可通过UID+IP+timestamp+随机数），<br>放在数据库中，然后设置上时限（比如1小时内），给用户发一个邮件，<br>这个连接中包含那个MD5的字串的链接，用户通过点击那个链接来自己重新设置新的口令。</p></li></p>
+<p><li><p><strong>更好一点的做法</strong>——多重认证。<br>比如：通过手机+邮件的方式让用户输入验证码。<br>手机+邮件可能还不把握，因为手机要能会丢了，而我的手机可以访问我的邮箱。<br>所以，使用U盾，SecureID（一个会变化的6位数token），或是通过人工的方式核实用户身份。<br>当然，这主要看你的系统的安全级别了。</p></li><br></p><h2>口令探测防守</h2><p></p>
+<p><ul></ul></p>
+<p><li><p><strong>使用验证码</strong>。<br>验证码是后台随机产生的一个短暂的验证码，这个验证码一般是一个计算机很难识别的图片。<br>这样就可以防止以程序的方式来尝试用户的口令。<br>事实证明，这是最简单也最有效的方式。<br>当然，总是让用户输入那些肉眼都看不清的验证码的用户体验不好，所以，可以折中一下。<br>比如Google，当他发现一个IP地址发出大量的搜索后，其会要求你输入验证码。<br>当他发现同一个IP注册了3个以上的gmail邮箱后，他需要给你发短信方式或是电话方式的验证码。</p></li></p>
+<p><li><p><strong>用户口令失败次数</strong>。<br>调置口令失败的上限，如果失败过多，则把帐号锁了，需要用户以找回口令的方式来重新激活帐号。<br>但是，这个功能可能会被恶意人使用。<br>最好的方法是，增加其尝试的时间成本（以前的这篇文章说过一个增加时间成本的解密算法）。<br>如，两次口令尝试的间隔是5秒钟。<br>三次以上错误，帐号被临时锁上30秒，5次以上帐号被锁1分钟，10次以上错误帐号被锁4小时……<br>但是这会导致恶意用户用脚本来攻击，所以最好再加上验证码，验证码出错次数过多不禁止登录而是禁lP。</p></li></p>
+<p><li><p><strong>系统全局防守</strong>。<br>上述的防守只针对某一个别用户。<br>恶意者们深知这一点，所以，他们一般会动用“僵尸网络”轮着尝试一堆用户的口令，<br>所以上述的那种方法可能还不够好。<br>我们需要在系统全局域上监控所有的口令失败的次数。<br>当然，这个需要我们平时没有受到攻击时的数据做为支持。<br>比如你的系统，平均每天有5000次的口令错误的事件，那么你可以认为，<br>当口令错误大幅超过这个数后，而且时间相对集中，就说明有黑客攻击。<br>这个时候你怎么办？一般最常见使用的方法是让所有的用户输错口令后再次尝试的时间成本增加。</p></li><br></p><p>最后，再说一下，关于用户登录，使用第三方的 OAuth 和 OpenID 也不失为一个很不错的选择。</p><p></p>
+<p><strong>参考文章</strong></p>
+<ul>
+<li>OWASP Guide To Authentication</li>
+<li>Dos and Don’ts of Client Authentication on the Web （PDF）</li>
+<li>Charles Miller’s Persistent Login Cookie Best Practice</li>
+<li>Wikipedia: HTTP cookie</li>
+<li>Personal knowledge questions for fallback authentication: Security questions in the era of Facebook</li>
+</ul>
+<p>原文来自：<a href="http://coolshell.cn/articles/5353.html" target="_blank" rel="external">http://coolshell.cn/articles/5353.html</a></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/04/13/best-web-default-fonts/" class="post-link">最佳 Web 中文默认字体</a></h2><span class="post-time">2012年4月13日</span><div class="post-content"><p>作者：<a href="http://weibo.com/lifesinger" target="_blank" rel="external">@lifesinger</a></p>
+<hr>
+<p>最近淘宝网首页有个小小的 默认字体调整风波，中文默认字体远比我们想象中的复杂。以前主要关注 font-family 自身，忽略了 lang 属性和 charset 设置。今天做了个更详尽的测试：</p>
+<p><a href="http://lifesinger.github.com/lab/2011/default-fonts/" target="_blank" rel="external">http://lifesinger.github.com/lab/2011/default-fonts/</a></p>
+<p>在不同操作系统下，用各个浏览器打开，特别是 Firefox 和 Opera，混乱的世界啊，真真的与浏览器斗，乐趣全无！</p>
+<p>虽然沮丧悲情愤，但分析研究的工作还是得继续：</p>
+<ul>
+<li>lang, charset 和 font-family 都会对默认字体产生影响，规律很复杂。</li>
+<li>浏览器偏好里的字体设置，对默认字体有直接影响，比如 WebKit 内核的 Chrome 浏览器。</li>
+<li>宋体转成 “\5b8b\4f53” 也不能通吃所有浏览器。比如在 Mac OS 的 Chrome 中，只认识 simsun.</li>
+<li><del>宋体其实是 serif 有衬线字体，后面跟 sans-serif, 逻辑上是错的。</del><br>（修正：并没有规定前面的 font name 要和最后的 general family 保持一致）</li>
+<li>不同操作系统下，各个浏览器默认的 sans-serif 中文字体，一般都是最佳选择或用户已调整为最佳，不能强制用户都用宋体。</li>
+</ul>
+<p>从目前用户反馈的情况来看，在以 12px 大小为主的网页设计中，<strong>最佳的中文默认字体方案是：Windows 下用宋体，其他操作系统下用雅黑等无衬线字体</strong>。未来随着电脑屏幕的变大和分辨率的提高，当字体的默认大小提高到 14px 以上时，或许所有操作系统下，最佳中文默认字体会统一为雅黑等无衬线字体。</p>
+<p>为了让所有网页在尽可能多的情况下，都用最佳中文字体渲染，需要特别考虑以下几点：</p>
+<ul>
+<li>在 Mac Chrome 等环境下，用 font-family: times, sans-serif 时，<br>中文字体并不会根据 sans-serif 渲染，而是会根据 times 的 serif 属性，<br>选择默认的 serif 中文字体来渲染。<br>比如在 Mac Chrome 下，默认 serif 中文字体是很接近宋体的一个字体，比较难看。<br>（修正：实际情况更为复杂，请参考评论中的讨论）</li>
+<li>在 Firefox 中，只要 font-family 中有宋体，中文必然就用宋体展现。<br>所以 font-family 中不能有宋体。</li>
+<li>当 lang=“zh-CN”, charset=“utf-8” 时，<br>font: arial 在 Mac Firefox 等环境下，默认中文字体是宋体。</li>
+<li>在英文 Win7 下，只要 charset=“gbk”, 当 font-family 为 arial, sans-serif 时，<br><del>默认中文字体是很难看的 Microsoft Sans Serif Regular.</del><br>（修正：是 fallback 到了韩文字体 Dotum/Gulim（gulim.ttc）来显示，<br>Dotum/Gulim 没有的字符最终会 fallback 到 SimSun，暂时不知道日文字体是否夹在中间。<br>和 Microsoft Sans Serif 没有一点关系。）</li>
+<li>Opera 是个恐怖的世界，不要尝试分析其规律，最后测试一下就好。</li>
+</ul>
+<p>可以总结出：</p>
+<ol>
+<li><p>如果页面 charset 是 utf-8, 完美的默认字体方案是：</p>
+<pre><code>font-family: arial, sans-serif;
+</code></pre><p>无论省略 lang 还是设置为 zh-CN, 在各种环境下都满足预期。</p>
+</li>
+<li><p>如果页面 charset 是 gbk, 推荐默认字体方案为：</p>
+<pre><code>font-family: arial;
+</code></pre><p>Chrome OS 下未测试，根据陈成博客上的反馈，<br>好像会因为没有 sans-serif 而导致中文字体很难看。<br>不过考虑 Chrome OS 还未正式发布，目前可以先忽略。</p>
+</li>
+</ol>
+<p>最后，个人推荐简体中文页面的最佳实践为：</p>
+<pre><code>html lang=zh-CN
+charset=utf-8
+font-family: arial, sans-serif;
+</code></pre><p>测试环境说明：</p>
+<pre><code>Mac OS X 10.6.7
+Chrome 10.0.648.204
+Firefox 4.0
+Safari 5.0.4
+Opera 11.01
+
+Win7 Ultimate
+IE 9.0.8080.16413
+</code></pre><p>补充：</p>
+<ol>
+<li>关于字体的默认大小和行高等信息，推荐博文：<a href="http://justjavac.com/web/2012/04/13/default-web-font-style.html" target="_blank" rel="external">默认 Web 字体样式</a></li>
+<li>关于字体的 fallback 等文本渲染信息，推荐博文：<a href="http://justjavac.com/web/2012/04/13/how-do-browsers-render-text.html" target="_blank" rel="external">浏览器如何渲染文本</a></li>
+</ol>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/03/31/markdown-syntax/" class="post-link">Markdown 语法 (简体中文版)</a></h2><span class="post-time">2012年3月31日</span><div class="post-content"><p><strong>NOTE:</strong> This is Simplelified  Chinese Edition Document of Markdown Syntax. If you are seeking for English Edition Document. Please refer to <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">Markdown: Syntax</a>.</p>
+<p><strong>声明：</strong> 这份文档派生(fork)于<a href="http://markdown.tw/" target="_blank" rel="external">繁体中文版</a>，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 Markdown 语法编写，你可以到这里<a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/syntax.md" target="_blank" rel="external">查看它的源文件</a>。「繁体中文版的原始文件可以<a href="https://github.com/othree/markdown-syntax-zhtw/blob/master/syntax.md" target="_blank" rel="external">查看这里</a> 。」–By @<a href="http://twitter.com/riku" target="_blank" rel="external">riku</a> / 本项目托管于 <a href="http://gitcafe.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">GitCafe</a></p>
+<p><strong>注：</strong> 本项目同时也托管于 <a href="https://github.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">Github</a> 上，请通过 fork＋pull request 方式来帮忙改进本项目。</p>
+<h1 id="Markdown-语法说明-简体中文版-点击查看快速入门"><a href="#Markdown-语法说明-简体中文版-点击查看快速入门" class="headerlink" title="Markdown 语法说明 (简体中文版) / (点击查看快速入门)"></a>Markdown 语法说明 (简体中文版) / (<a href="../markdown-basics">点击查看快速入门</a>)</h1><ul>
+<li><a href="#overview">概述</a><ul>
+<li><a href="#philosophy">宗旨</a></li>
+<li><a href="#html">兼容 HTML</a></li>
+<li><a href="#autoescape">特殊字符自动转换</a></li>
+</ul>
+</li>
+<li><a href="#block">区块元素</a><ul>
+<li><a href="#p">段落和换行</a></li>
+<li><a href="#header">标题</a></li>
+<li><a href="#blockquote">区块引用</a></li>
+<li><a href="#list">列表</a></li>
+<li><a href="#precode">代码区块</a></li>
+<li><a href="#hr">分隔线</a></li>
+</ul>
+</li>
+<li><a href="#span">区段元素</a><ul>
+<li><a href="#link">链接</a></li>
+<li><a href="#em">强调</a></li>
+<li><a href="#code">代码</a></li>
+<li><a href="#img">图片</a></li>
+</ul>
+</li>
+<li><a href="#misc">其它</a><ul>
+<li><a href="#backslash">反斜杠</a></li>
+<li><a href="#autolink">自动链接</a></li>
+</ul>
+</li>
+<li><a href="#acknowledgement">感谢</a></li>
+</ul>
+<hr>
+<h2 id="overview">概述</h2>
+
+<h3 id="philosophy">宗旨</h3>
+
+<p>Markdown 的目标是实现「易读易写」。</p>
+<p>可读性，无论如何，都是最重要的。一份使用 Markdown 格式撰写的文件应该可以直接以纯文本发布，并且看起来不会像是由许多标签或是格式指令所构成。Markdown 语法受到一些既有 text-to-HTML 格式的影响，包括 <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="external">Setext</a>、<a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="external">atx</a>、<a href="http://textism.com/tools/textile/" target="_blank" rel="external">Textile</a>、<a href="http://docutils.sourceforge.net/rst.html" target="_blank" rel="external">reStructuredText</a>、<a href="http://www.triptico.com/software/grutatxt.html" target="_blank" rel="external">Grutatext</a> 和 <a href="http://ettext.taint.org/doc/" target="_blank" rel="external">EtText</a>，而最大灵感来源其实是纯文本电子邮件的格式。</p>
+<p>总之， Markdown 的语法全由一些符号所组成，这些符号经过精挑细选，其作用一目了然。比如：在文字两旁加上星号，看起来就像*强调*。Markdown 的列表看起来，嗯，就是列表。Markdown 的区块引用看起来就真的像是引用一段文字，就像你曾在电子邮件中见过的那样。</p>
+<h3 id="html">兼容 HTML</h3>
+
+<p>Markdown 语法的目标是：成为一种适用于网络的<em>书写</em>语言。</p>
+<p>Markdown 不是想要取代 HTML，甚至也没有要和它相近，它的语法种类很少，只对应 HTML 标记的一小部分。Markdown 的构想<em>不是</em>要使得 HTML 文档更容易书写。在我看来， HTML 已经很容易写了。Markdown 的理念是，能让文档更容易读、写和随意改。HTML 是一种<em>发布</em>的格式，Markdown 是一种<em>书写</em>的格式。就这样，Markdown 的格式语法只涵盖纯文本可以涵盖的范围。</p>
+<p>不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。不需要额外标注这是 HTML 或是 Markdown；只要直接加标签就可以了。</p>
+<p>要制约的只有一些 HTML 区块元素――比如 <code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code> 等标签，必须在前后加上空行与其它内容区隔开，还要求它们的开始标签与结尾标签不能用制表符或空格来缩进。Markdown 的生成器有足够智能，不会在 HTML 区块标签外加上不必要的 <code>&lt;p&gt;</code> 标签。</p>
+<p>例子如下，在 Markdown 文件里加上一段 HTML 表格：</p>
+<pre><code>这是一个普通段落。
+
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Foo&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+这是另一个普通段落。
+</code></pre><p>请注意，在 HTML 区块标签间的 Markdown 格式语法将不会被处理。比如，你在 HTML 区块内使用 Markdown 样式的<code>*强调*</code>会没有效果。</p>
+<p>HTML 的区段（行内）标签如 <code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code> 可以在 Markdown 的段落、列表或是标题里随意使用。依照个人习惯，甚至可以不用 Markdown 格式，而直接采用 HTML 标签来格式化。举例说明：如果比较喜欢 HTML 的 <code>&lt;a&gt;</code> 或 <code>&lt;img&gt;</code> 标签，可以直接使用这些标签，而不用 Markdown 提供的链接或是图像标签语法。</p>
+<p>和处在 HTML 区块标签间不同，Markdown 语法在 HTML 区段标签间是有效的。</p>
+<h3 id="autoescape">特殊字符自动转换</h3>
+
+<p>在 HTML 文件中，有两个字符需要特殊处理： <code>&lt;</code> 和 <code>&amp;</code> 。 <code>&lt;</code> 符号用于起始标签，<code>&amp;</code> 符号则用于标记 HTML 实体，如果你只是想要显示这些字符的原型，你必须要使用实体的形式，像是 <code>&amp;lt;</code> 和 <code>&amp;amp;</code>。</p>
+<p><code>&amp;</code> 字符尤其让网络文档编写者受折磨，如果你要打「<code>AT&amp;T</code>」 ，你必须要写成「<code>AT&amp;amp;T</code>」。而网址中的 <code>&amp;</code> 字符也要转换。比如你要链接到：</p>
+<pre><code>http://images.google.com/images?num=30&amp;q=larry+bird
+</code></pre><p>你必须要把网址转换写为：</p>
+<pre><code>http://images.google.com/images?num=30&amp;amp;q=larry+bird
+</code></pre><p>才能放到链接标签的 <code>href</code> 属性里。不用说也知道这很容易忽略，这也可能是 HTML 标准检验所检查到的错误中，数量最多的。</p>
+<p>Markdown 让你可以自然地书写字符，需要转换的由它来处理好了。如果你使用的 <code>&amp;</code> 字符是 HTML 字符实体的一部分，它会保留原状，否则它会被转换成 <code>&amp;amp</code>;。</p>
+<p>所以你如果要在文档中插入一个版权符号 <code>©</code>，你可以这样写：</p>
+<pre><code>&amp;copy;
+</code></pre><p>Markdown 会保留它不动。而若你写：</p>
+<pre><code>AT&amp;T
+</code></pre><p>Markdown 就会将它转为：</p>
+<pre><code>AT&amp;amp;T
+</code></pre><p>类似的状况也会发生在 <code>&lt;</code> 符号上，因为 Markdown 允许 <a href="#html">兼容 HTML</a> ，如果你是把 <code>&lt;</code> 符号作为 HTML 标签的定界符使用，那 Markdown 也不会对它做任何转换，但是如果你写：</p>
+<pre><code>4 &lt; 5
+</code></pre><p>Markdown 将会把它转换为：</p>
+<pre><code>4 &amp;lt; 5
+</code></pre><p>不过需要注意的是，code 范围内，不论是行内还是区块， <code>&lt;</code> 和 <code>&amp;</code> 两个符号都<em>一定</em>会被转换成 HTML 实体，这项特性让你可以很容易地用 Markdown 写 HTML code （和 HTML 相对而言， HTML 语法中，你要把所有的 <code>&lt;</code> 和 <code>&amp;</code> 都转换为 HTML 实体，才能在 HTML 文件里面写出 HTML code。）</p>
+<hr>
+<h2 id="block">区块元素</h2>
+
+
+<h3 id="p">段落和换行</h3>
+
+<p>一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行（空行的定义是显示上看起来像是空的，便会被视为空行。比方说，若某一行只包含空格和制表符，则该行也会被视为空行）。普通段落不该用空格或制表符来缩进。</p>
+<p>「由一个或多个连续的文本行组成」这句话其实暗示了 Markdown 允许段落内的强迫换行（插入换行符），这个特性和其他大部分的 text-to-HTML 格式不一样（包括 Movable Type 的「Convert Line Breaks」选项），其它的格式会把每个换行符都转成 <code>&lt;br /&gt;</code> 标签。</p>
+<p>如果你<em>确实</em>想要依赖 Markdown 来插入 <code>&lt;br /&gt;</code> 标签的话，在插入处先按入两个以上的空格然后回车。</p>
+<p>的确，需要多费点事（多加空格）来产生 <code>&lt;br /&gt;</code> ，但是简单地「每个换行都转换为 <code>&lt;br /&gt;</code>」的方法在 Markdown 中并不适合， Markdown 中 email 式的 <a href="#blockquote">区块引用</a> 和多段落的 <a href="#list">列表</a> 在使用换行来排版的时候，不但更好用，还更方便阅读。</p>
+<h3 id="header">标题</h3>
+
+<p>Markdown 支持两种标题的语法，类 <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="external">Setext</a> 和类 <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="external">atx</a> 形式。</p>
+<p>类 Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），例如：</p>
+<pre><code>This is an H1
+=============
+
+This is an H2
+-------------
+</code></pre><p>任何数量的 <code>=</code> 和 <code>-</code> 都可以有效果。</p>
+<p>类 Atx 形式则是在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶，例如：</p>
+<pre><code># 这是 H1
+
+## 这是 H2
+
+###### 这是 H6
+</code></pre><p>你可以选择性地「闭合」类 atx 样式的标题，这纯粹只是美观用的，若是觉得这样看起来比较舒适，你就可以在行尾加上 <code>#</code>，而行尾的 <code>#</code> 数量也不用和开头一样（行首的井字符数量决定标题的阶数）：</p>
+<pre><code># 这是 H1 #
+
+## 这是 H2 ##
+
+### 这是 H3 ######
+</code></pre><h3 id="blockquote">区块引用 Blockquotes</h3>
+
+<p>Markdown 标记区块引用是使用类似 email 中用 <code>&gt;</code> 的引用方式。如果你还熟悉在 email 信件中的引言部分，你就知道怎么在 Markdown 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行的最前面加上 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+&gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+&gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+&gt; 
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+&gt; id sem consectetuer libero luctus adipiscing.
+</code></pre><p>Markdown 也允许你偷懒只在整个段落的第一行最前面加上 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+id sem consectetuer libero luctus adipiscing.
+</code></pre><p>区块引用可以嵌套（例如：引用内的引用），只要根据层次加上不同数量的 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is the first level of quoting.
+&gt;
+&gt; &gt; This is nested blockquote.
+&gt;
+&gt; Back to the first level.
+</code></pre><p>引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等：</p>
+<pre><code>&gt; ## 这是一个标题。
+&gt; 
+&gt; 1.   这是第一行列表项。
+&gt; 2.   这是第二行列表项。
+&gt; 
+&gt; 给出一些例子代码：
+&gt; 
+&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);
+</code></pre><p>任何像样的文本编辑器都能轻松地建立 email 型的引用。例如在 BBEdit 中，你可以选取文字后然后从选单中选择<em>增加引用阶层</em>。</p>
+<h3 id="list">列表</h3>
+
+<p>Markdown 支持有序列表和无序列表。</p>
+<p>无序列表使用星号、加号或是减号作为列表标记：</p>
+<pre><code>*   Red
+*   Green
+*   Blue
+</code></pre><p>等同于：</p>
+<pre><code>+   Red
++   Green
++   Blue
+</code></pre><p>也等同于：</p>
+<pre><code>-   Red
+-   Green
+-   Blue
+</code></pre><p>有序列表则使用数字接着一个英文句点：</p>
+<pre><code>1.  Bird
+2.  McHale
+3.  Parish
+</code></pre><p>很重要的一点是，你在列表标记上使用的数字并不会影响输出的 HTML 结果，上面的列表所产生的 HTML 标记为：</p>
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;McHale&lt;/li&gt;
+&lt;li&gt;Parish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre><p>如果你的列表标记写成：</p>
+<pre><code>1.  Bird
+1.  McHale
+1.  Parish
+</code></pre><p>或甚至是：</p>
+<pre><code>3. Bird
+1. McHale
+8. Parish
+</code></pre><p>你都会得到完全相同的 HTML 输出。重点在于，你可以让 Markdown 文件的列表数字和输出的结果相同，或是你懒一点，你可以完全不用在意数字的正确性。</p>
+<p>如果你使用懒惰的写法，建议第一个项目最好还是从 1. 开始，因为 Markdown 未来可能会支持有序列表的 start 属性。</p>
+<p>列表项目标记通常是放在最左边，但是其实也可以缩进，最多 3 个空格，项目标记后面则一定要接着至少一个空格或制表符。</p>
+<p>要让列表看起来更漂亮，你可以把内容用固定的缩进整理好：</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre><p>但是如果你懒，那也行：</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre><p>如果列表项目间用空行分开，在输出 HTML 时 Markdown 就会将项目内容用 <code>&lt;p&gt;</code><br>标签包起来，举例来说：</p>
+<pre><code>*   Bird
+*   Magic
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;Magic&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>但是这个：</p>
+<pre><code>*   Bird
+
+*   Magic
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Bird&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Magic&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>列表项目可以包含多个段落，每个项目下的段落都必须缩进 4 个空格或是 1 个制表符：</p>
+<pre><code>1.  This is a list item with two paragraphs. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+    mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+    sit amet velit.
+
+2.  Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre><p>如果你每行都有缩进，看起来会看好很多，当然，再次地，如果你很懒惰，Markdown 也允许：</p>
+<pre><code>*   This is a list item with two paragraphs.
+
+    This is the second paragraph in the list item. You&apos;re
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.
+
+*   Another item in the same list.
+</code></pre><p>如果要在列表项目内放进引用，那 <code>&gt;</code> 就需要缩进：</p>
+<pre><code>*   A list item with a blockquote:
+
+    &gt; This is a blockquote
+    &gt; inside a list item.
+</code></pre><p>如果要放代码区块的话，该区块就需要缩进<em>两次</em>，也就是 8 个空格或是 2 个制表符：</p>
+<pre><code>*   一列表项包含一个列表区块：
+
+        &lt;代码写在这&gt;
+</code></pre><p>当然，项目列表很可能会不小心产生，像是下面这样的写法：</p>
+<pre><code>1986. What a great season.
+</code></pre><p>换句话说，也就是在行首出现<em>数字-句点-空白</em>，要避免这样的状况，你可以在句点前面加上反斜杠。</p>
+<pre><code>1986\. What a great season.
+</code></pre><h3 id="precode">代码区块</h3>
+
+<p>和程序相关的写作或是标签语言原始码通常会有已经排版好的代码区块，通常这些区块我们并不希望它以一般段落文件的方式去排版，而是照原来的样子显示，Markdown 会用 <code>&lt;pre&gt;</code> 和 <code>&lt;code&gt;</code> 标签来把代码区块包起来。</p>
+<p>要在 Markdown 中建立代码区块很简单，只要简单地缩进 4 个空格或是 1 个制表符就可以，例如，下面的输入：</p>
+<pre><code>这是一个普通段落：
+
+    这是一个代码区块。
+</code></pre><p>Markdown 会转换成：</p>
+<pre><code>&lt;p&gt;这是一个普通段落：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;这是一个代码区块。
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre><p>这个每行一阶的缩进（4 个空格或是 1 个制表符），都会被移除，例如：</p>
+<pre><code>Here is an example of AppleScript:
+
+    tell application &quot;Foo&quot;
+        beep
+    end tell
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;p&gt;Here is an example of AppleScript:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tell application &quot;Foo&quot;
+    beep
+end tell
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre><p>一个代码区块会一直持续到没有缩进的那一行（或是文件结尾）。</p>
+<p>在代码区块里面， <code>&amp;</code> 、 <code>&lt;</code> 和 <code>&gt;</code> 会自动转成 HTML 实体，这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码，只需要复制贴上，再加上缩进就可以了，剩下的 Markdown 都会帮你处理，例如：</p>
+<pre><code>&lt;div class=&quot;footer&quot;&gt;
+    &amp;copy; 2004 Foo Corporation
+&lt;/div&gt;
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;footer&quot;&amp;gt;
+    &amp;amp;copy; 2004 Foo Corporation
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre><p>代码区块中，一般的 Markdown 语法不会被转换，像是星号便只是星号，这表示你可以很容易地以 Markdown 语法撰写 Markdown 语法相关的文件。</p>
+<h3 id="hr">分隔线</h3>
+
+<p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
+<pre><code>* * *
+
+***
+
+*****
+
+- - -
+
+---------------------------------------
+</code></pre><hr>
+<h2 id="span">区段元素</h2>
+
+<h3 id="link">链接</h3>
+
+<p>Markdown 支持两种形式的链接语法： <em>行内式</em>和<em>参考式</em>两种形式。</p>
+<p>不管是哪一种，链接文字都是用 [方括号] 来标记。</p>
+<p>要建立一个<em>行内式</em>的链接，只要在方块括号后面紧接着圆括号并插入网址链接即可，如果你还想要加上链接的 title 文字，只要在网址后面，用双引号把 title 文字包起来即可，例如：</p>
+<pre><code>This is [an example](http://example.com/ &quot;Title&quot;) inline link.
+
+[This link](http://example.net/) has no title attribute.
+</code></pre><p>会产生：</p>
+<pre><code>&lt;p&gt;This is &lt;a href=&quot;http://example.com/&quot; title=&quot;Title&quot;&gt;
+an example&lt;/a&gt; inline link.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://example.net/&quot;&gt;This link&lt;/a&gt; has no
+title attribute.&lt;/p&gt;
+</code></pre><p>如果你是要链接到同样主机的资源，你可以使用相对路径：</p>
+<pre><code>See my [About](/about/) page for details.   
+</code></pre><p><em>参考式</em>的链接是在链接文字的括号后面再接上另一个方括号，而在第二个方括号里面要填入用以辨识链接的标记：</p>
+<pre><code>This is [an example][id] reference-style link.
+</code></pre><p>你也可以选择性地在两个方括号中间加上一个空格：</p>
+<pre><code>This is [an example] [id] reference-style link.
+</code></pre><p>接着，在文件的任意处，你可以把这个标记的链接内容定义出来：</p>
+<pre><code>[id]: http://example.com/  &quot;Optional Title Here&quot;
+</code></pre><p>链接内容定义的形式为：</p>
+<ul>
+<li>方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字</li>
+<li>接着一个冒号</li>
+<li>接着一个以上的空格或制表符</li>
+<li>接着链接的网址</li>
+<li>选择性地接着 title 内容，可以用单引号、双引号或是括弧包着</li>
+</ul>
+<p>下面这三种链接的定义都是相同：</p>
+<pre><code>[foo]: http://example.com/  &quot;Optional Title Here&quot;
+[foo]: http://example.com/  &apos;Optional Title Here&apos;
+[foo]: http://example.com/  (Optional Title Here)
+</code></pre><p><strong>请注意：</strong>有一个已知的问题是 Markdown.pl 1.0.1 会忽略单引号包起来的链接 title。</p>
+<p>链接网址也可以用方括号包起来：</p>
+<pre><code>[id]: &lt;http://example.com/&gt;  &quot;Optional Title Here&quot;
+</code></pre><p>你也可以把 title 属性放到下一行，也可以加一些缩进，若网址太长的话，这样会比较好看：</p>
+<pre><code>[id]: http://example.com/longish/path/to/resource/here
+    &quot;Optional Title Here&quot;
+</code></pre><p>网址定义只有在产生链接的时候用到，并不会直接出现在文件之中。</p>
+<p>链接辨别标签可以有字母、数字、空白和标点符号，但是并<em>不</em>区分大小写，因此下面两个链接是一样的：</p>
+<pre><code>[link text][a]
+[link text][A]
+</code></pre><p><em>隐式链接标记</em>功能让你可以省略指定链接标记，这种情形下，链接标记会视为等同于链接文字，要用隐式链接标记只要在链接文字后面加上一个空的方括号，如果你要让 “Google” 链接到 google.com，你可以简化成：</p>
+<pre><code>[Google][]
+</code></pre><p>然后定义链接内容：</p>
+<pre><code>[Google]: http://google.com/
+</code></pre><p>由于链接文字可能包含空白，所以这种简化型的标记内也许包含多个单词：</p>
+<pre><code>Visit [Daring Fireball][] for more information.
+</code></pre><p>然后接着定义链接：</p>
+<pre><code>[Daring Fireball]: http://daringfireball.net/
+</code></pre><p>链接的定义可以放在文件中的任何一个地方，我比较偏好直接放在链接出现段落的后面，你也可以把它放在文件最后面，就像是注解一样。</p>
+<p>下面是一个参考式链接的范例：</p>
+<pre><code>I get 10 times more traffic from [Google] [1] than from
+[Yahoo] [2] or [MSN] [3].
+
+  [1]: http://google.com/        &quot;Google&quot;
+  [2]: http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [3]: http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre><p>如果改成用链接名称的方式写：</p>
+<pre><code>I get 10 times more traffic from [Google][] than from
+[Yahoo][] or [MSN][].
+
+  [google]: http://google.com/        &quot;Google&quot;
+  [yahoo]:  http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [msn]:    http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre><p>上面两种写法都会产生下面的 HTML。</p>
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
+title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from
+&lt;a href=&quot;http://search.yahoo.com/&quot; title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt;
+or &lt;a href=&quot;http://search.msn.com/&quot; title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>下面是用行内式写的同样一段内容的 Markdown 文件，提供作为比较之用：</p>
+<pre><code>I get 10 times more traffic from [Google](http://google.com/ &quot;Google&quot;)
+than from [Yahoo](http://search.yahoo.com/ &quot;Yahoo Search&quot;) or
+[MSN](http://search.msn.com/ &quot;MSN Search&quot;).
+</code></pre><p>参考式的链接其实重点不在于它比较好写，而是它比较好读，比较一下上面的范例，使用参考式的文章本身只有 81 个字符，但是用行内形式的却会增加到 176 个字元，如果是用纯 HTML 格式来写，会有 234 个字元，在 HTML 格式中，标签比文本还要多。</p>
+<p>使用 Markdown 的参考式链接，可以让文件更像是浏览器最后产生的结果，让你可以把一些标记相关的元数据移到段落文字之外，你就可以增加链接而不让文章的阅读感觉被打断。</p>
+<h3 id="em">强调</h3>
+
+<p>Markdown 使用星号（<code>*</code>）和底线（<code>_</code>）作为标记强调字词的符号，被 <code>*</code> 或 <code>_</code> 包围的字词会被转成用 <code>&lt;em&gt;</code> 标签包围，用两个 <code>*</code> 或 <code>_</code> 包起来的话，则会被转成 <code>&lt;strong&gt;</code>，例如：</p>
+<pre><code>*single asterisks*
+
+_single underscores_
+
+**double asterisks**
+
+__double underscores__
+</code></pre><p>会转成：</p>
+<pre><code>&lt;em&gt;single asterisks&lt;/em&gt;
+
+&lt;em&gt;single underscores&lt;/em&gt;
+
+&lt;strong&gt;double asterisks&lt;/strong&gt;
+
+&lt;strong&gt;double underscores&lt;/strong&gt;
+</code></pre><p>你可以随便用你喜欢的样式，唯一的限制是，你用什么符号开启标签，就要用什么符号结束。</p>
+<p>强调也可以直接插在文字中间：</p>
+<pre><code>un*frigging*believable
+</code></pre><p>但是<strong>如果你的 <code>*</code> 和 <code>_</code> 两边都有空白的话，它们就只会被当成普通的符号</strong>。</p>
+<p>如果要在文字前后直接插入普通的星号或底线，你可以用反斜线：</p>
+<pre><code>\*this text is surrounded by literal asterisks\*
+</code></pre><h3 id="code">代码</h3>
+
+<p>如果要标记一小段行内代码，你可以用反引号把它包起来（<code>` </code>），例如：</p>
+<pre><code>Use the `printf()` function.
+</code></pre><p>会产生：</p>
+<pre><code>&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
+</code></pre><p>如果要在代码区段内插入反引号，你可以用多个反引号来开启和结束代码区段：</p>
+<pre><code>``There is a literal backtick (`) here.``
+</code></pre><p>这段语法会产生：</p>
+<pre><code>&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;
+</code></pre><p>代码区段的起始和结束端都可以放入一个空白，起始端后面一个，结束端前面一个，这样你就可以在区段的一开始就插入反引号：</p>
+<pre><code>A single backtick in a code span: `` ` ``
+
+A backtick-delimited string in a code span: `` `foo` ``
+</code></pre><p>会产生：</p>
+<pre><code>&lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
+</code></pre><p>在代码区段内，<code>&amp;</code> 和方括号<strong>都</strong>会被自动地转成 HTML 实体，这使得插入 HTML 原始码变得很容易，Markdown 会把下面这段：</p>
+<pre><code>Please don&apos;t use any `&lt;blink&gt;` tags.
+</code></pre><p>转为：</p>
+<pre><code>&lt;p&gt;Please don&apos;t use any &lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+</code></pre><p>你也可以这样写：</p>
+<pre><code>`&amp;#8212;` is the decimal-encoded equivalent of `&amp;mdash;`.
+</code></pre><p>以产生：</p>
+<pre><code>&lt;p&gt;&lt;code&gt;&amp;amp;#8212;&lt;/code&gt; is the decimal-encoded
+equivalent of &lt;code&gt;&amp;amp;mdash;&lt;/code&gt;.&lt;/p&gt;
+</code></pre><h3 id="img">图片</h3>
+
+<p>很明显地，要在纯文字应用中设计一个「自然」的语法来插入图片是有一定难度的。</p>
+<p>Markdown 使用一种和链接很相似的语法来标记图片，同样也允许两种样式： <em>行内式</em>和<em>参考式</em>。</p>
+<p>行内式的图片语法看起来像是：</p>
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
+</code></pre><p>详细叙述如下：</p>
+<ul>
+<li>一个惊叹号 <code>!</code></li>
+<li>接着一个方括号，里面放上图片的替代文字</li>
+<li>接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上<br>选择性的 ‘title’ 文字。</li>
+</ul>
+<p>参考式的图片语法则长得像这样：</p>
+<pre><code>![Alt text][id]
+</code></pre><p>「id」是图片参考的名称，图片参考的定义方式则和连结参考一样：</p>
+<pre><code>[id]: url/to/image  &quot;Optional title attribute&quot;
+</code></pre><p>到目前为止， Markdown 还没有办法指定图片的宽高，如果你需要的话，你可以使用普通的 <code>&lt;img&gt;</code> 标签。</p>
+<hr>
+<h2 id="misc">其它</h2>
+
+<h3 id="autolink">自动链接</h3>
+
+<p>Markdown 支持以比较简短的自动链接形式来处理网址和电子邮件信箱，只要是用方括号包起来， Markdown 就会自动把它转成链接。一般网址的链接文字就和链接地址一样，例如：</p>
+<pre><code>&lt;http://example.com/&gt;
+</code></pre><p>Markdown 会转为：</p>
+<pre><code>&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;
+</code></pre><p>邮址的自动链接也很类似，只是 Markdown 会先做一个编码转换的过程，把文字字符转成 16 进位码的 HTML 实体，这样的格式可以糊弄一些不好的邮址收集机器人，例如：</p>
+<pre><code>&lt;address@example.com&gt;
+</code></pre><p>Markdown 会转成：</p>
+<pre><code>&lt;a href=&quot;&amp;#x6D;&amp;#x61;i&amp;#x6C;&amp;#x74;&amp;#x6F;:&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;
+&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
+&amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
+&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
+</code></pre><p>在浏览器里面，这段字串（其实是 <code>&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;</code>）会变成一个可以点击的「address@example.com」链接。</p>
+<p>（这种作法虽然可以糊弄不少的机器人，但并不能全部挡下来，不过总比什么都不做好些。不管怎样，公开你的信箱终究会引来广告信件的。）</p>
+<h3 id="backslash">反斜杠</h3>
+
+<p>Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号，例如：如果你想要用星号加在文字旁边的方式来做出强调效果（但不用 <code>&lt;em&gt;</code> 标签），你可以在星号的前面加上反斜杠：</p>
+<pre><code>\*literal asterisks\*
+</code></pre><p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：</p>
+<pre><code>\   反斜线
+`   反引号
+*   星号
+_   底线
+{}  花括号
+[]  方括号
+()  括弧
+#   井字号
++   加号
+-   减号
+.   英文句点
+!   惊叹号
+</code></pre><h2 id="acknowledgement">感谢</h2>
+
+<p>感谢 <a href="https://twitter.com/#!/leafy7382" target="_blank" rel="external">leafy7382</a> 协助翻译，<a href="http://iamhlb.com/" target="_blank" rel="external">hlb</a>、<a href="http://twitter.com/randylien" target="_blank" rel="external">Randylien</a> 帮忙润稿，<a href="https://twitter.com/#!/ethantw" target="_blank" rel="external">ethantw</a> 的<a href="http://ethantw.net/projects/han/" target="_blank" rel="external">汉字标准格式・CSS Reset</a>， <a href="http://kidwm.net/" target="_blank" rel="external">WM</a> 回报文字错误。</p>
+<p>感谢 <a href="https://github.com/fenprace" target="_blank" rel="external">fenprace</a>，<a href="https://github.com/addv" target="_blank" rel="external">addv</a>。</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/03/31/markdown-basics/" class="post-link">markdown 快速入门</a></h2><span class="post-time">2012年3月31日</span><div class="post-content"><p><strong>声明：</strong> 这份文档派生(fork)于<a href="http://markdown.tw/" target="_blank" rel="external">繁体中文版</a>，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 Markdown 语法编写，你可以到这里<a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/basics.md" target="_blank" rel="external">查看它的源文件</a>。「繁体中文版的原始文件可以<a href="https://github.com/othree/markdown-syntax-zhtw/blob/master/basics.md" target="_blank" rel="external">查看这里</a>」–By @<a href="http://twitter.com/riku" target="_blank" rel="external">riku</a> / 本项目托管于 <a href="http://gitcafe.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">GitCafe</a></p>
+<p><strong>注：</strong> 本项目同时也托管于 <a href="https://github.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">Github</a>上，请通过 fork＋pull request 方式来帮忙改进本项目。</p>
+<h1 id="Markdown-Basics-（快速入门）-点击查看完整语法说明"><a href="#Markdown-Basics-（快速入门）-点击查看完整语法说明" class="headerlink" title="Markdown: Basics （快速入门） / (点击查看完整语法说明)"></a>Markdown: Basics （快速入门） / (<a href="../markdown-syntax">点击查看完整语法说明</a>)</h1><h2 id="Getting-the-Gist-of-Markdown’s-Formatting-Syntax"><a href="#Getting-the-Gist-of-Markdown’s-Formatting-Syntax" class="headerlink" title="Getting the Gist of Markdown’s Formatting Syntax"></a>Getting the Gist of Markdown’s Formatting Syntax</h2><p>此页提供了 Markdown 的简单概念， <a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/syntax.md" title="Markdown Syntax" target="_blank" rel="external">语法说明</a> 页提供了完整详细的文档，说明了每项功能。但是 Markdown 其实很简单就可以上手，此页文档提供了一些范例，并且每个范例都会提供输出的 HTML 结果。</p>
+<p>其实直接试试看也是一个很不错的方法， <a href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Dingus" target="_blank" rel="external">Dingus</a> 是一个网页应用程序，你可以把自已编写的 Markdown 文档转成 XHTML。</p>
+<h2 id="段落、标题、区块代码"><a href="#段落、标题、区块代码" class="headerlink" title="段落、标题、区块代码"></a>段落、标题、区块代码</h2><p>一个段落是由一个以上的连接的行句组成，而一个以上的空行则会划分出不同的段落（空行的定义是显示上看起来像是空行，就被视为空行，例如有一行只有空白和 tab，那该行也会被视为空行），一般的段落不需要用空白或换行缩进。</p>
+<p>Markdown 支持两种标题的语法，<a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="external">Setext</a> 和 <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="external">atx</a> 形式。Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），Atx 形式在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶。</p>
+<p>区块引用则使用 email 形式的 ‘<code>&gt;</code>‘ 角括号。</p>
+<p>Markdown 语法:</p>
+<pre><code>A First Level Header
+====================
+A Second Level Header
+---------------------
+
+Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.
+
+The quick brown fox jumped over the lazy
+dog&apos;s back.
+### Header 3
+
+&gt; This is a blockquote.
+&gt; 
+&gt; This is the second paragraph in the blockquote.
+&gt;
+&gt; ## This is an H2 in a blockquote
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;h1&gt;A First Level Header&lt;/h1&gt;
+&lt;h2&gt;A Second Level Header&lt;/h2&gt;
+&lt;p&gt;Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.&lt;/p&gt;
+&lt;p&gt;The quick brown fox jumped over the lazy
+dog&apos;s back.&lt;/p&gt;
+&lt;h3&gt;Header 3&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is a blockquote.&lt;/p&gt;
+&lt;p&gt;This is the second paragraph in the blockquote.&lt;/p&gt;
+&lt;h2&gt;This is an H2 in a blockquote&lt;/h2&gt;
+&lt;/blockquote&gt;
+</code></pre><h3 id="修辞和强调"><a href="#修辞和强调" class="headerlink" title="修辞和强调"></a>修辞和强调</h3><p>Markdown 使用星号和底线来标记需要强调的区段。</p>
+<p>Markdown 语法:</p>
+<pre><code>Some of these words *are emphasized*.
+Some of these words _are emphasized also_.
+Use two asterisks for **strong emphasis**.
+Or, if you prefer, __use two underscores instead__.
+</code></pre><p>输出 HTML 为:</p>
+<pre><code>&lt;p&gt;Some of these words &lt;em&gt;are emphasized&lt;/em&gt;.
+Some of these words &lt;em&gt;are emphasized also&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Use two asterisks for &lt;strong&gt;strong emphasis&lt;/strong&gt;.
+Or, if you prefer, &lt;strong&gt;use two underscores instead&lt;/strong&gt;.&lt;/p&gt;
+</code></pre><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号和减号来做为列表的项目标记，这些符号是都可以使用的，使用星号：</p>
+<pre><code>* Candy.
+* Gum.
+* Booze.
+</code></pre><p>加号：</p>
+<pre><code>+ Candy.
++ Gum.
++ Booze.
+</code></pre><p>和减号</p>
+<pre><code>- Candy.
+- Gum.
+- Booze.
+</code></pre><p>都会输出 HTML 为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Candy.&lt;/li&gt;
+&lt;li&gt;Gum.&lt;/li&gt;
+&lt;li&gt;Booze.&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>有序的列表则是使用一般的数字接着一个英文句点作为项目标记：</p>
+<pre><code>1. Red
+2. Green
+3. Blue
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Red&lt;/li&gt;
+&lt;li&gt;Green&lt;/li&gt;
+&lt;li&gt;Blue&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre><p>如果你在项目之间插入空行，那项目的内容会用 <code>&lt;p&gt;</code> 包起来，你也可以在一个项目内放上多个段落，只要在它前面缩排 4 个空白或 1 个 tab 。</p>
+<pre><code>* A list item.
+With multiple paragraphs.
+
+* Another item in the list.
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A list item.&lt;/p&gt;
+&lt;p&gt;With multiple paragraphs.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Another item in the list.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支援两种形式的链接语法： <em>行内</em> 和 <em>参考</em> 两种形式，两种都是使用角括号来把文字转成连结。</p>
+<p>行内形式是直接在后面用括号直接接上链接：</p>
+<pre><code>This is an [example link](http://example.com/).
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot;&gt;
+example link&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>你也可以选择性的加上 title 属性：</p>
+<pre><code>This is an [example link](http://example.com/ &quot;With a Title&quot;).
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot; title=&quot;With a Title&quot;&gt;
+example link&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>参考形式的链接让你可以为链接定一个名称，之后你可以在文件的其他地方定义该链接的内容：</p>
+<pre><code>I get 10 times more traffic from [Google][1] than from
+[Yahoo][2] or [MSN][3].
+
+[1]: http://google.com/ &quot;Google&quot;
+[2]: http://search.yahoo.com/ &quot;Yahoo Search&quot;
+[3]: http://search.msn.com/ &quot;MSN Search&quot;
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
+title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from &lt;a href=&quot;http://search.yahoo.com/&quot;
+title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt; or &lt;a href=&quot;http://search.msn.com/&quot;
+title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>title 属性是选择性的，链接名称可以用字母、数字和空格，但是不分大小写：</p>
+<pre><code>I start my morning with a cup of coffee and
+[The New York Times][NY Times].
+
+[ny times]: http://www.nytimes.com/
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;I start my morning with a cup of coffee and
+&lt;a href=&quot;http://www.nytimes.com/&quot;&gt;The New York Times&lt;/a&gt;.&lt;/p&gt;
+</code></pre><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>图片的语法和链接很像。</p>
+<p>行内形式（title 是选择性的）：</p>
+<pre><code>![alt text](/path/to/img.jpg &quot;Title&quot;)
+</code></pre><p>参考形式：</p>
+<pre><code>![alt text][id]
+
+[id]: /path/to/img.jpg &quot;Title&quot;
+</code></pre><p>上面两种方法都会输出 HTML 为：</p>
+<pre><code>&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;alt text&quot; title=&quot;Title&quot; /&gt;
+</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>在一般的段落文字中，你可以使用反引号 <code>` </code> 来标记代码区段，区段内的 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 都会被自动的转换成 HTML 实体，这项特性让你可以很容易的在代码区段内插入 HTML 码：</p>
+<pre><code>I strongly recommend against using any `&lt;blink&gt;` tags.
+
+I wish SmartyPants used named entities like `&amp;mdash;`
+instead of decimal-encoded entites like `&amp;#8212;`.
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;I strongly recommend against using any
+&lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+&lt;p&gt;I wish SmartyPants used named entities like
+&lt;code&gt;&amp;amp;mdash;&lt;/code&gt; instead of decimal-encoded
+entites like &lt;code&gt;&amp;amp;#8212;&lt;/code&gt;.&lt;/p&gt;
+</code></pre><p>如果要建立一个已经格式化好的代码区块，只要每行都缩进 4 个空格或是一个 tab 就可以了，而 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 也一样会自动转成 HTML 实体。</p>
+<p>Markdown 语法:</p>
+<pre><code>If you want your page to validate under XHTML 1.0 Strict,
+you&apos;ve got to put paragraph tags in your blockquotes:
+
+&lt;blockquote&gt;
+&lt;p&gt;For example.&lt;/p&gt;
+&lt;/blockquote&gt;
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;If you want your page to validate under XHTML 1.0 Strict,
+you&apos;ve got to put paragraph tags in your blockquotes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;blockquote&amp;gt;
+&amp;lt;p&amp;gt;For example.&amp;lt;/p&amp;gt;
+&amp;lt;/blockquote&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre></div></article></li></ul><div class="paginator"><a href="/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a></div></section><footer><div class="social"><a href="mailto:your@email.com" class="iconfont icon-email"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
