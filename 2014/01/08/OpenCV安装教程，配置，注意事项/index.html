@@ -25,55 +25,16 @@
 <li>配置“包含目录”项：添加行”%opencv%\build\include”即可。<br>但在运行别人的opencv项目时，可能别人直接引用了上述目录的子目录路径，如果出现include错误，则再添加”%opencv%\build\include\opencv”和（或）”%opencv%\build\include\opencv2”，即可解决问题。<img src="/assets/images/2014010802.png" alt="alt text" title="Title"></li>
 <li>配置“库目录”项：添加行”%opencv%\build\x86\vc10\lib”即可。<img src="/assets/images/2014010803.png" alt="alt text" title="Title"></li>
 <li><p>配置连接器：项目（菜单项）-&gt;…属性-&gt;连接器-&gt;输入-&gt;附加依赖项<br>针对debug配置添加以下库： <code>find ./ -name &#39;*d.lib&#39; -type f | sed &#39;s/\.\///g&#39;</code></p>
-<pre><code>opencv_calib3d248d.lib
-opencv_contrib248d.lib
-opencv_core248d.lib
-opencv_features2d248d.lib
-opencv_flann248d.lib
-opencv_gpu248d.lib
-opencv_highgui248d.lib
-opencv_imgproc248d.lib
-opencv_legacy248d.lib
-opencv_ml248d.lib
-opencv_nonfree248d.lib
-opencv_objdetect248d.lib
-opencv_ocl248d.lib
-opencv_photo248d.lib
-opencv_stitching248d.lib
-opencv_superres248d.lib
-opencv_ts248d.lib
-opencv_video248d.lib
-opencv_videostab248d.lib
-</code></pre><p> 如果是release配置（以后再说，只需要添加上面的debug配置就行了现在），则添加：<code>find ./ -name &#39;*8.lib&#39; -type f | sed &#39;s/\.\///g&#39;</code></p>
-<pre><code>opencv_calib3d248.lib
-opencv_contrib248.lib
-opencv_core248.lib
-opencv_features2d248.lib
-opencv_flann248.lib
-opencv_gpu248.lib
-opencv_highgui248.lib
-opencv_imgproc248.lib
-opencv_legacy248.lib
-opencv_ml248.lib
-opencv_nonfree248.lib
-opencv_objdetect248.lib
-opencv_ocl248.lib
-opencv_photo248.lib
-opencv_stitching248.lib
-opencv_superres248.lib
-opencv_ts248.lib
-opencv_video248.lib
-opencv_videostab248.lib
-</code></pre><p><img src="/assets/images/2014010804.png" alt="alt text" title="Title"><br>注意：</p>
-<ul>
-<li><p>每个lib文件的文件名都是以248结尾的，这里248应该是代表版本号，不同的版本是不一样的，不然添加到VS里面一样提示找不到lib文件。</p>
-</li>
-<li><p>如果仍旧提示找不到lib文件，可尝试重启VS或者重启电脑。</p>
-</li>
-</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">opencv_calib3d248d.lib</div><div class="line">opencv_contrib248d.lib</div><div class="line">opencv_core248d.lib</div><div class="line">opencv_features2d248d.lib</div><div class="line">opencv_flann248d.lib</div><div class="line">opencv_gpu248d.lib</div><div class="line">opencv_highgui248d.lib</div><div class="line">opencv_imgproc248d.lib</div><div class="line">opencv_legacy248d.lib</div><div class="line">opencv_ml248d.lib</div><div class="line">opencv_nonfree248d.lib</div><div class="line">opencv_objdetect248d.lib</div><div class="line">opencv_ocl248d.lib</div><div class="line">opencv_photo248d.lib</div><div class="line">opencv_stitching248d.lib</div><div class="line">opencv_superres248d.lib</div><div class="line">opencv_ts248d.lib</div><div class="line">opencv_video248d.lib</div><div class="line">opencv_videostab248d.lib</div></pre></td></tr></table></figure>
+<p> 如果是release配置（以后再说，只需要添加上面的debug配置就行了现在），则添加：<code>find ./ -name &#39;*8.lib&#39; -type f | sed &#39;s/\.\///g&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">opencv_calib3d248.lib</div><div class="line">opencv_contrib248.lib</div><div class="line">opencv_core248.lib</div><div class="line">opencv_features2d248.lib</div><div class="line">opencv_flann248.lib</div><div class="line">opencv_gpu248.lib</div><div class="line">opencv_highgui248.lib</div><div class="line">opencv_imgproc248.lib</div><div class="line">opencv_legacy248.lib</div><div class="line">opencv_ml248.lib</div><div class="line">opencv_nonfree248.lib</div><div class="line">opencv_objdetect248.lib</div><div class="line">opencv_ocl248.lib</div><div class="line">opencv_photo248.lib</div><div class="line">opencv_stitching248.lib</div><div class="line">opencv_superres248.lib</div><div class="line">opencv_ts248.lib</div><div class="line">opencv_video248.lib</div><div class="line">opencv_videostab248.lib</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="第一个例子Quickstart-cpp"><a href="#第一个例子Quickstart-cpp" class="headerlink" title="第一个例子Quickstart.cpp"></a>第一个例子Quickstart.cpp</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#include &quot;StdAfx.h&quot;</div><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;string&gt;</div><div class="line">#include &lt;opencv2\opencv.hpp&gt;</div><div class="line">#include &quot;cv.h&quot;</div><div class="line">#include &quot;highgui.h&quot;</div><div class="line">using namespace cv;</div><div class="line">using namespace std;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	IplImage *img = cvLoadImage(&quot;hello-long.jpg&quot;);//图片文件地址，支持绝对路径</div><div class="line">	cvNamedWindow(&quot;龙哥&quot;,1);//1是不可拖动，0为可拖动窗口</div><div class="line">	cvShowImage(&quot;龙哥&quot;,img);//显示图片</div><div class="line">	cvWaitKey(0);//阻塞在此，直到按下一个键，运行</div><div class="line">	cvReleaseImage(&amp;img);//释放内存</div><div class="line">	cvDestroyWindow(&quot;龙哥&quot;);//销毁窗口</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/assets/images/2014010804.png" alt="alt text" title="Title"></p>
+<p><strong>注意：</strong></p>
+<pre><code>- 每个lib文件的文件名都是以248结尾的，这里248应该是代表版本号，不同的版本是不一样的，不然添加到VS里面一样提示找不到lib文件。
+- 如果仍旧提示找不到lib文件，可尝试重启VS或者重启电脑。
+</code></pre><h3 id="第一个例子Quickstart-cpp"><a href="#第一个例子Quickstart-cpp" class="headerlink" title="第一个例子Quickstart.cpp"></a>第一个例子Quickstart.cpp</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"StdAfx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2\opencv.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cv.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"highgui.h"</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	IplImage *img = cvLoadImage(<span class="string">"hello-long.jpg"</span>);<span class="comment">//图片文件地址，支持绝对路径</span></div><div class="line">	cvNamedWindow(<span class="string">"龙哥"</span>,<span class="number">1</span>);<span class="comment">//1是不可拖动，0为可拖动窗口</span></div><div class="line">	cvShowImage(<span class="string">"龙哥"</span>,img);<span class="comment">//显示图片</span></div><div class="line">	cvWaitKey(<span class="number">0</span>);<span class="comment">//阻塞在此，直到按下一个键，运行</span></div><div class="line">	cvReleaseImage(&amp;img);<span class="comment">//释放内存</span></div><div class="line">	cvDestroyWindow(<span class="string">"龙哥"</span>);<span class="comment">//销毁窗口</span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>照片就不贴了。。。</p>
 </div></article><div class="tags"><a href="/tags/OpenCV/">OpenCV</a><a href="/tags/图像处理/">图像处理</a></div><div class="paginator"><a href="/2014/01/23/diff命令的好用功能/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2013/12/24/Magic-or-Trick/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
     this.page.url = 'http://yoursite.com/2014/01/08/OpenCV安装教程，配置，注意事项/';
