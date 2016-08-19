@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2016-08-19T07:32:08.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2013/07/04/linux-redis-publish-subscribe-php/</loc>
     
     <lastmod>2016-08-19T07:11:03.000Z</lastmod>
@@ -138,13 +145,6 @@
     <loc>http://yoursite.com/2016/08/01/this-is-a-new-beginning/</loc>
     
     <lastmod>2016-08-17T06:45:49.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2016-08-16T11:09:48.000Z</lastmod>
     
   </url>
   
