@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="java内存组成介绍：堆(Heap)和非堆(Non-heap)内存Java虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在Java虚拟机启动时创建的。在JVM中堆之外的内存称为非堆内存(Non-heapmemory)可以看出JVM主"><meta name="keywords" content="JVM,java"><title>JVM内存组成及分配 · Hexo</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/08/10/JVM内存组成及分配/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"></head><body><div id="main"><header><a href="/." class="logo">Hexo</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">JVM内存组成及分配</h1><span class="post-time">2016年8月10日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#堆内存分配"><span class="toc-text">堆内存分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非堆内存分配"><span class="toc-text">非堆内存分配</span></a></li></ol></div><div class="post-content"><p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
+<blockquote>
+<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
+</blockquote>
+<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
+<ul>
+<li>方法栈&amp;本地方法栈:<ul>
+<li>线程创建时产生,方法执行时生成栈帧</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>存储类的元数据信息 常量等</li>
+</ul>
+</li>
+<li>堆<ul>
+<li>java代码中所有的new操作</li>
+</ul>
+</li>
+<li>native Memory(C heap)<ul>
+<li>Direct Bytebuffer JNI Compile GC;</li>
+</ul>
+</li>
+</ul>
+<h3 id="堆内存分配"><a href="#堆内存分配" class="headerlink" title="堆内存分配"></a>堆内存分配</h3><p>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。因此服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小。对象的堆内存由称为垃圾回收器的自动内存管理系统回收。</p>
+<p><img src="/assets/images/r_heap1.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>详解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Young Generation</td>
+<td>即图中的Eden + From Space + To Space</td>
+</tr>
+<tr>
+<td>Eden</td>
+<td>存放新生的对象</td>
+</tr>
+<tr>
+<td>Survivor Space</td>
+<td>有两个，存放每次垃圾回收后存活的对象</td>
+</tr>
+<tr>
+<td>Old Generation</td>
+<td>Tenured Generation 即图中的Old Space 主要存放应用程序中生命周期长的存活对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="非堆内存分配"><a href="#非堆内存分配" class="headerlink" title="非堆内存分配"></a>非堆内存分配</h3><p>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。</p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>详解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permanent Generation</td>
+<td>保存虚拟机自己的静态(refective)数据主要存放加载的Class类级别静态对象如class本身，method，field等等 <br>permanent generation空间不足会引发full GC(详见HotSpot VM GC种类)</td>
+</tr>
+<tr>
+<td>Code Cache</td>
+<td>用于编译和保存本地代码（native code）的内存 JVM内部处理或优化</td>
+</tr>
+</tbody>
+</table>
+</div></article><div class="tags"><a href="/tags/JVM/">JVM</a><a href="/tags/java/">java</a></div><div class="paginator"><a href="/2016/08/10/GC策略-内存申请、对象衰老/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/08/10/JVM内存组成及分配/';
+    this.page.identifier = '2016/08/10/JVM内存组成及分配/';
+    this.page.title = 'JVM内存组成及分配';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="不必多言编辑MySQL配置文件my.ini[client]default-character-set=utf8mb4[mysql]default-character-set=utf8mb4[mysqld]character-set-client-han"><meta name="keywords" content="MySQL,emoji,utf8mb4"><title>MySQL存储emoji表情 · Hexo</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/08/10/MySQL存储emoji表情/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"></head><body><div id="main"><header><a href="/." class="logo">Hexo</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">MySQL存储emoji表情</h1><span class="post-time">2016年8月10日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#编辑MySQL配置文件-my-ini"><span class="toc-text">编辑MySQL配置文件 my.ini</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重启MySQL服务"><span class="toc-text">重启MySQL服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查询变量是否配置成功"><span class="toc-text">查询变量是否配置成功</span></a></li></ol></div><div class="post-content"><p>不必多言</p>
+<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><pre><code>[client]
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+[mysqld] 
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+init_connect=&apos;SET NAMES utf8mb4&apos;
+</code></pre><h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
+<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><pre><code> mysql&gt;  show variables where variable_name like &apos;character\_set\_%&apos; or variable_name like &apos;collation%&apos;;
++--------------------------+--------------------+
+| Variable_name            | Value              |
++--------------------------+--------------------+
+| character_set_client     | utf8mb4            |
+| character_set_connection | utf8mb4            |
+| character_set_database   | utf8mb4            |
+| character_set_filesystem | binary             |
+| character_set_results    | utf8mb4            |
+| character_set_server     | utf8mb4            |
+| character_set_system     | utf8               |
+| collation_connection     | utf8mb4_unicode_ci |
+| collation_database       | utf8mb4_unicode_ci |
+| collation_server         | utf8mb4_unicode_ci |
++--------------------------+--------------------+
+10 rows in set (0.00 sec)
+</code></pre></div></article><div class="tags"><a href="/tags/MySQL/">MySQL</a><a href="/tags/emoji/">emoji</a><a href="/tags/utf8mb4/">utf8mb4</a></div><div class="paginator"><a href="/2016/08/10/GC策略-内存申请、对象衰老/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/08/10/MySQL定时备份/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/08/10/MySQL存储emoji表情/';
+    this.page.identifier = '2016/08/10/MySQL存储emoji表情/';
+    this.page.title = 'MySQL存储emoji表情';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
