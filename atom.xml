@@ -41,57 +41,110 @@
   </entry>
   
   <entry>
-    <title>GC策略&amp;内存申请、对象衰老</title>
-    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
-    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
+    <title>JVM内存组成及分配</title>
+    <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
+    <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-17T10:28:52.000Z</updated>
+    <updated>2016-08-20T02:24:54.000Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
-<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
-<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
-<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
-<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
-<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
-<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
-<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
-<li>当old区空间不够时，JVM会在old区进行major collection；</li>
-<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
-<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
-</ol>
-<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
+    <content type="html"><![CDATA[<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
+<blockquote>
+<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
+</blockquote>
+<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
+<ul>
+<li>方法栈&amp;本地方法栈:<ul>
+<li>线程创建时产生,方法执行时生成栈帧</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>存储类的元数据信息 常量等</li>
+</ul>
+</li>
+<li>堆<ul>
+<li>java代码中所有的new操作</li>
+</ul>
+</li>
+<li>native Memory(C heap)<ul>
+<li>Direct Bytebuffer JNI Compile GC;</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="堆内存分配"><a href="#堆内存分配" class="headerlink" title="堆内存分配"></a>堆内存分配</h3><p>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。因此服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小。对象的堆内存由称为垃圾回收器的自动内存管理系统回收。</p>
+<p><img src="/assets/images/r_heap1.png" alt=""></p>
+<table>
 <thead>
 <tr>
-<th>GC类型</th>
-<th>触发条件</th>
-<th>触发时发生了什么</th>
-<th>注意</th>
-<th>查看方式</th>
+<th>组成</th>
+<th>详解</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>YGC</td>
-<td>eden空间不足</td>
-<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
-<td>jstat –gcutil gc log</td>
+<td>Young Generation</td>
+<td>即图中的Eden + From Space + To Space</td>
 </tr>
 <tr>
-<td>FGC</td>
-<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
-<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
-<td>jstat –gcutil gc log</td>
+<td>Eden</td>
+<td>存放新生的对象</td>
+</tr>
+<tr>
+<td>Survivor Space</td>
+<td>有两个，存放每次垃圾回收后存活的对象</td>
+</tr>
+<tr>
+<td>Old Generation</td>
+<td>Tenured Generation 即图中的Old Space 主要存放应用程序中生命周期长的存活对象</td>
 </tr>
 </tbody>
 </table>
-<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
+<h3 id="非堆内存分配"><a href="#非堆内存分配" class="headerlink" title="非堆内存分配"></a>非堆内存分配</h3><p>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。</p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>详解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permanent Generation</td>
+<td>保存虚拟机自己的静态(refective)数据主要存放加载的Class类级别静态对象如class本身，method，field等等 <br>permanent generation空间不足会引发full GC(详见HotSpot VM GC种类)</td>
+</tr>
+<tr>
+<td>Code Cache</td>
+<td>用于编译和保存本地代码（native code）的内存 JVM内部处理或优化</td>
+</tr>
+</tbody>
+</table>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(t
+      &lt;p&gt;java内存组成介绍：堆(Heap)和非堆(Non-heap)内存&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。&lt;br&gt;在JVM中堆之外的内存称为非堆内存(Non-heap memory)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。&lt;br&gt;&lt;img src=&quot;/assets/images/r_sun-jdk-memory-area1.png&quot; alt=&quot;&quot;&gt;       &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;方法栈&amp;amp;本地方法栈:&lt;ul&gt;
+&lt;li&gt;线程创建时产生,方法执行时生成栈帧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;方法区&lt;ul&gt;
+&lt;li&gt;存储类的元数据信息 常量等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;堆&lt;ul&gt;
+&lt;li&gt;java代码中所有的new操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;native Memory(C heap)&lt;ul&gt;
+&lt;li&gt;Direct Bytebuffer JNI Compile GC;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
     
@@ -103,66 +156,15 @@
   </entry>
   
   <entry>
-    <title>MySQL定时备份</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-17T06:52:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># cat backup_mysql.sh</div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name &apos;*.sql&apos; -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab -e</div><div class="line"></div><div class="line"># For example, you can run a backup of all your user accounts</div><div class="line"># at 5 a.m every week with:</div><div class="line"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</div><div class="line">#</div><div class="line"># For more information see the manual pages of crontab(5) and cron(8)</div><div class="line">#</div><div class="line"># m h  dom mon dow   command</div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/di
-    
-    </summary>
-    
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL存储emoji表情</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-19T07:06:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>不必多言</p>
-<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
-<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
-<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;不必多言&lt;/p&gt;
-&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
-    
-    </summary>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
-    
-      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
-    
-  </entry>
-  
-  <entry>
     <title>JVM参数设置、分析</title>
     <link href="http://yoursite.com/2016/08/10/JVM%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81%E5%88%86%E6%9E%90/"/>
     <id>http://yoursite.com/2016/08/10/JVM参数设置、分析/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-17T10:31:00.000Z</updated>
+    <updated>2016-08-20T02:24:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>不管是YGC还是Full GC,GC过程中都会对导致程序运行中中断,正确的选择不同的GC策略,调整JVM、GC的参数，可以极大的减少由于GC工作，而导致的程序运行中断方面的问题，进而适当的提高Java程序的工作效率。但是调整GC是以个极为复杂的过程，由于各个程序具备不同的特点，如：web和GUI程序就有很大区别（Web可以适当的停顿，但GUI停顿是客户无法接受的），而且由于跑在各个机器上的配置不同（主要cup个数，内存不同），所以使用的GC种类也会不同(如何选择见GC种类及如何选择)。本文将注重介绍JVM、GC的一些重要参数的设置来提高系统的性能。</p>
 <p>JVM内存组成及GC相关内容请见之前的文章:JVM内存组成 GC策略&amp;内存申请。</p>
+<a id="more"></a>
 <h3 id="JVM参数的含义"><a href="#JVM参数的含义" class="headerlink" title="JVM参数的含义"></a>JVM参数的含义</h3><table>
 <thead>
 <tr>
@@ -495,7 +497,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;不管是YGC还是Full GC,GC过程中都会对导致程序运行中中断,正确的选择不同的GC策略,调整JVM、GC的参数，可以极大的减少由于GC工作，而导致的程序运行中断方面的问题，进而适当的提高Java程序的工作效率。但是调整GC是以个极为复杂的过程，由于各个程序具备不同的特
+      &lt;p&gt;不管是YGC还是Full GC,GC过程中都会对导致程序运行中中断,正确的选择不同的GC策略,调整JVM、GC的参数，可以极大的减少由于GC工作，而导致的程序运行中断方面的问题，进而适当的提高Java程序的工作效率。但是调整GC是以个极为复杂的过程，由于各个程序具备不同的特点，如：web和GUI程序就有很大区别（Web可以适当的停顿，但GUI停顿是客户无法接受的），而且由于跑在各个机器上的配置不同（主要cup个数，内存不同），所以使用的GC种类也会不同(如何选择见GC种类及如何选择)。本文将注重介绍JVM、GC的一些重要参数的设置来提高系统的性能。&lt;/p&gt;
+&lt;p&gt;JVM内存组成及GC相关内容请见之前的文章:JVM内存组成 GC策略&amp;amp;内存申请。&lt;/p&gt;
     
     </summary>
     
@@ -507,89 +510,60 @@
   </entry>
   
   <entry>
-    <title>JVM内存组成及分配</title>
-    <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
-    <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
+    <title>GC策略&amp;内存申请、对象衰老</title>
+    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
+    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-17T06:49:29.000Z</updated>
+    <updated>2016-08-20T02:24:26.000Z</updated>
     
-    <content type="html"><![CDATA[<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
-<blockquote>
-<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
-</blockquote>
-<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
-<ul>
-<li>方法栈&amp;本地方法栈:<ul>
-<li>线程创建时产生,方法执行时生成栈帧</li>
-</ul>
-</li>
-<li>方法区<ul>
-<li>存储类的元数据信息 常量等</li>
-</ul>
-</li>
-<li>堆<ul>
-<li>java代码中所有的new操作</li>
-</ul>
-</li>
-<li>native Memory(C heap)<ul>
-<li>Direct Bytebuffer JNI Compile GC;</li>
-</ul>
-</li>
-</ul>
-<h3 id="堆内存分配"><a href="#堆内存分配" class="headerlink" title="堆内存分配"></a>堆内存分配</h3><p>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。因此服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小。对象的堆内存由称为垃圾回收器的自动内存管理系统回收。</p>
-<p><img src="/assets/images/r_heap1.png" alt=""></p>
-<table>
+    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
+<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
+<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
+<a id="more"></a>
+<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
+<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
+<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
+<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
+<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
+<li>当old区空间不够时，JVM会在old区进行major collection；</li>
+<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
+<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
+</ol>
+<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
 <thead>
 <tr>
-<th>组成</th>
-<th>详解</th>
+<th>GC类型</th>
+<th>触发条件</th>
+<th>触发时发生了什么</th>
+<th>注意</th>
+<th>查看方式</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Young Generation</td>
-<td>即图中的Eden + From Space + To Space</td>
+<td>YGC</td>
+<td>eden空间不足</td>
+<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
+<td>jstat –gcutil gc log</td>
 </tr>
 <tr>
-<td>Eden</td>
-<td>存放新生的对象</td>
-</tr>
-<tr>
-<td>Survivor Space</td>
-<td>有两个，存放每次垃圾回收后存活的对象</td>
-</tr>
-<tr>
-<td>Old Generation</td>
-<td>Tenured Generation 即图中的Old Space 主要存放应用程序中生命周期长的存活对象</td>
+<td>FGC</td>
+<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
+<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
+<td>jstat –gcutil gc log</td>
 </tr>
 </tbody>
 </table>
-<h3 id="非堆内存分配"><a href="#非堆内存分配" class="headerlink" title="非堆内存分配"></a>非堆内存分配</h3><p>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。</p>
-<table>
-<thead>
-<tr>
-<th>组成</th>
-<th>详解</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Permanent Generation</td>
-<td>保存虚拟机自己的静态(refective)数据主要存放加载的Class类级别静态对象如class本身，method，field等等 <br>permanent generation空间不足会引发full GC(详见HotSpot VM GC种类)</td>
-</tr>
-<tr>
-<td>Code Cache</td>
-<td>用于编译和保存本地代码（native code）的内存 JVM内部处理或优化</td>
-</tr>
-</tbody>
-</table>
+<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;java内存组成介绍：堆(Heap)和非堆(Non-heap)内存&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。&lt;br&gt;在JVM中堆之外的内存称为非堆内存(
+      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
+&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
+&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
     
     </summary>
     
@@ -597,6 +571,58 @@
       <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL存储emoji表情</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-19T07:06:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>不必多言</p>
+<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
+<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
+<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;不必多言&lt;/p&gt;
+&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
+    
+    </summary>
+    
+    
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+    
+      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
+    
+      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL定时备份</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:05:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
+    
+    </summary>
+    
+    
+      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
@@ -634,12 +660,13 @@
     <link href="http://yoursite.com/2014/01/23/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/"/>
     <id>http://yoursite.com/2014/01/23/diff命令的好用功能/</id>
     <published>2014-01-22T16:00:00.000Z</published>
-    <updated>2016-08-18T03:39:51.000Z</updated>
+    <updated>2016-08-20T02:29:27.000Z</updated>
     
     <content type="html"><![CDATA[<p>GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。</p>
 <p>最常用的功能莫过于生成patch文件了：</p>
 <pre><code>diff -urN old/ new/ &gt; mysoft.patch
-</code></pre><p>参数 <code>-u</code> 表示使用 <code>unified</code>格式，<code>-r</code> 表示比较目录，<code>-N</code> 表示将不存在的文件当作空文件处理， 这样新添加的文件也会出现在patch文件中。</p>
+</code></pre><a id="more"></a>
+<p>参数 <code>-u</code> 表示使用 <code>unified</code>格式，<code>-r</code> 表示比较目录，<code>-N</code> 表示将不存在的文件当作空文件处理， 这样新添加的文件也会出现在patch文件中。</p>
 <p>然后在需要应用patch的地方使用下述命令即可：</p>
 <pre><code>patch -p0 &lt; mysoft.patch
 </code></pre><p>diff的 <code>-y</code> 命令（长格式为<code>--side-by-side</code>）可以将屏幕分成左右两部分，来比较两个文件之间的差异。<br>许多图形化的比较工具都有这个功能，但如果只能使用命令行，这个参数就相当有用了。 如果要改变左右各部分的宽度，可以通过<code>-W（--width）</code>参数来指定。  </p>
@@ -656,103 +683,22 @@ SYNOPSIS
 </code></pre><p>简单的说，patch就是利用diff制作的补丁来实现源文件（夹）和目的文件（夹）的转换。这样说就意味着你可以有源文件（夹）–&gt; 目的文件（夹），也可以目的文件（夹）–&gt; 源文件（夹）。下面介绍几个最常用选项：</p>
 <pre><code>-p0 选项要从当前目录查找目的文件（夹）
 -p1 选项要忽略掉第一层目录，从当前目录开始查找。
-</code></pre><p>####patch文件的结构</p>
-<p>#####补丁头<br>补丁头是分别由—/+++开头的两行，用来表示要打补丁的文件。—开头表示旧文件，+++开头表示新文件。</p>
+</code></pre><h4 id="patch文件的结构"><a href="#patch文件的结构" class="headerlink" title="patch文件的结构"></a>patch文件的结构</h4><h5 id="补丁头"><a href="#补丁头" class="headerlink" title="补丁头"></a>补丁头</h5><p>补丁头是分别由—/+++开头的两行，用来表示要打补丁的文件。—开头表示旧文件，+++开头表示新文件。</p>
 <p>一个补丁文件中的多个补丁</p>
 <p>一个补丁文件中可能包含以—/+++开头的很多节，每一节用来打一个补丁。所以在一个补丁文件中可以包含好多个补丁。</p>
-<p>#####块<br>块是补丁中要修改的地方。它通常由一部分不用修改的东西开始和结束。他们只是用来表示要修改的位置。他们通常以@@开始，结束于另一个块的开始或者一个新的补丁头。</p>
-<p>#####块的缩进<br>块会缩进一列，而这一列是用来表示这一行是要增加还是要删除的。<br>块的第一列</p>
+<h5 id="块"><a href="#块" class="headerlink" title="块"></a>块</h5><p>块是补丁中要修改的地方。它通常由一部分不用修改的东西开始和结束。他们只是用来表示要修改的位置。他们通常以@@开始，结束于另一个块的开始或者一个新的补丁头。</p>
+<h5 id="块的缩进"><a href="#块的缩进" class="headerlink" title="块的缩进"></a>块的缩进</h5><p>块会缩进一列，而这一列是用来表示这一行是要增加还是要删除的。<br>块的第一列</p>
 <p>+号表示这一行是要加上的。</p>
 <p>-号表示这一行是要删除的。</p>
 <p>没有加号也没有减号表示这里只是引用的而不需要修改。</p>
-<hr>
-<pre><code>用法：diff [选项]... FILES
-逐行比较文件。
-
-  -i  --ignore-case  忽略文件内容大小写的区别。
-  --ignore-file-name-case  忽略文件名大小写的区别。
-  --no-ignore-file-name-case  不忽略文件名大小写的区别。
-  -E  --ignore-tab-expansion  忽略由制表符宽度造成的差异。
-  -b  --ignore-space-change  忽略由空格数不同造成的差异。
-  -w  --ignore-all-space   忽略所有空格。
-  -B  --ignore-blank-lines  忽略任何因空行而造成的差异。
-  -I RE  --ignore-matching-lines=RE  如果某行匹配正则表达式，则忽略由该行造成的差异。
-  --strip-trailing-cr  去除输入内容每行末端的 carriage return 字符。
-  -a  --text  所有文件都以文本方式处理。
-
-  -c  -C 行数  --context[=行数]  显示指定&lt;行数&gt;(默认 3 行)copied 格式的上下文
-  -u  -U 行数  --unified[=行数]  显示指定&lt;行数&gt;(默认 3 行)unified 格式的上下文
-     --label 标识                       使用&lt;标识&gt;代替文件名称。
-     -p  --show-c-function           显示和每个差异有关的 C 函数名称。
- -F RE  --show-function-line=RE  显示最接近而符合&lt;正则表示式&gt;的一行。
-  -q  --brief  只显示文件是否不同。
-  -e  --ed 以 ed script 方式输出。
-  --normal 以正常的 diff 方式输出。
-  -n  --rcs  以 RCS diff 格式输出。
-  -y  --side-by-side         以两列并排的方式显示。
-    -W NUM  --width=NUM      每行显示最多 NUM (默认 130) 个字符。
-    --left-column            当有两行相同时只显示左边的一行。
-    --suppress-common-lines  当有两行相同时不会显示。
-  -D NAME  --ifdef=NAME  输出的内容以‘#ifdef NAME’方式标明差异。
-  --GTYPE-group-format=GFMT  效果类似，但会以 GFMT 格式处理 GTYPE 输入的行。
-  --line-format=LFMT  效果类似，但会以 LFMT 格式处理每一行资料。
-  --LTYPE-line-format=LFMT   效果类似，但会以 LFMT 格式处理 LTYPE 输入的行。
-    LTYPE 可以是‘old’、‘new’或‘unchanged’。GTYPE 可以是 LTYPE 的选择
-    或是‘changed’。
-    GFMT 可包括：
-      %&lt;  该组中每行属于 FILE1 的差异
-      %&gt;  该组中每行属于 FILE2 的差异
-      %=  该组中同时在 FILE1 和 FILE2 出现的每一行
-      %[-][宽度][.[精确度]]{doxX}字符  以 printf 格式表示该&lt;字符&gt;代表的内容
-        大写&lt;字符&gt;表示属于新的文件，小写表示属于旧的文件。&lt;字符&gt;的意义如下：
-          F  行组中第一行的行号
-          L  行组中最后一行的行号
-          N  行数 ( =L-F+1 )
-          E  F-1
-          M  L+1
-    LFMT 可包括：
-      %L  该行的内容
-      %l  该行的内容，但不包括结束的 newline 字符
-      %[-][宽度][.[精确度]]{doxX}n  以 printf 格式表示的输入资料行号
-    GFMT 或 LFMT 可包括：
-      %%        %
-      %c&apos;C&apos;     字符 C
-      %c&apos;\OOO&apos;  八进制数字OOO所代表的字符
-
-  -l  --paginate 将输出送至‘pr’指令来分页。
-  -t  --expand-tabs  将输出中的 tab 转换成空格。
-  -T  --initial-tab  每行先加上 tab 字符，使 tab 字符可以对齐。
-
-  -r  --recursive  连同所有子目录一起比较。
-  -N  --new-file  不存在的文件以空文件方式处理。
-  --unidirectional-new-file  若第一文件案不存在，以空文件处理。
-  -s  --report-identical-files   当两个一样时仍然显示结果。
-  -x PAT  --exclude=PAT  排除匹配 PAT 的文件。
-  -X FILE  --exclude-from=FILE   排除所有匹配在 FILE 中列出的模式的文件。
-  -S FILE  --starting-file=FILE  当比较目录時，由 FILE 开始比较。
-  --from-file=FILE1  将 FILE1 和操作数中的所有文件/目录作比较。FILE1 可以是目录。
-  --to-file=FILE2    将操作数中的所有文件/目录和 FILE2 作比较。FILE2 可以是目录。
-
-  --horizon-lines=NUM      (此选项不做处理)
-  -d  --minimal  尽可能找出最小的差异。
-  --speed-large-files     假设文件十分大而且其中含有许多微小的差异。
-
-  -v  --version  输出版本信息。
-  --help  输入本帮助。
-
-  FILES 的格式可以是‘FILE1 FILE2’、‘DIR1 DIR2’、‘DIR FILE...’或
-      ‘FILE... DIR’。
-如果使用 --from-file 或 --to-file 选项，FILES 的格式则不受限制。
-如果 FILE 是‘-’，则由标准输入读取内容。
-
-请向 &lt;bug-gnu-utils@gnu.org&gt; 报告错误。
-</code></pre>]]></content>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">   用法：diff [选项]... FILES</div><div class="line">逐行比较文件。</div><div class="line"></div><div class="line">  -i  --ignore-case  忽略文件内容大小写的区别。</div><div class="line">  --ignore-file-name-case  忽略文件名大小写的区别。</div><div class="line">  --no-ignore-file-name-case  不忽略文件名大小写的区别。</div><div class="line">  -E  --ignore-tab-expansion  忽略由制表符宽度造成的差异。</div><div class="line">  -b  --ignore-space-change  忽略由空格数不同造成的差异。</div><div class="line">  -w  --ignore-all-space   忽略所有空格。</div><div class="line">  -B  --ignore-blank-lines  忽略任何因空行而造成的差异。</div><div class="line">  -I RE  --ignore-matching-lines=RE  如果某行匹配正则表达式，则忽略由该行造成的差异。</div><div class="line">  --strip-trailing-cr  去除输入内容每行末端的 carriage <span class="built_in">return</span> 字符。</div><div class="line">  <span class="_">-a</span>  --text  所有文件都以文本方式处理。</div><div class="line"></div><div class="line">  -c  -C 行数  --context[=行数]  显示指定&lt;行数&gt;(默认 3 行)copied 格式的上下文</div><div class="line">  -u  -U 行数  --unified[=行数]  显示指定&lt;行数&gt;(默认 3 行)unified 格式的上下文</div><div class="line">     --label 标识                       使用&lt;标识&gt;代替文件名称。</div><div class="line">     -p  --show-c-function           显示和每个差异有关的 C 函数名称。</div><div class="line">    -F RE  --show-function-line=RE  显示最接近而符合&lt;正则表示式&gt;的一行。</div><div class="line">  -q  --brief  只显示文件是否不同。</div><div class="line">  <span class="_">-e</span>  --ed 以 ed script 方式输出。</div><div class="line">  --normal 以正常的 diff 方式输出。</div><div class="line">  -n  --rcs  以 RCS diff 格式输出。</div><div class="line">  -y  --side-by-side         以两列并排的方式显示。</div><div class="line">    -W NUM  --width=NUM      每行显示最多 NUM (默认 130) 个字符。</div><div class="line">    --left-column            当有两行相同时只显示左边的一行。</div><div class="line">    --suppress-common-lines  当有两行相同时不会显示。</div><div class="line">  -D NAME  --ifdef=NAME  输出的内容以‘<span class="comment">#ifdef NAME’方式标明差异。</span></div><div class="line">  --GTYPE-group-format=GFMT  效果类似，但会以 GFMT 格式处理 GTYPE 输入的行。</div><div class="line">  --line-format=LFMT  效果类似，但会以 LFMT 格式处理每一行资料。</div><div class="line">  --LTYPE-line-format=LFMT   效果类似，但会以 LFMT 格式处理 LTYPE 输入的行。</div><div class="line">    LTYPE 可以是‘old’、‘new’或‘unchanged’。GTYPE 可以是 LTYPE 的选择</div><div class="line">    或是‘changed’。</div><div class="line">    GFMT 可包括：</div><div class="line">      %&lt;  该组中每行属于 FILE1 的差异</div><div class="line">      %&gt;  该组中每行属于 FILE2 的差异</div><div class="line">      %=  该组中同时在 FILE1 和 FILE2 出现的每一行</div><div class="line">      %[-][宽度][.[精确度]]&#123;doxX&#125;字符  以 <span class="built_in">printf</span> 格式表示该&lt;字符&gt;代表的内容</div><div class="line">        大写&lt;字符&gt;表示属于新的文件，小写表示属于旧的文件。&lt;字符&gt;的意义如下：</div><div class="line">          F  行组中第一行的行号</div><div class="line">          L  行组中最后一行的行号</div><div class="line">          N  行数 ( =L-F+1 )</div><div class="line">          E  F-1</div><div class="line">          M  L+1</div><div class="line">    LFMT 可包括：</div><div class="line">      %L  该行的内容</div><div class="line">      %l  该行的内容，但不包括结束的 newline 字符</div><div class="line">      %[-][宽度][.[精确度]]&#123;doxX&#125;n  以 <span class="built_in">printf</span> 格式表示的输入资料行号</div><div class="line">    GFMT 或 LFMT 可包括：</div><div class="line">      %%        %</div><div class="line">      %c<span class="string">'C'</span>     字符 C</div><div class="line">      %c<span class="string">'\OOO'</span>  八进制数字OOO所代表的字符</div><div class="line"></div><div class="line">  <span class="_">-l</span>  --paginate 将输出送至‘pr’指令来分页。</div><div class="line">  -t  --expand-tabs  将输出中的 tab 转换成空格。</div><div class="line">  -T  --initial-tab  每行先加上 tab 字符，使 tab 字符可以对齐。</div><div class="line"></div><div class="line">  -r  --recursive  连同所有子目录一起比较。</div><div class="line">  -N  --new-file  不存在的文件以空文件方式处理。</div><div class="line">  --unidirectional-new-file  若第一文件案不存在，以空文件处理。</div><div class="line">  <span class="_">-s</span>  --report-identical-files   当两个一样时仍然显示结果。</div><div class="line">  -x PAT  --exclude=PAT  排除匹配 PAT 的文件。</div><div class="line">  -X FILE  --exclude-from=FILE   排除所有匹配在 FILE 中列出的模式的文件。</div><div class="line">  -S FILE  --starting-file=FILE  当比较目录時，由 FILE 开始比较。</div><div class="line">  --from-file=FILE1  将 FILE1 和操作数中的所有文件/目录作比较。FILE1 可以是目录。</div><div class="line">  --to-file=FILE2    将操作数中的所有文件/目录和 FILE2 作比较。FILE2 可以是目录。</div><div class="line"></div><div class="line">  --horizon-lines=NUM      (此选项不做处理)</div><div class="line">  <span class="_">-d</span>  --minimal  尽可能找出最小的差异。</div><div class="line">  --speed-large-files     假设文件十分大而且其中含有许多微小的差异。</div><div class="line"></div><div class="line">  -v  --version  输出版本信息。</div><div class="line">  --help  输入本帮助。</div><div class="line"></div><div class="line">  FILES 的格式可以是‘FILE1 FILE2’、‘DIR1 DIR2’、‘DIR FILE...’或</div><div class="line">      ‘FILE... DIR’。</div><div class="line">如果使用 --from-file 或 --to-file 选项，FILES 的格式则不受限制。</div><div class="line">如果 FILE 是‘-’，则由标准输入读取内容。</div><div class="line"></div><div class="line">请向 &lt;bug-gnu-utils@gnu.org&gt; 报告错误。</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       &lt;p&gt;GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。&lt;/p&gt;
 &lt;p&gt;最常用的功能莫过于生成patch文件了：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;diff -urN old/ new/ &amp;gt; mysoft.pat
+&lt;pre&gt;&lt;code&gt;diff -urN old/ new/ &amp;gt; mysoft.patch
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     
@@ -772,7 +718,7 @@ SYNOPSIS
     <link href="http://yoursite.com/2014/01/08/OpenCV%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%EF%BC%8C%E9%85%8D%E7%BD%AE%EF%BC%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
     <id>http://yoursite.com/2014/01/08/OpenCV安装教程，配置，注意事项/</id>
     <published>2014-01-07T16:00:00.000Z</published>
-    <updated>2016-08-19T07:08:57.000Z</updated>
+    <updated>2016-08-20T02:25:39.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文将介绍OpenCV + Windows visual studio 2010安装过程，以及第一个例子。</p>
 <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
@@ -782,6 +728,7 @@ SYNOPSIS
 <li>安装过程遇到的问题</li>
 <li>第一个例子Quickstart.cpp</li>
 </ul>
+<a id="more"></a>
 <h3 id="OpenCV基本介绍"><a href="#OpenCV基本介绍" class="headerlink" title="OpenCV基本介绍"></a>OpenCV基本介绍</h3><p><a href="http://opencv.org/" target="_blank" rel="external">OpenCV</a>(open source computer vision library)是一个基于C/C++语言的开源图像函数处理库。<br>可以运行在Linux、Windows和Mac OS操作系统上。它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。它的主要模块包括：</p>
 <ul>
 <li>cv —— 核心函数库</li>
@@ -818,7 +765,12 @@ SYNOPSIS
     
       &lt;p&gt;本文将介绍OpenCV + Windows visual studio 2010安装过程，以及第一个例子。&lt;/p&gt;
 &lt;h2 id=&quot;目录&quot;&gt;&lt;a href=&quot;#目录&quot; class=&quot;headerlink&quot; title=&quot;目录&quot;&gt;&lt;/a&gt;目录&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;ope
+&lt;li&gt;openCV基本介绍&lt;/li&gt;
+&lt;li&gt;OpenCV下载、安装和配置&lt;/li&gt;
+&lt;li&gt;Windows visual studio 2010安装过程和配置&lt;/li&gt;
+&lt;li&gt;安装过程遇到的问题&lt;/li&gt;
+&lt;li&gt;第一个例子Quickstart.cpp&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
     
@@ -836,9 +788,10 @@ SYNOPSIS
     <link href="http://yoursite.com/2013/12/24/Magic-or-Trick/"/>
     <id>http://yoursite.com/2013/12/24/Magic-or-Trick/</id>
     <published>2013-12-24T04:00:00.000Z</published>
-    <updated>2016-08-18T03:35:34.000Z</updated>
+    <updated>2016-08-20T02:25:57.000Z</updated>
     
     <content type="html"><![CDATA[<p>每一场魔术表演都有三个步骤。第一个步骤是“以虚代实”：魔术师秀出一个真实的东西，一副牌、一只鸟或一个人，让你看这样东西，叫你检视它，看它的确是真的，平常的不得了。但是，其中一定有假。第二个步骤是“偷天换日”，魔术师利用这个普通的东西，做出令人叹为观止的表演，现在你很想找出秘诀，但是绝对找不到。因为你根本没有真正在看，你并不是真的想知道，你想要被骗。但是你还不会鼓掌，因为把东西变不见还不够，你必须把它变回来。所以魔术都有第三个步骤，最难的部分，我们称之为“化腐朽为神奇”。</p>
+<a id="more"></a>
 <p>如果大家把我的表演当真，就不会鼓掌，只会尖叫。</p>
 <p>你不懂我们为什么要变魔术？观众知道真相。现实既残酷又悲惨。没有奇迹，没有魔法。但是如果你能骗倒他们，即使只有一秒钟，就能让他们惊叹，然后你就能… 然后你就能看到非常特别的事。你真的不知道吗？那就是观众脸上的表情。</p>
 <p>魔术的秘密没啥了不起，变魔术的技巧才重要。</p>
@@ -848,7 +801,7 @@ SYNOPSIS
     
     <summary type="html">
     
-      &lt;p&gt;每一场魔术表演都有三个步骤。第一个步骤是“以虚代实”：魔术师秀出一个真实的东西，一副牌、一只鸟或一个人，让你看这样东西，叫你检视它，看它的确是真的，平常的不得了。但是，其中一定有假。第二个步骤是“偷天换日”，魔术师利用这个普通的东西，做出令人叹为观止的表演，现在你很想找出秘
+      &lt;p&gt;每一场魔术表演都有三个步骤。第一个步骤是“以虚代实”：魔术师秀出一个真实的东西，一副牌、一只鸟或一个人，让你看这样东西，叫你检视它，看它的确是真的，平常的不得了。但是，其中一定有假。第二个步骤是“偷天换日”，魔术师利用这个普通的东西，做出令人叹为观止的表演，现在你很想找出秘诀，但是绝对找不到。因为你根本没有真正在看，你并不是真的想知道，你想要被骗。但是你还不会鼓掌，因为把东西变不见还不够，你必须把它变回来。所以魔术都有第三个步骤，最难的部分，我们称之为“化腐朽为神奇”。&lt;/p&gt;
     
     </summary>
     
@@ -1086,9 +1039,9 @@ ramesh@dev-db$ crontab -l
       <category term="other" scheme="http://yoursite.com/categories/other/"/>
     
     
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
       <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
+    
+      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
     
   </entry>
   
@@ -1272,6 +1225,71 @@ ramesh@dev-db$ crontab -l
   </entry>
   
   <entry>
+    <title>你会做Web上的用户登录功能吗</title>
+    <link href="http://yoursite.com/2012/04/13/%E4%BD%A0%E4%BC%9A%E5%81%9AWeb%E4%B8%8A%E7%9A%84%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E5%90%97/"/>
+    <id>http://yoursite.com/2012/04/13/你会做Web上的用户登录功能吗/</id>
+    <published>2012-04-12T16:00:00.000Z</published>
+    <updated>2016-08-18T03:39:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Web上的用户登录功能应该是最基本的功能了，可是在我看过一些站点的用户登录功能后，我觉得很有必要写一篇文章教大家怎么来做用户登录功能。下面的文章告诉大家这个功能可能并没有你所想像的那么简单，这是一个关系到用户安全的功能，希望大家能从下面的文章中能知道什么样的方法才是一个好的用户登录功能。以下内容，转载时请保持原文一致，并请注明作者和出处。</p>
+
+<h2>用户名和口令</h2>
+
+<p>首先，我们先来说说用户名和口令的事。这并不是本站第一次谈论这个事了。如何管理自己的口令让你知道怎么管理自己的口令，破解你的口令让你知道在现代这样速度的计算速度下，用穷举法破解你的口令可能会是一件很轻松的事。在这里我想告诉从开发者的角度上来做设计这个用户名和口令的事。下面一几件规则：</p>
+
+<ul><br><li><p><strong>限制用户输入一些非常容易被破解的口令</strong>。<br>如什么qwert，123456, password之类，就像twitter限制用户的口令一样做一个口令的黑名单。<br>另外，你可以限制用户口令的长度，是否有大小写，是否有数字，你可以用你的程序做一下校验。<br>当然，这可能会让用户感到很不爽，所以，现在很多网站都提供了UX让用户知道他的口<br>令强度是什么样的（比如这个有趣的UX），这样可以让用户有一个选择，<br>目的就是告诉用户——要想安全，先把口令设得好一点。</p></li><br><li><p><strong>千万不要明文保存用户的口令</strong>。<br>正如如何管理自己的口令所说的一样，很多时候，用户都会用相同的ID相同的口令来登录很多网站。<br>所以，如果你的网站明文保存的话，那么，如果你的数据被你的不良员工流传出去那对用户是灾难性的。<br>所以，用户的口令一定要加密保存，最好是用不可逆的加密，如MD5或是SHA1之类的有hash算法的不可逆的加密算法。<br>CSDN曾明文保存过用户的口令。<br>（另，对于国内公司的品行以及有关部门的管理方式，我不敢保证国内网站以加密的方式保存你的口令。<br>我觉得，做为一个有良知的人，我们应该加密保存用户的口令）</p></li><br><li><p><strong>是否让浏览器保存口令</strong>。<br>我们有N多的方法可以不让浏览器保存用户名和口令。<br>但是这可能对用户来说很不爽。因为在真实世界里谁也记得不住那么多的口令。<br>很多用户可能会使用一些密码管理工具来保存密码，浏览器只是其中一种。<br>是否让浏览器保存这个需要你做决定，重点是看一下你的系统的安全级别是否要求比较高，<br>如果是的话，则不要让浏览器保存密码，并在网站明显的位置告诉用户——保存口令最安全的地方只有你的大脑。</p></li><br><li><p><strong>口令在网上的传输</strong>。<br>因为HTTP是明文协议，所以，用户名和口令在网上也是明文发送的，这个很不安全。<br>你可以看看这篇文章你就明白了。要做到加密传输就必需使用HTTPS协议。<br>但是，在中国还是有很多网站的Web登录方式还在使用ActiveX控件，这可能成为IE6还大量存在的原因。<br>我通常理解为这些ActiveX控件是为了反键盘记录程序的。<br>不过，我依然觉ActiveX控件不应该存在，因为在国外的众多安全很重要的站点上都看不到ActiveX的控件的身影。</p></li><br></ul><h2>用户登录状态</h2><br><br><p>首先，我想告诉大家的是，因为HTTP是无状态的协议，也就是说，这个协议是无法记录用户访问状态的，<br>其每次请求都是独立的无关联的，一笔是一笔。<br>而我们的网站都是设计成多个页面的，所在页面跳转过程中我们需要知道用户的状态，<br>尤其是用户登录的状态，这样我们在页面跳转后我们才知道是否可以让用户有权限来操作一些功能或是查看一些数据。</p><br><br><p><strong>所以，我们每个页面都需要对用户的身份进行认证</strong>。<br>当然，我们不可能让用户在每个页面上输入用户名和口令，这会让用户觉得我们的网站相当的SB。<br>为了实现这一功能，用得最多的技术就是浏览器的cookie，我们会把用户登录的信息存放在客户端的cookie里，<br>这样，我们每个页面都从这个cookie里获得用户是否登录的信息，从而达到记录状态，验证用户的目的。<br>但是，你真的会用cookie吗？下面是使用cookie的一些原则。</p><br><br><ul><br><li><p><strong>千万不要在cookie中存放用户的密码</strong>。<br>加密的密码都不行。因为这个密码可以被人获取并尝试离线穷举。<br>所以，你一定不能把用户的密码保存在cookie中。<br>我看到太多的站点这么干了。</p></li><br><li><br><p><strong>正确设计“记住密码”</strong>。<br>这个功能简直就是一个安全隐患，我觉得并不是所有的程序员都知道怎么设计这个事。<br>一般的设计 是——一时用户勾选了这个功能，系统会生成一个cookie，cookie包括用户名和一个固定的散列值，<br>这个固定的散列值一直使用。<br>这样，你就可以在所有的设备和客户上都可以登录，而且可以有多个用户同时登录。<br>这个并不是很安全。下面是一些更为安全的方法供你参考：</p><br><br><ul><br><li> 在cookie中，保存三个东西——<strong>用户名，登录序列，登录token</strong>。<br><strong>用户名</strong>：明文存放。<br><strong>登录序列</strong>：一个被MD5散列过的随机数，仅当强制用户输入口令时更新（如：用户修改了口令）。<br><strong>登录token</strong>：一个被MD5散列过的随机数，仅一个登录session内有效，新的登录session会更新它。</li><br><li> 上述三个东西会存在服务器上，服务器的验证用户需要验证客户端cookie里的这三个事。</li><br><li> 这样的设计会有什么样的效果，会有下面的效果，<br><ul><br><li>a) <strong>登录token</strong> 是单实例登录。意思就是一个用户只能有一个登录实例。</li><br><li>b) <strong>登录序列</strong> 是用来做盗用行为检测的。<br>    如果用户的cookie被盗后，盗用者使用这个cookie访问网站时，我们的系统是以为是合法用户，<br>    然后更新“登录token”，而真正的用户回来访问时，系统发现只有“用户名”和“登录序列”相同，<br>    但是“登录token” 不对，这样的话，系统就知道，这个用户可能出现了被盗用的情况，<br>    于是，系统可以清除并更改登录序列 和 登录token，这样就可以令所有的cookie失效，并要求用户输入口令。<br>    并给警告用户系统安全。</li><br>    </ul>
+
+<pre><code>&lt;/li&gt;
+</code></pre><p><li> 当然，<strong>上述这样的设计还是会有一些问题，比如：同一用户的不同设备登录，甚至在同一个设备上使用不同的浏览器保登录</strong>。一个设备会让另一个设备的登录token和登录序列失效，从而让其它设备和浏览器需要重新登录，并会造成cookie被盗用的假象。所以，你在服务器服还需要考虑- IP 地址，</li></p>
+<p><ul></ul></p>
+<p><li>a) 如果以口令方式登录，我们无需更新服务器的“登录序列”和 “登录token”（但需要更新cookie）。因为我们认为口令只有真正的用户知道。</li></p>
+<p><li>b) 如果 <strong>IP相同</strong> ，那么，我们无需更新服务器的“登录序列”和 “登录token”（但需要更新cookie）。因为我们认为是同一用户有同一IP（当然，同一个局域网里也有同一IP，但我们认为这个局域网是用户可以控制的。网吧内并不推荐使用这一功能）。</li></p>
+<p><li>c) 如果 （<strong>IP不同 &amp;&amp; 没有用口令登录</strong>），那么，“登录token” 就会在多个IP间发生变化（登录token在两个或多个ip间被来来回回的变换），当在一定时间内达到一定次数后，系统才会真正觉得被盗用的可能性很高，此时系统在后台清除“登录序列”和“登录token“，让Cookie失效，强制用户输入口令（或是要求用户更改口令），以保证多台设备上的cookie一致。</li><br></p></li></ul><br></li><br></ul><br><p></p>
+<p><li></li></p>
+<p><strong>不要让cookie有权限访问所有的操作</strong>。<br>否则就是XSS攻击，这个功能请参看新浪微博的XSS攻击。<br>下面的这些功能一定要用户输入口令：</p>
+
+<p><ul></ul></p>
+<p><li> 修改口令。</li></p>
+<p><li> 修改电子邮件。（电子邮件通常用来找回用户密码，最好通发邮件或是发手机短信的方式修改，或者干脆就不让改一一用电子邮件做帐号名）</li></p>
+<p><li> 用户的隐私信息。</li></p>
+<p><li> 用户消费功能。</li><br><br></p>
+<p><li><p><strong>权衡Cookie的过期时间</strong>。<br>如果是永不过期，会有很不错的用户体验，但是这也会让用户很快就忘了登录密码。<br>如果设置上过期期限，比如2周，一个月，那么可能会好一点，但是2周和一个月后，用户依然会忘了密码。<br>尤其是用户在一些公共电脑上，如果保存了永久cookie的话，等于泄露了帐号。<br>所以，对于cookie的过期时间我们还需要权衡。</p></li><br></p><h2>找回口令的功能</h2><p></p>
+<p>找回口令的功能一定要提供。<br>但是很多朋友并不知道怎么来设计这个功能。<br>我们有很多找回口令的设计，下面我逐个点评一下。</p>
+
+<p><ul></ul></p>
+<p><li><p><strong>千万不要使用安全问答</strong>。<br>事实证明，这个环节很烦人，而且用户并不能很好的设置安全问答。<br>什么，我的生日啊，我母亲的生日，等等。<br>因为今天的互联网和以前不一样了，因为SNS，今天的互联比以前更真实了，<br>我可以上facebook，开心，人人网，LinkedIn查到你的很多的真实的信息。<br>通过这些信息我可以使用安全问答来重设你的口令。<br>这里需要说一下 Facebook，Facebook的安全问答很强大，还要你通过照片认人，呵呵。</p></li></p>
+<p><li><p><strong>不要重置用户的密码</strong>。<br>因为这有可能让用户的密码遭到恶意攻击。<br>当然，你要发个邮件给用户让其确认，用户点击邮件中的一个链接，你再重置。<br>我并不推荐这样的方法，因为用户一般都会用笔记下来这个很难记的口令，<br>然后登录系统，因为登录系统时使用了“记住密码”的功能，所以导致用户不会去修改密码，<br>从而要么导到被写下来的密码被人盗取，要么又忘记了密码。</p></li></p>
+<p><li><p><strong>好一点的做法</strong>——通过邮件自行重置。<br>当用户申请找回口令功能的时候，系统生成一个MD5唯一的随机字串（可通过UID+IP+timestamp+随机数），<br>放在数据库中，然后设置上时限（比如1小时内），给用户发一个邮件，<br>这个连接中包含那个MD5的字串的链接，用户通过点击那个链接来自己重新设置新的口令。</p></li></p>
+<p><li><p><strong>更好一点的做法</strong>——多重认证。<br>比如：通过手机+邮件的方式让用户输入验证码。<br>手机+邮件可能还不把握，因为手机要能会丢了，而我的手机可以访问我的邮箱。<br>所以，使用U盾，SecureID（一个会变化的6位数token），或是通过人工的方式核实用户身份。<br>当然，这主要看你的系统的安全级别了。</p></li><br></p><h2>口令探测防守</h2><p></p>
+<p><ul></ul></p>
+<p><li><p><strong>使用验证码</strong>。<br>验证码是后台随机产生的一个短暂的验证码，这个验证码一般是一个计算机很难识别的图片。<br>这样就可以防止以程序的方式来尝试用户的口令。<br>事实证明，这是最简单也最有效的方式。<br>当然，总是让用户输入那些肉眼都看不清的验证码的用户体验不好，所以，可以折中一下。<br>比如Google，当他发现一个IP地址发出大量的搜索后，其会要求你输入验证码。<br>当他发现同一个IP注册了3个以上的gmail邮箱后，他需要给你发短信方式或是电话方式的验证码。</p></li></p>
+<p><li><p><strong>用户口令失败次数</strong>。<br>调置口令失败的上限，如果失败过多，则把帐号锁了，需要用户以找回口令的方式来重新激活帐号。<br>但是，这个功能可能会被恶意人使用。<br>最好的方法是，增加其尝试的时间成本（以前的这篇文章说过一个增加时间成本的解密算法）。<br>如，两次口令尝试的间隔是5秒钟。<br>三次以上错误，帐号被临时锁上30秒，5次以上帐号被锁1分钟，10次以上错误帐号被锁4小时……<br>但是这会导致恶意用户用脚本来攻击，所以最好再加上验证码，验证码出错次数过多不禁止登录而是禁lP。</p></li></p>
+<p><li><p><strong>系统全局防守</strong>。<br>上述的防守只针对某一个别用户。<br>恶意者们深知这一点，所以，他们一般会动用“僵尸网络”轮着尝试一堆用户的口令，<br>所以上述的那种方法可能还不够好。<br>我们需要在系统全局域上监控所有的口令失败的次数。<br>当然，这个需要我们平时没有受到攻击时的数据做为支持。<br>比如你的系统，平均每天有5000次的口令错误的事件，那么你可以认为，<br>当口令错误大幅超过这个数后，而且时间相对集中，就说明有黑客攻击。<br>这个时候你怎么办？一般最常见使用的方法是让所有的用户输错口令后再次尝试的时间成本增加。</p></li><br></p><p>最后，再说一下，关于用户登录，使用第三方的 OAuth 和 OpenID 也不失为一个很不错的选择。</p><p></p>
+<p><strong>参考文章</strong></p>
+<ul>
+<li>OWASP Guide To Authentication</li>
+<li>Dos and Don’ts of Client Authentication on the Web （PDF）</li>
+<li>Charles Miller’s Persistent Login Cookie Best Practice</li>
+<li>Wikipedia: HTTP cookie</li>
+<li>Personal knowledge questions for fallback authentication: Security questions in the era of Facebook</li>
+</ul>
+<p>原文来自：<a href="http://coolshell.cn/articles/5353.html" target="_blank" rel="external">http://coolshell.cn/articles/5353.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Web上的用户登录功能应该是最基本的功能了，可是在我看过一些站点的用户登录功能后，我觉得很有必要写一篇文章教大家怎么来做用户登录功能。下面的文章告诉大家这个功能可能并没有你所想像的那么简单，这是一个关系到用户安全的功能，希望大家能从下面的文章中能知道什么样的方法才是一个好的
+    
+    </summary>
+    
+      <category term="web" scheme="http://yoursite.com/categories/web/"/>
+    
+    
+      <category term="web" scheme="http://yoursite.com/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
     <title>最佳 Web 中文默认字体</title>
     <link href="http://yoursite.com/2012/04/13/%E6%9C%80%E4%BD%B3-Web-%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/"/>
     <id>http://yoursite.com/2012/04/13/最佳-Web-中文默认字体/</id>
@@ -1347,67 +1365,182 @@ IE 9.0.8080.16413
   </entry>
   
   <entry>
-    <title>你会做Web上的用户登录功能吗</title>
-    <link href="http://yoursite.com/2012/04/13/%E4%BD%A0%E4%BC%9A%E5%81%9AWeb%E4%B8%8A%E7%9A%84%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E5%90%97/"/>
-    <id>http://yoursite.com/2012/04/13/你会做Web上的用户登录功能吗/</id>
-    <published>2012-04-12T16:00:00.000Z</published>
-    <updated>2016-08-18T03:39:28.000Z</updated>
+    <title>Markdown 快速入门</title>
+    <link href="http://yoursite.com/2012/03/31/Markdown-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
+    <id>http://yoursite.com/2012/03/31/Markdown-快速入门/</id>
+    <published>2012-03-30T16:00:00.000Z</published>
+    <updated>2016-08-18T03:37:16.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Web上的用户登录功能应该是最基本的功能了，可是在我看过一些站点的用户登录功能后，我觉得很有必要写一篇文章教大家怎么来做用户登录功能。下面的文章告诉大家这个功能可能并没有你所想像的那么简单，这是一个关系到用户安全的功能，希望大家能从下面的文章中能知道什么样的方法才是一个好的用户登录功能。以下内容，转载时请保持原文一致，并请注明作者和出处。</p>
+    <content type="html"><![CDATA[<p><strong>声明：</strong> 这份文档派生(fork)于<a href="http://markdown.tw/" target="_blank" rel="external">繁体中文版</a>，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 Markdown 语法编写，你可以到这里<a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/basics.md" target="_blank" rel="external">查看它的源文件</a>。「繁体中文版的原始文件可以<a href="https://github.com/othree/markdown-syntax-zhtw/blob/master/basics.md" target="_blank" rel="external">查看这里</a>」–By @<a href="http://twitter.com/riku" target="_blank" rel="external">riku</a> / 本项目托管于 <a href="http://gitcafe.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">GitCafe</a></p>
+<p><strong>注：</strong> 本项目同时也托管于 <a href="https://github.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">Github</a>上，请通过 fork＋pull request 方式来帮忙改进本项目。</p>
+<h1 id="Markdown-Basics-（快速入门）-点击查看完整语法说明"><a href="#Markdown-Basics-（快速入门）-点击查看完整语法说明" class="headerlink" title="Markdown: Basics （快速入门） / (点击查看完整语法说明)"></a>Markdown: Basics （快速入门） / (<a href="../markdown-syntax">点击查看完整语法说明</a>)</h1><h2 id="Getting-the-Gist-of-Markdown’s-Formatting-Syntax"><a href="#Getting-the-Gist-of-Markdown’s-Formatting-Syntax" class="headerlink" title="Getting the Gist of Markdown’s Formatting Syntax"></a>Getting the Gist of Markdown’s Formatting Syntax</h2><p>此页提供了 Markdown 的简单概念， <a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/syntax.md" title="Markdown Syntax" target="_blank" rel="external">语法说明</a> 页提供了完整详细的文档，说明了每项功能。但是 Markdown 其实很简单就可以上手，此页文档提供了一些范例，并且每个范例都会提供输出的 HTML 结果。</p>
+<p>其实直接试试看也是一个很不错的方法， <a href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Dingus" target="_blank" rel="external">Dingus</a> 是一个网页应用程序，你可以把自已编写的 Markdown 文档转成 XHTML。</p>
+<h2 id="段落、标题、区块代码"><a href="#段落、标题、区块代码" class="headerlink" title="段落、标题、区块代码"></a>段落、标题、区块代码</h2><p>一个段落是由一个以上的连接的行句组成，而一个以上的空行则会划分出不同的段落（空行的定义是显示上看起来像是空行，就被视为空行，例如有一行只有空白和 tab，那该行也会被视为空行），一般的段落不需要用空白或换行缩进。</p>
+<p>Markdown 支持两种标题的语法，<a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="external">Setext</a> 和 <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="external">atx</a> 形式。Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），Atx 形式在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶。</p>
+<p>区块引用则使用 email 形式的 ‘<code>&gt;</code>‘ 角括号。</p>
+<p>Markdown 语法:</p>
+<pre><code>A First Level Header
+====================
+A Second Level Header
+---------------------
 
-<h2>用户名和口令</h2>
+Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.
 
-<p>首先，我们先来说说用户名和口令的事。这并不是本站第一次谈论这个事了。如何管理自己的口令让你知道怎么管理自己的口令，破解你的口令让你知道在现代这样速度的计算速度下，用穷举法破解你的口令可能会是一件很轻松的事。在这里我想告诉从开发者的角度上来做设计这个用户名和口令的事。下面一几件规则：</p>
+The quick brown fox jumped over the lazy
+dog&apos;s back.
+### Header 3
 
-<ul><br><li><p><strong>限制用户输入一些非常容易被破解的口令</strong>。<br>如什么qwert，123456, password之类，就像twitter限制用户的口令一样做一个口令的黑名单。<br>另外，你可以限制用户口令的长度，是否有大小写，是否有数字，你可以用你的程序做一下校验。<br>当然，这可能会让用户感到很不爽，所以，现在很多网站都提供了UX让用户知道他的口<br>令强度是什么样的（比如这个有趣的UX），这样可以让用户有一个选择，<br>目的就是告诉用户——要想安全，先把口令设得好一点。</p></li><br><li><p><strong>千万不要明文保存用户的口令</strong>。<br>正如如何管理自己的口令所说的一样，很多时候，用户都会用相同的ID相同的口令来登录很多网站。<br>所以，如果你的网站明文保存的话，那么，如果你的数据被你的不良员工流传出去那对用户是灾难性的。<br>所以，用户的口令一定要加密保存，最好是用不可逆的加密，如MD5或是SHA1之类的有hash算法的不可逆的加密算法。<br>CSDN曾明文保存过用户的口令。<br>（另，对于国内公司的品行以及有关部门的管理方式，我不敢保证国内网站以加密的方式保存你的口令。<br>我觉得，做为一个有良知的人，我们应该加密保存用户的口令）</p></li><br><li><p><strong>是否让浏览器保存口令</strong>。<br>我们有N多的方法可以不让浏览器保存用户名和口令。<br>但是这可能对用户来说很不爽。因为在真实世界里谁也记得不住那么多的口令。<br>很多用户可能会使用一些密码管理工具来保存密码，浏览器只是其中一种。<br>是否让浏览器保存这个需要你做决定，重点是看一下你的系统的安全级别是否要求比较高，<br>如果是的话，则不要让浏览器保存密码，并在网站明显的位置告诉用户——保存口令最安全的地方只有你的大脑。</p></li><br><li><p><strong>口令在网上的传输</strong>。<br>因为HTTP是明文协议，所以，用户名和口令在网上也是明文发送的，这个很不安全。<br>你可以看看这篇文章你就明白了。要做到加密传输就必需使用HTTPS协议。<br>但是，在中国还是有很多网站的Web登录方式还在使用ActiveX控件，这可能成为IE6还大量存在的原因。<br>我通常理解为这些ActiveX控件是为了反键盘记录程序的。<br>不过，我依然觉ActiveX控件不应该存在，因为在国外的众多安全很重要的站点上都看不到ActiveX的控件的身影。</p></li><br></ul><h2>用户登录状态</h2><br><br><p>首先，我想告诉大家的是，因为HTTP是无状态的协议，也就是说，这个协议是无法记录用户访问状态的，<br>其每次请求都是独立的无关联的，一笔是一笔。<br>而我们的网站都是设计成多个页面的，所在页面跳转过程中我们需要知道用户的状态，<br>尤其是用户登录的状态，这样我们在页面跳转后我们才知道是否可以让用户有权限来操作一些功能或是查看一些数据。</p><br><br><p><strong>所以，我们每个页面都需要对用户的身份进行认证</strong>。<br>当然，我们不可能让用户在每个页面上输入用户名和口令，这会让用户觉得我们的网站相当的SB。<br>为了实现这一功能，用得最多的技术就是浏览器的cookie，我们会把用户登录的信息存放在客户端的cookie里，<br>这样，我们每个页面都从这个cookie里获得用户是否登录的信息，从而达到记录状态，验证用户的目的。<br>但是，你真的会用cookie吗？下面是使用cookie的一些原则。</p><br><br><ul><br><li><p><strong>千万不要在cookie中存放用户的密码</strong>。<br>加密的密码都不行。因为这个密码可以被人获取并尝试离线穷举。<br>所以，你一定不能把用户的密码保存在cookie中。<br>我看到太多的站点这么干了。</p></li><br><li><br><p><strong>正确设计“记住密码”</strong>。<br>这个功能简直就是一个安全隐患，我觉得并不是所有的程序员都知道怎么设计这个事。<br>一般的设计 是——一时用户勾选了这个功能，系统会生成一个cookie，cookie包括用户名和一个固定的散列值，<br>这个固定的散列值一直使用。<br>这样，你就可以在所有的设备和客户上都可以登录，而且可以有多个用户同时登录。<br>这个并不是很安全。下面是一些更为安全的方法供你参考：</p><br><br><ul><br><li> 在cookie中，保存三个东西——<strong>用户名，登录序列，登录token</strong>。<br><strong>用户名</strong>：明文存放。<br><strong>登录序列</strong>：一个被MD5散列过的随机数，仅当强制用户输入口令时更新（如：用户修改了口令）。<br><strong>登录token</strong>：一个被MD5散列过的随机数，仅一个登录session内有效，新的登录session会更新它。</li><br><li> 上述三个东西会存在服务器上，服务器的验证用户需要验证客户端cookie里的这三个事。</li><br><li> 这样的设计会有什么样的效果，会有下面的效果，<br><ul><br><li>a) <strong>登录token</strong> 是单实例登录。意思就是一个用户只能有一个登录实例。</li><br><li>b) <strong>登录序列</strong> 是用来做盗用行为检测的。<br>    如果用户的cookie被盗后，盗用者使用这个cookie访问网站时，我们的系统是以为是合法用户，<br>    然后更新“登录token”，而真正的用户回来访问时，系统发现只有“用户名”和“登录序列”相同，<br>    但是“登录token” 不对，这样的话，系统就知道，这个用户可能出现了被盗用的情况，<br>    于是，系统可以清除并更改登录序列 和 登录token，这样就可以令所有的cookie失效，并要求用户输入口令。<br>    并给警告用户系统安全。</li><br>    </ul>
+&gt; This is a blockquote.
+&gt; 
+&gt; This is the second paragraph in the blockquote.
+&gt;
+&gt; ## This is an H2 in a blockquote
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;h1&gt;A First Level Header&lt;/h1&gt;
+&lt;h2&gt;A Second Level Header&lt;/h2&gt;
+&lt;p&gt;Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.&lt;/p&gt;
+&lt;p&gt;The quick brown fox jumped over the lazy
+dog&apos;s back.&lt;/p&gt;
+&lt;h3&gt;Header 3&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is a blockquote.&lt;/p&gt;
+&lt;p&gt;This is the second paragraph in the blockquote.&lt;/p&gt;
+&lt;h2&gt;This is an H2 in a blockquote&lt;/h2&gt;
+&lt;/blockquote&gt;
+</code></pre><h3 id="修辞和强调"><a href="#修辞和强调" class="headerlink" title="修辞和强调"></a>修辞和强调</h3><p>Markdown 使用星号和底线来标记需要强调的区段。</p>
+<p>Markdown 语法:</p>
+<pre><code>Some of these words *are emphasized*.
+Some of these words _are emphasized also_.
+Use two asterisks for **strong emphasis**.
+Or, if you prefer, __use two underscores instead__.
+</code></pre><p>输出 HTML 为:</p>
+<pre><code>&lt;p&gt;Some of these words &lt;em&gt;are emphasized&lt;/em&gt;.
+Some of these words &lt;em&gt;are emphasized also&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Use two asterisks for &lt;strong&gt;strong emphasis&lt;/strong&gt;.
+Or, if you prefer, &lt;strong&gt;use two underscores instead&lt;/strong&gt;.&lt;/p&gt;
+</code></pre><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号和减号来做为列表的项目标记，这些符号是都可以使用的，使用星号：</p>
+<pre><code>* Candy.
+* Gum.
+* Booze.
+</code></pre><p>加号：</p>
+<pre><code>+ Candy.
++ Gum.
++ Booze.
+</code></pre><p>和减号</p>
+<pre><code>- Candy.
+- Gum.
+- Booze.
+</code></pre><p>都会输出 HTML 为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Candy.&lt;/li&gt;
+&lt;li&gt;Gum.&lt;/li&gt;
+&lt;li&gt;Booze.&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>有序的列表则是使用一般的数字接着一个英文句点作为项目标记：</p>
+<pre><code>1. Red
+2. Green
+3. Blue
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Red&lt;/li&gt;
+&lt;li&gt;Green&lt;/li&gt;
+&lt;li&gt;Blue&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre><p>如果你在项目之间插入空行，那项目的内容会用 <code>&lt;p&gt;</code> 包起来，你也可以在一个项目内放上多个段落，只要在它前面缩排 4 个空白或 1 个 tab 。</p>
+<pre><code>* A list item.
+With multiple paragraphs.
 
-<pre><code>&lt;/li&gt;
-</code></pre><p><li> 当然，<strong>上述这样的设计还是会有一些问题，比如：同一用户的不同设备登录，甚至在同一个设备上使用不同的浏览器保登录</strong>。一个设备会让另一个设备的登录token和登录序列失效，从而让其它设备和浏览器需要重新登录，并会造成cookie被盗用的假象。所以，你在服务器服还需要考虑- IP 地址，</li></p>
-<p><ul></ul></p>
-<p><li>a) 如果以口令方式登录，我们无需更新服务器的“登录序列”和 “登录token”（但需要更新cookie）。因为我们认为口令只有真正的用户知道。</li></p>
-<p><li>b) 如果 <strong>IP相同</strong> ，那么，我们无需更新服务器的“登录序列”和 “登录token”（但需要更新cookie）。因为我们认为是同一用户有同一IP（当然，同一个局域网里也有同一IP，但我们认为这个局域网是用户可以控制的。网吧内并不推荐使用这一功能）。</li></p>
-<p><li>c) 如果 （<strong>IP不同 &amp;&amp; 没有用口令登录</strong>），那么，“登录token” 就会在多个IP间发生变化（登录token在两个或多个ip间被来来回回的变换），当在一定时间内达到一定次数后，系统才会真正觉得被盗用的可能性很高，此时系统在后台清除“登录序列”和“登录token“，让Cookie失效，强制用户输入口令（或是要求用户更改口令），以保证多台设备上的cookie一致。</li><br></p></li></ul><br></li><br></ul><br><p></p>
-<p><li></li></p>
-<p><strong>不要让cookie有权限访问所有的操作</strong>。<br>否则就是XSS攻击，这个功能请参看新浪微博的XSS攻击。<br>下面的这些功能一定要用户输入口令：</p>
+* Another item in the list.
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A list item.&lt;/p&gt;
+&lt;p&gt;With multiple paragraphs.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Another item in the list.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支援两种形式的链接语法： <em>行内</em> 和 <em>参考</em> 两种形式，两种都是使用角括号来把文字转成连结。</p>
+<p>行内形式是直接在后面用括号直接接上链接：</p>
+<pre><code>This is an [example link](http://example.com/).
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot;&gt;
+example link&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>你也可以选择性的加上 title 属性：</p>
+<pre><code>This is an [example link](http://example.com/ &quot;With a Title&quot;).
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot; title=&quot;With a Title&quot;&gt;
+example link&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>参考形式的链接让你可以为链接定一个名称，之后你可以在文件的其他地方定义该链接的内容：</p>
+<pre><code>I get 10 times more traffic from [Google][1] than from
+[Yahoo][2] or [MSN][3].
 
-<p><ul></ul></p>
-<p><li> 修改口令。</li></p>
-<p><li> 修改电子邮件。（电子邮件通常用来找回用户密码，最好通发邮件或是发手机短信的方式修改，或者干脆就不让改一一用电子邮件做帐号名）</li></p>
-<p><li> 用户的隐私信息。</li></p>
-<p><li> 用户消费功能。</li><br><br></p>
-<p><li><p><strong>权衡Cookie的过期时间</strong>。<br>如果是永不过期，会有很不错的用户体验，但是这也会让用户很快就忘了登录密码。<br>如果设置上过期期限，比如2周，一个月，那么可能会好一点，但是2周和一个月后，用户依然会忘了密码。<br>尤其是用户在一些公共电脑上，如果保存了永久cookie的话，等于泄露了帐号。<br>所以，对于cookie的过期时间我们还需要权衡。</p></li><br></p><h2>找回口令的功能</h2><p></p>
-<p>找回口令的功能一定要提供。<br>但是很多朋友并不知道怎么来设计这个功能。<br>我们有很多找回口令的设计，下面我逐个点评一下。</p>
+[1]: http://google.com/ &quot;Google&quot;
+[2]: http://search.yahoo.com/ &quot;Yahoo Search&quot;
+[3]: http://search.msn.com/ &quot;MSN Search&quot;
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
+title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from &lt;a href=&quot;http://search.yahoo.com/&quot;
+title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt; or &lt;a href=&quot;http://search.msn.com/&quot;
+title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>title 属性是选择性的，链接名称可以用字母、数字和空格，但是不分大小写：</p>
+<pre><code>I start my morning with a cup of coffee and
+[The New York Times][NY Times].
 
-<p><ul></ul></p>
-<p><li><p><strong>千万不要使用安全问答</strong>。<br>事实证明，这个环节很烦人，而且用户并不能很好的设置安全问答。<br>什么，我的生日啊，我母亲的生日，等等。<br>因为今天的互联网和以前不一样了，因为SNS，今天的互联比以前更真实了，<br>我可以上facebook，开心，人人网，LinkedIn查到你的很多的真实的信息。<br>通过这些信息我可以使用安全问答来重设你的口令。<br>这里需要说一下 Facebook，Facebook的安全问答很强大，还要你通过照片认人，呵呵。</p></li></p>
-<p><li><p><strong>不要重置用户的密码</strong>。<br>因为这有可能让用户的密码遭到恶意攻击。<br>当然，你要发个邮件给用户让其确认，用户点击邮件中的一个链接，你再重置。<br>我并不推荐这样的方法，因为用户一般都会用笔记下来这个很难记的口令，<br>然后登录系统，因为登录系统时使用了“记住密码”的功能，所以导致用户不会去修改密码，<br>从而要么导到被写下来的密码被人盗取，要么又忘记了密码。</p></li></p>
-<p><li><p><strong>好一点的做法</strong>——通过邮件自行重置。<br>当用户申请找回口令功能的时候，系统生成一个MD5唯一的随机字串（可通过UID+IP+timestamp+随机数），<br>放在数据库中，然后设置上时限（比如1小时内），给用户发一个邮件，<br>这个连接中包含那个MD5的字串的链接，用户通过点击那个链接来自己重新设置新的口令。</p></li></p>
-<p><li><p><strong>更好一点的做法</strong>——多重认证。<br>比如：通过手机+邮件的方式让用户输入验证码。<br>手机+邮件可能还不把握，因为手机要能会丢了，而我的手机可以访问我的邮箱。<br>所以，使用U盾，SecureID（一个会变化的6位数token），或是通过人工的方式核实用户身份。<br>当然，这主要看你的系统的安全级别了。</p></li><br></p><h2>口令探测防守</h2><p></p>
-<p><ul></ul></p>
-<p><li><p><strong>使用验证码</strong>。<br>验证码是后台随机产生的一个短暂的验证码，这个验证码一般是一个计算机很难识别的图片。<br>这样就可以防止以程序的方式来尝试用户的口令。<br>事实证明，这是最简单也最有效的方式。<br>当然，总是让用户输入那些肉眼都看不清的验证码的用户体验不好，所以，可以折中一下。<br>比如Google，当他发现一个IP地址发出大量的搜索后，其会要求你输入验证码。<br>当他发现同一个IP注册了3个以上的gmail邮箱后，他需要给你发短信方式或是电话方式的验证码。</p></li></p>
-<p><li><p><strong>用户口令失败次数</strong>。<br>调置口令失败的上限，如果失败过多，则把帐号锁了，需要用户以找回口令的方式来重新激活帐号。<br>但是，这个功能可能会被恶意人使用。<br>最好的方法是，增加其尝试的时间成本（以前的这篇文章说过一个增加时间成本的解密算法）。<br>如，两次口令尝试的间隔是5秒钟。<br>三次以上错误，帐号被临时锁上30秒，5次以上帐号被锁1分钟，10次以上错误帐号被锁4小时……<br>但是这会导致恶意用户用脚本来攻击，所以最好再加上验证码，验证码出错次数过多不禁止登录而是禁lP。</p></li></p>
-<p><li><p><strong>系统全局防守</strong>。<br>上述的防守只针对某一个别用户。<br>恶意者们深知这一点，所以，他们一般会动用“僵尸网络”轮着尝试一堆用户的口令，<br>所以上述的那种方法可能还不够好。<br>我们需要在系统全局域上监控所有的口令失败的次数。<br>当然，这个需要我们平时没有受到攻击时的数据做为支持。<br>比如你的系统，平均每天有5000次的口令错误的事件，那么你可以认为，<br>当口令错误大幅超过这个数后，而且时间相对集中，就说明有黑客攻击。<br>这个时候你怎么办？一般最常见使用的方法是让所有的用户输错口令后再次尝试的时间成本增加。</p></li><br></p><p>最后，再说一下，关于用户登录，使用第三方的 OAuth 和 OpenID 也不失为一个很不错的选择。</p><p></p>
-<p><strong>参考文章</strong></p>
-<ul>
-<li>OWASP Guide To Authentication</li>
-<li>Dos and Don’ts of Client Authentication on the Web （PDF）</li>
-<li>Charles Miller’s Persistent Login Cookie Best Practice</li>
-<li>Wikipedia: HTTP cookie</li>
-<li>Personal knowledge questions for fallback authentication: Security questions in the era of Facebook</li>
-</ul>
-<p>原文来自：<a href="http://coolshell.cn/articles/5353.html" target="_blank" rel="external">http://coolshell.cn/articles/5353.html</a></p>
-]]></content>
+[ny times]: http://www.nytimes.com/
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;I start my morning with a cup of coffee and
+&lt;a href=&quot;http://www.nytimes.com/&quot;&gt;The New York Times&lt;/a&gt;.&lt;/p&gt;
+</code></pre><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>图片的语法和链接很像。</p>
+<p>行内形式（title 是选择性的）：</p>
+<pre><code>![alt text](/path/to/img.jpg &quot;Title&quot;)
+</code></pre><p>参考形式：</p>
+<pre><code>![alt text][id]
+
+[id]: /path/to/img.jpg &quot;Title&quot;
+</code></pre><p>上面两种方法都会输出 HTML 为：</p>
+<pre><code>&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;alt text&quot; title=&quot;Title&quot; /&gt;
+</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>在一般的段落文字中，你可以使用反引号 <code>` </code> 来标记代码区段，区段内的 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 都会被自动的转换成 HTML 实体，这项特性让你可以很容易的在代码区段内插入 HTML 码：</p>
+<pre><code>I strongly recommend against using any `&lt;blink&gt;` tags.
+
+I wish SmartyPants used named entities like `&amp;mdash;`
+instead of decimal-encoded entites like `&amp;#8212;`.
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;I strongly recommend against using any
+&lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+&lt;p&gt;I wish SmartyPants used named entities like
+&lt;code&gt;&amp;amp;mdash;&lt;/code&gt; instead of decimal-encoded
+entites like &lt;code&gt;&amp;amp;#8212;&lt;/code&gt;.&lt;/p&gt;
+</code></pre><p>如果要建立一个已经格式化好的代码区块，只要每行都缩进 4 个空格或是一个 tab 就可以了，而 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 也一样会自动转成 HTML 实体。</p>
+<p>Markdown 语法:</p>
+<pre><code>If you want your page to validate under XHTML 1.0 Strict,
+you&apos;ve got to put paragraph tags in your blockquotes:
+
+&lt;blockquote&gt;
+&lt;p&gt;For example.&lt;/p&gt;
+&lt;/blockquote&gt;
+</code></pre><p>输出 HTML 为：</p>
+<pre><code>&lt;p&gt;If you want your page to validate under XHTML 1.0 Strict,
+you&apos;ve got to put paragraph tags in your blockquotes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;blockquote&amp;gt;
+&amp;lt;p&amp;gt;For example.&amp;lt;/p&amp;gt;
+&amp;lt;/blockquote&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Web上的用户登录功能应该是最基本的功能了，可是在我看过一些站点的用户登录功能后，我觉得很有必要写一篇文章教大家怎么来做用户登录功能。下面的文章告诉大家这个功能可能并没有你所想像的那么简单，这是一个关系到用户安全的功能，希望大家能从下面的文章中能知道什么样的方法才是一个好的
+      &lt;p&gt;&lt;strong&gt;声明：&lt;/strong&gt; 这份文档派生(fork)于&lt;a href=&quot;http://markdown.tw/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;繁体中文版&lt;/a&gt;，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 M
     
     </summary>
     
-      <category term="web" scheme="http://yoursite.com/categories/web/"/>
+      <category term="jekyll" scheme="http://yoursite.com/categories/jekyll/"/>
     
     
-      <category term="web" scheme="http://yoursite.com/tags/web/"/>
+      <category term="jekyll" scheme="http://yoursite.com/tags/jekyll/"/>
+    
+      <category term="Markdown" scheme="http://yoursite.com/tags/Markdown/"/>
     
   </entry>
   
@@ -1901,186 +2034,6 @@ _   底线
     <summary type="html">
     
       &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; This is Simplelified  Chinese Edition Document of Markdown Syntax. If you are seeking for English Edition Document
-    
-    </summary>
-    
-      <category term="jekyll" scheme="http://yoursite.com/categories/jekyll/"/>
-    
-    
-      <category term="jekyll" scheme="http://yoursite.com/tags/jekyll/"/>
-    
-      <category term="Markdown" scheme="http://yoursite.com/tags/Markdown/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown 快速入门</title>
-    <link href="http://yoursite.com/2012/03/31/Markdown-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
-    <id>http://yoursite.com/2012/03/31/Markdown-快速入门/</id>
-    <published>2012-03-30T16:00:00.000Z</published>
-    <updated>2016-08-18T03:37:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>声明：</strong> 这份文档派生(fork)于<a href="http://markdown.tw/" target="_blank" rel="external">繁体中文版</a>，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 Markdown 语法编写，你可以到这里<a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/basics.md" target="_blank" rel="external">查看它的源文件</a>。「繁体中文版的原始文件可以<a href="https://github.com/othree/markdown-syntax-zhtw/blob/master/basics.md" target="_blank" rel="external">查看这里</a>」–By @<a href="http://twitter.com/riku" target="_blank" rel="external">riku</a> / 本项目托管于 <a href="http://gitcafe.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">GitCafe</a></p>
-<p><strong>注：</strong> 本项目同时也托管于 <a href="https://github.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">Github</a>上，请通过 fork＋pull request 方式来帮忙改进本项目。</p>
-<h1 id="Markdown-Basics-（快速入门）-点击查看完整语法说明"><a href="#Markdown-Basics-（快速入门）-点击查看完整语法说明" class="headerlink" title="Markdown: Basics （快速入门） / (点击查看完整语法说明)"></a>Markdown: Basics （快速入门） / (<a href="../markdown-syntax">点击查看完整语法说明</a>)</h1><h2 id="Getting-the-Gist-of-Markdown’s-Formatting-Syntax"><a href="#Getting-the-Gist-of-Markdown’s-Formatting-Syntax" class="headerlink" title="Getting the Gist of Markdown’s Formatting Syntax"></a>Getting the Gist of Markdown’s Formatting Syntax</h2><p>此页提供了 Markdown 的简单概念， <a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/syntax.md" title="Markdown Syntax" target="_blank" rel="external">语法说明</a> 页提供了完整详细的文档，说明了每项功能。但是 Markdown 其实很简单就可以上手，此页文档提供了一些范例，并且每个范例都会提供输出的 HTML 结果。</p>
-<p>其实直接试试看也是一个很不错的方法， <a href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Dingus" target="_blank" rel="external">Dingus</a> 是一个网页应用程序，你可以把自已编写的 Markdown 文档转成 XHTML。</p>
-<h2 id="段落、标题、区块代码"><a href="#段落、标题、区块代码" class="headerlink" title="段落、标题、区块代码"></a>段落、标题、区块代码</h2><p>一个段落是由一个以上的连接的行句组成，而一个以上的空行则会划分出不同的段落（空行的定义是显示上看起来像是空行，就被视为空行，例如有一行只有空白和 tab，那该行也会被视为空行），一般的段落不需要用空白或换行缩进。</p>
-<p>Markdown 支持两种标题的语法，<a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="external">Setext</a> 和 <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="external">atx</a> 形式。Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），Atx 形式在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶。</p>
-<p>区块引用则使用 email 形式的 ‘<code>&gt;</code>‘ 角括号。</p>
-<p>Markdown 语法:</p>
-<pre><code>A First Level Header
-====================
-A Second Level Header
----------------------
-
-Now is the time for all good men to come to
-the aid of their country. This is just a
-regular paragraph.
-
-The quick brown fox jumped over the lazy
-dog&apos;s back.
-### Header 3
-
-&gt; This is a blockquote.
-&gt; 
-&gt; This is the second paragraph in the blockquote.
-&gt;
-&gt; ## This is an H2 in a blockquote
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;h1&gt;A First Level Header&lt;/h1&gt;
-&lt;h2&gt;A Second Level Header&lt;/h2&gt;
-&lt;p&gt;Now is the time for all good men to come to
-the aid of their country. This is just a
-regular paragraph.&lt;/p&gt;
-&lt;p&gt;The quick brown fox jumped over the lazy
-dog&apos;s back.&lt;/p&gt;
-&lt;h3&gt;Header 3&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is a blockquote.&lt;/p&gt;
-&lt;p&gt;This is the second paragraph in the blockquote.&lt;/p&gt;
-&lt;h2&gt;This is an H2 in a blockquote&lt;/h2&gt;
-&lt;/blockquote&gt;
-</code></pre><h3 id="修辞和强调"><a href="#修辞和强调" class="headerlink" title="修辞和强调"></a>修辞和强调</h3><p>Markdown 使用星号和底线来标记需要强调的区段。</p>
-<p>Markdown 语法:</p>
-<pre><code>Some of these words *are emphasized*.
-Some of these words _are emphasized also_.
-Use two asterisks for **strong emphasis**.
-Or, if you prefer, __use two underscores instead__.
-</code></pre><p>输出 HTML 为:</p>
-<pre><code>&lt;p&gt;Some of these words &lt;em&gt;are emphasized&lt;/em&gt;.
-Some of these words &lt;em&gt;are emphasized also&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Use two asterisks for &lt;strong&gt;strong emphasis&lt;/strong&gt;.
-Or, if you prefer, &lt;strong&gt;use two underscores instead&lt;/strong&gt;.&lt;/p&gt;
-</code></pre><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号和减号来做为列表的项目标记，这些符号是都可以使用的，使用星号：</p>
-<pre><code>* Candy.
-* Gum.
-* Booze.
-</code></pre><p>加号：</p>
-<pre><code>+ Candy.
-+ Gum.
-+ Booze.
-</code></pre><p>和减号</p>
-<pre><code>- Candy.
-- Gum.
-- Booze.
-</code></pre><p>都会输出 HTML 为：</p>
-<pre><code>&lt;ul&gt;
-&lt;li&gt;Candy.&lt;/li&gt;
-&lt;li&gt;Gum.&lt;/li&gt;
-&lt;li&gt;Booze.&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre><p>有序的列表则是使用一般的数字接着一个英文句点作为项目标记：</p>
-<pre><code>1. Red
-2. Green
-3. Blue
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;ol&gt;
-&lt;li&gt;Red&lt;/li&gt;
-&lt;li&gt;Green&lt;/li&gt;
-&lt;li&gt;Blue&lt;/li&gt;
-&lt;/ol&gt;
-</code></pre><p>如果你在项目之间插入空行，那项目的内容会用 <code>&lt;p&gt;</code> 包起来，你也可以在一个项目内放上多个段落，只要在它前面缩排 4 个空白或 1 个 tab 。</p>
-<pre><code>* A list item.
-With multiple paragraphs.
-
-* Another item in the list.
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;A list item.&lt;/p&gt;
-&lt;p&gt;With multiple paragraphs.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Another item in the list.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支援两种形式的链接语法： <em>行内</em> 和 <em>参考</em> 两种形式，两种都是使用角括号来把文字转成连结。</p>
-<p>行内形式是直接在后面用括号直接接上链接：</p>
-<pre><code>This is an [example link](http://example.com/).
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot;&gt;
-example link&lt;/a&gt;.&lt;/p&gt;
-</code></pre><p>你也可以选择性的加上 title 属性：</p>
-<pre><code>This is an [example link](http://example.com/ &quot;With a Title&quot;).
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot; title=&quot;With a Title&quot;&gt;
-example link&lt;/a&gt;.&lt;/p&gt;
-</code></pre><p>参考形式的链接让你可以为链接定一个名称，之后你可以在文件的其他地方定义该链接的内容：</p>
-<pre><code>I get 10 times more traffic from [Google][1] than from
-[Yahoo][2] or [MSN][3].
-
-[1]: http://google.com/ &quot;Google&quot;
-[2]: http://search.yahoo.com/ &quot;Yahoo Search&quot;
-[3]: http://search.msn.com/ &quot;MSN Search&quot;
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
-title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from &lt;a href=&quot;http://search.yahoo.com/&quot;
-title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt; or &lt;a href=&quot;http://search.msn.com/&quot;
-title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
-</code></pre><p>title 属性是选择性的，链接名称可以用字母、数字和空格，但是不分大小写：</p>
-<pre><code>I start my morning with a cup of coffee and
-[The New York Times][NY Times].
-
-[ny times]: http://www.nytimes.com/
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;I start my morning with a cup of coffee and
-&lt;a href=&quot;http://www.nytimes.com/&quot;&gt;The New York Times&lt;/a&gt;.&lt;/p&gt;
-</code></pre><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>图片的语法和链接很像。</p>
-<p>行内形式（title 是选择性的）：</p>
-<pre><code>![alt text](/path/to/img.jpg &quot;Title&quot;)
-</code></pre><p>参考形式：</p>
-<pre><code>![alt text][id]
-
-[id]: /path/to/img.jpg &quot;Title&quot;
-</code></pre><p>上面两种方法都会输出 HTML 为：</p>
-<pre><code>&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;alt text&quot; title=&quot;Title&quot; /&gt;
-</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>在一般的段落文字中，你可以使用反引号 <code>` </code> 来标记代码区段，区段内的 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 都会被自动的转换成 HTML 实体，这项特性让你可以很容易的在代码区段内插入 HTML 码：</p>
-<pre><code>I strongly recommend against using any `&lt;blink&gt;` tags.
-
-I wish SmartyPants used named entities like `&amp;mdash;`
-instead of decimal-encoded entites like `&amp;#8212;`.
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;I strongly recommend against using any
-&lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
-&lt;p&gt;I wish SmartyPants used named entities like
-&lt;code&gt;&amp;amp;mdash;&lt;/code&gt; instead of decimal-encoded
-entites like &lt;code&gt;&amp;amp;#8212;&lt;/code&gt;.&lt;/p&gt;
-</code></pre><p>如果要建立一个已经格式化好的代码区块，只要每行都缩进 4 个空格或是一个 tab 就可以了，而 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 也一样会自动转成 HTML 实体。</p>
-<p>Markdown 语法:</p>
-<pre><code>If you want your page to validate under XHTML 1.0 Strict,
-you&apos;ve got to put paragraph tags in your blockquotes:
-
-&lt;blockquote&gt;
-&lt;p&gt;For example.&lt;/p&gt;
-&lt;/blockquote&gt;
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;If you want your page to validate under XHTML 1.0 Strict,
-you&apos;ve got to put paragraph tags in your blockquotes:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;blockquote&amp;gt;
-&amp;lt;p&amp;gt;For example.&amp;lt;/p&amp;gt;
-&amp;lt;/blockquote&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;声明：&lt;/strong&gt; 这份文档派生(fork)于&lt;a href=&quot;http://markdown.tw/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;繁体中文版&lt;/a&gt;，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 M
     
     </summary>
     
