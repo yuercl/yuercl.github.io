@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-08-19T06:59:59.000Z</updated>
+  <updated>2016-08-22T07:15:16.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Quartz集群调度坑</title>
+    <link href="http://yoursite.com/2016/08/22/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/"/>
+    <id>http://yoursite.com/2016/08/22/Quartz集群调度坑/</id>
+    <published>2016-08-21T16:00:00.000Z</published>
+    <updated>2016-08-22T07:15:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近将老版本程序的单机版定时任务调度调整到了Quartz，理由在于Spring在集群调度上并不是很适合，Quartz更适合，在这么一迁移后，可以将以前任务相关部分的代码解藕出来，逻辑会更为清晰。再者，接口程序目前已支持多开，但是任务这块尚未支持多开下保证同一类程序有且只有一台执行。</p>
+<p>这次需要合并的达到最终效果是这样：</p>
+<ul>
+<li>Application A～N 使用相同的Quartz数据库</li>
+<li>Application A 处理API任务</li>
+<li>Application B 处理结算方面任务</li>
+<li>Application C 统计任务</li>
+<li>….</li>
+</ul>
+<p>由于Application A和Application B 的job类是不同的，所以默认配置下，多个Application会使用相同的<code>SCHED_NAME</code>,会导致不停的misfire，最终配置需要将不同目的的Application 采用不同的 <code>SCHED_NAME</code>。参考下面配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Our 'AutowiringSpringBeanJobFactory' implemented in the previous section: --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"quartzJobFactory"</span> <span class="attr">class</span>=<span class="string">"com.chinaroad.settleserver.quartz.AutowiringSpringBeanJobFactory"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- I will not explain this setting, just use it as shown: --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ignoredUnknownProperties"</span> <span class="attr">value</span>=<span class="string">"applicationContext"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.scheduling.quartz.SchedulerFactoryBean"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- Quartz requires a separate 'quartz.properties' file --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"configLocation"</span> <span class="attr">value</span>=<span class="string">"classpath:config/quartz.properties"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"transactionManager"</span> <span class="attr">ref</span>=<span class="string">"transactionManager"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- reference to our 'autowiring job factory bean', defined above: --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jobFactory"</span> <span class="attr">ref</span>=<span class="string">"quartzJobFactory"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Boolean controlling whether you want to override the job definitions in the DB on the app start up. We'll talk about it more in the next section. --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"overwriteExistingJobs"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- I will not explain the next three properties, just use it as shown: --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"autoStartup"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 需要保证每个目的的设置为不同的schedulerName --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"schedulerName"</span> <span class="attr">value</span>=<span class="string">"RobotQuartzScheduler"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"applicationContextSchedulerContextKey"</span> <span class="attr">value</span>=<span class="string">"applicationContext"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Controls whether to wait for jobs completion on app shutdown, we use 'true' --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"waitForJobsToCompleteOnShutdown"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure Main Scheduler Properties</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.scheduler.instanceName=RobotQuartzScheduler</div><div class="line">org.quartz.scheduler.instanceId=AUTO</div><div class="line">org.quartz.scheduler.skipUpdateCheck=<span class="keyword">true</span></div><div class="line">org.quartz.scheduler.misfirePolicy=doNothing</div><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure ThreadPool</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.threadPool.class:org.quartz.simpl.SimpleThreadPool</div><div class="line">org.quartz.threadPool.threadCount:<span class="number">5</span></div><div class="line">org.quartz.threadPool.threadPriority:<span class="number">5</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure JobStore</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.jobStore.misfireThreshold=<span class="number">60000</span></div><div class="line"><span class="comment"># Quartz的集群模式需要设置数据库，所以jobStore设置为有jdbc的</span></div><div class="line">org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX</div><div class="line">org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate</div><div class="line">org.quartz.jobStore.useProperties=<span class="keyword">false</span></div><div class="line">org.quartz.jobStore.dataSource=mysql</div><div class="line">org.quartz.jobStore.tablePrefix=QRTZ_</div><div class="line">org.quartz.jobStore.isClustered=<span class="keyword">true</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure Datasources</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.dataSource.mysql.driver:com.mysql.jdbc.Driver</div><div class="line">org.quartz.dataSource.mysql.URL:jdbc:mysql:<span class="comment">//db.pp.net:3306/quartz?useUnicode=true&amp;characterEncoding=utf-8</span></div><div class="line">org.quartz.dataSource.mysql.user:root</div><div class="line">org.quartz.dataSource.mysql.password:</div><div class="line">org.quartz.dataSource.mysql.maxConnections:<span class="number">5</span></div><div class="line">org.quartz.dataSource.mysql.validationQuery:select <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>Quartz需要初始化数据库表，查看的Github中的初始化代码 <a href="https://github.com/elventear/quartz-scheduler/blob/master/distribution/src/main/assembly/root/docs/dbTables/tables_mysql.sql" target="_blank" rel="external">tables_mysql.sql</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近将老版本程序的单机版定时任务调度调整到了Quartz，理由在于Spring在集群调度上并不是很适合，Quartz更适合，在这么一迁移后，可以将以前任务相关部分的代码解藕出来，逻辑会更为清晰。再者，接口程序目前已支持多开，但是任务这块尚未支持多开下保证同一类程序有且只有一
+    
+    </summary>
+    
+    
+      <category term="Quartz" scheme="http://yoursite.com/tags/Quartz/"/>
+    
+  </entry>
   
   <entry>
     <title>为什么zgrep</title>
@@ -37,238 +70,6 @@
       <category term="zgrep" scheme="http://yoursite.com/tags/zgrep/"/>
     
       <category term="grep" scheme="http://yoursite.com/tags/grep/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL定时备份</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:05:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
-    
-    </summary>
-    
-    
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GC策略&amp;内存申请、对象衰老</title>
-    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
-    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
-<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
-<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
-<a id="more"></a>
-<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
-<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
-<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
-<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
-<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
-<li>当old区空间不够时，JVM会在old区进行major collection；</li>
-<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
-<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
-</ol>
-<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
-<thead>
-<tr>
-<th>GC类型</th>
-<th>触发条件</th>
-<th>触发时发生了什么</th>
-<th>注意</th>
-<th>查看方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>YGC</td>
-<td>eden空间不足</td>
-<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-<tr>
-<td>FGC</td>
-<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
-<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-</tbody>
-</table>
-<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
-&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
-&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM内存组成及分配</title>
-    <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
-    <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
-<blockquote>
-<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
-</blockquote>
-<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
-<ul>
-<li>方法栈&amp;本地方法栈:<ul>
-<li>线程创建时产生,方法执行时生成栈帧</li>
-</ul>
-</li>
-<li>方法区<ul>
-<li>存储类的元数据信息 常量等</li>
-</ul>
-</li>
-<li>堆<ul>
-<li>java代码中所有的new操作</li>
-</ul>
-</li>
-<li>native Memory(C heap)<ul>
-<li>Direct Bytebuffer JNI Compile GC;</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-<h3 id="堆内存分配"><a href="#堆内存分配" class="headerlink" title="堆内存分配"></a>堆内存分配</h3><p>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。因此服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小。对象的堆内存由称为垃圾回收器的自动内存管理系统回收。</p>
-<p><img src="/assets/images/r_heap1.png" alt=""></p>
-<table>
-<thead>
-<tr>
-<th>组成</th>
-<th>详解</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Young Generation</td>
-<td>即图中的Eden + From Space + To Space</td>
-</tr>
-<tr>
-<td>Eden</td>
-<td>存放新生的对象</td>
-</tr>
-<tr>
-<td>Survivor Space</td>
-<td>有两个，存放每次垃圾回收后存活的对象</td>
-</tr>
-<tr>
-<td>Old Generation</td>
-<td>Tenured Generation 即图中的Old Space 主要存放应用程序中生命周期长的存活对象</td>
-</tr>
-</tbody>
-</table>
-<h3 id="非堆内存分配"><a href="#非堆内存分配" class="headerlink" title="非堆内存分配"></a>非堆内存分配</h3><p>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。</p>
-<table>
-<thead>
-<tr>
-<th>组成</th>
-<th>详解</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Permanent Generation</td>
-<td>保存虚拟机自己的静态(refective)数据主要存放加载的Class类级别静态对象如class本身，method，field等等 <br>permanent generation空间不足会引发full GC(详见HotSpot VM GC种类)</td>
-</tr>
-<tr>
-<td>Code Cache</td>
-<td>用于编译和保存本地代码（native code）的内存 JVM内部处理或优化</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;java内存组成介绍：堆(Heap)和非堆(Non-heap)内存&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。&lt;br&gt;在JVM中堆之外的内存称为非堆内存(Non-heap memory)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。&lt;br&gt;&lt;img src=&quot;/assets/images/r_sun-jdk-memory-area1.png&quot; alt=&quot;&quot;&gt;       &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;方法栈&amp;amp;本地方法栈:&lt;ul&gt;
-&lt;li&gt;线程创建时产生,方法执行时生成栈帧&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;方法区&lt;ul&gt;
-&lt;li&gt;存储类的元数据信息 常量等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;堆&lt;ul&gt;
-&lt;li&gt;java代码中所有的new操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;native Memory(C heap)&lt;ul&gt;
-&lt;li&gt;Direct Bytebuffer JNI Compile GC;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL存储emoji表情</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-19T07:06:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>不必多言</p>
-<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
-<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
-<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;不必多言&lt;/p&gt;
-&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
-    
-    </summary>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
-    
-      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
     
   </entry>
   
@@ -623,6 +424,238 @@
       <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GC策略&amp;内存申请、对象衰老</title>
+    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
+    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:24:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
+<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
+<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
+<a id="more"></a>
+<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
+<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
+<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
+<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
+<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
+<li>当old区空间不够时，JVM会在old区进行major collection；</li>
+<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
+<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
+</ol>
+<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
+<thead>
+<tr>
+<th>GC类型</th>
+<th>触发条件</th>
+<th>触发时发生了什么</th>
+<th>注意</th>
+<th>查看方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YGC</td>
+<td>eden空间不足</td>
+<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
+<td>jstat –gcutil gc log</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
+<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
+<td>jstat –gcutil gc log</td>
+</tr>
+</tbody>
+</table>
+<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
+&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
+&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM内存组成及分配</title>
+    <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
+    <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:24:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
+<blockquote>
+<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
+</blockquote>
+<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
+<ul>
+<li>方法栈&amp;本地方法栈:<ul>
+<li>线程创建时产生,方法执行时生成栈帧</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>存储类的元数据信息 常量等</li>
+</ul>
+</li>
+<li>堆<ul>
+<li>java代码中所有的new操作</li>
+</ul>
+</li>
+<li>native Memory(C heap)<ul>
+<li>Direct Bytebuffer JNI Compile GC;</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="堆内存分配"><a href="#堆内存分配" class="headerlink" title="堆内存分配"></a>堆内存分配</h3><p>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。因此服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小。对象的堆内存由称为垃圾回收器的自动内存管理系统回收。</p>
+<p><img src="/assets/images/r_heap1.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>详解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Young Generation</td>
+<td>即图中的Eden + From Space + To Space</td>
+</tr>
+<tr>
+<td>Eden</td>
+<td>存放新生的对象</td>
+</tr>
+<tr>
+<td>Survivor Space</td>
+<td>有两个，存放每次垃圾回收后存活的对象</td>
+</tr>
+<tr>
+<td>Old Generation</td>
+<td>Tenured Generation 即图中的Old Space 主要存放应用程序中生命周期长的存活对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="非堆内存分配"><a href="#非堆内存分配" class="headerlink" title="非堆内存分配"></a>非堆内存分配</h3><p>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。</p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>详解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permanent Generation</td>
+<td>保存虚拟机自己的静态(refective)数据主要存放加载的Class类级别静态对象如class本身，method，field等等 <br>permanent generation空间不足会引发full GC(详见HotSpot VM GC种类)</td>
+</tr>
+<tr>
+<td>Code Cache</td>
+<td>用于编译和保存本地代码（native code）的内存 JVM内部处理或优化</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;java内存组成介绍：堆(Heap)和非堆(Non-heap)内存&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。&lt;br&gt;在JVM中堆之外的内存称为非堆内存(Non-heap memory)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。&lt;br&gt;&lt;img src=&quot;/assets/images/r_sun-jdk-memory-area1.png&quot; alt=&quot;&quot;&gt;       &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;方法栈&amp;amp;本地方法栈:&lt;ul&gt;
+&lt;li&gt;线程创建时产生,方法执行时生成栈帧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;方法区&lt;ul&gt;
+&lt;li&gt;存储类的元数据信息 常量等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;堆&lt;ul&gt;
+&lt;li&gt;java代码中所有的new操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;native Memory(C heap)&lt;ul&gt;
+&lt;li&gt;Direct Bytebuffer JNI Compile GC;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL定时备份</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:05:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
+    
+    </summary>
+    
+    
+      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL存储emoji表情</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-19T07:06:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>不必多言</p>
+<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
+<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
+<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;不必多言&lt;/p&gt;
+&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
+    
+    </summary>
+    
+    
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+    
+      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
+    
+      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
     
   </entry>
   
@@ -1361,186 +1394,6 @@ IE 9.0.8080.16413
     
     
       <category term="web" scheme="http://yoursite.com/tags/web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown 快速入门</title>
-    <link href="http://yoursite.com/2012/03/31/Markdown-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
-    <id>http://yoursite.com/2012/03/31/Markdown-快速入门/</id>
-    <published>2012-03-30T16:00:00.000Z</published>
-    <updated>2016-08-18T03:37:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>声明：</strong> 这份文档派生(fork)于<a href="http://markdown.tw/" target="_blank" rel="external">繁体中文版</a>，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 Markdown 语法编写，你可以到这里<a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/basics.md" target="_blank" rel="external">查看它的源文件</a>。「繁体中文版的原始文件可以<a href="https://github.com/othree/markdown-syntax-zhtw/blob/master/basics.md" target="_blank" rel="external">查看这里</a>」–By @<a href="http://twitter.com/riku" target="_blank" rel="external">riku</a> / 本项目托管于 <a href="http://gitcafe.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">GitCafe</a></p>
-<p><strong>注：</strong> 本项目同时也托管于 <a href="https://github.com/riku/Markdown-Syntax-CN" target="_blank" rel="external">Github</a>上，请通过 fork＋pull request 方式来帮忙改进本项目。</p>
-<h1 id="Markdown-Basics-（快速入门）-点击查看完整语法说明"><a href="#Markdown-Basics-（快速入门）-点击查看完整语法说明" class="headerlink" title="Markdown: Basics （快速入门） / (点击查看完整语法说明)"></a>Markdown: Basics （快速入门） / (<a href="../markdown-syntax">点击查看完整语法说明</a>)</h1><h2 id="Getting-the-Gist-of-Markdown’s-Formatting-Syntax"><a href="#Getting-the-Gist-of-Markdown’s-Formatting-Syntax" class="headerlink" title="Getting the Gist of Markdown’s Formatting Syntax"></a>Getting the Gist of Markdown’s Formatting Syntax</h2><p>此页提供了 Markdown 的简单概念， <a href="http://gitcafe.com/riku/Markdown-Syntax-CN/blob/master/syntax.md" title="Markdown Syntax" target="_blank" rel="external">语法说明</a> 页提供了完整详细的文档，说明了每项功能。但是 Markdown 其实很简单就可以上手，此页文档提供了一些范例，并且每个范例都会提供输出的 HTML 结果。</p>
-<p>其实直接试试看也是一个很不错的方法， <a href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Dingus" target="_blank" rel="external">Dingus</a> 是一个网页应用程序，你可以把自已编写的 Markdown 文档转成 XHTML。</p>
-<h2 id="段落、标题、区块代码"><a href="#段落、标题、区块代码" class="headerlink" title="段落、标题、区块代码"></a>段落、标题、区块代码</h2><p>一个段落是由一个以上的连接的行句组成，而一个以上的空行则会划分出不同的段落（空行的定义是显示上看起来像是空行，就被视为空行，例如有一行只有空白和 tab，那该行也会被视为空行），一般的段落不需要用空白或换行缩进。</p>
-<p>Markdown 支持两种标题的语法，<a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="external">Setext</a> 和 <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="external">atx</a> 形式。Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），Atx 形式在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶。</p>
-<p>区块引用则使用 email 形式的 ‘<code>&gt;</code>‘ 角括号。</p>
-<p>Markdown 语法:</p>
-<pre><code>A First Level Header
-====================
-A Second Level Header
----------------------
-
-Now is the time for all good men to come to
-the aid of their country. This is just a
-regular paragraph.
-
-The quick brown fox jumped over the lazy
-dog&apos;s back.
-### Header 3
-
-&gt; This is a blockquote.
-&gt; 
-&gt; This is the second paragraph in the blockquote.
-&gt;
-&gt; ## This is an H2 in a blockquote
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;h1&gt;A First Level Header&lt;/h1&gt;
-&lt;h2&gt;A Second Level Header&lt;/h2&gt;
-&lt;p&gt;Now is the time for all good men to come to
-the aid of their country. This is just a
-regular paragraph.&lt;/p&gt;
-&lt;p&gt;The quick brown fox jumped over the lazy
-dog&apos;s back.&lt;/p&gt;
-&lt;h3&gt;Header 3&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is a blockquote.&lt;/p&gt;
-&lt;p&gt;This is the second paragraph in the blockquote.&lt;/p&gt;
-&lt;h2&gt;This is an H2 in a blockquote&lt;/h2&gt;
-&lt;/blockquote&gt;
-</code></pre><h3 id="修辞和强调"><a href="#修辞和强调" class="headerlink" title="修辞和强调"></a>修辞和强调</h3><p>Markdown 使用星号和底线来标记需要强调的区段。</p>
-<p>Markdown 语法:</p>
-<pre><code>Some of these words *are emphasized*.
-Some of these words _are emphasized also_.
-Use two asterisks for **strong emphasis**.
-Or, if you prefer, __use two underscores instead__.
-</code></pre><p>输出 HTML 为:</p>
-<pre><code>&lt;p&gt;Some of these words &lt;em&gt;are emphasized&lt;/em&gt;.
-Some of these words &lt;em&gt;are emphasized also&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Use two asterisks for &lt;strong&gt;strong emphasis&lt;/strong&gt;.
-Or, if you prefer, &lt;strong&gt;use two underscores instead&lt;/strong&gt;.&lt;/p&gt;
-</code></pre><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号和减号来做为列表的项目标记，这些符号是都可以使用的，使用星号：</p>
-<pre><code>* Candy.
-* Gum.
-* Booze.
-</code></pre><p>加号：</p>
-<pre><code>+ Candy.
-+ Gum.
-+ Booze.
-</code></pre><p>和减号</p>
-<pre><code>- Candy.
-- Gum.
-- Booze.
-</code></pre><p>都会输出 HTML 为：</p>
-<pre><code>&lt;ul&gt;
-&lt;li&gt;Candy.&lt;/li&gt;
-&lt;li&gt;Gum.&lt;/li&gt;
-&lt;li&gt;Booze.&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre><p>有序的列表则是使用一般的数字接着一个英文句点作为项目标记：</p>
-<pre><code>1. Red
-2. Green
-3. Blue
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;ol&gt;
-&lt;li&gt;Red&lt;/li&gt;
-&lt;li&gt;Green&lt;/li&gt;
-&lt;li&gt;Blue&lt;/li&gt;
-&lt;/ol&gt;
-</code></pre><p>如果你在项目之间插入空行，那项目的内容会用 <code>&lt;p&gt;</code> 包起来，你也可以在一个项目内放上多个段落，只要在它前面缩排 4 个空白或 1 个 tab 。</p>
-<pre><code>* A list item.
-With multiple paragraphs.
-
-* Another item in the list.
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;A list item.&lt;/p&gt;
-&lt;p&gt;With multiple paragraphs.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Another item in the list.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支援两种形式的链接语法： <em>行内</em> 和 <em>参考</em> 两种形式，两种都是使用角括号来把文字转成连结。</p>
-<p>行内形式是直接在后面用括号直接接上链接：</p>
-<pre><code>This is an [example link](http://example.com/).
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot;&gt;
-example link&lt;/a&gt;.&lt;/p&gt;
-</code></pre><p>你也可以选择性的加上 title 属性：</p>
-<pre><code>This is an [example link](http://example.com/ &quot;With a Title&quot;).
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;This is an &lt;a href=&quot;http://example.com/&quot; title=&quot;With a Title&quot;&gt;
-example link&lt;/a&gt;.&lt;/p&gt;
-</code></pre><p>参考形式的链接让你可以为链接定一个名称，之后你可以在文件的其他地方定义该链接的内容：</p>
-<pre><code>I get 10 times more traffic from [Google][1] than from
-[Yahoo][2] or [MSN][3].
-
-[1]: http://google.com/ &quot;Google&quot;
-[2]: http://search.yahoo.com/ &quot;Yahoo Search&quot;
-[3]: http://search.msn.com/ &quot;MSN Search&quot;
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
-title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from &lt;a href=&quot;http://search.yahoo.com/&quot;
-title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt; or &lt;a href=&quot;http://search.msn.com/&quot;
-title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
-</code></pre><p>title 属性是选择性的，链接名称可以用字母、数字和空格，但是不分大小写：</p>
-<pre><code>I start my morning with a cup of coffee and
-[The New York Times][NY Times].
-
-[ny times]: http://www.nytimes.com/
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;I start my morning with a cup of coffee and
-&lt;a href=&quot;http://www.nytimes.com/&quot;&gt;The New York Times&lt;/a&gt;.&lt;/p&gt;
-</code></pre><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>图片的语法和链接很像。</p>
-<p>行内形式（title 是选择性的）：</p>
-<pre><code>![alt text](/path/to/img.jpg &quot;Title&quot;)
-</code></pre><p>参考形式：</p>
-<pre><code>![alt text][id]
-
-[id]: /path/to/img.jpg &quot;Title&quot;
-</code></pre><p>上面两种方法都会输出 HTML 为：</p>
-<pre><code>&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;alt text&quot; title=&quot;Title&quot; /&gt;
-</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>在一般的段落文字中，你可以使用反引号 <code>` </code> 来标记代码区段，区段内的 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 都会被自动的转换成 HTML 实体，这项特性让你可以很容易的在代码区段内插入 HTML 码：</p>
-<pre><code>I strongly recommend against using any `&lt;blink&gt;` tags.
-
-I wish SmartyPants used named entities like `&amp;mdash;`
-instead of decimal-encoded entites like `&amp;#8212;`.
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;I strongly recommend against using any
-&lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
-&lt;p&gt;I wish SmartyPants used named entities like
-&lt;code&gt;&amp;amp;mdash;&lt;/code&gt; instead of decimal-encoded
-entites like &lt;code&gt;&amp;amp;#8212;&lt;/code&gt;.&lt;/p&gt;
-</code></pre><p>如果要建立一个已经格式化好的代码区块，只要每行都缩进 4 个空格或是一个 tab 就可以了，而 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 也一样会自动转成 HTML 实体。</p>
-<p>Markdown 语法:</p>
-<pre><code>If you want your page to validate under XHTML 1.0 Strict,
-you&apos;ve got to put paragraph tags in your blockquotes:
-
-&lt;blockquote&gt;
-&lt;p&gt;For example.&lt;/p&gt;
-&lt;/blockquote&gt;
-</code></pre><p>输出 HTML 为：</p>
-<pre><code>&lt;p&gt;If you want your page to validate under XHTML 1.0 Strict,
-you&apos;ve got to put paragraph tags in your blockquotes:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;blockquote&amp;gt;
-&amp;lt;p&amp;gt;For example.&amp;lt;/p&amp;gt;
-&amp;lt;/blockquote&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;声明：&lt;/strong&gt; 这份文档派生(fork)于&lt;a href=&quot;http://markdown.tw/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;繁体中文版&lt;/a&gt;，在此基础上进行了繁体转简体工作，并进行了适当的润色。此文档用 M
-    
-    </summary>
-    
-      <category term="jekyll" scheme="http://yoursite.com/categories/jekyll/"/>
-    
-    
-      <category term="jekyll" scheme="http://yoursite.com/tags/jekyll/"/>
-    
-      <category term="Markdown" scheme="http://yoursite.com/tags/Markdown/"/>
     
   </entry>
   
