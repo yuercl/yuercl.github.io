@@ -5,7 +5,7 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/08/23/模版模式/" class="post-link">模版模式</a></h2><span class="post-time">2016年8月23日</span><div class="post-content"><h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) …</p>
+</script></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/08/23/模版模式/" class="post-link">设计模式之模版模式</a></h2><span class="post-time">2016年8月23日</span><div class="post-content"><h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) …</p>
 <p>别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…</p>
 <blockquote>
 <p>模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板方法模式的用意。</p>
@@ -29,26 +29,6 @@
 <p>Quartz需要初始化数据库表，查看的Github中的初始化代码 <a href="https://github.com/elventear/quartz-scheduler/blob/master/distribution/src/main/assembly/root/docs/dbTables/tables_mysql.sql" target="_blank" rel="external">tables_mysql.sql</a></p>
 </div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/08/19/为什么zgrep/" class="post-link">为什么zgrep</a></h2><span class="post-time">2016年8月19日</span><div class="post-content"><p>真不知道选一个什么样的域名，最后想了一个自己比较常用的一条命令，于是变成了<code>zgrep.me</code></p>
  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find logs/ -name <span class="string">'cashier.2016*'</span> -type f | xargs zgrep <span class="string">'ERROR'</span> | grep <span class="string">'failed'</span></div></pre></td></tr></table></figure>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/08/10/JVM内存组成及分配/" class="post-link">JVM内存组成及分配</a></h2><span class="post-time">2016年8月10日</span><div class="post-content"><p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
-<blockquote>
-<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
-</blockquote>
-<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
-<ul>
-<li>方法栈&amp;本地方法栈:<ul>
-<li>线程创建时产生,方法执行时生成栈帧</li>
-</ul>
-</li>
-<li>方法区<ul>
-<li>存储类的元数据信息 常量等</li>
-</ul>
-</li>
-<li>堆<ul>
-<li>java代码中所有的new操作</li>
-</ul>
-</li>
-<li>native Memory(C heap)<ul>
-<li>Direct Bytebuffer JNI Compile GC;</li>
-</ul>
-</li>
-</ul></div><a href="/2016/08/10/JVM内存组成及分配/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/08/10/GC策略-内存申请、对象衰老/" class="post-link">GC策略&内存申请、对象衰老</a></h2><span class="post-time">2016年8月10日</span><div class="post-content"><h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
+<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
+<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p></div><a href="/2016/08/10/GC策略-内存申请、对象衰老/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
