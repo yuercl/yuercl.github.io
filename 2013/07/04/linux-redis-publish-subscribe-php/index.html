@@ -1,12 +1,12 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="Basictools:redisatubuntu13.0464bitphp:PHP5.4.9-4ubuntu2.1redis:Redis2.6.14,64bitinstallphp(nginx+apache2+php+mys"><meta name="keywords" content="redis"><title>redis publish &amp; subscribe php · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2013/07/04/linux-redis-publish-subscribe-php/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript">var _hmt = _hmt || [];
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="Basictools:redisatubuntu13.0464bitphp:PHP5.4.9-4ubuntu2.1redis:Redis2.6.14,64bitinstallphp(nginx+apache2+php+mys"><meta name="keywords" content="redis"><title>redis publish &amp; subscribe php · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2013/07/04/linux-redis-publish-subscribe-php/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">redis publish & subscribe php</h1><span class="post-time">2013年7月4日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic"><span class="toc-text">Basic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Files"><span class="toc-text">Files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Attention"><span class="toc-text">Attention</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#See-more"><span class="toc-text">See more</span></a></li></ol></div><div class="post-content"><h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><blockquote>
-<p>tools : redis at ubuntu13.04 64bit<br>php   : PHP 5.4.9-4ubuntu2.1<br>redis : Redis 2.6.14 ,64 bit </p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">redis publish & subscribe php</h1><span class="post-time">2013年7月4日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic"><span class="toc-text">Basic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Files"><span class="toc-text">Files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Attention"><span class="toc-text">Attention</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#See-more"><span class="toc-text">See more</span></a></li></ol></div><div class="post-content"><h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><blockquote>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>tools : redis at ubuntu13.04 64bit<br>php   : PHP 5.4.9-4ubuntu2.1<br>redis : Redis 2.6.14 ,64 bit </p>
 </blockquote>
 <ol>
 <li>install php (nginx + apache2 + php + mysql ) etc …</li>
@@ -45,4 +45,21 @@ s.src = '//Your disqus ID.disqus.com/embed.js';
 
 s.setAttribute('data-timestamp', +new Date());
 (d.head || d.body).appendChild(s);
-})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>
