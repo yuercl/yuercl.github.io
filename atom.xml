@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-09-06T10:14:59.000Z</updated>
+  <updated>2016-09-06T10:26:57.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>Storm的7种流分组策略Stream Grouping</title>
     <link href="http://yoursite.com/2016/09/06/Storm%E7%9A%847%E7%A7%8D%E6%B5%81%E5%88%86%E7%BB%84%E7%AD%96%E7%95%A5Stream-Grouping/"/>
     <id>http://yoursite.com/2016/09/06/Storm的7种流分组策略Stream-Grouping/</id>
-    <published>2016-09-05T16:00:00.000Z</published>
-    <updated>2016-09-06T10:14:59.000Z</updated>
+    <published>2016-09-06T08:00:00.000Z</published>
+    <updated>2016-09-06T10:26:57.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="流分组策略-Stream-Grouping"><a href="#流分组策略-Stream-Grouping" class="headerlink" title="流分组策略(Stream Grouping)"></a>流分组策略(Stream Grouping)</h2><p>Stream Grouping，告诉topology如何在两个组件之间发送tuple<br>定义一个topology的其中一步是定义每个bolt接收什么样的流作为输入。stream grouping就是用来定义一个stream应该如果分配数据给bolts上面的多个tasks </p>
 <p>Storm里面有7种类型的stream grouping，也可以通过实现CustomStreamGrouping接口来实现自定义Grouping </p>
@@ -49,11 +49,53 @@
   </entry>
   
   <entry>
+    <title>Storm安装</title>
+    <link href="http://yoursite.com/2016/09/06/Storm%E5%AE%89%E8%A3%85/"/>
+    <id>http://yoursite.com/2016/09/06/Storm安装/</id>
+    <published>2016-09-06T04:00:00.000Z</published>
+    <updated>2016-09-06T10:28:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程</p>
+<ul>
+<li>wget …</li>
+<li>tar -xzvf …</li>
+<li>cd …</li>
+<li>vim conf/storm.yaml</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">########### These MUST be filled in for a storm configuration</span></div><div class="line">storm.zookeeper.servers:</div><div class="line">     - <span class="string">"192.168.1.110"</span></div><div class="line"><span class="comment">#     - "server2" 如果多个，就排着</span></div><div class="line"><span class="comment">#</span></div><div class="line">numbus.seeds: [<span class="string">"127.0.0.1"</span>] 本机就行，先跑起来</div></pre></td></tr></table></figure>
+<p>各种start以后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bin/storm nimbus &amp; 后台去 </div><div class="line">bin/storm supervisor &amp; 后台去 </div><div class="line">bin/storm ui &amp; 后台去</div></pre></td></tr></table></figure>
+<p>开了ui后会打开http的8080端口，里面能看到服务器的状态，之后提交一个Topology到Storm上，Topology 从提交的那一刻就会一直运行，接收spout的数据，直到手动结束</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/storm jar examples/storm-starter/storm-starter-topologies-*.jar storm.starter.StatefulTopology statetopology</div></pre></td></tr></table></figure>
+<p>Let’s get the ball rolling ～～～</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wget …&lt;/li&gt;
+&lt;li&gt;tar -xzvf …&lt;/li&gt;
+&lt;li&gt;cd …&lt;/li&gt;
+&lt;li&gt;vim conf/storm.yaml&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="other" scheme="http://yoursite.com/categories/other/"/>
+    
+    
+      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
+    
+  </entry>
+  
+  <entry>
     <title>kafka</title>
     <link href="http://yoursite.com/2016/09/06/kafka/"/>
     <id>http://yoursite.com/2016/09/06/kafka/</id>
-    <published>2016-09-05T16:00:00.000Z</published>
-    <updated>2016-09-06T10:06:47.000Z</updated>
+    <published>2016-09-06T02:00:00.000Z</published>
+    <updated>2016-09-06T10:27:44.000Z</updated>
     
     <content type="html"><![CDATA[<p>wget –&gt; tar -xzvf –&gt; cd –&gt;</p>
 <p>注意绑定的ip地址，配置文件，server.properties</p>
@@ -336,71 +378,6 @@
   </entry>
   
   <entry>
-    <title>GC策略&amp;内存申请、对象衰老</title>
-    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
-    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
-<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
-<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
-<a id="more"></a>
-<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
-<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
-<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
-<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
-<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
-<li>当old区空间不够时，JVM会在old区进行major collection；</li>
-<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
-<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
-</ol>
-<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
-<thead>
-<tr>
-<th>GC类型</th>
-<th>触发条件</th>
-<th>触发时发生了什么</th>
-<th>注意</th>
-<th>查看方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>YGC</td>
-<td>eden空间不足</td>
-<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-<tr>
-<td>FGC</td>
-<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
-<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-</tbody>
-</table>
-<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
-&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
-&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
     <title>JVM内存组成及分配</title>
     <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
     <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
@@ -505,6 +482,71 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GC策略&amp;内存申请、对象衰老</title>
+    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
+    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:24:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
+<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
+<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
+<a id="more"></a>
+<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
+<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
+<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
+<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
+<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
+<li>当old区空间不够时，JVM会在old区进行major collection；</li>
+<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
+<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
+</ol>
+<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
+<thead>
+<tr>
+<th>GC类型</th>
+<th>触发条件</th>
+<th>触发时发生了什么</th>
+<th>注意</th>
+<th>查看方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YGC</td>
+<td>eden空间不足</td>
+<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
+<td>jstat –gcutil gc log</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
+<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
+<td>jstat –gcutil gc log</td>
+</tr>
+</tbody>
+</table>
+<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
+&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
+&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
     
     </summary>
     
@@ -1336,52 +1378,6 @@ ramesh@dev-db$ crontab -l
     
     
       <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>我想要找全国的酒店信息怎么办？</title>
-    <link href="http://yoursite.com/2013/06/01/%E6%88%91%E6%83%B3%E8%A6%81%E6%89%BE%E5%85%A8%E5%9B%BD%E7%9A%84%E9%85%92%E5%BA%97%E4%BF%A1%E6%81%AF%E6%80%8E%E4%B9%88%E5%8A%9E/"/>
-    <id>http://yoursite.com/2013/06/01/我想要找全国的酒店信息怎么办/</id>
-    <published>2013-05-31T16:00:00.000Z</published>
-    <updated>2016-08-18T03:35:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>   今日需要获取一些数据，这些数据从网上找不到下载的地方。这里以酒店数据为例。下同，今日想获取全国的酒店LBS信息的数据，包括但不局限于酒店名称，酒店经纬度，酒店入住价格等信息。</p>
-<p>于是想到可以分析现有APP接口得到数据，通常来讲，APP接口的返回的数据是json和xml格式的。<br>所需工具：抓包工具Wireshark之类的，代理工具(用于在手机或者是Pad上使用)，为了方遍，直接采用Fiddler2工具，自带有代理选项<br>手机客户端或者是Pad客户端上设置好代理，这个不多说。<br>打开APP，刷几个列表，发现Fiddle里面就有很多数据了，包括本身这个app的，还有这个app的统计信息，一般的没战略的app可能会没有统计信息。</p>
-<p>好吧。。。在fiddle里面找到一个请求，是http的，post，有host，有param，本地构造。</p>
-<p><img src="/assets/images/hotel.jpg" alt="alt text"></p>
-<pre><code>&lt;html&gt;
-    &lt;form method=&quot;post&quot; action=&quot;http://host:port/Finder.php?type=city_hot_zones&amp;city_id=1&amp;client_version=1.6.4&amp;client_agent=iPad&amp;market=AppStore&quot;&gt;
-        &lt;input name=&quot;type&quot; value=&quot;city_hot_zones&quot;&gt;
-        &lt;input name=&quot;city_id&quot; value=&quot;1&quot;&gt;
-        &lt;input name=&quot;client_version&quot; value=&quot;1.6.4&quot;&gt;
-        &lt;input name=&quot;client_agent&quot; value=&quot;iPad&quot;&gt;
-        &lt;input name=&quot;market&quot; value=&quot;AppStore&quot;&gt;
-        &lt;input type=&quot;submit&quot;&gt;
-    &lt;/form&gt;
-&lt;/html&gt; 
-</code></pre><p>ok，然后浏览器访问，发现返回是xml的数组，包含名字和这个酒店的经纬度。</p>
-<p><img src="/assets/images/hotel-result.jpg" alt="alt text" title="Title"></p>
-<p>于是乎，如果可以构造请求，那么这个app上面的所有的地理位置数据理论上讲是都可以下载了。httpclient模拟请求over，然后等数据。。。</p>
-<p><strong>反思</strong> 中间的数据是不是应该采用加密措施。</p>
-<p>不要说就我想到这么搞，其实他们的数据也是这么搞到的，说不定哈。。。<br>分析一个APP—从功能上，从界面设计上，从盈利模式上，从市场推广上，现在到了，从数据交换的协议上。。。</p>
-<h1 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h1><ul>
-<li>Fiddler 教程 .<a href="http://www.cnblogs.com/TankXiao/archive/2012/02/06/2337728.html" target="_blank" rel="external">http://www.cnblogs.com/TankXiao/archive/2012/02/06/2337728.html</a></li>
-<li>类似的工具还有tcpdump,wireshark等。。。</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;   今日需要获取一些数据，这些数据从网上找不到下载的地方。这里以酒店数据为例。下同，今日想获取全国的酒店LBS信息的数据，包括但不局限于酒店名称，酒店经纬度，酒店入住价格等信息。&lt;/p&gt;
-&lt;p&gt;于是想到可以分析现有APP接口得到数据，通常来讲，APP接口的返回的数据是js
-    
-    </summary>
-    
-      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
-    
-    
-      <category term="hack" scheme="http://yoursite.com/tags/hack/"/>
     
   </entry>
   

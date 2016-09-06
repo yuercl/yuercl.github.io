@@ -15,7 +15,7 @@
 <h3 id="None-Grouping"><a href="#None-Grouping" class="headerlink" title="None Grouping"></a>None Grouping</h3><p>不分组，这个分组的意思是说stream不关心到底怎样分组。目前这种分组和Shuffle grouping是一样的效果， 有一点不同的是storm会把使用none grouping的这个bolt放到这个bolt的订阅者同一个线程里面去执行（如果可能的话）。 </p>
 <h3 id="Direct-Grouping"><a href="#Direct-Grouping" class="headerlink" title="Direct Grouping"></a>Direct Grouping</h3><p>指向型分组， 这是一种比较特别的分组方法，用这种分组意味着消息（tuple）的发送者指定由消息接收者的哪个task处理这个消息。只有被声明为 Direct Stream 的消息流可以声明这种分组方法。而且这种消息tuple必须使用 emitDirect 方法来发射。消息处理者可以通过 TopologyContext 来获取处理它的消息的task的id (OutputCollector.emit方法也会返回task的id)  </p>
 <h3 id="Local-or-shuffle-grouping"><a href="#Local-or-shuffle-grouping" class="headerlink" title="Local or shuffle grouping"></a>Local or shuffle grouping</h3><p>本地或随机分组。如果目标bolt有一个或者多个task与源bolt的task在同一个工作进程中，tuple将会被随机发送给这些同进程中的tasks。否则，和普通的Shuffle Grouping行为一致。 </p>
-</div></article><div class="tags"><a href="/tags/Storm/">Storm</a></div><div class="paginator"><a href="/2016/09/06/kafka/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+</div></article><div class="tags"><a href="/tags/Storm/">Storm</a></div><div class="paginator"><a href="/2016/09/06/Storm安装/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
     this.page.url = 'http://yoursite.com/2016/09/06/Storm的7种流分组策略Stream-Grouping/';
     this.page.identifier = '2016/09/06/Storm的7种流分组策略Stream-Grouping/';
     this.page.title = 'Storm的7种流分组策略Stream Grouping';
