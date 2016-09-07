@@ -5,9 +5,60 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/04/13/你会做Web上的用户登录功能吗/" class="post-link">你会做Web上的用户登录功能吗</a></h2><span class="post-time">2012年4月13日</span><div class="post-content"><p>Web上的用户登录功能应该是最基本的功能了，可是在我看过一些站点的用户登录功能后，我觉得很有必要写一篇文章教大家怎么来做用户登录功能。下面的文章告诉大家这个功能可能并没有你所想像的那么简单，这是一个关系到用户安全的功能，希望大家能从下面的文章中能知道什么样的方法才是一个好的用户登录功能。以下内容，转载时请保持原文一致，并请注明作者和出处。</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/04/13/最佳-Web-中文默认字体/" class="post-link">最佳 Web 中文默认字体</a></h2><span class="post-time">2012年4月13日</span><div class="post-content"><p>作者：<a href="http://weibo.com/lifesinger" target="_blank" rel="external">@lifesinger</a></p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><hr>
+<p>最近淘宝网首页有个小小的 默认字体调整风波，中文默认字体远比我们想象中的复杂。以前主要关注 font-family 自身，忽略了 lang 属性和 charset 设置。今天做了个更详尽的测试：</p>
+<p><a href="http://lifesinger.github.com/lab/2011/default-fonts/" target="_blank" rel="external">http://lifesinger.github.com/lab/2011/default-fonts/</a></p>
+<p>在不同操作系统下，用各个浏览器打开，特别是 Firefox 和 Opera，混乱的世界啊，真真的与浏览器斗，乐趣全无！</p>
+<p>虽然沮丧悲情愤，但分析研究的工作还是得继续：</p>
+<ul>
+<li>lang, charset 和 font-family 都会对默认字体产生影响，规律很复杂。</li>
+<li>浏览器偏好里的字体设置，对默认字体有直接影响，比如 WebKit 内核的 Chrome 浏览器。</li>
+<li>宋体转成 “\5b8b\4f53” 也不能通吃所有浏览器。比如在 Mac OS 的 Chrome 中，只认识 simsun.</li>
+<li><del>宋体其实是 serif 有衬线字体，后面跟 sans-serif, 逻辑上是错的。</del><br>（修正：并没有规定前面的 font name 要和最后的 general family 保持一致）</li>
+<li>不同操作系统下，各个浏览器默认的 sans-serif 中文字体，一般都是最佳选择或用户已调整为最佳，不能强制用户都用宋体。</li>
+</ul>
+<p>从目前用户反馈的情况来看，在以 12px 大小为主的网页设计中，<strong>最佳的中文默认字体方案是：Windows 下用宋体，其他操作系统下用雅黑等无衬线字体</strong>。未来随着电脑屏幕的变大和分辨率的提高，当字体的默认大小提高到 14px 以上时，或许所有操作系统下，最佳中文默认字体会统一为雅黑等无衬线字体。</p>
+<p>为了让所有网页在尽可能多的情况下，都用最佳中文字体渲染，需要特别考虑以下几点：</p>
+<ul>
+<li>在 Mac Chrome 等环境下，用 font-family: times, sans-serif 时，<br>中文字体并不会根据 sans-serif 渲染，而是会根据 times 的 serif 属性，<br>选择默认的 serif 中文字体来渲染。<br>比如在 Mac Chrome 下，默认 serif 中文字体是很接近宋体的一个字体，比较难看。<br>（修正：实际情况更为复杂，请参考评论中的讨论）</li>
+<li>在 Firefox 中，只要 font-family 中有宋体，中文必然就用宋体展现。<br>所以 font-family 中不能有宋体。</li>
+<li>当 lang=“zh-CN”, charset=“utf-8” 时，<br>font: arial 在 Mac Firefox 等环境下，默认中文字体是宋体。</li>
+<li>在英文 Win7 下，只要 charset=“gbk”, 当 font-family 为 arial, sans-serif 时，<br><del>默认中文字体是很难看的 Microsoft Sans Serif Regular.</del><br>（修正：是 fallback 到了韩文字体 Dotum/Gulim（gulim.ttc）来显示，<br>Dotum/Gulim 没有的字符最终会 fallback 到 SimSun，暂时不知道日文字体是否夹在中间。<br>和 Microsoft Sans Serif 没有一点关系。）</li>
+<li>Opera 是个恐怖的世界，不要尝试分析其规律，最后测试一下就好。</li>
+</ul>
+<p>可以总结出：</p>
+<ol>
+<li><p>如果页面 charset 是 utf-8, 完美的默认字体方案是：</p>
+<pre><code>font-family: arial, sans-serif;
+</code></pre><p>无论省略 lang 还是设置为 zh-CN, 在各种环境下都满足预期。</p>
+</li>
+<li><p>如果页面 charset 是 gbk, 推荐默认字体方案为：</p>
+<pre><code>font-family: arial;
+</code></pre><p>Chrome OS 下未测试，根据陈成博客上的反馈，<br>好像会因为没有 sans-serif 而导致中文字体很难看。<br>不过考虑 Chrome OS 还未正式发布，目前可以先忽略。</p>
+</li>
+</ol>
+<p>最后，个人推荐简体中文页面的最佳实践为：</p>
+<pre><code>html lang=zh-CN
+charset=utf-8
+font-family: arial, sans-serif;
+</code></pre><p>测试环境说明：</p>
+<pre><code>Mac OS X 10.6.7
+Chrome 10.0.648.204
+Firefox 4.0
+Safari 5.0.4
+Opera 11.01
 
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><h2>用户名和口令</h2>
+Win7 Ultimate
+IE 9.0.8080.16413
+</code></pre><p>补充：</p>
+<ol>
+<li>关于字体的默认大小和行高等信息，推荐博文：<a href="http://justjavac.com/web/2012/04/13/default-web-font-style.html" target="_blank" rel="external">默认 Web 字体样式</a></li>
+<li>关于字体的 fallback 等文本渲染信息，推荐博文：<a href="http://justjavac.com/web/2012/04/13/how-do-browsers-render-text.html" target="_blank" rel="external">浏览器如何渲染文本</a></li>
+</ol>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/04/13/你会做Web上的用户登录功能吗/" class="post-link">你会做Web上的用户登录功能吗</a></h2><span class="post-time">2012年4月13日</span><div class="post-content"><p>Web上的用户登录功能应该是最基本的功能了，可是在我看过一些站点的用户登录功能后，我觉得很有必要写一篇文章教大家怎么来做用户登录功能。下面的文章告诉大家这个功能可能并没有你所想像的那么简单，这是一个关系到用户安全的功能，希望大家能从下面的文章中能知道什么样的方法才是一个好的用户登录功能。以下内容，转载时请保持原文一致，并请注明作者和出处。</p>
+
+<h2>用户名和口令</h2>
 
 <p>首先，我们先来说说用户名和口令的事。这并不是本站第一次谈论这个事了。如何管理自己的口令让你知道怎么管理自己的口令，破解你的口令让你知道在现代这样速度的计算速度下，用穷举法破解你的口令可能会是一件很轻松的事。在这里我想告诉从开发者的角度上来做设计这个用户名和口令的事。下面一几件规则：</p>
 
@@ -683,9 +734,7 @@ _   底线
 <p>感谢 <a href="https://twitter.com/#!/leafy7382" target="_blank" rel="external">leafy7382</a> 协助翻译，<a href="http://iamhlb.com/" target="_blank" rel="external">hlb</a>、<a href="http://twitter.com/randylien" target="_blank" rel="external">Randylien</a> 帮忙润稿，<a href="https://twitter.com/#!/ethantw" target="_blank" rel="external">ethantw</a> 的<a href="http://ethantw.net/projects/han/" target="_blank" rel="external">汉字标准格式・CSS Reset</a>， <a href="http://kidwm.net/" target="_blank" rel="external">WM</a> 回报文字错误。</p>
 <p>感谢 <a href="https://github.com/fenprace" target="_blank" rel="external">fenprace</a>，<a href="https://github.com/addv" target="_blank" rel="external">addv</a>。</p>
 </div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/03/15/小试牛刀/" class="post-link">小试牛刀</a></h2><span class="post-time">2012年3月15日</span><div class="post-content"><p><img src="/assets/images/www.lu.uestc.edu.cn.png" alt=""></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2012/01/22/利用linux系统轻松破解xp系统密码/" class="post-link">利用linux系统轻松破解xp系统密码</a></h2><span class="post-time">2012年1月22日</span><div class="post-content"><p>其实很简单的，因为在linux下能访问xp的文件系统。在xp的文件系统里面复制system32目录下的cmd.exe改名为sethc.exe将原来的那个sethc.exe替换了，然后启动xp，到登陆的时候不停的按shift键，直到出现命令行窗口，然后在里面输入net user yourUserName newPassword(例如net user yuer yuercl，用户名user可以通过net命令的帮助获得)，然后回车就把密码改掉了，然后就可猥琐了。。。</p>
-<p>今天，虚拟环境下亲测利用ubuntu iso镜像进入ubuntu系统，更改Windows xp文件，完美进入系统。。。</p>
-</div></article></li></ul><div class="paginator"><a href="/page/5/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</div></article></li></ul><div class="paginator"><a href="/page/5/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/7/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

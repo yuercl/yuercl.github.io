@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-09-06T10:26:57.000Z</updated>
+  <updated>2016-09-07T02:34:37.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>终极Shell－－zsh</title>
+    <link href="http://yoursite.com/2016/09/07/%E7%BB%88%E6%9E%81Shell%EF%BC%8D%EF%BC%8Dzsh/"/>
+    <id>http://yoursite.com/2016/09/07/终极Shell－－zsh/</id>
+    <published>2016-09-06T16:00:00.000Z</published>
+    <updated>2016-09-07T02:34:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>如果你在用Shell，默认那用bash，那一定要试试zsh，配合<code>oh-my-zsh</code>那必须推荐，很骚，真的很骚～～</p>
+<ul>
+<li>官网地址: <a href="http://ohmyz.sh" target="_blank" rel="external">http://ohmyz.sh</a></li>
+<li>Github: <a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">https://github.com/robbyrussell/oh-my-zsh</a></li>
+</ul>
+<p>官网写着</p>
+<blockquote>
+<p>Your terminal never felt this good before.</p>
+</blockquote>
+<a id="more"></a>
+<p>安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></div></pre></td></tr></table></figure>
+<p>~/.zshrc 我的配置如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> ZSH=<span class="variable">$HOME</span>/.oh-my-zsh</div><div class="line">ZSH_THEME=<span class="string">"robbyrussell"</span></div><div class="line">plugins=(brew nmap osx <span class="built_in">history</span> git mvn gradle node npm gradle svn sed autojump <span class="built_in">kill</span> docker docker-compose)</div><div class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$PATH</span>:/opt/X11/bin:/usr/local/mysql/bin"</span></div><div class="line"><span class="built_in">source</span> <span class="variable">$ZSH</span>/oh-my-zsh.sh</div><div class="line"><span class="built_in">source</span> ~/.bash_profile</div><div class="line"><span class="built_in">source</span> ~/.zshrc.config.me</div></pre></td></tr></table></figure>
+<p>一定要安装autojump神器.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">brew install autojump</div><div class="line">./install.sh</div><div class="line">[[ <span class="_">-s</span> ~/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; . ~/.autojump/etc/profile.d/autojump.sh</div></pre></td></tr></table></figure>
+<p>使用 zsh</p>
+<ul>
+<li>autojump j 这货支持模糊匹配，不用输全，一个字骚</li>
+<li>kill 再按一个tab键，经常kill一个jar，效率很高</li>
+<li>.. / …  cd都不需要</li>
+<li>tab 多按几下，有惊喜</li>
+<li>git 一般大家都配置别名</li>
+<li>输入一个s，上下键自动提示之前匹配的输入的命令，比如直接出来ssh xxx,scp xxx</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如果你在用Shell，默认那用bash，那一定要试试zsh，配合&lt;code&gt;oh-my-zsh&lt;/code&gt;那必须推荐，很骚，真的很骚～～&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;官网地址: &lt;a href=&quot;http://ohmyz.sh&quot;&gt;http://ohmyz.sh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Github: &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;https://github.com/robbyrussell/oh-my-zsh&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;官网写着&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Your terminal never felt this good before.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="zsh" scheme="http://yoursite.com/categories/zsh/"/>
+    
+    
+      <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
+    
+      <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
+    
+  </entry>
   
   <entry>
     <title>Storm的7种流分组策略Stream Grouping</title>
@@ -326,58 +383,6 @@
   </entry>
   
   <entry>
-    <title>MySQL存储emoji表情</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-19T07:06:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>不必多言</p>
-<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
-<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
-<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;不必多言&lt;/p&gt;
-&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
-    
-    </summary>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
-    
-      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL定时备份</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:05:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
-    
-    </summary>
-    
-    
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
     <title>JVM内存组成及分配</title>
     <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
     <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
@@ -489,6 +494,58 @@
       <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL存储emoji表情</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-19T07:06:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>不必多言</p>
+<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
+<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
+<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;不必多言&lt;/p&gt;
+&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
+    
+    </summary>
+    
+    
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+    
+      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
+    
+      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL定时备份</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:05:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
+    
+    </summary>
+    
+    
+      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
@@ -1327,57 +1384,6 @@ ramesh@dev-db$ crontab -l
       <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
     
       <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis publish &amp; subscribe php</title>
-    <link href="http://yoursite.com/2013/07/04/linux-redis-publish-subscribe-php/"/>
-    <id>http://yoursite.com/2013/07/04/linux-redis-publish-subscribe-php/</id>
-    <published>2013-07-03T16:00:00.000Z</published>
-    <updated>2016-08-19T07:11:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><blockquote>
-<p>tools : redis at ubuntu13.04 64bit<br>php   : PHP 5.4.9-4ubuntu2.1<br>redis : Redis 2.6.14 ,64 bit </p>
-</blockquote>
-<ol>
-<li>install php (nginx + apache2 + php + mysql ) etc …</li>
-<li>install redis (@see <a href="http://www.redis.io/download" target="_blank" rel="external">http://www.redis.io/download</a> #installtion)</li>
-<li>install phpredis ext (@see <a href="https://github.com/nicolasff/phpredis" target="_blank" rel="external">https://github.com/nicolasff/phpredis</a>)</li>
-<li>run…</li>
-</ol>
-<h2 id="Files"><a href="#Files" class="headerlink" title="Files"></a>Files</h2><p>file: pub.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">"redis.php"</span>;</div><div class="line">$redis-&gt;publish(<span class="string">"tv1"</span>,<span class="string">"aaaa"</span>); <span class="comment">/* channel name 'tv1'*/</span></div></pre></td></tr></table></figure>
-<p>file:sub.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">"redis.php"</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span><span class="params">($redis,$channel,$content)</span></span>&#123;</div><div class="line">	<span class="keyword">echo</span> $channel.<span class="string">"-----"</span>.$content.<span class="string">"&lt;br&gt;"</span>;</div><div class="line">	<span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line">$redis-&gt;psubscribe(<span class="keyword">array</span>(<span class="string">"*"</span>),<span class="string">"callback"</span>); <span class="comment">/* psubscribe  used with patten , subscribe used with full channel name.*/</span></div></pre></td></tr></table></figure>
-<p>file:sub.html ( with jquery.js)</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"aa"</span>&gt;&lt;/div&gt;</div><div class="line">&lt;script src=<span class="string">'jquery.js'</span>&gt;&lt;/script&gt;</div><div class="line">&lt;script&gt;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">gets</span><span class="params">()</span></span>&#123;</div><div class="line">	$.get(<span class="string">'sub.php'</span>,<span class="function"><span class="keyword">function</span><span class="params">(data)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span>(data)&#123;</div><div class="line">			$(<span class="string">"#aa"</span>).append(data);</div><div class="line">			gets();</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			gets(); </div><div class="line">		&#125;</div><div class="line">	&#125;);</div><div class="line">&#125;</div><div class="line">gets();</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
-<p>core redis file: redis.php </p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$redis = <span class="keyword">new</span> Redis();</div><div class="line">$redis-&gt;connect(<span class="string">"localhost"</span>,<span class="number">6379</span>);</div><div class="line"><span class="comment">//$redis-&gt;auth("123");</span></div></pre></td></tr></table></figure>
-<p>then. see <a href="http://localhost:port/redis/sub.html" target="_blank" rel="external">http://localhost:port/redis/sub.html</a><br>visit url :<a href="http://localhost:port/redis/pub.php" target="_blank" rel="external">http://localhost:port/redis/pub.php</a> , (for publish message on channel named “<code>tv1</code>“)</p>
-<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><p>same ip will recevie only once published message , different ip will receive every message</p>
-<h2 id="See-more"><a href="#See-more" class="headerlink" title="See more"></a>See more</h2><ul>
-<li><a href="https://github.com/nicolasff/phpredis#pubsub" target="_blank" rel="external">https://github.com/nicolasff/phpredis#pubsub</a></li>
-<li><a href="https://github.com/nicolasff/" target="_blank" rel="external">https://github.com/nicolasff/</a></li>
-<li><a href="http://www.redis.io/download" target="_blank" rel="external">http://www.redis.io/download</a> ;</li>
-<li><a href="http://www.searchdatabase.com.cn/showcontent_64755.htm" target="_blank" rel="external">http://www.searchdatabase.com.cn/showcontent_64755.htm</a></li>
-<li><a href="http://www.springload.cn/springload/detail/331" target="_blank" rel="external">http://www.springload.cn/springload/detail/331</a></li>
-<li><a href="http://www.cnblogs.com/weafer/archive/2011/09/21/2184059.html" target="_blank" rel="external">http://www.cnblogs.com/weafer/archive/2011/09/21/2184059.html</a></li>
-<li>source from  <a href="http://vdisk.weibo.com/s/z-JIj1kqihA5" target="_blank" rel="external">http://vdisk.weibo.com/s/z-JIj1kqihA5</a>  Redis实现新浪微博即时聊天系统.rar   sub.php have one error</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Basic&quot;&gt;&lt;a href=&quot;#Basic&quot; class=&quot;headerlink&quot; title=&quot;Basic&quot;&gt;&lt;/a&gt;Basic&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;tools : redis at ubuntu13.04 64bit&lt;br&gt;php   :
-    
-    </summary>
-    
-      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
-    
-    
-      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
     
   </entry>
   

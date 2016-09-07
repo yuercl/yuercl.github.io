@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="如果你在用Shell，默认那用bash，那一定要试试zsh，配合oh-my-zsh那必须推荐，很骚，真的很骚～～官网地址:http://ohmyz.shGithub:https://github.com/robbyrussell/oh-my-zsh官网写着You"><meta name="keywords" content="zsh,Shell"><title>终极Shell－－zsh · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/09/07/终极Shell－－zsh/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">终极Shell－－zsh</h1><span class="post-time">2016年9月7日</span><div class="post-content"><p>如果你在用Shell，默认那用bash，那一定要试试zsh，配合<code>oh-my-zsh</code>那必须推荐，很骚，真的很骚～～</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li>官网地址: <a href="http://ohmyz.sh" target="_blank" rel="external">http://ohmyz.sh</a></li>
+<li>Github: <a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">https://github.com/robbyrussell/oh-my-zsh</a></li>
+</ul>
+<p>官网写着</p>
+<blockquote>
+<p>Your terminal never felt this good before.</p>
+</blockquote>
+<a id="more"></a>
+<p>安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></div></pre></td></tr></table></figure>
+<p>~/.zshrc 我的配置如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> ZSH=<span class="variable">$HOME</span>/.oh-my-zsh</div><div class="line">ZSH_THEME=<span class="string">"robbyrussell"</span></div><div class="line">plugins=(brew nmap osx <span class="built_in">history</span> git mvn gradle node npm gradle svn sed autojump <span class="built_in">kill</span> docker docker-compose)</div><div class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$PATH</span>:/opt/X11/bin:/usr/local/mysql/bin"</span></div><div class="line"><span class="built_in">source</span> <span class="variable">$ZSH</span>/oh-my-zsh.sh</div><div class="line"><span class="built_in">source</span> ~/.bash_profile</div><div class="line"><span class="built_in">source</span> ~/.zshrc.config.me</div></pre></td></tr></table></figure>
+<p>一定要安装autojump神器.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">brew install autojump</div><div class="line">./install.sh</div><div class="line">[[ <span class="_">-s</span> ~/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; . ~/.autojump/etc/profile.d/autojump.sh</div></pre></td></tr></table></figure>
+<p>使用 zsh</p>
+<ul>
+<li>autojump j 这货支持模糊匹配，不用输全，一个字骚</li>
+<li>kill 再按一个tab键，经常kill一个jar，效率很高</li>
+<li>.. / …  cd都不需要</li>
+<li>tab 多按几下，有惊喜</li>
+<li>git 一般大家都配置别名</li>
+<li>输入一个s，上下键自动提示之前匹配的输入的命令，比如直接出来ssh xxx,scp xxx</li>
+</ul>
+</div></article><div class="tags"><a href="/tags/zsh/">zsh</a><a href="/tags/Shell/">Shell</a></div><div class="paginator"><a href="/2016/09/06/Storm的7种流分组策略Stream-Grouping/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/09/07/终极Shell－－zsh/';
+    this.page.identifier = '2016/09/07/终极Shell－－zsh/';
+    this.page.title = '终极Shell－－zsh';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>
