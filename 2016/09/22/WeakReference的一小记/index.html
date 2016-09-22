@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="最近要做一个功能，白名单配置，采用了一个叫做FileMonitor的工具，源码参看链接。新版本JDK是可以用WatchServices来监听文件变化。FileMonitor.javaFileListener.java坑1234//Application已实现了Fi"><meta name="keywords" content="WeakReference"><title>WeakReference的一小记 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/09/22/WeakReference的一小记/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">WeakReference的一小记</h1><span class="post-time">2016年9月22日</span><div class="post-content"><p>最近要做一个功能，白名单配置，采用了一个叫做FileMonitor的工具，源码参看链接。新版本JDK是可以用WatchServices来监听文件变化。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li><a href="http://geosoft.no/software/filemonitor/FileMonitor.java.html" target="_blank" rel="external">FileMonitor.java</a></li>
+<li><a href="http://geosoft.no/software/filemonitor/FileListener.java.html" target="_blank" rel="external">FileListener.java</a></li>
+</ul>
+<p><strong>坑</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是错误写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是正确写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div></pre></td></tr></table></figure>
+<p>程序开始运行的挺好的，文件变动也能及时反馈调用给Listener，但是运行一段时间之后，程序便不再调用Listener回调。费解。阅读FileMonitor源码实现后，发现采用了WeakReference来包装Listener，使得不容易内存泄漏。后来证明这是作者想多了，在作为配置文件Reload这种特性的情况下，一般是不会有很多new 很多个FileMonitor出来的。</p>
+<p>经过初步猜测是由于WeakReference 弱应用导致Listener被GC掉。遂用VisualVM  Dump类证实为GC时被回收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div><div class="line"><span class="comment">// 分割线</span></div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
+<p>经过和朋友沟通和自己理解后，认为在new Application()出来的对象的作用域有关。于是将new单独出来，测试后问题解决。</p>
+<p>哎，惭愧</p>
+<ul>
+<li><a href="http://puretech.iteye.com/blog/2008663" target="_blank" rel="external">http://puretech.iteye.com/blog/2008663</a></li>
+</ul>
+</div></article><div class="tags"><a href="/tags/WeakReference/">WeakReference</a></div><div class="paginator"><a href="/2016/09/07/终极Shell－－zsh/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/09/22/WeakReference的一小记/';
+    this.page.identifier = '2016/09/22/WeakReference的一小记/';
+    this.page.title = 'WeakReference的一小记';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
