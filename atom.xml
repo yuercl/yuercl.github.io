@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-10-18T16:14:28.000Z</updated>
+  <updated>2016-10-19T06:52:00.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>投资的Daily Checklist</title>
+    <link href="http://yoursite.com/2016/10/19/%E6%8A%95%E8%B5%84%E7%9A%84Daily-Checklist/"/>
+    <id>http://yoursite.com/2016/10/19/投资的Daily-Checklist/</id>
+    <published>2016-10-19T06:51:55.000Z</published>
+    <updated>2016-10-19T06:52:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li>人民币兑美元汇率 <a href="http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml" target="_blank" rel="external">http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml</a></li>
+<li>融资融卷余额走势图 <a href="http://data.10jqka.com.cn/market/rzrq/" target="_blank" rel="external">http://data.10jqka.com.cn/market/rzrq/</a></li>
+<li>昨夜外盘涨跌</li>
+<li>Shibor隔夜拆借利率走势 <a href="http://value500.com/Shibor.asp" target="_blank" rel="external">http://value500.com/Shibor.asp</a></li>
+<li>交易结算资金余额走势图</li>
+<li>A股历史平均市盈率走势图 , 如果市场异常活跃和异常惨淡需要参考该值</li>
+<li>M1M2走势图，大概每月20号左右发布，关注剪刀手和房价走势。平衡资产配置</li>
+<li>value500的指数百科 <a href="http://value500.com/volv500.html" target="_blank" rel="external">http://value500.com/volv500.html</a></li>
+<li>同花顺数据中心 <a href="http://data.10jqka.com.cn/macro/cpi/" target="_blank" rel="external">http://data.10jqka.com.cn/macro/cpi/</a></li>
+</ul>
+<p>暂时想到这么多，后续增加</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;人民币兑美元汇率 &lt;a href=&quot;http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://finance.sina.com.cn
+    
+    </summary>
+    
+    
+      <category term="投资" scheme="http://yoursite.com/tags/%E6%8A%95%E8%B5%84/"/>
+    
+  </entry>
   
   <entry>
     <title>投资反思2016年10月19日写</title>
@@ -645,117 +678,30 @@
   </entry>
   
   <entry>
-    <title>JVM内存组成及分配</title>
-    <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
-    <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
+    <title>MySQL存储emoji表情</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:54.000Z</updated>
+    <updated>2016-08-19T07:06:00.000Z</updated>
     
-    <content type="html"><![CDATA[<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
-<blockquote>
-<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
-</blockquote>
-<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
-<ul>
-<li>方法栈&amp;本地方法栈:<ul>
-<li>线程创建时产生,方法执行时生成栈帧</li>
-</ul>
-</li>
-<li>方法区<ul>
-<li>存储类的元数据信息 常量等</li>
-</ul>
-</li>
-<li>堆<ul>
-<li>java代码中所有的new操作</li>
-</ul>
-</li>
-<li>native Memory(C heap)<ul>
-<li>Direct Bytebuffer JNI Compile GC;</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-<h3 id="堆内存分配"><a href="#堆内存分配" class="headerlink" title="堆内存分配"></a>堆内存分配</h3><p>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。因此服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小。对象的堆内存由称为垃圾回收器的自动内存管理系统回收。</p>
-<p><img src="/assets/images/r_heap1.png" alt=""></p>
-<table>
-<thead>
-<tr>
-<th>组成</th>
-<th>详解</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Young Generation</td>
-<td>即图中的Eden + From Space + To Space</td>
-</tr>
-<tr>
-<td>Eden</td>
-<td>存放新生的对象</td>
-</tr>
-<tr>
-<td>Survivor Space</td>
-<td>有两个，存放每次垃圾回收后存活的对象</td>
-</tr>
-<tr>
-<td>Old Generation</td>
-<td>Tenured Generation 即图中的Old Space 主要存放应用程序中生命周期长的存活对象</td>
-</tr>
-</tbody>
-</table>
-<h3 id="非堆内存分配"><a href="#非堆内存分配" class="headerlink" title="非堆内存分配"></a>非堆内存分配</h3><p>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。</p>
-<table>
-<thead>
-<tr>
-<th>组成</th>
-<th>详解</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Permanent Generation</td>
-<td>保存虚拟机自己的静态(refective)数据主要存放加载的Class类级别静态对象如class本身，method，field等等 <br>permanent generation空间不足会引发full GC(详见HotSpot VM GC种类)</td>
-</tr>
-<tr>
-<td>Code Cache</td>
-<td>用于编译和保存本地代码（native code）的内存 JVM内部处理或优化</td>
-</tr>
-</tbody>
-</table>
-]]></content>
+    <content type="html"><![CDATA[<p>不必多言</p>
+<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
+<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
+<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;java内存组成介绍：堆(Heap)和非堆(Non-heap)内存&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。&lt;br&gt;在JVM中堆之外的内存称为非堆内存(Non-heap memory)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。&lt;br&gt;&lt;img src=&quot;/assets/images/r_sun-jdk-memory-area1.png&quot; alt=&quot;&quot;&gt;       &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;方法栈&amp;amp;本地方法栈:&lt;ul&gt;
-&lt;li&gt;线程创建时产生,方法执行时生成栈帧&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;方法区&lt;ul&gt;
-&lt;li&gt;存储类的元数据信息 常量等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;堆&lt;ul&gt;
-&lt;li&gt;java代码中所有的new操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;native Memory(C heap)&lt;ul&gt;
-&lt;li&gt;Direct Bytebuffer JNI Compile GC;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+      &lt;p&gt;不必多言&lt;/p&gt;
+&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
     
     </summary>
     
     
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
+    
+      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
     
   </entry>
   
@@ -1114,34 +1060,6 @@
   </entry>
   
   <entry>
-    <title>MySQL存储emoji表情</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-19T07:06:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>不必多言</p>
-<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
-<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
-<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;不必多言&lt;/p&gt;
-&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
-    
-    </summary>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
-    
-      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
-    
-  </entry>
-  
-  <entry>
     <title>GC策略&amp;内存申请、对象衰老</title>
     <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
     <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
@@ -1196,6 +1114,121 @@
       &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
 &lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
 &lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM内存组成及分配</title>
+    <link href="http://yoursite.com/2016/08/10/JVM%E5%86%85%E5%AD%98%E7%BB%84%E6%88%90%E5%8F%8A%E5%88%86%E9%85%8D/"/>
+    <id>http://yoursite.com/2016/08/10/JVM内存组成及分配/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:24:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
+<blockquote>
+<p>Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。<br>在JVM中堆之外的内存称为非堆内存(Non-heap memory)</p>
+</blockquote>
+<p>可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。<br><img src="/assets/images/r_sun-jdk-memory-area1.png" alt="">       </p>
+<ul>
+<li>方法栈&amp;本地方法栈:<ul>
+<li>线程创建时产生,方法执行时生成栈帧</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>存储类的元数据信息 常量等</li>
+</ul>
+</li>
+<li>堆<ul>
+<li>java代码中所有的new操作</li>
+</ul>
+</li>
+<li>native Memory(C heap)<ul>
+<li>Direct Bytebuffer JNI Compile GC;</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="堆内存分配"><a href="#堆内存分配" class="headerlink" title="堆内存分配"></a>堆内存分配</h3><p>JVM初始分配的内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的内存由-Xmx指 定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。因此服务器一般设置-Xms、-Xmx相等以避免在每次GC 后调整堆的大小。对象的堆内存由称为垃圾回收器的自动内存管理系统回收。</p>
+<p><img src="/assets/images/r_heap1.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>详解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Young Generation</td>
+<td>即图中的Eden + From Space + To Space</td>
+</tr>
+<tr>
+<td>Eden</td>
+<td>存放新生的对象</td>
+</tr>
+<tr>
+<td>Survivor Space</td>
+<td>有两个，存放每次垃圾回收后存活的对象</td>
+</tr>
+<tr>
+<td>Old Generation</td>
+<td>Tenured Generation 即图中的Old Space 主要存放应用程序中生命周期长的存活对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="非堆内存分配"><a href="#非堆内存分配" class="headerlink" title="非堆内存分配"></a>非堆内存分配</h3><p>JVM使用-XX:PermSize设置非堆内存初始值，默认是物理内存的1/64；由XX:MaxPermSize设置最大非堆内存的大小，默认是物理内存的1/4。</p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>详解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permanent Generation</td>
+<td>保存虚拟机自己的静态(refective)数据主要存放加载的Class类级别静态对象如class本身，method，field等等 <br>permanent generation空间不足会引发full GC(详见HotSpot VM GC种类)</td>
+</tr>
+<tr>
+<td>Code Cache</td>
+<td>用于编译和保存本地代码（native code）的内存 JVM内部处理或优化</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;java内存组成介绍：堆(Heap)和非堆(Non-heap)内存&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。&lt;br&gt;在JVM中堆之外的内存称为非堆内存(Non-heap memory)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。&lt;br&gt;&lt;img src=&quot;/assets/images/r_sun-jdk-memory-area1.png&quot; alt=&quot;&quot;&gt;       &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;方法栈&amp;amp;本地方法栈:&lt;ul&gt;
+&lt;li&gt;线程创建时产生,方法执行时生成栈帧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;方法区&lt;ul&gt;
+&lt;li&gt;存储类的元数据信息 常量等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;堆&lt;ul&gt;
+&lt;li&gt;java代码中所有的new操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;native Memory(C heap)&lt;ul&gt;
+&lt;li&gt;Direct Bytebuffer JNI Compile GC;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
     
@@ -1290,76 +1323,6 @@ SYNOPSIS
       <category term="diff" scheme="http://yoursite.com/tags/diff/"/>
     
       <category term="patch" scheme="http://yoursite.com/tags/patch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OpenCV安装教程，配置，注意事项</title>
-    <link href="http://yoursite.com/2014/01/08/OpenCV%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%EF%BC%8C%E9%85%8D%E7%BD%AE%EF%BC%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
-    <id>http://yoursite.com/2014/01/08/OpenCV安装教程，配置，注意事项/</id>
-    <published>2014-01-07T16:00:00.000Z</published>
-    <updated>2016-08-20T02:25:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文将介绍OpenCV + Windows visual studio 2010安装过程，以及第一个例子。</p>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li>openCV基本介绍</li>
-<li>OpenCV下载、安装和配置</li>
-<li>Windows visual studio 2010安装过程和配置</li>
-<li>安装过程遇到的问题</li>
-<li>第一个例子Quickstart.cpp</li>
-</ul>
-<a id="more"></a>
-<h3 id="OpenCV基本介绍"><a href="#OpenCV基本介绍" class="headerlink" title="OpenCV基本介绍"></a>OpenCV基本介绍</h3><p><a href="http://opencv.org/" target="_blank" rel="external">OpenCV</a>(open source computer vision library)是一个基于C/C++语言的开源图像函数处理库。<br>可以运行在Linux、Windows和Mac OS操作系统上。它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。它的主要模块包括：</p>
-<ul>
-<li>cv —— 核心函数库</li>
-<li>cvaux —— 辅助函数库</li>
-<li>cxcore —— 数据结构与线性代数库</li>
-<li>highgui —— GUI函数库</li>
-<li>ml —— 机器学习函数库</li>
-</ul>
-<p>opencv是跨平台的，支持包括windows、unix以及android等平台。关于opencv的一系列功能以及特性，本文不再赘述，如果要了解，请购买书籍O’Reilly：<a href="http://item.jd.com/10080298.html" target="_blank" rel="external">学习OpenCV（中文版）</a></p>
-<h3 id="OpenCV下载以及安装"><a href="#OpenCV下载以及安装" class="headerlink" title="OpenCV下载以及安装"></a>OpenCV下载以及安装</h3><p>OpenCV提供Windows、Linux/Mac、Android、IOS安装工具，可直接前往<a href="http://opencv.org/" target="_blank" rel="external">OpenCV官网</a>下载，这里以下载Windows版本为例，进行说明。</p>
-<ul>
-<li>前往<a href="http://opencv.org/" target="_blank" rel="external">OpenCV官网</a>下载Windows版本,目前最新版本为2.4.8。这种方式很傻瓜，直接双击解压到%opencv%（凡是出现%opencv%的地方均替换为你自己opencv的路径全名，如D:\opencv）。</li>
-<li>配置OpenCV环境变量。<br>计算机-&gt;（右键）属性-&gt;高级系统设置-&gt;高级（标签）-&gt;环境变量-&gt;（双击）path（用户，系统里面的path任选其一）-&gt;在变量值里面添加” %opencv%\build\x86\vc10\bin”和”%opencv%\build\common\tbb\ia32\vc10”（里面的%opencv%记得换成自己的opencv路径)。注意如果是系统的环境变量，可能需要重新启动机器，不然设置的path变量不会立即生效。<h3 id="Windows-visual-studio-2010安装过程和配置"><a href="#Windows-visual-studio-2010安装过程和配置" class="headerlink" title="Windows visual studio 2010安装过程和配置"></a>Windows visual studio 2010安装过程和配置</h3>直接下载，不断Next就行了。微软的东西基本都是Next。这里忽略<br>配置工程的opencv依赖（每次新建工程都要重新配置，要执行此步骤请先跳到第4步建立工程）</li>
-</ul>
-<ol>
-<li>项目（菜单项）-&gt;…属性-&gt;VC++目录：需要配置“包含目录”和“库目录”两项。<img src="/assets/images/2014010801.png" alt="alt text" title="Title"></li>
-<li>配置“包含目录”项：添加行”%opencv%\build\include”即可。<br>但在运行别人的opencv项目时，可能别人直接引用了上述目录的子目录路径，如果出现include错误，则再添加”%opencv%\build\include\opencv”和（或）”%opencv%\build\include\opencv2”，即可解决问题。<img src="/assets/images/2014010802.png" alt="alt text" title="Title"></li>
-<li>配置“库目录”项：添加行”%opencv%\build\x86\vc10\lib”即可。<img src="/assets/images/2014010803.png" alt="alt text" title="Title"></li>
-<li><p>配置连接器：项目（菜单项）-&gt;…属性-&gt;连接器-&gt;输入-&gt;附加依赖项<br>针对debug配置添加以下库： <code>find ./ -name &#39;*d.lib&#39; -type f | sed &#39;s/\.\///g&#39;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">opencv_calib3d248d.lib</div><div class="line">opencv_contrib248d.lib</div><div class="line">opencv_core248d.lib</div><div class="line">opencv_features2d248d.lib</div><div class="line">opencv_flann248d.lib</div><div class="line">opencv_gpu248d.lib</div><div class="line">opencv_highgui248d.lib</div><div class="line">opencv_imgproc248d.lib</div><div class="line">opencv_legacy248d.lib</div><div class="line">opencv_ml248d.lib</div><div class="line">opencv_nonfree248d.lib</div><div class="line">opencv_objdetect248d.lib</div><div class="line">opencv_ocl248d.lib</div><div class="line">opencv_photo248d.lib</div><div class="line">opencv_stitching248d.lib</div><div class="line">opencv_superres248d.lib</div><div class="line">opencv_ts248d.lib</div><div class="line">opencv_video248d.lib</div><div class="line">opencv_videostab248d.lib</div></pre></td></tr></table></figure>
-<p> 如果是release配置（以后再说，只需要添加上面的debug配置就行了现在），则添加：<code>find ./ -name &#39;*8.lib&#39; -type f | sed &#39;s/\.\///g&#39;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">opencv_calib3d248.lib</div><div class="line">opencv_contrib248.lib</div><div class="line">opencv_core248.lib</div><div class="line">opencv_features2d248.lib</div><div class="line">opencv_flann248.lib</div><div class="line">opencv_gpu248.lib</div><div class="line">opencv_highgui248.lib</div><div class="line">opencv_imgproc248.lib</div><div class="line">opencv_legacy248.lib</div><div class="line">opencv_ml248.lib</div><div class="line">opencv_nonfree248.lib</div><div class="line">opencv_objdetect248.lib</div><div class="line">opencv_ocl248.lib</div><div class="line">opencv_photo248.lib</div><div class="line">opencv_stitching248.lib</div><div class="line">opencv_superres248.lib</div><div class="line">opencv_ts248.lib</div><div class="line">opencv_video248.lib</div><div class="line">opencv_videostab248.lib</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><img src="/assets/images/2014010804.png" alt="alt text" title="Title"></p>
-<p><strong>注意：</strong></p>
-<pre><code>- 每个lib文件的文件名都是以248结尾的，这里248应该是代表版本号，不同的版本是不一样的，不然添加到VS里面一样提示找不到lib文件。
-- 如果仍旧提示找不到lib文件，可尝试重启VS或者重启电脑。
-</code></pre><h3 id="第一个例子Quickstart-cpp"><a href="#第一个例子Quickstart-cpp" class="headerlink" title="第一个例子Quickstart.cpp"></a>第一个例子Quickstart.cpp</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"StdAfx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2\opencv.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cv.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"highgui.h"</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	IplImage *img = cvLoadImage(<span class="string">"hello-long.jpg"</span>);<span class="comment">//图片文件地址，支持绝对路径</span></div><div class="line">	cvNamedWindow(<span class="string">"龙哥"</span>,<span class="number">1</span>);<span class="comment">//1是不可拖动，0为可拖动窗口</span></div><div class="line">	cvShowImage(<span class="string">"龙哥"</span>,img);<span class="comment">//显示图片</span></div><div class="line">	cvWaitKey(<span class="number">0</span>);<span class="comment">//阻塞在此，直到按下一个键，运行</span></div><div class="line">	cvReleaseImage(&amp;img);<span class="comment">//释放内存</span></div><div class="line">	cvDestroyWindow(<span class="string">"龙哥"</span>);<span class="comment">//销毁窗口</span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>照片就不贴了。。。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文将介绍OpenCV + Windows visual studio 2010安装过程，以及第一个例子。&lt;/p&gt;
-&lt;h2 id=&quot;目录&quot;&gt;&lt;a href=&quot;#目录&quot; class=&quot;headerlink&quot; title=&quot;目录&quot;&gt;&lt;/a&gt;目录&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;openCV基本介绍&lt;/li&gt;
-&lt;li&gt;OpenCV下载、安装和配置&lt;/li&gt;
-&lt;li&gt;Windows visual studio 2010安装过程和配置&lt;/li&gt;
-&lt;li&gt;安装过程遇到的问题&lt;/li&gt;
-&lt;li&gt;第一个例子Quickstart.cpp&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="web" scheme="http://yoursite.com/categories/web/"/>
-    
-    
-      <category term="OpenCV" scheme="http://yoursite.com/tags/OpenCV/"/>
-    
-      <category term="图像处理" scheme="http://yoursite.com/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
     
   </entry>
   
