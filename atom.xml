@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-10-25T08:27:42.000Z</updated>
+  <updated>2016-10-25T08:32:47.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/10/25/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%E4%B9%8Bsed%E5%92%8Cgsed/"/>
     <id>http://yoursite.com/2016/10/25/那些年踩过的坑之sed和gsed/</id>
     <published>2016-10-25T08:08:40.000Z</published>
-    <updated>2016-10-25T08:27:42.000Z</updated>
+    <updated>2016-10-25T08:32:47.000Z</updated>
     
     <content type="html"><![CDATA[<p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
 <p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
@@ -43,8 +43,10 @@
     
     </summary>
     
+      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
     
-      <category term="shell" scheme="http://yoursite.com/tags/shell/"/>
+    
+      <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
     
   </entry>
   
@@ -370,9 +372,9 @@
       <category term="zsh" scheme="http://yoursite.com/categories/zsh/"/>
     
     
-      <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
-    
       <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
+    
+      <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
     
   </entry>
   
@@ -711,6 +713,30 @@
       <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
     
       <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL定时备份</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:05:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
+    
+    </summary>
+    
+    
+      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
@@ -1065,30 +1091,6 @@
       <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL定时备份</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:05:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
-    
-    </summary>
-    
-    
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
