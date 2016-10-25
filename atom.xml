@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-10-19T06:52:00.000Z</updated>
+  <updated>2016-10-25T08:27:42.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>那些年踩过的坑之sed和gsed</title>
+    <link href="http://yoursite.com/2016/10/25/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%E4%B9%8Bsed%E5%92%8Cgsed/"/>
+    <id>http://yoursite.com/2016/10/25/那些年踩过的坑之sed和gsed/</id>
+    <published>2016-10-25T08:08:40.000Z</published>
+    <updated>2016-10-25T08:27:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
+<p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
+<p>这个小程序是在Mac上的，所以里面的sed换成了gsed，不然一直要报错。</p>
+<p>还有一个是否生成额外副本的情况，这个个人用的比较少。</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"></div><div class="line">__author__ = <span class="string">'yuer'</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> os.path</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> subprocess</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    array = []</div><div class="line">    config = <span class="string">'''</span></div><div class="line">        [</div><div class="line">            &#123;</div><div class="line">                "stock":"001421",</div><div class="line">                "amount":3805.26,</div><div class="line">                "name":"nanfanglianghua",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"519983",</div><div class="line">                "amount":8709.51,</div><div class="line">                "name":"changxinlianghua",</div><div class="line">                "cost":20000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"519712",</div><div class="line">                "amount":4272.58,</div><div class="line">                "name":"jiaoyinAlpha",</div><div class="line">                "cost":10000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"340009",</div><div class="line">                "amount":3734.21,</div><div class="line">                "name":"quanxinzhaiquan",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"110003",</div><div class="line">                "amount":4951.41,</div><div class="line">                "name":"yifangda50",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"020003",</div><div class="line">                "amount":7063.66,</div><div class="line">                "name":"guotaijinlong",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"001039",</div><div class="line">                "amount":12015.67,</div><div class="line">                "name":"jiashixianjin",</div><div class="line">                "cost":10000</div><div class="line">            &#125;</div><div class="line"></div><div class="line">	]</div><div class="line">    '''</div><div class="line">    stocks = json.loads(config)</div><div class="line"></div><div class="line">    total = <span class="number">0</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'Calculation of earnings...'</span></div><div class="line">    os.system(<span class="string">'date'</span>)</div><div class="line">    <span class="keyword">for</span> stock <span class="keyword">in</span> stocks:</div><div class="line">        cmd = <span class="string">"curl -s  http://fund.eastmoney.com/%s.html?spm=aladin | gsed 's/div/\\n/g' | gsed 's/span/\\n/g'| grep gz_gsz | gsed 's/&gt;/ /g' | gsed 's/&lt;/ /g' | grep large | awk '&#123;print $5&#125;'"</span> % stock[<span class="string">'stock'</span>]</div><div class="line">	result = subprocess.check_output(cmd, shell=<span class="keyword">True</span>)</div><div class="line">	result = result.strip()</div><div class="line">	now = float(result)*stock[<span class="string">'amount'</span>]</div><div class="line">	<span class="keyword">print</span> <span class="string">'Code: %s , Price: %s , Amount: %s , Total: %s , Percent: %s'</span> % (stock[<span class="string">'stock'</span>] , result , stock[<span class="string">'amount'</span>] , now , (now - stock[<span class="string">'cost'</span>] ) / stock[<span class="string">'cost'</span>])</div><div class="line"></div><div class="line">	total = total + float(result)*stock[<span class="string">'amount'</span>]</div><div class="line">    <span class="keyword">print</span> <span class="string">"Total : %s "</span> % total</div></pre></td></tr></table></figure>
+<ul>
+<li>参考地址 <a href="https://stackoverflow.com/questions/10748453/replace-comma-with-newline-in-sed/28773445" target="_blank" rel="external">https://stackoverflow.com/questions/10748453/replace-comma-with-newline-in-sed/28773445</a></li>
+<li><a href="http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x" target="_blank" rel="external">http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;偶然间翻开多年前写过的一个python脚本，恍如昨日～&lt;/p&gt;
+&lt;p&gt;这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。&lt;/p&gt;
+&lt;p&gt;这个小程序是在Mac上的，所以里面的sed换成了gsed，不然一直要报错。&lt;/p&gt;
+&lt;p&gt;还有一个是否生成额外副本的情况，这个个人用的比较少。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="shell" scheme="http://yoursite.com/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>投资的Daily Checklist</title>
@@ -53,7 +86,7 @@
     <link href="http://yoursite.com/2016/10/19/%E6%8A%95%E8%B5%84%E5%8F%8D%E6%80%9D2016%E5%B9%B410%E6%9C%8819%E6%97%A5%E5%86%99/"/>
     <id>http://yoursite.com/2016/10/19/投资反思2016年10月19日写/</id>
     <published>2016-10-18T16:05:00.000Z</published>
-    <updated>2016-10-18T16:14:28.000Z</updated>
+    <updated>2016-10-20T01:18:50.000Z</updated>
     
     <content type="html"><![CDATA[<p>自2014年入市以来，2015年股灾中离开。空仓也有一年有余。</p>
 <p>股灾打击很大，反思很多。之后变忘了股票这回事，安心的写代码。</p>
@@ -654,91 +687,30 @@
   </entry>
   
   <entry>
-    <title>MySQL定时备份</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
+    <title>MySQL存储emoji表情</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:05:55.000Z</updated>
+    <updated>2016-08-19T07:06:00.000Z</updated>
     
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
-]]></content>
+    <content type="html"><![CDATA[<p>不必多言</p>
+<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
+<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
+<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
+      &lt;p&gt;不必多言&lt;/p&gt;
+&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
     
     </summary>
     
     
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
     
-  </entry>
-  
-  <entry>
-    <title>GC策略&amp;内存申请、对象衰老</title>
-    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
-    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
-<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
-<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
-<a id="more"></a>
-<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
-<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
-<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
-<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
-<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
-<li>当old区空间不够时，JVM会在old区进行major collection；</li>
-<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
-<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
-</ol>
-<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
-<thead>
-<tr>
-<th>GC类型</th>
-<th>触发条件</th>
-<th>触发时发生了什么</th>
-<th>注意</th>
-<th>查看方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>YGC</td>
-<td>eden空间不足</td>
-<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-<tr>
-<td>FGC</td>
-<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
-<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-</tbody>
-</table>
-<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
-&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
-&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
     
   </entry>
   
@@ -1097,30 +1069,26 @@
   </entry>
   
   <entry>
-    <title>MySQL存储emoji表情</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
+    <title>MySQL定时备份</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-19T07:06:00.000Z</updated>
+    <updated>2016-08-20T02:05:55.000Z</updated>
     
-    <content type="html"><![CDATA[<p>不必多言</p>
-<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
-<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
-<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
+]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;不必多言&lt;/p&gt;
-&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
     
     </summary>
     
     
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
     
-      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
-    
-      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
@@ -1240,6 +1208,71 @@
   </entry>
   
   <entry>
+    <title>GC策略&amp;内存申请、对象衰老</title>
+    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
+    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
+    <published>2016-08-10T04:00:00.000Z</published>
+    <updated>2016-08-20T02:24:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
+<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
+<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
+<a id="more"></a>
+<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
+<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
+<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
+<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
+<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
+<li>当old区空间不够时，JVM会在old区进行major collection；</li>
+<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
+<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
+</ol>
+<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
+<thead>
+<tr>
+<th>GC类型</th>
+<th>触发条件</th>
+<th>触发时发生了什么</th>
+<th>注意</th>
+<th>查看方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YGC</td>
+<td>eden空间不足</td>
+<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
+<td>jstat –gcutil gc log</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
+<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
+<td>jstat –gcutil gc log</td>
+</tr>
+</tbody>
+</table>
+<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
+&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
+&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>这是一个新的开始Hexo</title>
     <link href="http://yoursite.com/2016/08/01/this-is-a-new-beginning/"/>
     <id>http://yoursite.com/2016/08/01/this-is-a-new-beginning/</id>
@@ -1265,64 +1298,6 @@
     
     
       <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>diff命令的好用功能</title>
-    <link href="http://yoursite.com/2014/01/23/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/"/>
-    <id>http://yoursite.com/2014/01/23/diff命令的好用功能/</id>
-    <published>2014-01-22T16:00:00.000Z</published>
-    <updated>2016-08-20T02:29:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。</p>
-<p>最常用的功能莫过于生成patch文件了：</p>
-<pre><code>diff -urN old/ new/ &gt; mysoft.patch
-</code></pre><a id="more"></a>
-<p>参数 <code>-u</code> 表示使用 <code>unified</code>格式，<code>-r</code> 表示比较目录，<code>-N</code> 表示将不存在的文件当作空文件处理， 这样新添加的文件也会出现在patch文件中。</p>
-<p>然后在需要应用patch的地方使用下述命令即可：</p>
-<pre><code>patch -p0 &lt; mysoft.patch
-</code></pre><p>diff的 <code>-y</code> 命令（长格式为<code>--side-by-side</code>）可以将屏幕分成左右两部分，来比较两个文件之间的差异。<br>许多图形化的比较工具都有这个功能，但如果只能使用命令行，这个参数就相当有用了。 如果要改变左右各部分的宽度，可以通过<code>-W（--width）</code>参数来指定。  </p>
-<p>此外，<code>--strip-trailing-cr</code> 参数可以去除行尾的换行，这样DOS格式和Unix格式的文件互相比较时， 就不至于因为换行符不一致而出现大量的差异。</p>
-<p>patch</p>
-<pre><code>－－－－－－－－－－－－－－－－－－
-NAME
-   patch - apply a diff file to an original
-SYNOPSIS
-   patch [options] [originalfile [patchfile]]
-   but usually just
-   patch -pnum &lt;patchfile&gt;
-－－－－－－－－－－－－－－－－－－
-</code></pre><p>简单的说，patch就是利用diff制作的补丁来实现源文件（夹）和目的文件（夹）的转换。这样说就意味着你可以有源文件（夹）–&gt; 目的文件（夹），也可以目的文件（夹）–&gt; 源文件（夹）。下面介绍几个最常用选项：</p>
-<pre><code>-p0 选项要从当前目录查找目的文件（夹）
--p1 选项要忽略掉第一层目录，从当前目录开始查找。
-</code></pre><h4 id="patch文件的结构"><a href="#patch文件的结构" class="headerlink" title="patch文件的结构"></a>patch文件的结构</h4><h5 id="补丁头"><a href="#补丁头" class="headerlink" title="补丁头"></a>补丁头</h5><p>补丁头是分别由—/+++开头的两行，用来表示要打补丁的文件。—开头表示旧文件，+++开头表示新文件。</p>
-<p>一个补丁文件中的多个补丁</p>
-<p>一个补丁文件中可能包含以—/+++开头的很多节，每一节用来打一个补丁。所以在一个补丁文件中可以包含好多个补丁。</p>
-<h5 id="块"><a href="#块" class="headerlink" title="块"></a>块</h5><p>块是补丁中要修改的地方。它通常由一部分不用修改的东西开始和结束。他们只是用来表示要修改的位置。他们通常以@@开始，结束于另一个块的开始或者一个新的补丁头。</p>
-<h5 id="块的缩进"><a href="#块的缩进" class="headerlink" title="块的缩进"></a>块的缩进</h5><p>块会缩进一列，而这一列是用来表示这一行是要增加还是要删除的。<br>块的第一列</p>
-<p>+号表示这一行是要加上的。</p>
-<p>-号表示这一行是要删除的。</p>
-<p>没有加号也没有减号表示这里只是引用的而不需要修改。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">   用法：diff [选项]... FILES</div><div class="line">逐行比较文件。</div><div class="line"></div><div class="line">  -i  --ignore-case  忽略文件内容大小写的区别。</div><div class="line">  --ignore-file-name-case  忽略文件名大小写的区别。</div><div class="line">  --no-ignore-file-name-case  不忽略文件名大小写的区别。</div><div class="line">  -E  --ignore-tab-expansion  忽略由制表符宽度造成的差异。</div><div class="line">  -b  --ignore-space-change  忽略由空格数不同造成的差异。</div><div class="line">  -w  --ignore-all-space   忽略所有空格。</div><div class="line">  -B  --ignore-blank-lines  忽略任何因空行而造成的差异。</div><div class="line">  -I RE  --ignore-matching-lines=RE  如果某行匹配正则表达式，则忽略由该行造成的差异。</div><div class="line">  --strip-trailing-cr  去除输入内容每行末端的 carriage <span class="built_in">return</span> 字符。</div><div class="line">  <span class="_">-a</span>  --text  所有文件都以文本方式处理。</div><div class="line"></div><div class="line">  -c  -C 行数  --context[=行数]  显示指定&lt;行数&gt;(默认 3 行)copied 格式的上下文</div><div class="line">  -u  -U 行数  --unified[=行数]  显示指定&lt;行数&gt;(默认 3 行)unified 格式的上下文</div><div class="line">     --label 标识                       使用&lt;标识&gt;代替文件名称。</div><div class="line">     -p  --show-c-function           显示和每个差异有关的 C 函数名称。</div><div class="line">    -F RE  --show-function-line=RE  显示最接近而符合&lt;正则表示式&gt;的一行。</div><div class="line">  -q  --brief  只显示文件是否不同。</div><div class="line">  <span class="_">-e</span>  --ed 以 ed script 方式输出。</div><div class="line">  --normal 以正常的 diff 方式输出。</div><div class="line">  -n  --rcs  以 RCS diff 格式输出。</div><div class="line">  -y  --side-by-side         以两列并排的方式显示。</div><div class="line">    -W NUM  --width=NUM      每行显示最多 NUM (默认 130) 个字符。</div><div class="line">    --left-column            当有两行相同时只显示左边的一行。</div><div class="line">    --suppress-common-lines  当有两行相同时不会显示。</div><div class="line">  -D NAME  --ifdef=NAME  输出的内容以‘<span class="comment">#ifdef NAME’方式标明差异。</span></div><div class="line">  --GTYPE-group-format=GFMT  效果类似，但会以 GFMT 格式处理 GTYPE 输入的行。</div><div class="line">  --line-format=LFMT  效果类似，但会以 LFMT 格式处理每一行资料。</div><div class="line">  --LTYPE-line-format=LFMT   效果类似，但会以 LFMT 格式处理 LTYPE 输入的行。</div><div class="line">    LTYPE 可以是‘old’、‘new’或‘unchanged’。GTYPE 可以是 LTYPE 的选择</div><div class="line">    或是‘changed’。</div><div class="line">    GFMT 可包括：</div><div class="line">      %&lt;  该组中每行属于 FILE1 的差异</div><div class="line">      %&gt;  该组中每行属于 FILE2 的差异</div><div class="line">      %=  该组中同时在 FILE1 和 FILE2 出现的每一行</div><div class="line">      %[-][宽度][.[精确度]]&#123;doxX&#125;字符  以 <span class="built_in">printf</span> 格式表示该&lt;字符&gt;代表的内容</div><div class="line">        大写&lt;字符&gt;表示属于新的文件，小写表示属于旧的文件。&lt;字符&gt;的意义如下：</div><div class="line">          F  行组中第一行的行号</div><div class="line">          L  行组中最后一行的行号</div><div class="line">          N  行数 ( =L-F+1 )</div><div class="line">          E  F-1</div><div class="line">          M  L+1</div><div class="line">    LFMT 可包括：</div><div class="line">      %L  该行的内容</div><div class="line">      %l  该行的内容，但不包括结束的 newline 字符</div><div class="line">      %[-][宽度][.[精确度]]&#123;doxX&#125;n  以 <span class="built_in">printf</span> 格式表示的输入资料行号</div><div class="line">    GFMT 或 LFMT 可包括：</div><div class="line">      %%        %</div><div class="line">      %c<span class="string">'C'</span>     字符 C</div><div class="line">      %c<span class="string">'\OOO'</span>  八进制数字OOO所代表的字符</div><div class="line"></div><div class="line">  <span class="_">-l</span>  --paginate 将输出送至‘pr’指令来分页。</div><div class="line">  -t  --expand-tabs  将输出中的 tab 转换成空格。</div><div class="line">  -T  --initial-tab  每行先加上 tab 字符，使 tab 字符可以对齐。</div><div class="line"></div><div class="line">  -r  --recursive  连同所有子目录一起比较。</div><div class="line">  -N  --new-file  不存在的文件以空文件方式处理。</div><div class="line">  --unidirectional-new-file  若第一文件案不存在，以空文件处理。</div><div class="line">  <span class="_">-s</span>  --report-identical-files   当两个一样时仍然显示结果。</div><div class="line">  -x PAT  --exclude=PAT  排除匹配 PAT 的文件。</div><div class="line">  -X FILE  --exclude-from=FILE   排除所有匹配在 FILE 中列出的模式的文件。</div><div class="line">  -S FILE  --starting-file=FILE  当比较目录時，由 FILE 开始比较。</div><div class="line">  --from-file=FILE1  将 FILE1 和操作数中的所有文件/目录作比较。FILE1 可以是目录。</div><div class="line">  --to-file=FILE2    将操作数中的所有文件/目录和 FILE2 作比较。FILE2 可以是目录。</div><div class="line"></div><div class="line">  --horizon-lines=NUM      (此选项不做处理)</div><div class="line">  <span class="_">-d</span>  --minimal  尽可能找出最小的差异。</div><div class="line">  --speed-large-files     假设文件十分大而且其中含有许多微小的差异。</div><div class="line"></div><div class="line">  -v  --version  输出版本信息。</div><div class="line">  --help  输入本帮助。</div><div class="line"></div><div class="line">  FILES 的格式可以是‘FILE1 FILE2’、‘DIR1 DIR2’、‘DIR FILE...’或</div><div class="line">      ‘FILE... DIR’。</div><div class="line">如果使用 --from-file 或 --to-file 选项，FILES 的格式则不受限制。</div><div class="line">如果 FILE 是‘-’，则由标准输入读取内容。</div><div class="line"></div><div class="line">请向 &lt;bug-gnu-utils@gnu.org&gt; 报告错误。</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。&lt;/p&gt;
-&lt;p&gt;最常用的功能莫过于生成patch文件了：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;diff -urN old/ new/ &amp;gt; mysoft.patch
-&lt;/code&gt;&lt;/pre&gt;
-    
-    </summary>
-    
-      <category term="other" scheme="http://yoursite.com/categories/other/"/>
-    
-    
-      <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
-    
-      <category term="diff" scheme="http://yoursite.com/tags/diff/"/>
-    
-      <category term="patch" scheme="http://yoursite.com/tags/patch/"/>
     
   </entry>
   
