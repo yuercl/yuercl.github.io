@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：在python的安装目录中找到配置文件：%Python_Home%\Lib\site-packages\matplotlib\mpl-data\matpl"><meta name="keywords" content="Python"><title>python matplotlib中文显示问题 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">python matplotlib中文显示问题</h1><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ol>
+<li><p>在python的安装目录中找到配置文件： %Python_Home%\Lib\site-packages\matplotlib\mpl-data\matplotlibrc。如果找不到目录，在pycharm里面点击代码引用也可以发现目录。</p>
+</li>
+<li><p>找到139行的font.family : sans-serif将其前面的#注释去掉</p>
+</li>
+<li><p>找到151行的font.sans-serif : <font color="red"><strong>AR PL UMing CN, SimHei,</strong> </font> Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif将【<font color="red"><strong>AR PL UMing CN, SimHei</strong></font>】添加在最前面，其中AR PL UMing CN代表：宋体。SimHei代表：黑体。并将前面的#注释号去掉，重启编辑器后，便可显示中文了。</p>
+</li>
+<li><p>同时需要更改axes.unicode_minus  : False；使其值为False；否则无法显示负号</p>
+</li>
+<li><p>代码如下：</p>
+</li>
+</ol>
+<pre><code class="python"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt 
+plt.xlabel(<span class="string">'x轴'</span>) 
+plt.ylabel(<span class="string">'y轴'</span>) 
+plt.bar(left = (<span class="number">0</span>,<span class="number">1</span>),height =(<span class="number">1</span>,<span class="number">0.5</span>),width = <span class="number">0.35</span>) 
+plt.show()
+</code></pre>
+<p><img src="/assets/images/matplotlib_display_chinese.png" alt=""></p>
+</div></article><div class="tags"><a href="/tags/Python/">Python</a></div><div class="paginator"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/';
+    this.page.identifier = '2016/11/16/python-matplotlib中文显示问题/';
+    this.page.title = 'python matplotlib中文显示问题';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

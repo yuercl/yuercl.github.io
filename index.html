@@ -5,8 +5,28 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><blockquote>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/16/python-matplotlib中文显示问题/" class="post-link">python matplotlib中文显示问题</a></h2><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ol>
+<li><p>在python的安装目录中找到配置文件： %Python_Home%\Lib\site-packages\matplotlib\mpl-data\matplotlibrc。如果找不到目录，在pycharm里面点击代码引用也可以发现目录。</p>
+</li>
+<li><p>找到139行的font.family : sans-serif将其前面的#注释去掉</p>
+</li>
+<li><p>找到151行的font.sans-serif : <font color="red"><strong>AR PL UMing CN, SimHei,</strong> </font> Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif将【<font color="red"><strong>AR PL UMing CN, SimHei</strong></font>】添加在最前面，其中AR PL UMing CN代表：宋体。SimHei代表：黑体。并将前面的#注释号去掉，重启编辑器后，便可显示中文了。</p>
+</li>
+<li><p>同时需要更改axes.unicode_minus  : False；使其值为False；否则无法显示负号</p>
+</li>
+<li><p>代码如下：</p>
+</li>
+</ol>
+<pre><code class="python"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt 
+plt.xlabel(<span class="string">'x轴'</span>) 
+plt.ylabel(<span class="string">'y轴'</span>) 
+plt.bar(left = (<span class="number">0</span>,<span class="number">1</span>),height =(<span class="number">1</span>,<span class="number">0.5</span>),width = <span class="number">0.35</span>) 
+plt.show()
+</code></pre>
+<p><img src="/assets/images/matplotlib_display_chinese.png" alt=""></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
+<blockquote>
 <p>“Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly for targets which use Swift. Use the [Edit &gt; Convert &gt; To Current Swift Syntax…] menu to choose a Swift version or use the Build Settings editor to configure the build setting directly.</p>
 </blockquote>
 <p>设置 对应的SWIFT_VERSION = NO 可成。</p>
@@ -33,10 +53,4 @@
 <p>任何时候都不能忘记投资，投资是一辈子的事情，anytime。纵然熊市也有相应的策略，一定不能让资金固定在那儿。分级基金套利／分级A投资／房市…</p>
 <p>2016年10月1日，人民币加入SDR，国庆假期各城市限购政策，到今天两周多了，人民币一直在跌，楼市一线城市量价齐跌。</p>
 <p>于是乎，资金们，流动起来吧～</p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/28/国债逆回购/" class="post-link">国债逆回购</a></h2><span class="post-time">2016年9月28日</span><div class="post-content"><h1 id="什么是国债逆回购"><a href="#什么是国债逆回购" class="headerlink" title="什么是国债逆回购"></a>什么是国债逆回购</h1><p>所谓国债逆回购，本质就是一种短期贷款，也就是说，个人通过国债回购市场把自己的资金借出去，获得固定的利息收益；而回购方，也就是借款人用自己的国债作为抵押获得这笔借款，到期后还本付息。通俗来讲，就是将资金通过国债回购市场拆出，其实就是一种短期贷款，即你把钱借给别人，获得固定利息；而别人用国债作抵押，到期还本付息。逆回购的安全性超强，等同于国债。</p>
-<p>简单来说，国债逆回购有三方参与者：</p>
-<ul>
-<li>融资方 即正回购方，需要用手中的国债券换取现金；</li>
-<li>融券方 即逆回购方，需要用手中的现金买国债券，以实现资金增值；</li>
-<li>监督方 上交所和深交所</li>
-</ul></div><a href="/2016/09/28/国债逆回购/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+</div></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
