@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-06T01:55:02.000Z</updated>
+  <updated>2016-12-06T09:37:16.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,77 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>matplotlib作图</title>
+    <link href="http://yoursite.com/2016/12/05/matplotlib%E4%BD%9C%E5%9B%BE/"/>
+    <id>http://yoursite.com/2016/12/05/matplotlib作图/</id>
+    <published>2016-12-04T16:00:00.000Z</published>
+    <updated>2016-12-06T09:37:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
+<ul>
+<li><a href="http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">基础介绍</a></li>
+<li><a href="http://www.cnblogs.com/nju2014/p/5620776.html" target="_blank" rel="external">详解Matplotlib的图像各个部分</a> </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为1的位置，顺着来排</span></div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为2的位置</span></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line"></div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</div><div class="line"></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'g'</span>, alpha=<span class="number">0.75</span>)</div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'Smarts'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability'</span>)</div><div class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</div><div class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)</div><div class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="/assets/images/matplotlib_python_parking.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;amp;utm_medium=referral&quot;&gt;基础介绍&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/nju2014/p/5620776.html&quot;&gt;详解Matplotlib的图像各个部分&lt;/a&gt; &lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; plt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(t)&lt;/span&gt;:&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; np.exp(-t) * np.cos(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;*np.pi*t)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;t1 = np.arange(&lt;span class=&quot;number&quot;&gt;0.0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5.0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;t2 = np.arange(&lt;span class=&quot;number&quot;&gt;0.0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5.0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.02&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;plt.figure(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 211 两行一列，编号为1的位置，顺着来排&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;plt.subplot(&lt;span class=&quot;number&quot;&gt;211&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;plt.plot(t1, f(t1), &lt;span class=&quot;string&quot;&gt;&#39;bo&#39;&lt;/span&gt;, t2, f(t2), &lt;span class=&quot;string&quot;&gt;&#39;k&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 211 两行一列，编号为2的位置&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;plt.subplot(&lt;span class=&quot;number&quot;&gt;212&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;plt.plot(t2, np.cos(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;*np.pi*t2), &lt;span class=&quot;string&quot;&gt;&#39;r--&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;plt.show()&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="matplotlib" scheme="http://yoursite.com/tags/matplotlib/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MacOS反编译某研报客户端</title>
+    <link href="http://yoursite.com/2016/12/04/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91%E6%9F%90%E7%A0%94%E6%8A%A5%E5%AE%A2%E6%88%B7%E7%AB%AF/"/>
+    <id>http://yoursite.com/2016/12/04/MacOS反编译某研报客户端/</id>
+    <published>2016-12-03T16:00:00.000Z</published>
+    <updated>2016-12-06T09:37:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>偶尔看看别人的代码，换一个角度思考，也是一种乐趣～</p>
+<p>好好学习，人生苦短，及时行乐～</p>
+<a id="more"></a>
+<p><img src="/assets/images/class_decompiler_overview.png" alt=""></p>
+<p><img src="/assets/images/class_original_fileutils.png" alt=""></p>
+<p>这里使用jd-gui反编译的时候，效果不是很好，需要根据理解来还原代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.crypto.Cipher;</div><div class="line"><span class="keyword">import</span> javax.crypto.SecretKeyFactory;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.DESKeySpec;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.IvParameterSpec;</div><div class="line"><span class="keyword">import</span> java.net.URLDecoder;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUtils</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] convertHexString(String paramString) &#123;</div><div class="line">        <span class="keyword">byte</span>[] arrayOfByte = <span class="keyword">new</span> <span class="keyword">byte</span>[paramString.length() / <span class="number">2</span>];</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (i &lt; arrayOfByte.length) &#123;</div><div class="line">            arrayOfByte[i] = ((<span class="keyword">byte</span>) Integer.parseInt(paramString.substring(i * <span class="number">2</span>, i * <span class="number">2</span> + <span class="number">2</span>), <span class="number">16</span>));</div><div class="line">            i += <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> arrayOfByte;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">decrypt</span><span class="params">(String paramString1, String paramString2)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="keyword">byte</span>[] p1 = convertHexString(paramString1);</div><div class="line">        Cipher localCipher = Cipher.getInstance(<span class="string">"DES/CBC/PKCS5Padding"</span>);</div><div class="line">        DESKeySpec localDESKeySpec = <span class="keyword">new</span> DESKeySpec(paramString2.getBytes());</div><div class="line">        localCipher.init(<span class="number">2</span>, SecretKeyFactory.getInstance(<span class="string">"DES"</span>).generateSecret(localDESKeySpec), <span class="keyword">new</span> IvParameterSpec(paramString2.getBytes()));</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(localCipher.doFinal(p1));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getUrl</span><span class="params">(String paramString1, String paramString2, String paramString3, String paramString4)</span> </span>&#123;</div><div class="line">        String[] p2 = paramString2.substring(<span class="number">10</span>).trim().split(<span class="string">":"</span>);</div><div class="line">        StringBuffer localStringBuffer = <span class="keyword">new</span> StringBuffer();</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (i &lt; p2.length) &#123;</div><div class="line">            localStringBuffer = localStringBuffer.append(p2[i]);</div><div class="line">            i += <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        paramString2 = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (paramString1 != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (!paramString3.equals(<span class="string">""</span>)) &#123;</div><div class="line"><span class="comment">//                ;</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (!paramString4.equals(<span class="string">""</span>)) &#123;</div><div class="line"><span class="comment">//                break;</span></div><div class="line">            &#125;</div><div class="line">            paramString2 = localStringBuffer + <span class="string">"W"</span> + <span class="string">"M"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (; ; ) &#123;</div><div class="line">            <span class="keyword">if</span> (paramString2 == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                paramString1 = URLDecoder.decode(decrypt(paramString1, paramString2), <span class="string">"utf-8"</span>);</div><div class="line">                <span class="keyword">return</span> paramString1;</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">            paramString2 = localStringBuffer + <span class="string">"W"</span> + paramString4.substring(<span class="number">0</span>, <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span> (paramString4.equals(<span class="string">""</span>)) &#123;</div><div class="line">                paramString2 = localStringBuffer + paramString3.substring(<span class="number">0</span>, <span class="number">1</span>) + <span class="string">"M"</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                paramString2 = localStringBuffer + paramString3.substring(<span class="number">0</span>, <span class="number">1</span>) + paramString4.substring(<span class="number">0</span>, <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDES</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        String file = <span class="string">"FDAEBB080873D6CF6E67B5AA6D9823......忽略"</span>;</div><div class="line">        String url = FileUtils.getUrl(file, <span class="string">"2016-12-01 10:00:12"</span>, <span class="string">"547952"</span>, <span class="string">"6"</span>);</div><div class="line">        System.out.println(url);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;偶尔看看别人的代码，换一个角度思考，也是一种乐趣～&lt;/p&gt;
+&lt;p&gt;好好学习，人生苦短，及时行乐～&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MacOS反编译APK</title>
-    <link href="http://yoursite.com/2016/12/06/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91APK/"/>
-    <id>http://yoursite.com/2016/12/06/MacOS反编译APK/</id>
-    <published>2016-12-05T16:00:00.000Z</published>
-    <updated>2016-12-06T01:55:02.000Z</updated>
+    <link href="http://yoursite.com/2016/12/03/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91APK/"/>
+    <id>http://yoursite.com/2016/12/03/MacOS反编译APK/</id>
+    <published>2016-12-02T16:00:00.000Z</published>
+    <updated>2016-12-06T09:38:30.000Z</updated>
     
     <content type="html"><![CDATA[<p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
 <h3 id="反编译代码的工具"><a href="#反编译代码的工具" class="headerlink" title="反编译代码的工具"></a>反编译代码的工具</h3><ul>
@@ -71,36 +137,6 @@
       <category term="dex2jar" scheme="http://yoursite.com/tags/dex2jar/"/>
     
       <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib作图</title>
-    <link href="http://yoursite.com/2016/12/05/matplotlib%E4%BD%9C%E5%9B%BE/"/>
-    <id>http://yoursite.com/2016/12/05/matplotlib作图/</id>
-    <published>2016-12-04T16:00:00.000Z</published>
-    <updated>2016-12-06T03:41:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
-<p><a href="http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为1的位置，顺着来排</span></div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为2的位置</span></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line"></div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</div><div class="line"></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'g'</span>, alpha=<span class="number">0.75</span>)</div><div class="line"></div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'Smarts'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability'</span>)</div><div class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</div><div class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)</div><div class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="/assets/images/matplotlib_python_parking.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;amp;ut
-    
-    </summary>
-    
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-      <category term="matplotlib" scheme="http://yoursite.com/tags/matplotlib/"/>
     
   </entry>
   
@@ -719,9 +755,9 @@
       <category term="zsh" scheme="http://yoursite.com/categories/zsh/"/>
     
     
-      <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
-    
       <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
+    
+      <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
     
   </entry>
   
@@ -1032,71 +1068,6 @@
       <category term="zgrep" scheme="http://yoursite.com/tags/zgrep/"/>
     
       <category term="grep" scheme="http://yoursite.com/tags/grep/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GC策略&amp;内存申请、对象衰老</title>
-    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
-    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
-<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
-<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
-<a id="more"></a>
-<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
-<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
-<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
-<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
-<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
-<li>当old区空间不够时，JVM会在old区进行major collection；</li>
-<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
-<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
-</ol>
-<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
-<thead>
-<tr>
-<th>GC类型</th>
-<th>触发条件</th>
-<th>触发时发生了什么</th>
-<th>注意</th>
-<th>查看方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>YGC</td>
-<td>eden空间不足</td>
-<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-<tr>
-<td>FGC</td>
-<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
-<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-</tbody>
-</table>
-<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
-&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
-&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
