@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="属性类型默认值说明propagationPropagation枚举REQUIRED事务传播属性(下有说明)isolationisolation枚举DEFAULT事务隔离级别(另有说明)readOnlybooleanfalse"><meta name="keywords" content="Spring,事务"><title>Spring transaction 事务 -- Isolation &amp; Progation · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/11/28/Spring-transaction-事务-Isolation-Progation/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Spring transaction 事务 -- Isolation & Progation</h1><span class="post-time">2016年11月28日</span><div class="post-content"><table>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>propagation</td>
+<td>Propagation枚举</td>
+<td>REQUIRED</td>
+<td>事务传播属性 (下有说明)</td>
+</tr>
+<tr>
+<td>isolation</td>
+<td>isolation枚举</td>
+<td>DEFAULT</td>
+<td>事务隔离级别 (另有说明)</td>
+</tr>
+<tr>
+<td>readOnly</td>
+<td>boolean</td>
+<td>false</td>
+<td>是否只读</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>int</td>
+<td>-1</td>
+<td>超时(秒)</td>
+</tr>
+<tr>
+<td>rollbackFor</td>
+<td>Class[]</td>
+<td>{}</td>
+<td>需要回滚的异常类</td>
+</tr>
+<tr>
+<td>rollbackForClassName</td>
+<td>String[]</td>
+<td>{}</td>
+<td>需要回滚的异常类名</td>
+</tr>
+<tr>
+<td>noRollbackFor</td>
+<td>Class[]</td>
+<td>{}</td>
+<td>不需要回滚的异常类</td>
+</tr>
+<tr>
+<td>noRollbackForClassName</td>
+<td>String[]</td>
+<td>{}</td>
+<td>不需要回滚的异常类名</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<font color="red"><strong>注意:</strong></font>
+
+<ul>
+<li><p>@Transactional 只能被应用到public方法上, 对于其它非public的方法,如果标记了@Transactional也不会报错,但方法没有事务功能。</p>
+</li>
+<li><p>默认情况下,一个有事务方法, 遇到RuntiomeException时会回滚。遇到受检查的异常是不会回滚的。要想所有异常都回滚,要加上rollbackFor={Exception.class}。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQUIRED</td>
+<td>业务方法需要在一个事务中运行,如果方法运行时,已处在一个事务中,那么就加入该事务,否则自己创建一个新的事务.这是spring默认的传播行为.</td>
+</tr>
+<tr>
+<td>SUPPORTS</td>
+<td>如果业务方法在某个事务范围内被调用,则方法成为该事务的一部分,如果业务方法在事务范围外被调用,则方法在没有事务的环境下执行.</td>
+</tr>
+<tr>
+<td>MANDATORY</td>
+<td>只能在一个已存在事务中执行,业务方法不能发起自己的事务,如果业务方法在没有事务的环境下调用,就抛异常</td>
+</tr>
+<tr>
+<td>REQUIRES_NEW</td>
+<td>业务方法总是会为自己发起一个新的事务,如果方法已运行在一个事务中,则原有事务被挂起,新的事务被创建,直到方法结束,新事务才结束,原先的事务才会恢复执行.</td>
+</tr>
+<tr>
+<td>NOT_SUPPORTED</td>
+<td>声明方法需要事务,如果方法没有关联到一个事务,容器不会为它开启事务.如果方法在一个事务中被调用,该事务会被挂起,在方法调用结束后,原先的事务便会恢复执行.</td>
+</tr>
+<tr>
+<td>NEVER</td>
+<td>声明方法绝对不能在事务范围内执行,如果方法在某个事务范围内执行,容器就抛异常.只有没关联到事务,才正常执行.</td>
+</tr>
+<tr>
+<td>NESTED</td>
+<td>如果一个活动的事务存在,则运行在一个嵌套的事务中.如果没有活动的事务,则按REQUIRED,属性执行.它使用了一个单独的事务, 这个事务拥有多个可以回滚的保证点.内部事务回滚不会对外部事务造成影响, 它只对DataSourceTransactionManager 事务管理器起效.</td>
+</tr>
+</tbody>
+</table>
+</div></article><div class="tags"><a href="/tags/Spring/">Spring</a><a href="/tags/事务/">事务</a></div><div class="paginator"><a href="/2016/12/06/MacOS反编译APK/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/11/16/python-matplotlib中文显示问题/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/11/28/Spring-transaction-事务-Isolation-Progation/';
+    this.page.identifier = '2016/11/28/Spring-transaction-事务-Isolation-Progation/';
+    this.page.title = 'Spring transaction 事务 -- Isolation &amp; Progation';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

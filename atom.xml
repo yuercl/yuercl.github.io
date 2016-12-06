@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-16T03:56:17.000Z</updated>
+  <updated>2016-12-06T01:55:02.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,262 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MacOS反编译APK</title>
+    <link href="http://yoursite.com/2016/12/06/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91APK/"/>
+    <id>http://yoursite.com/2016/12/06/MacOS反编译APK/</id>
+    <published>2016-12-05T16:00:00.000Z</published>
+    <updated>2016-12-06T01:55:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
+<h3 id="反编译代码的工具"><a href="#反编译代码的工具" class="headerlink" title="反编译代码的工具"></a>反编译代码的工具</h3><ul>
+<li>dex2jar<ul>
+<li>把dex文件转成jar文件</li>
+<li>下载地址： <a href="https://sourceforge.net/projects/dex2jar/files/" target="_blank" rel="external">https://sourceforge.net/projects/dex2jar/files/</a></li>
+</ul>
+</li>
+<li>jd-gui<ul>
+<li>这个工具用于将jar文件转换成java代码</li>
+<li>下载地址： <a href="http://jd.benow.ca/" target="_blank" rel="external">http://jd.benow.ca/</a></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="反编译资源的工具"><a href="#反编译资源的工具" class="headerlink" title="反编译资源的工具"></a>反编译资源的工具</h3><ul>
+<li>APKTool: 本文重要工具，APK逆向工具，使用简单<ul>
+<li>下载地址: <a href="http://ibotpeaches.github.io/Apktool/install/" target="_blank" rel="external">http://ibotpeaches.github.io/Apktool/install/</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="反编译代码-资源"><a href="#反编译代码-资源" class="headerlink" title="反编译代码/资源"></a>反编译代码/资源</h3><p>dex2jar 和windows上面的不太一样，对应为d2j-dex2jar，所以执行的时候是，<code>sh d2j-dex2jar.sh classes.dex</code>。如果<code>d2j-dex2jar.sh</code>没有在path里面，需要写全路径或者加入到path变量中。</p>
+<ul>
+<li>sh d2j-dex2jar.sh classes.dex</li>
+<li>sh apktool.sh apktool d FooApp.apk</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">yuer@172-12-1-29.lightspeed.sgnwmi.sbcglobal.net:/usr/<span class="built_in">local</span>/Cellar/dex2jar/2.0&gt; ll bin                                                                                                                                                                            16-12-06 9:41</div><div class="line">total 80</div><div class="line">lrwxr-xr-x  1 yuer  admin    26B 11 23 14:32 d2j-baksmali -&gt; ../libexec/d2j-baksmali.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    40B 11 23 14:32 d2j-dex-recompute-checksum -&gt; ../libexec/d2j-dex-recompute-checksum.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    25B 11 23 14:32 d2j-dex2jar -&gt; ../libexec/d2j-dex2jar.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    27B 11 23 14:32 d2j-dex2smali -&gt; ../libexec/d2j-dex2smali.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    25B 11 23 14:32 d2j-jar2dex -&gt; ../libexec/d2j-jar2dex.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    28B 11 23 14:32 d2j-jar2jasmin -&gt; ../libexec/d2j-jar2jasmin.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    28B 11 23 14:32 d2j-jasmin2jar -&gt; ../libexec/d2j-jasmin2jar.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    23B 11 23 14:32 d2j-smali -&gt; ../libexec/d2j-smali.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    25B 11 23 14:32 d2j-std-apk -&gt; ../libexec/d2j-std-apk.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    24B 11 23 14:32 d2j_invoke -&gt; ../libexec/d2j_invoke.sh</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓&lt;/p&gt;
+&lt;h3 id=&quot;反编译代码的工具&quot;&gt;&lt;a href=&quot;#反编译代码的工具&quot; class=&quot;headerlink&quot; title=&quot;反编译代码的工具&quot;&gt;&lt;/a&gt;反编译代码的工具&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;dex2jar&lt;ul&gt;
+&lt;li&gt;把dex文件转成jar文件&lt;/li&gt;
+&lt;li&gt;下载地址： &lt;a href=&quot;https://sourceforge.net/projects/dex2jar/files/&quot;&gt;https://sourceforge.net/projects/dex2jar/files/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;jd-gui&lt;ul&gt;
+&lt;li&gt;这个工具用于将jar文件转换成java代码&lt;/li&gt;
+&lt;li&gt;下载地址： &lt;a href=&quot;http://jd.benow.ca/&quot;&gt;http://jd.benow.ca/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="dex2jar" scheme="http://yoursite.com/tags/dex2jar/"/>
+    
+      <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring transaction 事务 -- Isolation &amp; Progation</title>
+    <link href="http://yoursite.com/2016/11/28/Spring-transaction-%E4%BA%8B%E5%8A%A1-Isolation-Progation/"/>
+    <id>http://yoursite.com/2016/11/28/Spring-transaction-事务-Isolation-Progation/</id>
+    <published>2016-11-27T16:00:00.000Z</published>
+    <updated>2016-12-06T01:54:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>propagation</td>
+<td>Propagation枚举</td>
+<td>REQUIRED</td>
+<td>事务传播属性 (下有说明)</td>
+</tr>
+<tr>
+<td>isolation</td>
+<td>isolation枚举</td>
+<td>DEFAULT</td>
+<td>事务隔离级别 (另有说明)</td>
+</tr>
+<tr>
+<td>readOnly</td>
+<td>boolean</td>
+<td>false</td>
+<td>是否只读</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>int</td>
+<td>-1</td>
+<td>超时(秒)</td>
+</tr>
+<tr>
+<td>rollbackFor</td>
+<td>Class[]</td>
+<td>{}</td>
+<td>需要回滚的异常类</td>
+</tr>
+<tr>
+<td>rollbackForClassName</td>
+<td>String[]</td>
+<td>{}</td>
+<td>需要回滚的异常类名</td>
+</tr>
+<tr>
+<td>noRollbackFor</td>
+<td>Class[]</td>
+<td>{}</td>
+<td>不需要回滚的异常类</td>
+</tr>
+<tr>
+<td>noRollbackForClassName</td>
+<td>String[]</td>
+<td>{}</td>
+<td>不需要回滚的异常类名</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<font color="red"><strong>注意:</strong></font>
+
+<ul>
+<li><p>@Transactional 只能被应用到public方法上, 对于其它非public的方法,如果标记了@Transactional也不会报错,但方法没有事务功能。</p>
+</li>
+<li><p>默认情况下,一个有事务方法, 遇到RuntiomeException时会回滚。遇到受检查的异常是不会回滚的。要想所有异常都回滚,要加上rollbackFor={Exception.class}。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQUIRED</td>
+<td>业务方法需要在一个事务中运行,如果方法运行时,已处在一个事务中,那么就加入该事务,否则自己创建一个新的事务.这是spring默认的传播行为.</td>
+</tr>
+<tr>
+<td>SUPPORTS</td>
+<td>如果业务方法在某个事务范围内被调用,则方法成为该事务的一部分,如果业务方法在事务范围外被调用,则方法在没有事务的环境下执行.</td>
+</tr>
+<tr>
+<td>MANDATORY</td>
+<td>只能在一个已存在事务中执行,业务方法不能发起自己的事务,如果业务方法在没有事务的环境下调用,就抛异常</td>
+</tr>
+<tr>
+<td>REQUIRES_NEW</td>
+<td>业务方法总是会为自己发起一个新的事务,如果方法已运行在一个事务中,则原有事务被挂起,新的事务被创建,直到方法结束,新事务才结束,原先的事务才会恢复执行.</td>
+</tr>
+<tr>
+<td>NOT_SUPPORTED</td>
+<td>声明方法需要事务,如果方法没有关联到一个事务,容器不会为它开启事务.如果方法在一个事务中被调用,该事务会被挂起,在方法调用结束后,原先的事务便会恢复执行.</td>
+</tr>
+<tr>
+<td>NEVER</td>
+<td>声明方法绝对不能在事务范围内执行,如果方法在某个事务范围内执行,容器就抛异常.只有没关联到事务,才正常执行.</td>
+</tr>
+<tr>
+<td>NESTED</td>
+<td>如果一个活动的事务存在,则运行在一个嵌套的事务中.如果没有活动的事务,则按REQUIRED,属性执行.它使用了一个单独的事务, 这个事务拥有多个可以回滚的保证点.内部事务回滚不会对外部事务造成影响, 它只对DataSourceTransactionManager 事务管理器起效.</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;属性&lt;/th&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;默认值&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;propagation&lt;/td&gt;
+&lt;td&gt;Propagation枚举&lt;/td&gt;
+&lt;td&gt;REQUIRED&lt;/td&gt;
+&lt;td&gt;事务传播属性 (下有说明)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;isolation&lt;/td&gt;
+&lt;td&gt;isolation枚举&lt;/td&gt;
+&lt;td&gt;DEFAULT&lt;/td&gt;
+&lt;td&gt;事务隔离级别 (另有说明)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;readOnly&lt;/td&gt;
+&lt;td&gt;boolean&lt;/td&gt;
+&lt;td&gt;false&lt;/td&gt;
+&lt;td&gt;是否只读&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;timeout&lt;/td&gt;
+&lt;td&gt;int&lt;/td&gt;
+&lt;td&gt;-1&lt;/td&gt;
+&lt;td&gt;超时(秒)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rollbackFor&lt;/td&gt;
+&lt;td&gt;Class[]&lt;/td&gt;
+&lt;td&gt;{}&lt;/td&gt;
+&lt;td&gt;需要回滚的异常类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rollbackForClassName&lt;/td&gt;
+&lt;td&gt;String[]&lt;/td&gt;
+&lt;td&gt;{}&lt;/td&gt;
+&lt;td&gt;需要回滚的异常类名&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;noRollbackFor&lt;/td&gt;
+&lt;td&gt;Class[]&lt;/td&gt;
+&lt;td&gt;{}&lt;/td&gt;
+&lt;td&gt;不需要回滚的异常类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;noRollbackForClassName&lt;/td&gt;
+&lt;td&gt;String[]&lt;/td&gt;
+&lt;td&gt;{}&lt;/td&gt;
+&lt;td&gt;不需要回滚的异常类名&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+    
+    
+      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
+    
+      <category term="事务" scheme="http://yoursite.com/tags/%E4%BA%8B%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
     <title>python matplotlib中文显示问题</title>
     <link href="http://yoursite.com/2016/11/16/python-matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/</id>
     <published>2016-11-15T16:00:00.000Z</published>
-    <updated>2016-11-16T03:56:17.000Z</updated>
+    <updated>2016-12-06T01:55:33.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</p>
+    <content type="html"><![CDATA[<p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：<a id="more"></a></p>
 <ol>
 <li><p>在python的安装目录中找到配置文件： %Python_Home%\Lib\site-packages\matplotlib\mpl-data\matplotlibrc。如果找不到目录，在pycharm里面点击代码引用也可以发现目录。</p>
 </li>
@@ -35,20 +284,13 @@
 <li><p>代码如下：</p>
 </li>
 </ol>
-<pre><code class="python"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt 
-plt.xlabel(<span class="string">'x轴'</span>) 
-plt.ylabel(<span class="string">'y轴'</span>) 
-plt.bar(left = (<span class="number">0</span>,<span class="number">1</span>),height =(<span class="number">1</span>,<span class="number">0.5</span>),width = <span class="number">0.35</span>) 
-plt.show()
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </div><div class="line">plt.xlabel(<span class="string">'x轴'</span>) </div><div class="line">plt.ylabel(<span class="string">'y轴'</span>) </div><div class="line">plt.bar(left = (<span class="number">0</span>,<span class="number">1</span>),height =(<span class="number">1</span>,<span class="number">0.5</span>),width = <span class="number">0.35</span>) </div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <p><img src="/assets/images/matplotlib_display_chinese.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;在python的安装目录中找到配置文件： %Python_Home%\Lib\site-packages\matplot
+      &lt;p&gt;Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：
     
     </summary>
     
@@ -447,9 +689,9 @@ plt.show()
       <category term="zsh" scheme="http://yoursite.com/categories/zsh/"/>
     
     
-      <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
-    
       <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
+    
+      <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
     
   </entry>
   
@@ -764,30 +1006,26 @@ plt.show()
   </entry>
   
   <entry>
-    <title>MySQL存储emoji表情</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AD%98%E5%82%A8emoji%E8%A1%A8%E6%83%85/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL存储emoji表情/</id>
+    <title>MySQL定时备份</title>
+    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
+    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-19T07:06:00.000Z</updated>
+    <updated>2016-08-20T02:05:55.000Z</updated>
     
-    <content type="html"><![CDATA[<p>不必多言</p>
-<h1 id="编辑MySQL配置文件-my-ini"><a href="#编辑MySQL配置文件-my-ini" class="headerlink" title="编辑MySQL配置文件 my.ini"></a>编辑MySQL配置文件 my.ini</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysql]</div><div class="line"><span class="keyword">default</span>-character-set = utf8mb4</div><div class="line">	</div><div class="line">[mysqld] </div><div class="line">character-set-client-handshake = <span class="keyword">FALSE</span></div><div class="line">character-set-server = utf8mb4</div><div class="line">collation-server = utf8mb4_unicode_ci</div><div class="line">init_connect=<span class="string">'SET NAMES utf8mb4'</span></div></pre></td></tr></table></figure>
-<h1 id="重启MySQL服务"><a href="#重启MySQL服务" class="headerlink" title="重启MySQL服务"></a>重启MySQL服务</h1><p>重启MySQL后service mysql restart 查询character &amp; collation 的值</p>
-<h1 id="查询变量是否配置成功"><a href="#查询变量是否配置成功" class="headerlink" title="查询变量是否配置成功"></a>查询变量是否配置成功</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  show variables <span class="built_in">where</span> variable_name like <span class="string">'character\_set\_%'</span> or variable_name like <span class="string">'collation%'</span>;</div><div class="line">+--------------------------+--------------------+</div><div class="line">| Variable_name            | Value              |</div><div class="line">+--------------------------+--------------------+</div><div class="line">| character_set_client     | utf8mb4            |</div><div class="line">| character_set_connection | utf8mb4            |</div><div class="line">| character_set_database   | utf8mb4            |</div><div class="line">| character_set_filesystem | binary             |</div><div class="line">| character_set_results    | utf8mb4            |</div><div class="line">| character_set_server     | utf8mb4            |</div><div class="line">| character_set_system     | utf8               |</div><div class="line">| collation_connection     | utf8mb4_unicode_ci |</div><div class="line">| collation_database       | utf8mb4_unicode_ci |</div><div class="line">| collation_server         | utf8mb4_unicode_ci |</div><div class="line">+--------------------------+--------------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
+]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;不必多言&lt;/p&gt;
-&lt;h1 id=&quot;编辑MySQL配置文件-my-ini&quot;&gt;&lt;a href=&quot;#编辑MySQL配置文件-my-ini&quot; class=&quot;headerlink&quot; title=&quot;编辑MySQL配置文件 my.ini&quot;&gt;&lt;/a&gt;编辑MySQL配置文件 my.ini&lt;/
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
     
     </summary>
     
     
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
     
-      <category term="emoji" scheme="http://yoursite.com/tags/emoji/"/>
-    
-      <category term="utf8mb4" scheme="http://yoursite.com/tags/utf8mb4/"/>
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
@@ -1135,95 +1373,6 @@ plt.show()
     
       &lt;p&gt;不管是YGC还是Full GC,GC过程中都会对导致程序运行中中断,正确的选择不同的GC策略,调整JVM、GC的参数，可以极大的减少由于GC工作，而导致的程序运行中断方面的问题，进而适当的提高Java程序的工作效率。但是调整GC是以个极为复杂的过程，由于各个程序具备不同的特点，如：web和GUI程序就有很大区别（Web可以适当的停顿，但GUI停顿是客户无法接受的），而且由于跑在各个机器上的配置不同（主要cup个数，内存不同），所以使用的GC种类也会不同(如何选择见GC种类及如何选择)。本文将注重介绍JVM、GC的一些重要参数的设置来提高系统的性能。&lt;/p&gt;
 &lt;p&gt;JVM内存组成及GC相关内容请见之前的文章:JVM内存组成 GC策略&amp;amp;内存申请。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL定时备份</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:05:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
-    
-    </summary>
-    
-    
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GC策略&amp;内存申请、对象衰老</title>
-    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
-    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
-<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
-<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
-<a id="more"></a>
-<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
-<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
-<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
-<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
-<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
-<li>当old区空间不够时，JVM会在old区进行major collection；</li>
-<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
-<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
-</ol>
-<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
-<thead>
-<tr>
-<th>GC类型</th>
-<th>触发条件</th>
-<th>触发时发生了什么</th>
-<th>注意</th>
-<th>查看方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>YGC</td>
-<td>eden空间不足</td>
-<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-<tr>
-<td>FGC</td>
-<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
-<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
-<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
-<td>jstat –gcutil gc log</td>
-</tr>
-</tbody>
-</table>
-<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
-&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
-&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
     
     </summary>
     

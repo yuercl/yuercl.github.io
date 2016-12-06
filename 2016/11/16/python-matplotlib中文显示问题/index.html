@@ -1,11 +1,11 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：在python的安装目录中找到配置文件：%Python_Home%\Lib\site-packages\matplotlib\mpl-data\matpl"><meta name="keywords" content="Python"><title>python matplotlib中文显示问题 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置："><meta name="keywords" content="Python"><title>python matplotlib中文显示问题 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">python matplotlib中文显示问题</h1><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">python matplotlib中文显示问题</h1><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：<a id="more"></a></p>
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><ol>
 <li><p>在python的安装目录中找到配置文件： %Python_Home%\Lib\site-packages\matplotlib\mpl-data\matplotlibrc。如果找不到目录，在pycharm里面点击代码引用也可以发现目录。</p>
 </li>
@@ -18,14 +18,9 @@
 <li><p>代码如下：</p>
 </li>
 </ol>
-<pre><code class="python"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt 
-plt.xlabel(<span class="string">'x轴'</span>) 
-plt.ylabel(<span class="string">'y轴'</span>) 
-plt.bar(left = (<span class="number">0</span>,<span class="number">1</span>),height =(<span class="number">1</span>,<span class="number">0.5</span>),width = <span class="number">0.35</span>) 
-plt.show()
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </div><div class="line">plt.xlabel(<span class="string">'x轴'</span>) </div><div class="line">plt.ylabel(<span class="string">'y轴'</span>) </div><div class="line">plt.bar(left = (<span class="number">0</span>,<span class="number">1</span>),height =(<span class="number">1</span>,<span class="number">0.5</span>),width = <span class="number">0.35</span>) </div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <p><img src="/assets/images/matplotlib_display_chinese.png" alt=""></p>
-</div></article><div class="tags"><a href="/tags/Python/">Python</a></div><div class="paginator"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+</div></article><div class="tags"><a href="/tags/Python/">Python</a></div><div class="paginator"><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
     this.page.url = 'http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/';
     this.page.identifier = '2016/11/16/python-matplotlib中文显示问题/';
     this.page.title = 'python matplotlib中文显示问题';
