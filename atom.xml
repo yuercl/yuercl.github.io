@@ -75,6 +75,36 @@
   </entry>
   
   <entry>
+    <title>matplotlib作图</title>
+    <link href="http://yoursite.com/2016/12/05/matplotlib%E4%BD%9C%E5%9B%BE/"/>
+    <id>http://yoursite.com/2016/12/05/matplotlib作图/</id>
+    <published>2016-12-04T16:00:00.000Z</published>
+    <updated>2016-12-06T03:41:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
+<p><a href="http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为1的位置，顺着来排</span></div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为2的位置</span></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line"></div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</div><div class="line"></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'g'</span>, alpha=<span class="number">0.75</span>)</div><div class="line"></div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'Smarts'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability'</span>)</div><div class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</div><div class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)</div><div class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="/assets/images/matplotlib_python_parking.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;amp;ut
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="matplotlib" scheme="http://yoursite.com/tags/matplotlib/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Spring transaction 事务 -- Isolation &amp; Progation</title>
     <link href="http://yoursite.com/2016/11/28/Spring-transaction-%E4%BA%8B%E5%8A%A1-Isolation-Progation/"/>
     <id>http://yoursite.com/2016/11/28/Spring-transaction-事务-Isolation-Progation/</id>
@@ -689,9 +719,9 @@
       <category term="zsh" scheme="http://yoursite.com/categories/zsh/"/>
     
     
-      <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
-    
       <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
+    
+      <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
     
   </entry>
   
@@ -1006,373 +1036,60 @@
   </entry>
   
   <entry>
-    <title>MySQL定时备份</title>
-    <link href="http://yoursite.com/2016/08/10/MySQL%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD/"/>
-    <id>http://yoursite.com/2016/08/10/MySQL定时备份/</id>
+    <title>GC策略&amp;内存申请、对象衰老</title>
+    <link href="http://yoursite.com/2016/08/10/GC%E7%AD%96%E7%95%A5-%E5%86%85%E5%AD%98%E7%94%B3%E8%AF%B7%E3%80%81%E5%AF%B9%E8%B1%A1%E8%A1%B0%E8%80%81/"/>
+    <id>http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/</id>
     <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:05:55.000Z</updated>
+    <updated>2016-08-20T02:24:26.000Z</updated>
     
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat backup_mysql.sh</span></div><div class="line"></div><div class="line">mkdir -p /backup/mysqloffline/</div><div class="line">mysqldump -uroot -p10086 -h127.0.0.1 --all-databases  &gt; /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">tar czvf /backup/mysqloffline/`date +%Y%m%d`.tar.gz /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">rm -rf /backup/mysqloffline/`date +%Y%m%d`.sql</div><div class="line">find   /backup/mysqloffline/ -mtime +30 -name <span class="string">'*.sql'</span> -exec rm -rf &#123;&#125; \;</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">crontab <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="comment"># For example, you can run a backup of all your user accounts</span></div><div class="line"><span class="comment"># at 5 a.m every week with:</span></div><div class="line"><span class="comment"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For more information see the manual pages of crontab(5) and cron(8)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># m h  dom mon dow   command</span></div><div class="line">30 12 * * * /root/backup_mysql.sh</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
-    
-    </summary>
-    
-    
-      <category term="cron" scheme="http://yoursite.com/tags/cron/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM参数设置、分析</title>
-    <link href="http://yoursite.com/2016/08/10/JVM%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81%E5%88%86%E6%9E%90/"/>
-    <id>http://yoursite.com/2016/08/10/JVM参数设置、分析/</id>
-    <published>2016-08-10T04:00:00.000Z</published>
-    <updated>2016-08-20T02:24:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>不管是YGC还是Full GC,GC过程中都会对导致程序运行中中断,正确的选择不同的GC策略,调整JVM、GC的参数，可以极大的减少由于GC工作，而导致的程序运行中断方面的问题，进而适当的提高Java程序的工作效率。但是调整GC是以个极为复杂的过程，由于各个程序具备不同的特点，如：web和GUI程序就有很大区别（Web可以适当的停顿，但GUI停顿是客户无法接受的），而且由于跑在各个机器上的配置不同（主要cup个数，内存不同），所以使用的GC种类也会不同(如何选择见GC种类及如何选择)。本文将注重介绍JVM、GC的一些重要参数的设置来提高系统的性能。</p>
-<p>JVM内存组成及GC相关内容请见之前的文章:JVM内存组成 GC策略&amp;内存申请。</p>
+    <content type="html"><![CDATA[<h4 id="堆内存GC"><a href="#堆内存GC" class="headerlink" title="堆内存GC"></a>堆内存GC</h4><p>JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。</p>
+<h4 id="非堆内存不GC"><a href="#非堆内存不GC" class="headerlink" title="非堆内存不GC"></a>非堆内存不GC</h4><p>GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。</p>
+<h4 id="对象衰老过程"><a href="#对象衰老过程" class="headerlink" title="对象衰老过程"></a>对象衰老过程</h4><p>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</p>
 <a id="more"></a>
-<h3 id="JVM参数的含义"><a href="#JVM参数的含义" class="headerlink" title="JVM参数的含义"></a>JVM参数的含义</h3><table>
+<h4 id="内存申请、对象衰老过程"><a href="#内存申请、对象衰老过程" class="headerlink" title="内存申请、对象衰老过程"></a>内存申请、对象衰老过程</h4><h5 id="内存申请过程"><a href="#内存申请过程" class="headerlink" title="内存申请过程"></a>内存申请过程</h5><ol>
+<li>JVM会试图为相关Java对象在Eden中初始化一块内存区域；</li>
+<li>当Eden空间足够时，内存申请结束。否则到下一步；</li>
+<li>JVM试图释放在Eden中所有不活跃的对象（minor collection），释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中活跃对象放入Survivor区；</li>
+<li>Survivor区被用来作为Eden及old的中间交换区域，当OLD区空间足够时，Survivor区的对象会被移到Old区，否则会被保留在Survivor区；</li>
+<li>当old区空间不够时，JVM会在old区进行major collection；</li>
+<li>完全垃圾收集后，若Survivor及old区仍然无法存放从Eden复制过来的部分对象，导致JVM无法在Eden区为新对象创建内存区域，则出现”Out of memory错误”；</li>
+<li>新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。</li>
+</ol>
+<h5 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h5><table>
 <thead>
 <tr>
-<th>参数名称</th>
-<th>含义</th>
-<th>默认值</th>
-<th>备注 </th>
+<th>GC类型</th>
+<th>触发条件</th>
+<th>触发时发生了什么</th>
+<th>注意</th>
+<th>查看方式</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>-Xms</td>
-<td>初始堆大小</td>
-<td>物理内存的1/64(&lt;1GB)</td>
-<td>默认(MinHeapFreeRatio参数可以调整)空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制.</td>
+<td>YGC</td>
+<td>eden空间不足</td>
+<td>清空Eden+from survivor中所有no ref的对象占用的内存 <br>将eden+from survivor中所有存活的对象copy到to survivor中 <br>一些对象将晋升到old中: <br>    to survivor放不下的 <br>    存活次数超过turning threshold中的 <br>重新计算tenuring threshold(serial parallel GC会触发此项) <br>重新调整Eden 和from的大小(parallel GC会触发此项) <br></td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定</td>
+<td>jstat –gcutil gc log</td>
 </tr>
 <tr>
-<td>-Xmx</td>
-<td>最大堆大小</td>
-<td>物理内存的1/4(&lt;1GB)</td>
-<td>默认(MaxHeapFreeRatio参数可以调整)空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制</td>
-</tr>
-<tr>
-<td>-Xmn</td>
-<td>年轻代大小(1.4or lator)</td>
-<td></td>
-<td>注意：此处的大小是（eden+ 2 survivor space).与jmap -heap中显示的New gen是不同的。整个堆大小=年轻代大小 + 年老代大小 + 持久代大小.增大年轻代后,将会减小年老代大小.此值对系统性能影响较大,Sun官方推荐配置为整个堆的3/8</td>
-</tr>
-<tr>
-<td>-XX:NewSize</td>
-<td>设置年轻代大小(for 1.3/1.4)</td>
-<td></td>
-</tr>
-<tr>
-<td>-XX:MaxNewSize</td>
-<td>年轻代最大值(for 1.3/1.4)</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>-XX:PermSize</td>
-<td>设置持久代(perm gen)初始值</td>
-<td>物理内存的1/64</td>
-</tr>
-<tr>
-<td>-XX:MaxPermSize</td>
-<td>设置持久代最大值</td>
-<td>物理内存的1/4     </td>
-</tr>
-<tr>
-<td>-Xss</td>
-<td>每个线程的堆栈大小</td>
-<td></td>
-<td>JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.更具应用的线程所需内存大小进行 调整.在相同物理内存下,减小这个值能生成更多的线程.但是操作系统对一个进程内的线程数还是有限制的,不能无限生成,经验值在3000~5000左右.一般小的应用， 如果栈不是很深， 应该是128k够用的 大的应用建议使用256k。这个选项对性能影响比较大，需要严格的测试。（校长）和threadstacksize选项解释很类似,官方文档似乎没有解释,在论坛中有这样一句话:”” -Xss is translated in a VM flag named ThreadStackSize”一般设置这个值就可以了。-XX:ThreadStackSize    Thread Stack Size         (0 means use default stack size) [Sparc: 512; Solaris x86: 320 (was 256 prior in 5.0 and earlier); Sparc 64 bit: 1024; Linux amd64: 1024 (was 0 in 5.0 and earlier); all others 0.]</td>
-</tr>
-<tr>
-<td>-XX:NewRatio</td>
-<td>年轻代(包括Eden和两个Survivor区)与年老代的比值(除去持久代)</td>
-<td></td>
-<td>-XX:NewRatio=4表示年轻代与年老代所占比值为1:4,年轻代占整个堆栈的1/5 .Xms=Xmx并且设置了Xmn的情况下，该参数不需要进行设置。</td>
-</tr>
-<tr>
-<td>-XX:SurvivorRatio</td>
-<td>Eden区与Survivor区的大小比值</td>
-<td></td>
-<td>设置为8,则两个Survivor区与一个Eden区的比值为2:8,一个Survivor区占整个年轻代的1/10</td>
-</tr>
-<tr>
-<td>-XX:LargePageSizeInBytes</td>
-<td>内存页的大小不可设置过大， 会影响Perm的大小</td>
-<td></td>
-<td>=128m</td>
-</tr>
-<tr>
-<td>-XX:+UseFastAccessorMethods</td>
-<td>原始类型的快速优化</td>
-</tr>
-<tr>
-<td>-XX:+DisableExplicitGC</td>
-<td>关闭System.gc()</td>
-<td></td>
-<td>这个参数需要严格的测试</td>
-</tr>
-<tr>
-<td>-XX:MaxTenuringThreshold</td>
-<td>垃圾最大年龄</td>
-<td></td>
-<td>如果设置为0的话,则年轻代对象不经过Survivor区,直接进入年老代. 对于年老代比较多的应用,可以提高效率.如果将此值设置为一个较大值,则年轻代对象会在Survivor区进行多次复制,这样可以增加对象再年轻代的存活 时间,增加在年轻代即被回收的概率该参数只有在串行GC时才有效.</td>
-</tr>
-<tr>
-<td>-XX:+AggressiveOpts</td>
-<td>加快编译          </td>
-</tr>
-<tr>
-<td>-XX:+UseBiasedLocking</td>
-<td>锁机制的性能改善     </td>
-</tr>
-<tr>
-<td>-Xnoclassgc</td>
-<td>禁用垃圾回收          </td>
-</tr>
-<tr>
-<td>-XX:SoftRefLRUPolicyMSPerMB</td>
-<td>每兆堆空闲空间中SoftReference的存活时间</td>
-<td>1s</td>
-<td>softly reachable objects will remain alive for some amount of time after the last time they were referenced. The default value is one second of lifetime per free megabyte in the heap</td>
-</tr>
-<tr>
-<td>-XX:PretenureSizeThreshold</td>
-<td>对象超过多大是直接在旧生代分配</td>
-<td>0</td>
-<td>单位字节 新生代采用Parallel Scavenge GC时无效 另一种直接在旧生代分配的情况是大的数组对象,且数组中无外部引用对象.</td>
-</tr>
-<tr>
-<td>-XX:TLABWasteTargetPercent</td>
-<td>TLAB占eden区的百分比</td>
-<td>1%</td>
-</tr>
-<tr>
-<td>-XX:+CollectGen0First</td>
-<td>FullGC时是否先YGC</td>
-<td>false     </td>
+<td>FGC</td>
+<td>old空间不足 <br>perm空间不足 <br>显示调用System.GC, RMI等的定时触发 <br>YGC时的悲观策略 <br>dump live的内存信息时(jmap –dump:live) <br></td>
+<td>清空heap中no ref的对象 <br>permgen中已经被卸载的classloader中加载的class信息 <br>如配置了CollectGenOFirst,则先触发YGC(针对serial GC) <br>如配置了ScavengeBeforeFullGC,则先触发YGC(针对serial GC)</td>
+<td>全过程暂停应用 <br>是否为多线程处理由具体的GC决定 <br>是否压缩需要看配置的具体GC</td>
+<td>jstat –gcutil gc log</td>
 </tr>
 </tbody>
 </table>
-<h3 id="并行收集器相关参数"><a href="#并行收集器相关参数" class="headerlink" title="并行收集器相关参数"></a>并行收集器相关参数</h3><table>
-<thead>
-<tr>
-<th>参数名称</th>
-<th>含义</th>
-<th>默认值</th>
-<th>备注 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-XX:+UseParallelGC</td>
-<td>Full GC采用parallel MSC(此项待验证)</td>
-<td></td>
-<td>选择垃圾收集器为并行收集器.此配置仅对年轻代有效.即上述配置下,年轻代使用并发收集,而年老代仍旧使用串行收集.(此项待验证)</td>
-</tr>
-<tr>
-<td>-XX:+UseParNewGC</td>
-<td>设置年轻代为并行收集</td>
-<td></td>
-<td>可与CMS收集同时使用 JDK5.0以上,JVM会根据系统配置自行设置,所以无需再设置此值</td>
-</tr>
-<tr>
-<td>-XX:ParallelGCThreads</td>
-<td>并行收集器的线程数</td>
-<td></td>
-<td>此值最好配置与处理器数目相等 同样适用于CMS</td>
-</tr>
-<tr>
-<td>-XX:+UseParallelOldGC</td>
-<td>年老代垃圾收集方式为并行收集(Parallel Compacting)</td>
-<td></td>
-<td>这个是JAVA 6出现的参数选项</td>
-</tr>
-<tr>
-<td>-XX:MaxGCPauseMillis</td>
-<td>每次年轻代垃圾回收的最长时间(最大暂停时间)</td>
-<td></td>
-<td>如果无法满足此时间,JVM会自动调整年轻代大小,以满足此值.</td>
-</tr>
-<tr>
-<td>-XX:+UseAdaptiveSizePolicy</td>
-<td>自动选择年轻代区大小和相应的Survivor区比例</td>
-<td></td>
-<td>设置此选项后,并行收集器会自动选择年轻代区大小和相应的Survivor区比例,以达到目标系统规定的最低相应时间或者收集频率等,此值建议使用并行收集器时,一直打开.</td>
-</tr>
-<tr>
-<td>-XX:GCTimeRatio</td>
-<td>设置垃圾回收时间占程序运行时间的百分比</td>
-<td></td>
-<td>公式为1/(1+n)</td>
-</tr>
-<tr>
-<td>-XX:+ScavengeBeforeFullGC</td>
-<td>Full GC前调用YGC</td>
-<td>true</td>
-<td>Do young generation GC prior to a full GC. (Introduced in 1.4.1.)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="CMS相关参数"><a href="#CMS相关参数" class="headerlink" title="CMS相关参数"></a>CMS相关参数</h3><table>
-<thead>
-<tr>
-<th>参数名称</th>
-<th>含义</th>
-<th>默认值</th>
-<th>备注 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-XX:+UseConcMarkSweepGC</td>
-<td>使用CMS内存收集</td>
-<td></td>
-<td>测试中配置这个以后,-XX:NewRatio=4的配置失效了,原因不明.所以,此时年轻代大小最好用-Xmn设置.???</td>
-</tr>
-<tr>
-<td>-XX:+AggressiveHeap</td>
-<td></td>
-<td></td>
-<td>试图是使用大量的物理内存长时间大内存使用的优化，能检查计算资源（内存， 处理器数量）至少需要256MB内存大量的CPU／内存， （在1.4.1在4CPU的机器上已经显示有提升）</td>
-</tr>
-<tr>
-<td>-XX:CMSFullGCsBeforeCompaction</td>
-<td>多少次后进行内存压缩</td>
-<td></td>
-<td>由于并发收集器不对内存空间进行压缩,整理,所以运行一段时间以后会产生”碎片”,使得运行效率降低.此值设置运行多少次GC以后对内存空间进行压缩,整理.</td>
-</tr>
-<tr>
-<td>-XX:+CMSParallelRemarkEnabled</td>
-<td>降低标记停顿</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>-XX+UseCMSCompactAtFullCollection</td>
-<td>在FULL GC的时候， 对年老代的压缩</td>
-<td></td>
-<td>CMS是不会移动内存的， 因此， 这个非常容易产生碎片， 导致内存不够用， 因此， 内存的压缩这个时候就会被启用。 增加这个参数是个好习惯。 可能会影响性能,但是可以消除碎片</td>
-</tr>
-<tr>
-<td>-XX:+UseCMSInitiatingOccupancyOnly</td>
-<td>使用手动定义初始化定义开始CMS收集</td>
-<td></td>
-<td>禁止hostspot自行触发CMS GC</td>
-</tr>
-<tr>
-<td>-XX:CMSInitiatingOccupancyFraction=70</td>
-<td>使用cms作为垃圾回收使用70％后开始CMS收集</td>
-<td>92</td>
-<td>为了保证不出现promotion failed(见下面介绍)错误,该值的设置需要满足以下公式CMSInitiatingOccupancyFraction计算公式</td>
-<td></td>
-</tr>
-<tr>
-<td>-XX:CMSInitiatingPermOccupancyFraction</td>
-<td>设置Perm Gen使用到达多少比率时触发</td>
-<td>92</td>
-<td></td>
-</tr>
-<tr>
-<td>-XX:+CMSIncrementalMode</td>
-<td>设置为增量模式</td>
-<td></td>
-<td>用于单CPU情况</td>
-</tr>
-<tr>
-<td>-XX:+CMSClassUnloadingEnabled</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="辅助信息"><a href="#辅助信息" class="headerlink" title="辅助信息"></a>辅助信息</h3><table>
-<thead>
-<tr>
-<th>参数名称</th>
-<th>含义</th>
-<th>默认值</th>
-<th>备注 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-XX:+PrintGC</td>
-<td></td>
-<td></td>
-<td>输出形式:<br>[GC 118250K-&gt;113543K(130112K), 0.0094143 secs]<br>[Full GC 121376K-&gt;10414K(130112K), 0.0650971 secs]</td>
-</tr>
-<tr>
-<td>-XX:+PrintGCDetails</td>
-<td></td>
-<td></td>
-<td>输出形式:<br>[GC [DefNew: 8614K-&gt;781K(9088K), 0.0123035 secs] 118250K-&gt;113543K(130112K), 0.0124633 secs]<br>[GC [DefNew: 8614K-&gt;8614K(9088K), 0.0000665 secs][Tenured: 112761K-&gt;10414K(121024K), 0.0433488 secs] 121376K-&gt;10414K(130112K), 0.0436268 secs]</td>
-</tr>
-<tr>
-<td>-XX:+PrintGCTimeStamps</td>
-<td></td>
-</tr>
-<tr>
-<td>-XX:+PrintGC:PrintGCTimeStamps</td>
-<td></td>
-<td></td>
-<td>可与-XX:+PrintGC -XX:+PrintGCDetails混合使用输出形式:11.851: [GC 98328K-&gt;93620K(130112K), 0.0082960 secs]</td>
-</tr>
-<tr>
-<td>-XX:+PrintGCApplicationStoppedTime</td>
-<td>打印垃圾回收期间程序暂停的时间.可与上面混合使用</td>
-<td></td>
-<td>输出形式:Total time for which application threads were stopped: 0.0468229 seconds</td>
-</tr>
-<tr>
-<td>-XX:+PrintGCApplicationConcurrentTime</td>
-<td>打印每次垃圾回收前,程序未中断的执行时间.可与上面混合使用</td>
-<td></td>
-<td>输出形式:Application time: 0.5291524 seconds</td>
-</tr>
-<tr>
-<td>-XX:+PrintHeapAtGC</td>
-<td>打印GC前后的详细堆栈信息</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>-Xloggc:filename</td>
-<td>把相关日志信息记录到文件以便分析.与上面几个配合使用</td>
-</tr>
-<tr>
-<td>-XX:+PrintClassHistogram</td>
-<td>garbage collects before printing the histogram.</td>
-</tr>
-<tr>
-<td>-XX:+PrintTLAB</td>
-<td>查看TLAB空间的使用情况     </td>
-</tr>
-<tr>
-<td>XX:+PrintTenuringDistribution</td>
-<td>查看每次minor GC后新的存活周期的阈值</td>
-<td></td>
-<td>Desired survivor size 1048576 bytes, new threshold 7 (max 15) new threshold 7即标识新的存活周期的阈值为7。</td>
-</tr>
-</tbody>
-</table>
+<p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;不管是YGC还是Full GC,GC过程中都会对导致程序运行中中断,正确的选择不同的GC策略,调整JVM、GC的参数，可以极大的减少由于GC工作，而导致的程序运行中断方面的问题，进而适当的提高Java程序的工作效率。但是调整GC是以个极为复杂的过程，由于各个程序具备不同的特点，如：web和GUI程序就有很大区别（Web可以适当的停顿，但GUI停顿是客户无法接受的），而且由于跑在各个机器上的配置不同（主要cup个数，内存不同），所以使用的GC种类也会不同(如何选择见GC种类及如何选择)。本文将注重介绍JVM、GC的一些重要参数的设置来提高系统的性能。&lt;/p&gt;
-&lt;p&gt;JVM内存组成及GC相关内容请见之前的文章:JVM内存组成 GC策略&amp;amp;内存申请。&lt;/p&gt;
+      &lt;h4 id=&quot;堆内存GC&quot;&gt;&lt;a href=&quot;#堆内存GC&quot; class=&quot;headerlink&quot; title=&quot;堆内存GC&quot;&gt;&lt;/a&gt;堆内存GC&lt;/h4&gt;&lt;p&gt;JVM(采用分代回收的策略)，用较高的频率对年轻的对象(young generation)进行YGC，而对老对象(tenured generation)较少(tenured generation 满了后才进行)进行Full GC。这样就不需要每次GC都将内存中所有对象都检查一遍。&lt;/p&gt;
+&lt;h4 id=&quot;非堆内存不GC&quot;&gt;&lt;a href=&quot;#非堆内存不GC&quot; class=&quot;headerlink&quot; title=&quot;非堆内存不GC&quot;&gt;&lt;/a&gt;非堆内存不GC&lt;/h4&gt;&lt;p&gt;GC不会在主程序运行期对PermGen Space进行清理，所以如果你的应用中有很多CLASS(特别是动态生成类，当然permgen space存放的内容不仅限于类)的话,就很可能出现PermGen Space错误。&lt;/p&gt;
+&lt;h4 id=&quot;对象衰老过程&quot;&gt;&lt;a href=&quot;#对象衰老过程&quot; class=&quot;headerlink&quot; title=&quot;对象衰老过程&quot;&gt;&lt;/a&gt;对象衰老过程&lt;/h4&gt;&lt;p&gt;新创建的对象的内存都分配自eden。Minor collection的过程就是将eden和在用survivor space中的活对象copy到空闲survivor space中。对象在young generation里经历了一定次数(可以通过参数配置)的minor collection后，就会被移到old generation中，称为tenuring。&lt;/p&gt;
     
     </summary>
     
