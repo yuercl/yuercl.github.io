@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-06T09:37:16.000Z</updated>
+  <updated>2016-12-08T03:56:38.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,137 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>贝叶斯概率</title>
+    <link href="http://yoursite.com/2016/12/08/%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%A6%82%E7%8E%87/"/>
+    <id>http://yoursite.com/2016/12/08/贝叶斯概率/</id>
+    <published>2016-12-08T03:54:43.000Z</published>
+    <updated>2016-12-08T03:56:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>待完善</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;待完善&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>十分钟pandas</title>
+    <link href="http://yoursite.com/2016/12/08/%E5%8D%81%E5%88%86%E9%92%9Fpandas/"/>
+    <id>http://yoursite.com/2016/12/08/十分钟pandas/</id>
+    <published>2016-12-07T16:00:00.000Z</published>
+    <updated>2016-12-08T03:58:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>有时候真的要沉下心来，慢慢地看就自然懂了，一味的求快反而浪费大把时间～</p>
+<p>DataFrames 真是一个神器</p>
+<ul>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/index.html" target="_blank" rel="external">英文官方文档</a></li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/10min.html" target="_blank" rel="external">英文官方稳定pandas十分钟入门</a></li>
+<li><a href="http://pda.readthedocs.io/en/latest/chp5.html" target="_blank" rel="external">中文文档，老旧</a></li>
+<li><a href="http://nbviewer.jupyter.org/github/phelps-sg/python-bigdata/blob/master/src/main/ipynb/pandas.ipynb" target="_blank" rel="external">jupyter上面的一篇pandas的文章</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line">s = pd.Series(data, index=index)</div><div class="line">s = pd.Series(np.random.randn(<span class="number">5</span>), index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</div><div class="line"></div><div class="line">d = &#123;<span class="string">'a'</span> : <span class="number">0.</span>, <span class="string">'b'</span> : <span class="number">1.</span>, <span class="string">'c'</span> : <span class="number">2.</span>&#125;</div><div class="line"></div><div class="line">pd.Series(d)</div><div class="line">pd.Series(d, index=[<span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'a'</span>])</div><div class="line">pd.Series(<span class="number">5.</span>, index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</div><div class="line">s[<span class="number">0</span>]</div><div class="line">s[:<span class="number">3</span>]</div><div class="line">s[s &gt; s.median()]</div><div class="line">s[[<span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>]]</div><div class="line">np.exp(s)</div><div class="line">s[<span class="string">'a'</span>]</div><div class="line">s[<span class="string">'a'</span>] = <span class="number">12</span></div><div class="line"><span class="string">'e'</span> <span class="keyword">in</span> s</div><div class="line"><span class="string">'f'</span> <span class="keyword">in</span> s</div><div class="line">s.get(<span class="string">'f'</span>)</div><div class="line">s.get(<span class="string">'f'</span>, np.nan)</div><div class="line">...</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有时候真的要沉下心来，慢慢地看就自然懂了，一味的求快反而浪费大把时间～&lt;/p&gt;
+&lt;p&gt;DataFrames 真是一个神器&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://pandas.pydata.org/pandas-docs/stable/index.html
+    
+    </summary>
+    
+      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="pandas" scheme="http://yoursite.com/tags/pandas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>皮尔逊相关系数</title>
+    <link href="http://yoursite.com/2016/12/07/%E7%9A%AE%E5%B0%94%E9%80%8A%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/"/>
+    <id>http://yoursite.com/2016/12/07/皮尔逊相关系数/</id>
+    <published>2016-12-07T13:44:20.000Z</published>
+    <updated>2016-12-08T03:58:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在统计学中，皮尔逊积矩相关系数（英语：Pearson product-moment correlation coefficient，又称作 PPMCC或PCCs[1], 文章中常用r或Pearson’s r表示）用于度量两个变量X和Y之间的相关（线性相关），其值介于 -1 与 1 之间。在自然科学领域中，该系数广泛用于度量两个变量之间的相关程度。这个相关系数也称作“皮尔森相关系数r”。</p>
+<p>待完善<br>$$  \rho_{X,Y}={\mathrm{cov}(X,Y) \over \sigma_X \sigma_Y} ={E[(X-\mu_X)(Y-\mu_Y)] \over \sigma_X\sigma_Y} $$</p>
+<p>$$ r = \frac{\sum\limits ^n _{i=1}(X_i - \overline{X})(Y<em>i - \overline{Y})}{\sqrt{\sum\limits ^n </em>{i=1}(X<em>i - \overline{X})^2} \sqrt{\sum\limits ^n </em>{i=1}(Y_i - \overline{Y})^2}}  $$</p>
+<p>$$ r = \frac{1}{n-1} \sum\limits ^n _{i=1} \left( \frac{X_i - \overline{X}}{\sigma_X} \right) \left( \frac{Y_i - \overline{Y}}{\sigma_Y} \right) $$</p>
+<p>$$ cov(X,Y)=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)(Y_i-\bar Y) $$</p>
+<p>$$ r = \frac{cov(X,Y)}{\sqrt{var(X)} \sqrt{var(Y)}} $$ </p>
+<p>均值：</p>
+<p>$$ \bar X = \frac{ \sum_{i=1}^n X_i }{n} $$</p>
+<p>方差：</p>
+<p>$$ s^2 = \frac{ \sum_{i=1}^n (X_i - \bar X)^2 }{n - 1} $$</p>
+<p>标准差：</p>
+<p>$$ s = { \sqrt{ \frac{ \sum_{i=1}^n (X_i - \bar X)^2 } {n - 1}}} $$</p>
+<p>要理解Pearson相关系数，首先要理解协方差（Covariance），协方差是一个反映两个随机变量相关程度的指标，如果一个变量跟随着另一个变量同时变大或者变小，那么这两个变量的协方差就是正值，反之相反，公式如下：</p>
+<p>$$皮尔逊系数 = \frac{x和y的协方差}{(x的标准差 * y的标准差)} $$</p>
+<p>资料：</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//segmentfault.com/q/1010000000094674" target="_blank" rel="external">数据挖掘 - 如何理解皮尔逊相关系数（Pearson Correlation Coefficient）</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/皮尔逊积矩相关系数" target="_blank" rel="external">皮尔逊相关系数－wikipedia.org</a></li>
+<li><a href="https://www.douban.com/note/267043565/" target="_blank" rel="external">pearson、spearman、Kendall’s tau-b三种相关性的区别</a></li>
+<li><a href="http://guessthecorrelation.com/" target="_blank" rel="external">游戏，直观了解点的二维分布和相关系数大小：Guess the Correlation</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在统计学中，皮尔逊积矩相关系数（英语：Pearson product-moment correlation coefficient，又称作 PPMCC或PCCs[1], 文章中常用r或Pearson’s r表示）用于度量两个变量X和Y之间的相关（线性相关），其值介于 -1 
+    
+    </summary>
+    
+      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>协方差矩阵</title>
+    <link href="http://yoursite.com/2016/12/07/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/"/>
+    <id>http://yoursite.com/2016/12/07/协方差矩阵/</id>
+    <published>2016-12-07T13:43:48.000Z</published>
+    <updated>2016-12-08T03:59:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>待完善</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;待完善&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
+    
+  </entry>
+  
+  <entry>
     <title>matplotlib作图</title>
     <link href="http://yoursite.com/2016/12/05/matplotlib%E4%BD%9C%E5%9B%BE/"/>
     <id>http://yoursite.com/2016/12/05/matplotlib作图/</id>
     <published>2016-12-04T16:00:00.000Z</published>
-    <updated>2016-12-06T09:37:16.000Z</updated>
+    <updated>2016-12-08T04:01:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
 <ul>
@@ -44,7 +170,7 @@
     
     </summary>
     
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
     
     
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
@@ -58,7 +184,7 @@
     <link href="http://yoursite.com/2016/12/04/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91%E6%9F%90%E7%A0%94%E6%8A%A5%E5%AE%A2%E6%88%B7%E7%AB%AF/"/>
     <id>http://yoursite.com/2016/12/04/MacOS反编译某研报客户端/</id>
     <published>2016-12-03T16:00:00.000Z</published>
-    <updated>2016-12-06T09:37:44.000Z</updated>
+    <updated>2016-12-08T04:00:37.000Z</updated>
     
     <content type="html"><![CDATA[<p>偶尔看看别人的代码，换一个角度思考，也是一种乐趣～</p>
 <p>好好学习，人生苦短，及时行乐～</p>
@@ -76,6 +202,8 @@
     
     </summary>
     
+      <category term="安全" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8/"/>
+    
     
       <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
     
@@ -86,7 +214,7 @@
     <link href="http://yoursite.com/2016/12/03/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91APK/"/>
     <id>http://yoursite.com/2016/12/03/MacOS反编译APK/</id>
     <published>2016-12-02T16:00:00.000Z</published>
-    <updated>2016-12-06T09:38:30.000Z</updated>
+    <updated>2016-12-08T04:00:43.000Z</updated>
     
     <content type="html"><![CDATA[<p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
 <h3 id="反编译代码的工具"><a href="#反编译代码的工具" class="headerlink" title="反编译代码的工具"></a>反编译代码的工具</h3><ul>
@@ -133,6 +261,8 @@
     
     </summary>
     
+      <category term="安全" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8/"/>
+    
     
       <category term="dex2jar" scheme="http://yoursite.com/tags/dex2jar/"/>
     
@@ -145,7 +275,7 @@
     <link href="http://yoursite.com/2016/11/28/Spring-transaction-%E4%BA%8B%E5%8A%A1-Isolation-Progation/"/>
     <id>http://yoursite.com/2016/11/28/Spring-transaction-事务-Isolation-Progation/</id>
     <published>2016-11-27T16:00:00.000Z</published>
-    <updated>2016-12-06T01:54:34.000Z</updated>
+    <updated>2016-12-08T04:01:50.000Z</updated>
     
     <content type="html"><![CDATA[<table>
 <thead>
@@ -321,7 +451,7 @@
     
     </summary>
     
-      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
@@ -335,7 +465,7 @@
     <link href="http://yoursite.com/2016/11/16/python-matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/</id>
     <published>2016-11-15T16:00:00.000Z</published>
-    <updated>2016-12-06T01:55:33.000Z</updated>
+    <updated>2016-12-08T04:01:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：<a id="more"></a></p>
 <ol>
@@ -360,7 +490,7 @@
     
     </summary>
     
-      <category term="other" scheme="http://yoursite.com/categories/other/"/>
+      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
     
     
       <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
@@ -372,7 +502,7 @@
     <link href="http://yoursite.com/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version%E7%9A%84%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/"/>
     <id>http://yoursite.com/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/</id>
     <published>2016-11-04T03:50:00.000Z</published>
-    <updated>2016-11-08T04:08:05.000Z</updated>
+    <updated>2016-12-08T04:02:32.000Z</updated>
     
     <content type="html"><![CDATA[<p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
 <blockquote>
@@ -391,7 +521,7 @@
     
     </summary>
     
-      <category term="other" scheme="http://yoursite.com/categories/other/"/>
+      <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
       <category term="Xcode" scheme="http://yoursite.com/tags/Xcode/"/>
@@ -403,7 +533,7 @@
     <link href="http://yoursite.com/2016/10/25/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%E4%B9%8Bsed%E5%92%8Cgsed/"/>
     <id>http://yoursite.com/2016/10/25/那些年踩过的坑之sed和gsed/</id>
     <published>2016-10-25T08:08:40.000Z</published>
-    <updated>2016-10-25T08:32:47.000Z</updated>
+    <updated>2016-12-08T03:57:54.000Z</updated>
     
     <content type="html"><![CDATA[<p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
 <p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
@@ -426,7 +556,7 @@
     
     </summary>
     
-      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
     
     
       <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
@@ -438,7 +568,7 @@
     <link href="http://yoursite.com/2016/10/19/%E6%8A%95%E8%B5%84%E7%9A%84Daily-Checklist/"/>
     <id>http://yoursite.com/2016/10/19/投资的Daily-Checklist/</id>
     <published>2016-10-19T06:51:55.000Z</published>
-    <updated>2016-10-19T06:52:00.000Z</updated>
+    <updated>2016-12-08T03:58:33.000Z</updated>
     
     <content type="html"><![CDATA[<ul>
 <li>人民币兑美元汇率 <a href="http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml" target="_blank" rel="external">http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml</a></li>
@@ -461,6 +591,8 @@
     
     </summary>
     
+      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
+    
     
       <category term="投资" scheme="http://yoursite.com/tags/%E6%8A%95%E8%B5%84/"/>
     
@@ -471,7 +603,7 @@
     <link href="http://yoursite.com/2016/10/19/%E6%8A%95%E8%B5%84%E5%8F%8D%E6%80%9D2016%E5%B9%B410%E6%9C%8819%E6%97%A5%E5%86%99/"/>
     <id>http://yoursite.com/2016/10/19/投资反思2016年10月19日写/</id>
     <published>2016-10-18T16:05:00.000Z</published>
-    <updated>2016-10-20T01:18:50.000Z</updated>
+    <updated>2016-12-08T03:58:41.000Z</updated>
     
     <content type="html"><![CDATA[<p>自2014年入市以来，2015年股灾中离开。空仓也有一年有余。</p>
 <p>股灾打击很大，反思很多。之后变忘了股票这回事，安心的写代码。</p>
@@ -489,6 +621,8 @@
     
     </summary>
     
+      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
+    
     
       <category term="投资" scheme="http://yoursite.com/tags/%E6%8A%95%E8%B5%84/"/>
     
@@ -499,7 +633,7 @@
     <link href="http://yoursite.com/2016/09/28/%E5%9B%BD%E5%80%BA%E9%80%86%E5%9B%9E%E8%B4%AD/"/>
     <id>http://yoursite.com/2016/09/28/国债逆回购/</id>
     <published>2016-09-27T16:00:00.000Z</published>
-    <updated>2016-09-28T08:16:07.000Z</updated>
+    <updated>2016-12-08T03:57:19.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="什么是国债逆回购"><a href="#什么是国债逆回购" class="headerlink" title="什么是国债逆回购"></a>什么是国债逆回购</h1><p>所谓国债逆回购，本质就是一种短期贷款，也就是说，个人通过国债回购市场把自己的资金借出去，获得固定的利息收益；而回购方，也就是借款人用自己的国债作为抵押获得这笔借款，到期后还本付息。通俗来讲，就是将资金通过国债回购市场拆出，其实就是一种短期贷款，即你把钱借给别人，获得固定利息；而别人用国债作抵押，到期还本付息。逆回购的安全性超强，等同于国债。</p>
 <p>简单来说，国债逆回购有三方参与者：</p>
@@ -655,7 +789,7 @@
     
     </summary>
     
-      <category term="finance" scheme="http://yoursite.com/categories/finance/"/>
+      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
     
     
       <category term="国债" scheme="http://yoursite.com/tags/%E5%9B%BD%E5%80%BA/"/>
@@ -669,7 +803,7 @@
     <link href="http://yoursite.com/2016/09/22/WeakReference%E7%9A%84%E4%B8%80%E5%B0%8F%E8%AE%B0/"/>
     <id>http://yoursite.com/2016/09/22/WeakReference的一小记/</id>
     <published>2016-09-21T16:00:00.000Z</published>
-    <updated>2016-09-22T09:11:57.000Z</updated>
+    <updated>2016-12-08T04:02:24.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近要做一个功能，白名单配置，采用了一个叫做FileMonitor的工具，源码参看链接。新版本JDK是可以用WatchServices来监听文件变化。</p>
 <ul>
@@ -697,7 +831,7 @@
     
     </summary>
     
-      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="WeakReference" scheme="http://yoursite.com/tags/WeakReference/"/>
@@ -709,7 +843,7 @@
     <link href="http://yoursite.com/2016/09/07/%E7%BB%88%E6%9E%81Shell%EF%BC%8D%EF%BC%8Dzsh/"/>
     <id>http://yoursite.com/2016/09/07/终极Shell－－zsh/</id>
     <published>2016-09-06T16:00:00.000Z</published>
-    <updated>2016-09-07T02:34:37.000Z</updated>
+    <updated>2016-12-08T03:59:18.000Z</updated>
     
     <content type="html"><![CDATA[<p>如果你在用Shell，默认那用bash，那一定要试试zsh，配合<code>oh-my-zsh</code>那必须推荐，很骚，真的很骚～～</p>
 <ul>
@@ -752,12 +886,12 @@
     
     </summary>
     
-      <category term="zsh" scheme="http://yoursite.com/categories/zsh/"/>
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
     
-    
-      <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
     
       <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
+    
+      <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
     
   </entry>
   
@@ -766,7 +900,7 @@
     <link href="http://yoursite.com/2016/09/06/Storm%E7%9A%847%E7%A7%8D%E6%B5%81%E5%88%86%E7%BB%84%E7%AD%96%E7%95%A5Stream-Grouping/"/>
     <id>http://yoursite.com/2016/09/06/Storm的7种流分组策略Stream-Grouping/</id>
     <published>2016-09-06T08:00:00.000Z</published>
-    <updated>2016-09-06T10:26:57.000Z</updated>
+    <updated>2016-12-08T04:02:02.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="流分组策略-Stream-Grouping"><a href="#流分组策略-Stream-Grouping" class="headerlink" title="流分组策略(Stream Grouping)"></a>流分组策略(Stream Grouping)</h2><p>Stream Grouping，告诉topology如何在两个组件之间发送tuple<br>定义一个topology的其中一步是定义每个bolt接收什么样的流作为输入。stream grouping就是用来定义一个stream应该如果分配数据给bolts上面的多个tasks </p>
 <p>Storm里面有7种类型的stream grouping，也可以通过实现CustomStreamGrouping接口来实现自定义Grouping </p>
@@ -787,7 +921,7 @@
     
     </summary>
     
-      <category term="other" scheme="http://yoursite.com/categories/other/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
@@ -799,7 +933,7 @@
     <link href="http://yoursite.com/2016/09/06/Storm%E5%AE%89%E8%A3%85/"/>
     <id>http://yoursite.com/2016/09/06/Storm安装/</id>
     <published>2016-09-06T04:00:00.000Z</published>
-    <updated>2016-09-06T10:28:09.000Z</updated>
+    <updated>2016-12-08T04:01:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程</p>
 <ul>
@@ -829,7 +963,7 @@
     
     </summary>
     
-      <category term="other" scheme="http://yoursite.com/categories/other/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
@@ -841,7 +975,7 @@
     <link href="http://yoursite.com/2016/09/06/kafka/"/>
     <id>http://yoursite.com/2016/09/06/kafka/</id>
     <published>2016-09-06T02:00:00.000Z</published>
-    <updated>2016-09-06T10:27:44.000Z</updated>
+    <updated>2016-12-08T04:08:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>wget –&gt; tar -xzvf –&gt; cd –&gt;</p>
 <p>注意绑定的ip地址，配置文件，server.properties</p>
@@ -860,7 +994,7 @@
     
     </summary>
     
-      <category term="other" scheme="http://yoursite.com/categories/other/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="kafka" scheme="http://yoursite.com/tags/kafka/"/>
@@ -872,7 +1006,7 @@
     <link href="http://yoursite.com/2016/08/23/%E6%B5%8B%E8%AF%95Mathjax/"/>
     <id>http://yoursite.com/2016/08/23/测试Mathjax/</id>
     <published>2016-08-23T15:18:58.000Z</published>
-    <updated>2016-08-23T15:33:06.000Z</updated>
+    <updated>2016-12-08T03:56:53.000Z</updated>
     
     <content type="html"><![CDATA[<p>$$\sum_{i=1}^n a_i=0$$ </p>
 <p>$$f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$$ </p>
@@ -893,181 +1027,10 @@
     
     </summary>
     
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
     
       <category term="Mathjax" scheme="http://yoursite.com/tags/Mathjax/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式之模版模式</title>
-    <link href="http://yoursite.com/2016/08/23/%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2016/08/23/模版模式/</id>
-    <published>2016-08-23T13:57:03.000Z</published>
-    <updated>2016-08-23T14:29:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) …</p>
-<p>别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…</p>
-<blockquote>
-<p>模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板方法模式的用意。</p>
-</blockquote>
-<p>模版，顾名思义就是有一大堆共有的方法快，或者方法流程，比如说依次执行method_A,method_B…method_N ，里面有些方法是能抽象成一致的，仅方法不同。但是我们又不能在到处都写一样的代码，那怎么搞，那就把这些代码写到一块，不同部分来自定义，想想看，也就是抽象类比较适合了。所以策略模式用的是接口，模版模式用的是抽象类。</p>
-<a id="more"></a>
-<ul>
-<li>代表这些具体逻辑步骤的方法称做基本方法(primitive method)；</li>
-<li>将这些基本方法汇总起来的方法叫做模板方法(template method)</li>
-<li>模板方法所代表的行为称为顶级行为，其逻辑称为顶级逻辑。</li>
-</ul>
-<p>模板方法模式的静态结构图如下所示：</p>
-<p><img src="/assets/images/template.png" alt=""></p>
-<h1 id="抽象模板-Abstract-Template"><a href="#抽象模板-Abstract-Template" class="headerlink" title="抽象模板(Abstract Template)"></a>抽象模板(Abstract Template)</h1><ul>
-<li>定义了一个或多个抽象操作，以便让子类实现。这些抽象操作叫做基本操作，它们是一个顶级逻辑的组成步骤。</li>
-<li>定义并实现了一个模板方法。这个模板方法一般是一个具体方法，它给出了一个顶级逻辑的骨架，而逻辑的组成步骤在相应的抽象操作中，推迟到子类实现。顶级逻辑也有可能调用一些具体方法。</li>
-</ul>
-<h1 id="具体模板-Concrete-Template"><a href="#具体模板-Concrete-Template" class="headerlink" title="具体模板(Concrete Template)"></a>具体模板(Concrete Template)</h1><ul>
-<li>实现父类所定义的一个或多个抽象方法，它们是一个顶级逻辑的组成步骤。</li>
-<li>每一个抽象模板角色都可以有任意多个具体模板角色与之对应，而每一个具体模板角色都可以给出这些抽象方法（也就是顶级逻辑的组成步骤）的不同实现，从而使得顶级逻辑的实现各不相同。</li>
-<li>子类可以置换掉父类的可变部分，但是子类却不可以改变模板方法所代表的顶级逻辑。</li>
-</ul>
-<h1 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h1><p>根据支付的类型不同，同步回调（立刻返回数据），异步回调（返回部分数据，另一部分再返回），因为在支付流程上是一致的，但是对返回的结果是不一致的，恰到好处。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractPay</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> ApiPay apiResult;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> ApiPay <span class="title">getApiResult</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> apiResult;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 同步回调</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">success</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 异步回调</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 失败调用</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">fail</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">pay</span><span class="params">(ApiPay apiPay)</span> </span>&#123;</div><div class="line">        apiResult = Application.context.getBean(PayDubboService.class).pay(apiPay);</div><div class="line">        String code = apiResult.getResultCode();</div><div class="line">    	<span class="keyword">if</span>(code.equals(<span class="string">"success"</span>)) &#123;</div><div class="line">    		success();</div><div class="line">    	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (code.equals(<span class="string">"accept"</span>)) &#123;</div><div class="line">    		accept();</div><div class="line">    	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (code.equals(<span class="string">"fail"</span>)) &#123;</div><div class="line">    		fail();</div><div class="line">    	&#125; <span class="keyword">else</span> &#123;</div><div class="line">	    	<span class="comment">//do something</span></div><div class="line">    	&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActivePay</span> <span class="keyword">extends</span> <span class="title">AbstractPay</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> ParkingPayment payment;</div><div class="line">    <span class="keyword">private</span> PaymentMapper paymentMapper;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ActivePay</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ActivePay</span><span class="params">(ParkingPayment payment)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.payment = payment;</div><div class="line">        <span class="keyword">this</span>.paymentMapper = Application.context.getBean(PaymentMapper.class);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">success</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//do something, when active pay , notification...</span></div><div class="line">        paymentMapper.update(payment);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//do something</span></div><div class="line">        paymentMapper.update(payment);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fail</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//do something , send to Monitor</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostpaidPay</span> <span class="keyword">extends</span> <span class="title">AbstractPay</span> </span>&#123;</div><div class="line">	<span class="comment">//省略了，和AvtivePay类似，只是重写不同的方法</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//简直优雅的不要不要的～～</span></div><div class="line"><span class="keyword">new</span> AvtivePay(payment).pay(pay);</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;废话&quot;&gt;&lt;a href=&quot;#废话&quot; class=&quot;headerlink&quot; title=&quot;废话&quot;&gt;&lt;/a&gt;废话&lt;/h1&gt;&lt;p&gt;自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) …&lt;/p&gt;
-&lt;p&gt;别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板方法模式的用意。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;模版，顾名思义就是有一大堆共有的方法快，或者方法流程，比如说依次执行method_A,method_B…method_N ，里面有些方法是能抽象成一致的，仅方法不同。但是我们又不能在到处都写一样的代码，那怎么搞，那就把这些代码写到一块，不同部分来自定义，想想看，也就是抽象类比较适合了。所以策略模式用的是接口，模版模式用的是抽象类。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="模版模式" scheme="http://yoursite.com/tags/%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="Template" scheme="http://yoursite.com/tags/Template/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式之策略模式</title>
-    <link href="http://yoursite.com/2016/08/23/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2016/08/23/策略模式/</id>
-    <published>2016-08-23T13:24:34.000Z</published>
-    <updated>2016-08-23T13:54:47.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>自我修养与自我提升～ , 抛弃if , 我们叫策略(Strategy) …</p>
-<p>别问我为啥要用策略，因为在我的一个项目中，一个三方支付系统的通知TMD过来竟然要根据不同的订单做不同的操作，比如有些要通知合作伙伴API，不通知合作伙伴API，不通知API但是改其他表，发起不同的通知给客户端…曾经的我还用if，情况一多，哎，都是泪…</p>
-<blockquote>
-<p>策略模式属于对象的行为模式。其用意是针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。</p>
-</blockquote>
-<a id="more"></a>
-<p>策略模式，顾名思义会有N多个策略，都叫啥些Strategy A，Strategy B… Strategy N<br>策略嘛，应该是对某件是的处理，于是这些策略在高度抽象后应该是一个接口Interface，有共同的策略执行方法，对应于每一个具体策略，其具体的执行方法不同。</p>
-<p>但是只要一个Strategy N 是不够的，直接new嚒，那多不优雅啊，所以还需要再外面包装一下，这里称为Context，这个Context里面包含了这个抽象的Strategy（说接口更合理些），只是实例化的时候传递对应的策略。</p>
-<p>所以大概的关系就是这样：</p>
-<p><img src="/assets/images/strategy.png" alt=""></p>
-<ul>
-<li>环境(Context)角色：持有一个Strategy的引用。</li>
-<li>抽象策略(Strategy)角色：这是一个抽象角色，通常由一个接口或抽象类实现。此角色给出所有的具体策略类所需的接口。</li>
-<li>具体策略(ConcreteStrategy)角色：包装了相关的算法或行为。</li>
-</ul>
-<h1 id="策略模式的优点"><a href="#策略模式的优点" class="headerlink" title="策略模式的优点"></a>策略模式的优点</h1><ul>
-<li>策略模式提供了管理相关的算法族的办法。策略类的等级结构定义了一个算法或行为族。恰当使用继承可以把公共的代码移到父类里面，从而避免代码重复。</li>
-<li>使用策略模式可以避免使用多重条件(if-else)语句。多重条件语句不易维护，它把采取哪一种算法或采取哪一种行为的逻辑与算法或行为的逻辑混合在一起，统统列在一个多重条件语句里面，比使用继承的办法还要原始和落后。</li>
-</ul>
-<h1 id="策略模式的缺点"><a href="#策略模式的缺点" class="headerlink" title="策略模式的缺点"></a>策略模式的缺点</h1><ul>
-<li>客户端必须知道所有的策略类，并自行决定使用哪一个策略类。这就意味着客户端必须理解这些算法的区别，以便适时选择恰当的算法类。换言之，策略模式只适用于客户端知道算法或行为的情况。</li>
-<li>由于策略模式把每个具体的策略实现都单独封装成为类，如果备选的策略很多的话，那么对象的数目就会很可观。这也能是什么缺点？</li>
-</ul>
-<h1 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h1><p>在一辆车出入场的时候，对应不同的策略处理逻辑，比如扣费，接口，推送等</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RecordContext</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> RecordStrategy strategy;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RecordContext</span><span class="params">(RecordStrategy strategy)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.strategy = strategy;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">()</span> </span>&#123;</div><div class="line">        strategy.execute();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RecordStrategy</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EnterStrategy</span> <span class="keyword">implements</span> <span class="title">RecordStrategy</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> ParkingRecord record;</div><div class="line">    <span class="keyword">private</span> PushDubboService pushDubboService;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EntranceStrategy</span><span class="params">(ParkingRecord record)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.record = record;</div><div class="line">        <span class="keyword">this</span>.pushDubboService = Application.context.getBean(PushDubboService.class);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123;</div><div class="line">	    <span class="comment">//do something</span></div><div class="line">	    <span class="keyword">this</span>.pushDubboService.publish(<span class="string">"user enter"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LeaveStrategy</span> <span class="keyword">implements</span> <span class="title">RecordStrategy</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> ParkingRecord record;</div><div class="line">    <span class="keyword">private</span> PushDubboService pushDubboService;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LeaveStrategy</span><span class="params">(ParkingRecord record)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.record = record;</div><div class="line">        <span class="keyword">this</span>.pushDubboService = Application.context.getBean(PushDubboService.class);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123;</div><div class="line">	    <span class="comment">//do something</span></div><div class="line">	    <span class="keyword">this</span>.pushDubboService.publish(<span class="string">"user leave"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 就是这么简单，优雅</span></div><div class="line"><span class="keyword">new</span> RecordContext(<span class="keyword">new</span> EntranceStrategy(record)).process();</div></pre></td></tr></table></figure>
-<p>写点优雅的代码～～</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;废话&quot;&gt;&lt;a href=&quot;#废话&quot; class=&quot;headerlink&quot; title=&quot;废话&quot;&gt;&lt;/a&gt;废话&lt;/h1&gt;&lt;p&gt;自我修养与自我提升～ , 抛弃if , 我们叫策略(Strategy) …&lt;/p&gt;
-&lt;p&gt;别问我为啥要用策略，因为在我的一个项目中，一个三方支付系统的通知TMD过来竟然要根据不同的订单做不同的操作，比如有些要通知合作伙伴API，不通知合作伙伴API，不通知API但是改其他表，发起不同的通知给客户端…曾经的我还用if，情况一多，哎，都是泪…&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;策略模式属于对象的行为模式。其用意是针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="策略模式" scheme="http://yoursite.com/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="Strategy" scheme="http://yoursite.com/tags/Strategy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Quartz集群调度坑</title>
-    <link href="http://yoursite.com/2016/08/22/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/"/>
-    <id>http://yoursite.com/2016/08/22/Quartz集群调度坑/</id>
-    <published>2016-08-21T16:00:00.000Z</published>
-    <updated>2016-08-22T07:15:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近将老版本程序的单机版定时任务调度调整到了Quartz，理由在于Spring在集群调度上并不是很适合，Quartz更适合，在这么一迁移后，可以将以前任务相关部分的代码解藕出来，逻辑会更为清晰。再者，接口程序目前已支持多开，但是任务这块尚未支持多开下保证同一类程序有且只有一台执行。</p>
-<p>这次需要合并的达到最终效果是这样：</p>
-<ul>
-<li>Application A～N 使用相同的Quartz数据库</li>
-<li>Application A 处理API任务</li>
-<li>Application B 处理结算方面任务</li>
-<li>Application C 统计任务</li>
-<li>….</li>
-</ul>
-<p>由于Application A和Application B 的job类是不同的，所以默认配置下，多个Application会使用相同的<code>SCHED_NAME</code>,会导致不停的misfire，最终配置需要将不同目的的Application 采用不同的 <code>SCHED_NAME</code>。参考下面配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Our 'AutowiringSpringBeanJobFactory' implemented in the previous section: --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"quartzJobFactory"</span> <span class="attr">class</span>=<span class="string">"com.chinaroad.settleserver.quartz.AutowiringSpringBeanJobFactory"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- I will not explain this setting, just use it as shown: --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ignoredUnknownProperties"</span> <span class="attr">value</span>=<span class="string">"applicationContext"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.scheduling.quartz.SchedulerFactoryBean"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- Quartz requires a separate 'quartz.properties' file --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"configLocation"</span> <span class="attr">value</span>=<span class="string">"classpath:config/quartz.properties"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"transactionManager"</span> <span class="attr">ref</span>=<span class="string">"transactionManager"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- reference to our 'autowiring job factory bean', defined above: --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jobFactory"</span> <span class="attr">ref</span>=<span class="string">"quartzJobFactory"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Boolean controlling whether you want to override the job definitions in the DB on the app start up. We'll talk about it more in the next section. --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"overwriteExistingJobs"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- I will not explain the next three properties, just use it as shown: --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"autoStartup"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 需要保证每个目的的设置为不同的schedulerName --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"schedulerName"</span> <span class="attr">value</span>=<span class="string">"RobotQuartzScheduler"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"applicationContextSchedulerContextKey"</span> <span class="attr">value</span>=<span class="string">"applicationContext"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Controls whether to wait for jobs completion on app shutdown, we use 'true' --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"waitForJobsToCompleteOnShutdown"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure Main Scheduler Properties</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.scheduler.instanceName=RobotQuartzScheduler</div><div class="line">org.quartz.scheduler.instanceId=AUTO</div><div class="line">org.quartz.scheduler.skipUpdateCheck=<span class="keyword">true</span></div><div class="line">org.quartz.scheduler.misfirePolicy=doNothing</div><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure ThreadPool</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.threadPool.class:org.quartz.simpl.SimpleThreadPool</div><div class="line">org.quartz.threadPool.threadCount:<span class="number">5</span></div><div class="line">org.quartz.threadPool.threadPriority:<span class="number">5</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure JobStore</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.jobStore.misfireThreshold=<span class="number">60000</span></div><div class="line"><span class="comment"># Quartz的集群模式需要设置数据库，所以jobStore设置为有jdbc的</span></div><div class="line">org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX</div><div class="line">org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate</div><div class="line">org.quartz.jobStore.useProperties=<span class="keyword">false</span></div><div class="line">org.quartz.jobStore.dataSource=mysql</div><div class="line">org.quartz.jobStore.tablePrefix=QRTZ_</div><div class="line">org.quartz.jobStore.isClustered=<span class="keyword">true</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line"><span class="comment"># Configure Datasources</span></div><div class="line"><span class="comment">#============================================================================</span></div><div class="line">org.quartz.dataSource.mysql.driver:com.mysql.jdbc.Driver</div><div class="line">org.quartz.dataSource.mysql.URL:jdbc:mysql:<span class="comment">//db.pp.net:3306/quartz?useUnicode=true&amp;characterEncoding=utf-8</span></div><div class="line">org.quartz.dataSource.mysql.user:root</div><div class="line">org.quartz.dataSource.mysql.password:</div><div class="line">org.quartz.dataSource.mysql.maxConnections:<span class="number">5</span></div><div class="line">org.quartz.dataSource.mysql.validationQuery:select <span class="number">0</span></div></pre></td></tr></table></figure>
-<p>Quartz需要初始化数据库表，查看的Github中的初始化代码 <a href="https://github.com/elventear/quartz-scheduler/blob/master/distribution/src/main/assembly/root/docs/dbTables/tables_mysql.sql" target="_blank" rel="external">tables_mysql.sql</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近将老版本程序的单机版定时任务调度调整到了Quartz，理由在于Spring在集群调度上并不是很适合，Quartz更适合，在这么一迁移后，可以将以前任务相关部分的代码解藕出来，逻辑会更为清晰。再者，接口程序目前已支持多开，但是任务这块尚未支持多开下保证同一类程序有且只有一
-    
-    </summary>
-    
-    
-      <category term="Quartz" scheme="http://yoursite.com/tags/Quartz/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为什么zgrep</title>
-    <link href="http://yoursite.com/2016/08/19/%E4%B8%BA%E4%BB%80%E4%B9%88zgrep/"/>
-    <id>http://yoursite.com/2016/08/19/为什么zgrep/</id>
-    <published>2016-08-18T16:00:00.000Z</published>
-    <updated>2016-08-19T06:59:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>真不知道选一个什么样的域名，最后想了一个自己比较常用的一条命令，于是变成了<code>zgrep.me</code></p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find logs/ -name <span class="string">'cashier.2016*'</span> -type f | xargs zgrep <span class="string">'ERROR'</span> | grep <span class="string">'failed'</span></div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;真不知道选一个什么样的域名，最后想了一个自己比较常用的一条命令，于是变成了&lt;code&gt;zgrep.me&lt;/code&gt;&lt;/p&gt;
- &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div cl
-    
-    </summary>
-    
-    
-      <category term="zgrep" scheme="http://yoursite.com/tags/zgrep/"/>
-    
-      <category term="grep" scheme="http://yoursite.com/tags/grep/"/>
     
   </entry>
   

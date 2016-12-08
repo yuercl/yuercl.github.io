@@ -5,15 +5,8 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><blockquote>
-<p>“Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly for targets which use Swift. Use the [Edit &gt; Convert &gt; To Current Swift Syntax…] menu to choose a Swift version or use the Build Settings editor to configure the build setting directly.</p>
-</blockquote>
-<p>设置 对应的SWIFT_VERSION = NO 可成。</p>
-<p><img src="/assets/images/SWIFT_VERSION_SETTING.png" alt=""></p>
-<p>参考 <a href="http://blog.csdn.net/u012847940/article/details/52229485" target="_blank" rel="external">http://blog.csdn.net/u012847940/article/details/52229485</a></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="post-link">那些年踩过的坑之sed和gsed</a></h2><span class="post-time">2016年10月25日</span><div class="post-content"><p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
-<p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="post-link">那些年踩过的坑之sed和gsed</a></h2><span class="post-time">2016年10月25日</span><div class="post-content"><p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
 <p>这个小程序是在Mac上的，所以里面的sed换成了gsed，不然一直要报错。</p>
 <p>还有一个是否生成额外副本的情况，这个个人用的比较少。</p></div><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/19/投资的Daily-Checklist/" class="post-link">投资的Daily Checklist</a></h2><span class="post-time">2016年10月19日</span><div class="post-content"><ul>
 <li>人民币兑美元汇率 <a href="http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml" target="_blank" rel="external">http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml</a></li>
@@ -39,4 +32,68 @@
 <li>融资方 即正回购方，需要用手中的国债券换取现金；</li>
 <li>融券方 即逆回购方，需要用手中的现金买国债券，以实现资金增值；</li>
 <li>监督方 上交所和深交所</li>
-</ul></div><a href="/2016/09/28/国债逆回购/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/3/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+</ul></div><a href="/2016/09/28/国债逆回购/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/22/WeakReference的一小记/" class="post-link">WeakReference的一小记</a></h2><span class="post-time">2016年9月22日</span><div class="post-content"><p>最近要做一个功能，白名单配置，采用了一个叫做FileMonitor的工具，源码参看链接。新版本JDK是可以用WatchServices来监听文件变化。</p>
+<ul>
+<li><a href="http://geosoft.no/software/filemonitor/FileMonitor.java.html" target="_blank" rel="external">FileMonitor.java</a></li>
+<li><a href="http://geosoft.no/software/filemonitor/FileListener.java.html" target="_blank" rel="external">FileListener.java</a></li>
+</ul>
+<p><strong>坑</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是错误写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是正确写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div></pre></td></tr></table></figure>
+<p>程序开始运行的挺好的，文件变动也能及时反馈调用给Listener，但是运行一段时间之后，程序便不再调用Listener回调。费解。阅读FileMonitor源码实现后，发现采用了WeakReference来包装Listener，使得不容易内存泄漏。后来证明这是作者想多了，在作为配置文件Reload这种特性的情况下，一般是不会有很多new 很多个FileMonitor出来的。</p>
+<p>经过初步猜测是由于WeakReference 弱应用导致Listener被GC掉。遂用VisualVM  Dump类证实为GC时被回收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div><div class="line"><span class="comment">// 分割线</span></div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
+<p>经过和朋友沟通和自己理解后，认为在new Application()出来的对象的作用域有关。于是将new单独出来，测试后问题解决。</p>
+<p>哎，惭愧</p>
+<ul>
+<li><a href="http://puretech.iteye.com/blog/2008663" target="_blank" rel="external">http://puretech.iteye.com/blog/2008663</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/07/终极Shell－－zsh/" class="post-link">终极Shell－－zsh</a></h2><span class="post-time">2016年9月7日</span><div class="post-content"><p>如果你在用Shell，默认那用bash，那一定要试试zsh，配合<code>oh-my-zsh</code>那必须推荐，很骚，真的很骚～～</p>
+<ul>
+<li>官网地址: <a href="http://ohmyz.sh">http://ohmyz.sh</a></li>
+<li>Github: <a href="https://github.com/robbyrussell/oh-my-zsh">https://github.com/robbyrussell/oh-my-zsh</a></li>
+</ul>
+<p>官网写着</p>
+<blockquote>
+<p>Your terminal never felt this good before.</p>
+</blockquote></div><a href="/2016/09/07/终极Shell－－zsh/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/06/Storm的7种流分组策略Stream-Grouping/" class="post-link">Storm的7种流分组策略Stream Grouping</a></h2><span class="post-time">2016年9月6日</span><div class="post-content"><h2 id="流分组策略-Stream-Grouping"><a href="#流分组策略-Stream-Grouping" class="headerlink" title="流分组策略(Stream Grouping)"></a>流分组策略(Stream Grouping)</h2><p>Stream Grouping，告诉topology如何在两个组件之间发送tuple<br>定义一个topology的其中一步是定义每个bolt接收什么样的流作为输入。stream grouping就是用来定义一个stream应该如果分配数据给bolts上面的多个tasks </p>
+<p>Storm里面有7种类型的stream grouping，也可以通过实现CustomStreamGrouping接口来实现自定义Grouping </p></div><a href="/2016/09/06/Storm的7种流分组策略Stream-Grouping/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/06/Storm安装/" class="post-link">Storm安装</a></h2><span class="post-time">2016年9月6日</span><div class="post-content"><p>前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程</p>
+<ul>
+<li>wget …</li>
+<li>tar -xzvf …</li>
+<li>cd …</li>
+<li>vim conf/storm.yaml</li>
+</ul></div><a href="/2016/09/06/Storm安装/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/06/kafka/" class="post-link">kafka</a></h2><span class="post-time">2016年9月6日</span><div class="post-content"><p>wget –&gt; tar -xzvf –&gt; cd –&gt;</p>
+<p>注意绑定的ip地址，配置文件，server.properties</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bin/zookeeper-server-start.sh config/zookeeper.properties &amp;</div><div class="line">bin/kafka-server-start.sh config/server.properties &amp;  </div><div class="line">bin/kafka-server-stop.sh   </div><div class="line">bin/zookeeper-server-stop.sh  </div><div class="line">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="built_in">test</span>  </div><div class="line">bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic <span class="built_in">test</span> --from-beginning</div></pre></td></tr></table></figure>
+<p>参考地址:</p>
+<ul>
+<li><a href="http://orchome.com/kafka/index" target="_blank" rel="external">http://orchome.com/kafka/index</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/08/23/测试Mathjax/" class="post-link">测试Mathjax</a></h2><span class="post-time">2016年8月23日</span><div class="post-content"><p>$$\sum_{i=1}^n a_i=0$$ </p>
+<p>$$f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$$ </p>
+<p>$$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$<br>$$P(A) = P(A \mid B) \Longleftrightarrow P(B) = P(B \mid A)$$</p>
+<p>$$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$</p>
+<p>$$ \left[<br>    \begin{array}{cc|c}<br>      1&amp;2&amp;3\\<br>      4&amp;5&amp;6<br>    \end{array}<br>\right] $$</p>
+<p>$$\bigl( \begin{smallmatrix} a &amp; b \\ c &amp; d \end{smallmatrix} \bigr)$$</p>
+<p>$$<br>\left.<br>\begin{array}{l}<br>\text{if $n$ is even:}&amp;n/2\\<br>\text{if $n$ is odd:}&amp;3n+1<br>\end{array}<br>\right\}<br>=f(n)<br>$$</p>
+<p>$$<br>f(n) =<br>\begin{cases}<br>\frac{n}{2},  &amp; \text{if $n$ is even} \\[2ex]<br>3n+1, &amp; \text{if $n$ is odd}<br>\end{cases}<br>$$</p>
+<p>$$<br>f(x) = {1 \over \sqrt{2 \pi} \sigma} exp\left( - {(x - \mu)^2 \over 2 \sigma^2} \right)<br>$$</p>
+</div></article></li></ul><div class="paginator"><a href="/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/3/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>
