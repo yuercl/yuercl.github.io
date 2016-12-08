@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-08T03:56:38.000Z</updated>
+  <updated>2016-12-08T04:45:27.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,77 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Netty 介绍</title>
+    <link href="http://yoursite.com/2016/12/08/Netty-%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://yoursite.com/2016/12/08/Netty-介绍/</id>
+    <published>2016-12-08T04:40:48.000Z</published>
+    <updated>2016-12-08T04:45:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>作为一个优秀的后台工程师，怎么可能没有Netty呢。</p>
+<p>Netty是一个非常优秀的网络库框架，优雅地写出TCP/UDP的服务端／客户端程序。神奇的是测试效果还很棒。👍</p>
+<ul>
+<li><a href="http://github.com/yuercl/QuantBridge" target="_blank" rel="external">QuantBridge</a>，是一个转发量化平台(JoinQuant/ricequant)的HTTP请求到客户端的小小小工具。结合Python的<code>WIN32 API</code>可以实现实盘交易。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作为一个优秀的后台工程师，怎么可能没有Netty呢。&lt;/p&gt;
+&lt;p&gt;Netty是一个非常优秀的网络库框架，优雅地写出TCP/UDP的服务端／客户端程序。神奇的是测试效果还很棒。👍&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/yuercl
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Netty" scheme="http://yoursite.com/tags/Netty/"/>
+    
+      <category term="Socket" scheme="http://yoursite.com/tags/Socket/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Dubbo 分布式服务框架</title>
+    <link href="http://yoursite.com/2016/12/08/Dubbo-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6/"/>
+    <id>http://yoursite.com/2016/12/08/Dubbo-分布式服务框架/</id>
+    <published>2016-12-08T04:35:00.000Z</published>
+    <updated>2016-12-08T04:40:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>整理以往的思路是一件非常美妙的过程。现在到了<code>dubbo</code>了…</p>
+<p>dubbo满足了我对RPC调用的大部分幻想～</p>
+<p>dubbo一般用maven管理的时候，将共同部分抽离成模块，再消费者和服务提供方都导入。比如说，协议的接口和协议中需要使用的类都是在common公共模块中。</p>
+<p>尽量在程序中设计成为可以多开的情况，这样可以平滑地迁移版本。</p>
+<ul>
+<li><a href="http://dubbo.io" target="_blank" rel="external">dubbo.io</a></li>
+<li><a href="http://dubbo.io/Developer+Guide-zh.htm" target="_blank" rel="external">dubbo 开发者指南</a></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoServiceImpl</span> <span class="keyword">implements</span> <span class="title">DemoService</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"Hello "</span> + name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoClientAction</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> DemoService demoService;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDemoService</span><span class="params">(DemoService demoService)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.demoService = demoService;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">        String hello = demoService.sayHello(<span class="string">"world"</span> + i);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Dubbo的配置文件，下面是停车场服务的配置文件，在ApplicationContext.xml 中import即可。一个服务即可以作为服务提供方也可以作为服务的消费方。定义的bean可以在其他Service中通过<code>@autowared</code>注入。一般来说，<code>zookeeper</code>应该配置成集群，以防单点故障，事实上，哪有那么容易死啊，最大的可能就是<code>zookeeper</code> 服务器重启，所以配置多台是最靠谱的。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xmlns:dubbo</span>=<span class="string">"http://code.alibabatech.com/schema/dubbo"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">    http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">    http://code.alibabatech.com/schema/dubbo</div><div class="line">    http://code.alibabatech.com/schema/dubbo/dubbo.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"ParkServices"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://mq.660pp.net:2181"</span>/&gt;</span></div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"parkDubboService"</span></span></div><div class="line">                     <span class="attr">interface</span>=<span class="string">"com.chinaroad.api.common.services.ParkDubboService"</span></div><div class="line">                     <span class="attr">timeout</span>=<span class="string">"20000"</span></div><div class="line">                     <span class="attr">retries</span>=<span class="string">"0"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"userDubboService"</span></span></div><div class="line">                     <span class="attr">interface</span>=<span class="string">"com.chinaroad.api.common.services.UserDubboService"</span></div><div class="line">                     <span class="attr">timeout</span>=<span class="string">"20000"</span></div><div class="line">                     <span class="attr">retries</span>=<span class="string">"0"</span>/&gt;</div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 用dubbo协议在20880端口暴露服务 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"-1"</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 声明需要暴露的服务接口 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.chinaroad.api.common.services.ParkInfoDubboService"</span> <span class="attr">ref</span>=<span class="string">"parkInfoDubboService"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"parkInfoDubboService"</span> <span class="attr">class</span>=<span class="string">"com.chinaroad.parkservices.service.impl.ParkInfoServiceImpl"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;整理以往的思路是一件非常美妙的过程。现在到了&lt;code&gt;dubbo&lt;/code&gt;了…&lt;/p&gt;
+&lt;p&gt;dubbo满足了我对RPC调用的大部分幻想～&lt;/p&gt;
+&lt;p&gt;dubbo一般用maven管理的时候，将共同部分抽离成模块，再消费者和服务提供方都导入。比如说，协议的接口和协议中
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Dubbo" scheme="http://yoursite.com/tags/Dubbo/"/>
+    
+      <category term="RPC" scheme="http://yoursite.com/tags/RPC/"/>
+    
+      <category term="分布式服务框架" scheme="http://yoursite.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>贝叶斯概率</title>
@@ -967,70 +1038,6 @@
     
     
       <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka</title>
-    <link href="http://yoursite.com/2016/09/06/kafka/"/>
-    <id>http://yoursite.com/2016/09/06/kafka/</id>
-    <published>2016-09-06T02:00:00.000Z</published>
-    <updated>2016-12-08T04:08:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>wget –&gt; tar -xzvf –&gt; cd –&gt;</p>
-<p>注意绑定的ip地址，配置文件，server.properties</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bin/zookeeper-server-start.sh config/zookeeper.properties &amp;</div><div class="line">bin/kafka-server-start.sh config/server.properties &amp;  </div><div class="line">bin/kafka-server-stop.sh   </div><div class="line">bin/zookeeper-server-stop.sh  </div><div class="line">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="built_in">test</span>  </div><div class="line">bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic <span class="built_in">test</span> --from-beginning</div></pre></td></tr></table></figure>
-<p>参考地址:</p>
-<ul>
-<li><a href="http://orchome.com/kafka/index" target="_blank" rel="external">http://orchome.com/kafka/index</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;wget –&amp;gt; tar -xzvf –&amp;gt; cd –&amp;gt;&lt;/p&gt;
-&lt;p&gt;注意绑定的ip地址，配置文件，server.properties&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutt
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="kafka" scheme="http://yoursite.com/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>测试Mathjax</title>
-    <link href="http://yoursite.com/2016/08/23/%E6%B5%8B%E8%AF%95Mathjax/"/>
-    <id>http://yoursite.com/2016/08/23/测试Mathjax/</id>
-    <published>2016-08-23T15:18:58.000Z</published>
-    <updated>2016-12-08T03:56:53.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>$$\sum_{i=1}^n a_i=0$$ </p>
-<p>$$f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$$ </p>
-<p>$$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$<br>$$P(A) = P(A \mid B) \Longleftrightarrow P(B) = P(B \mid A)$$</p>
-<p>$$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$</p>
-<p>$$ \left[<br>    \begin{array}{cc|c}<br>      1&amp;2&amp;3\\<br>      4&amp;5&amp;6<br>    \end{array}<br>\right] $$</p>
-<p>$$\bigl( \begin{smallmatrix} a &amp; b \\ c &amp; d \end{smallmatrix} \bigr)$$</p>
-<p>$$<br>\left.<br>\begin{array}{l}<br>\text{if $n$ is even:}&amp;n/2\\<br>\text{if $n$ is odd:}&amp;3n+1<br>\end{array}<br>\right\}<br>=f(n)<br>$$</p>
-<p>$$<br>f(n) =<br>\begin{cases}<br>\frac{n}{2},  &amp; \text{if $n$ is even} \\[2ex]<br>3n+1, &amp; \text{if $n$ is odd}<br>\end{cases}<br>$$</p>
-<p>$$<br>f(x) = {1 \over \sqrt{2 \pi} \sigma} exp\left( - {(x - \mu)^2 \over 2 \sigma^2} \right)<br>$$</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;$$\sum_{i=1}^n a_i=0$$ &lt;/p&gt;
-&lt;p&gt;$$f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$$ &lt;/p&gt;
-&lt;p&gt;$$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$&lt;br&gt;$
-    
-    </summary>
-    
-      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-      <category term="Mathjax" scheme="http://yoursite.com/tags/Mathjax/"/>
     
   </entry>
   
