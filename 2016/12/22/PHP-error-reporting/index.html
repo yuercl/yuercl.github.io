@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="定义和用法：error_reporting()设置PHP的报错级别并返回当前级别。函数语法：error_reporting(report_level)"><meta name="keywords" content="PHP"><title>PHP error_reporting() · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/12/22/PHP-error-reporting/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">PHP error_reporting()</h1><span class="post-time">2016年12月22日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义和用法："><span class="toc-text">定义和用法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数语法："><span class="toc-text">函数语法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引申"><span class="toc-text">引申</span></a></li></ol></div><div class="post-content"><h3 id="定义和用法："><a href="#定义和用法：" class="headerlink" title="定义和用法："></a>定义和用法：</h3><p>error_reporting() 设置 PHP 的报错级别并返回当前级别。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><h3 id="函数语法："><a href="#函数语法：" class="headerlink" title="函数语法："></a>函数语法：</h3><p>error_reporting(report_level)</p>
+<a id="more"></a>
+<p>如果参数 level 未指定，当前报错级别将被返回。下面几项是 level 可能的值：</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>常量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>E_ERROR</td>
+<td>致命的运行错误。错误无法恢复，暂停执行脚本。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>E_WARNING</td>
+<td>运行时警告(非致命性错误)。非致命的运行错误，脚本执行不会停止。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>E_PARSE</td>
+<td>编译时解析错误。解析错误只由分析器产生。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>E_NOTICE</td>
+<td>运行时提醒(这些经常是你代码中的bug引起的，也可能是有意的行为造成的。)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>E_CORE_ERROR</td>
+<td>PHP启动时初始化过程中的致命错误。</td>
+</tr>
+<tr>
+<td>32</td>
+<td>E_CORE_WARNING</td>
+<td>PHP启动时初始化过程中的警告(非致命性错)。</td>
+</tr>
+<tr>
+<td>64</td>
+<td>E_COMPILE_ERROR</td>
+<td>编译时致命性错。这就像由Zend脚本引擎生成了一个E_ERROR。</td>
+</tr>
+<tr>
+<td>128</td>
+<td>E_COMPILE_WARNING</td>
+<td>编译时警告(非致命性错)。这就像由Zend脚本引擎生成了一个E_WARNING警告。</td>
+</tr>
+<tr>
+<td>256</td>
+<td>E_USER_ERROR</td>
+<td>用户自定义的错误消息。这就像由使用PHP函数trigger_error（程序员设置E_ERROR）</td>
+</tr>
+<tr>
+<td>512</td>
+<td>E_USER_WARNING</td>
+<td>用户自定义的警告消息。这就像由使用PHP函数trigger_error（程序员设定的一个E_WARNING警告）</td>
+</tr>
+<tr>
+<td>1024</td>
+<td>E_USER_NOTICE</td>
+<td>用户自定义的提醒消息。这就像一个由使用PHP函数trigger_error（程序员一个E_NOTICE集）</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>E_STRICT</td>
+<td>编码标准化警告。允许PHP建议如何修改代码以确保最佳的互操作性向前兼容性。</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>E_RECOVERABLE_ERROR</td>
+<td>开捕致命错误。这就像一个E_ERROR，但可以通过用户定义的处理捕获（又见set_error_handler（））</td>
+</tr>
+<tr>
+<td>8191</td>
+<td>E_ALL</td>
+<td>所有的错误和警告(不包括 E_STRICT) (E_STRICT will be part of E_ALL as of PHP 6.0)</td>
+</tr>
+</tbody>
+</table>
+<p>例子：<br>任意数目的以上选项都可以用“或”来连接(用 OR 或 |)，这样可以报告所有需要的各级别错误。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">//禁用错误报告</span></div><div class="line">error_reporting(<span class="number">0</span>);</div><div class="line"> </div><div class="line"><span class="comment">//报告运行时错误</span></div><div class="line">error_reporting(E_ERROR | E_WARNING | E_PARSE);</div><div class="line"> </div><div class="line"><span class="comment">//报告所有错误</span></div><div class="line">error_reporting(E_ALL);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h3><p>类似的方法也用在了用于屏蔽客户端类型的请求上面。<br>比如说：目前存在有四种类型，微信、支付宝、iOS、android、其他的接入渠道。目前需要根据业务来决定是否当前渠道是否被屏蔽。</p>
+<p>值取二进制对应的十进制。屏蔽某些渠道：</p>
+<table>
+<thead>
+<tr>
+<th>微信</th>
+<th>支付宝</th>
+<th>iOS</th>
+<th>Android</th>
+<th>数值</th>
+<th>说明 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>微信</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>支付宝</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>iOS客户端</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>Android客户端 </td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>未定义接入渠道</td>
+</tr>
+</tbody>
+</table>
+<p>可以根据简单的，<code>(config.getForbidden() &amp; request.getPlatform()) != 0</code> 来判断</p>
+</div></article><div class="tags"><a href="/tags/PHP/">PHP</a></div><div class="paginator"><a href="/2016/12/09/牛顿法/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/12/22/PHP-error-reporting/';
+    this.page.identifier = '2016/12/22/PHP-error-reporting/';
+    this.page.title = 'PHP error_reporting()';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

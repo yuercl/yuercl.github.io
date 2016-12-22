@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-08T04:45:27.000Z</updated>
+  <updated>2016-12-22T03:25:37.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,203 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP error_reporting()</title>
+    <link href="http://yoursite.com/2016/12/22/PHP-error-reporting/"/>
+    <id>http://yoursite.com/2016/12/22/PHP-error-reporting/</id>
+    <published>2016-12-21T16:00:00.000Z</published>
+    <updated>2016-12-22T03:25:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="定义和用法："><a href="#定义和用法：" class="headerlink" title="定义和用法："></a>定义和用法：</h3><p>error_reporting() 设置 PHP 的报错级别并返回当前级别。</p>
+<h3 id="函数语法："><a href="#函数语法：" class="headerlink" title="函数语法："></a>函数语法：</h3><p>error_reporting(report_level)</p>
+<a id="more"></a>
+<p>如果参数 level 未指定，当前报错级别将被返回。下面几项是 level 可能的值：</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>常量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>E_ERROR</td>
+<td>致命的运行错误。错误无法恢复，暂停执行脚本。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>E_WARNING</td>
+<td>运行时警告(非致命性错误)。非致命的运行错误，脚本执行不会停止。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>E_PARSE</td>
+<td>编译时解析错误。解析错误只由分析器产生。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>E_NOTICE</td>
+<td>运行时提醒(这些经常是你代码中的bug引起的，也可能是有意的行为造成的。)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>E_CORE_ERROR</td>
+<td>PHP启动时初始化过程中的致命错误。</td>
+</tr>
+<tr>
+<td>32</td>
+<td>E_CORE_WARNING</td>
+<td>PHP启动时初始化过程中的警告(非致命性错)。</td>
+</tr>
+<tr>
+<td>64</td>
+<td>E_COMPILE_ERROR</td>
+<td>编译时致命性错。这就像由Zend脚本引擎生成了一个E_ERROR。</td>
+</tr>
+<tr>
+<td>128</td>
+<td>E_COMPILE_WARNING</td>
+<td>编译时警告(非致命性错)。这就像由Zend脚本引擎生成了一个E_WARNING警告。</td>
+</tr>
+<tr>
+<td>256</td>
+<td>E_USER_ERROR</td>
+<td>用户自定义的错误消息。这就像由使用PHP函数trigger_error（程序员设置E_ERROR）</td>
+</tr>
+<tr>
+<td>512</td>
+<td>E_USER_WARNING</td>
+<td>用户自定义的警告消息。这就像由使用PHP函数trigger_error（程序员设定的一个E_WARNING警告）</td>
+</tr>
+<tr>
+<td>1024</td>
+<td>E_USER_NOTICE</td>
+<td>用户自定义的提醒消息。这就像一个由使用PHP函数trigger_error（程序员一个E_NOTICE集）</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>E_STRICT</td>
+<td>编码标准化警告。允许PHP建议如何修改代码以确保最佳的互操作性向前兼容性。</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>E_RECOVERABLE_ERROR</td>
+<td>开捕致命错误。这就像一个E_ERROR，但可以通过用户定义的处理捕获（又见set_error_handler（））</td>
+</tr>
+<tr>
+<td>8191</td>
+<td>E_ALL</td>
+<td>所有的错误和警告(不包括 E_STRICT) (E_STRICT will be part of E_ALL as of PHP 6.0)</td>
+</tr>
+</tbody>
+</table>
+<p>例子：<br>任意数目的以上选项都可以用“或”来连接(用 OR 或 |)，这样可以报告所有需要的各级别错误。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">//禁用错误报告</span></div><div class="line">error_reporting(<span class="number">0</span>);</div><div class="line"> </div><div class="line"><span class="comment">//报告运行时错误</span></div><div class="line">error_reporting(E_ERROR | E_WARNING | E_PARSE);</div><div class="line"> </div><div class="line"><span class="comment">//报告所有错误</span></div><div class="line">error_reporting(E_ALL);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h3><p>类似的方法也用在了用于屏蔽客户端类型的请求上面。<br>比如说：目前存在有四种类型，微信、支付宝、iOS、android、其他的接入渠道。目前需要根据业务来决定是否当前渠道是否被屏蔽。</p>
+<p>值取二进制对应的十进制。屏蔽某些渠道：</p>
+<table>
+<thead>
+<tr>
+<th>微信</th>
+<th>支付宝</th>
+<th>iOS</th>
+<th>Android</th>
+<th>数值</th>
+<th>说明 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>微信</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>支付宝</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>iOS客户端</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>Android客户端 </td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>未定义接入渠道</td>
+</tr>
+</tbody>
+</table>
+<p>可以根据简单的，<code>(config.getForbidden() &amp; request.getPlatform()) != 0</code> 来判断</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;定义和用法：&quot;&gt;&lt;a href=&quot;#定义和用法：&quot; class=&quot;headerlink&quot; title=&quot;定义和用法：&quot;&gt;&lt;/a&gt;定义和用法：&lt;/h3&gt;&lt;p&gt;error_reporting() 设置 PHP 的报错级别并返回当前级别。&lt;/p&gt;
+&lt;h3 id=&quot;函数语法：&quot;&gt;&lt;a href=&quot;#函数语法：&quot; class=&quot;headerlink&quot; title=&quot;函数语法：&quot;&gt;&lt;/a&gt;函数语法：&lt;/h3&gt;&lt;p&gt;error_reporting(report_level)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>牛顿法</title>
+    <link href="http://yoursite.com/2016/12/09/%E7%89%9B%E9%A1%BF%E6%B3%95/"/>
+    <id>http://yoursite.com/2016/12/09/牛顿法/</id>
+    <published>2016-12-09T04:25:01.000Z</published>
+    <updated>2016-12-09T06:40:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>待完善</p>
+<p>对于一个多元函数</p>
+<p>$$ f(x) = f(x_1,x_2,…,x_n) $$</p>
+<p>用牛顿法求其极小值的迭代格式为 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;待完善&lt;/p&gt;
+&lt;p&gt;对于一个多元函数&lt;/p&gt;
+&lt;p&gt;$$ f(x) = f(x_1,x_2,…,x_n) $$&lt;/p&gt;
+&lt;p&gt;用牛顿法求其极小值的迭代格式为 &lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
+    
+  </entry>
   
   <entry>
     <title>Netty 介绍</title>
@@ -963,81 +1160,6 @@
       <category term="zsh" scheme="http://yoursite.com/tags/zsh/"/>
     
       <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Storm的7种流分组策略Stream Grouping</title>
-    <link href="http://yoursite.com/2016/09/06/Storm%E7%9A%847%E7%A7%8D%E6%B5%81%E5%88%86%E7%BB%84%E7%AD%96%E7%95%A5Stream-Grouping/"/>
-    <id>http://yoursite.com/2016/09/06/Storm的7种流分组策略Stream-Grouping/</id>
-    <published>2016-09-06T08:00:00.000Z</published>
-    <updated>2016-12-08T04:02:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="流分组策略-Stream-Grouping"><a href="#流分组策略-Stream-Grouping" class="headerlink" title="流分组策略(Stream Grouping)"></a>流分组策略(Stream Grouping)</h2><p>Stream Grouping，告诉topology如何在两个组件之间发送tuple<br>定义一个topology的其中一步是定义每个bolt接收什么样的流作为输入。stream grouping就是用来定义一个stream应该如果分配数据给bolts上面的多个tasks </p>
-<p>Storm里面有7种类型的stream grouping，也可以通过实现CustomStreamGrouping接口来实现自定义Grouping </p>
-<a id="more"></a>
-<h3 id="Shuffle-Grouping"><a href="#Shuffle-Grouping" class="headerlink" title="Shuffle Grouping"></a>Shuffle Grouping</h3><p>随机分组，随机派发stream里面的tuple，保证每个bolt task接收到的tuple数目大致相同。 </p>
-<h3 id="Fields-Grouping"><a href="#Fields-Grouping" class="headerlink" title="Fields Grouping"></a>Fields Grouping</h3><p>按字段分组，比如，按”user-id”这个字段来分组，那么具有同样”user-id”的 tuple 会被分到相同的Bolt里的一个task， 而不同的”user-id”则可能会被分配到不同的task。 </p>
-<h3 id="All-Grouping"><a href="#All-Grouping" class="headerlink" title="All Grouping"></a>All Grouping</h3><p>广播发送，对亍每一个tuple，所有的bolts都会收到 </p>
-<h3 id="Global-Grouping"><a href="#Global-Grouping" class="headerlink" title="Global Grouping"></a>Global Grouping</h3><p>全局分组，整个stream被分配到storm中的一个bolt的其中一个task。再具体一点就是分配给id值最低的那个task。 </p>
-<h3 id="None-Grouping"><a href="#None-Grouping" class="headerlink" title="None Grouping"></a>None Grouping</h3><p>不分组，这个分组的意思是说stream不关心到底怎样分组。目前这种分组和Shuffle grouping是一样的效果， 有一点不同的是storm会把使用none grouping的这个bolt放到这个bolt的订阅者同一个线程里面去执行（如果可能的话）。 </p>
-<h3 id="Direct-Grouping"><a href="#Direct-Grouping" class="headerlink" title="Direct Grouping"></a>Direct Grouping</h3><p>指向型分组， 这是一种比较特别的分组方法，用这种分组意味着消息（tuple）的发送者指定由消息接收者的哪个task处理这个消息。只有被声明为 Direct Stream 的消息流可以声明这种分组方法。而且这种消息tuple必须使用 emitDirect 方法来发射。消息处理者可以通过 TopologyContext 来获取处理它的消息的task的id (OutputCollector.emit方法也会返回task的id)  </p>
-<h3 id="Local-or-shuffle-grouping"><a href="#Local-or-shuffle-grouping" class="headerlink" title="Local or shuffle grouping"></a>Local or shuffle grouping</h3><p>本地或随机分组。如果目标bolt有一个或者多个task与源bolt的task在同一个工作进程中，tuple将会被随机发送给这些同进程中的tasks。否则，和普通的Shuffle Grouping行为一致。 </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;流分组策略-Stream-Grouping&quot;&gt;&lt;a href=&quot;#流分组策略-Stream-Grouping&quot; class=&quot;headerlink&quot; title=&quot;流分组策略(Stream Grouping)&quot;&gt;&lt;/a&gt;流分组策略(Stream Grouping)&lt;/h2&gt;&lt;p&gt;Stream Grouping，告诉topology如何在两个组件之间发送tuple&lt;br&gt;定义一个topology的其中一步是定义每个bolt接收什么样的流作为输入。stream grouping就是用来定义一个stream应该如果分配数据给bolts上面的多个tasks &lt;/p&gt;
-&lt;p&gt;Storm里面有7种类型的stream grouping，也可以通过实现CustomStreamGrouping接口来实现自定义Grouping &lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Storm安装</title>
-    <link href="http://yoursite.com/2016/09/06/Storm%E5%AE%89%E8%A3%85/"/>
-    <id>http://yoursite.com/2016/09/06/Storm安装/</id>
-    <published>2016-09-06T04:00:00.000Z</published>
-    <updated>2016-12-08T04:01:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程</p>
-<ul>
-<li>wget …</li>
-<li>tar -xzvf …</li>
-<li>cd …</li>
-<li>vim conf/storm.yaml</li>
-</ul>
-<a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">########### These MUST be filled in for a storm configuration</span></div><div class="line">storm.zookeeper.servers:</div><div class="line">     - <span class="string">"192.168.1.110"</span></div><div class="line"><span class="comment">#     - "server2" 如果多个，就排着</span></div><div class="line"><span class="comment">#</span></div><div class="line">numbus.seeds: [<span class="string">"127.0.0.1"</span>] 本机就行，先跑起来</div></pre></td></tr></table></figure>
-<p>各种start以后</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bin/storm nimbus &amp; 后台去 </div><div class="line">bin/storm supervisor &amp; 后台去 </div><div class="line">bin/storm ui &amp; 后台去</div></pre></td></tr></table></figure>
-<p>开了ui后会打开http的8080端口，里面能看到服务器的状态，之后提交一个Topology到Storm上，Topology 从提交的那一刻就会一直运行，接收spout的数据，直到手动结束</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/storm jar examples/storm-starter/storm-starter-topologies-*.jar storm.starter.StatefulTopology statetopology</div></pre></td></tr></table></figure>
-<p>Let’s get the ball rolling ～～～</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;wget …&lt;/li&gt;
-&lt;li&gt;tar -xzvf …&lt;/li&gt;
-&lt;li&gt;cd …&lt;/li&gt;
-&lt;li&gt;vim conf/storm.yaml&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
     
   </entry>
   

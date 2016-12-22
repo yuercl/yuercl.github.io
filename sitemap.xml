@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/12/22/PHP-error-reporting/</loc>
+    
+    <lastmod>2016-12-22T03:25:37.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/12/09/%E7%89%9B%E9%A1%BF%E6%B3%95/</loc>
+    
+    <lastmod>2016-12-09T06:40:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/12/08/Netty-%E4%BB%8B%E7%BB%8D/</loc>
     
     <lastmod>2016-12-08T04:45:27.000Z</lastmod>
