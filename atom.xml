@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-22T07:29:03.000Z</updated>
+  <updated>2017-01-10T01:20:20.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>价值投资法之格雷厄姆经典价值投资策略</title>
+    <link href="http://yoursite.com/2017/01/10/%E4%BB%B7%E5%80%BC%E6%8A%95%E8%B5%84%E6%B3%95%E4%B9%8B%E6%A0%BC%E9%9B%B7%E5%8E%84%E5%A7%86%E7%BB%8F%E5%85%B8%E4%BB%B7%E5%80%BC%E6%8A%95%E8%B5%84%E7%AD%96%E7%95%A5/"/>
+    <id>http://yoursite.com/2017/01/10/价值投资法之格雷厄姆经典价值投资策略/</id>
+    <published>2017-01-10T01:14:11.000Z</published>
+    <updated>2017-01-10T01:20:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>  说到价值投资，就不得不提价值投资之父—本杰明.格雷尔姆，接下来为大家介绍的是其经典的价值投资策略。其要求所选的股票必须要有投资价值，而且通过价格和价值的比较研究，进一步选取具有安全边际的股票，简而言之，就是要在承担最小风险的情况下获取尽可能大的收益。</p>
+<a id="more"></a>
+<h2 id="估值"><a href="#估值" class="headerlink" title="估值"></a>估值</h2><p>估值不能过高，例如股票的市盈率小于过去5年最高市盈率的40%，而在牛市的时候，市盈率往往都上天了，都讲市梦率了。</p>
+<h2 id="有形资产"><a href="#有形资产" class="headerlink" title="有形资产"></a>有形资产</h2><p>股价与真实的有形资产相对应，防止泡沫，例如，股价低于每股有形资产净值的2/3,股价低于每股流动资产的2/3,</p>
+<h2 id="成长性"><a href="#成长性" class="headerlink" title="成长性"></a>成长性</h2><p>企业要具有稳定向上的成长性，例如要求企业过去10年的平均盈利增长率大于n%或者股票的盈利回报率大于中国银行3年期定期存款利率。</p>
+<h2 id="股息率"><a href="#股息率" class="headerlink" title="股息率"></a>股息率</h2><p>股息率稳定，股息率稳定且较优说明公司发展好，具有较好的投资价值。例如股票的派息率大于中国银行3年定期存款利率的2/3。</p>
+<h2 id="财务状况"><a href="#财务状况" class="headerlink" title="财务状况"></a>财务状况</h2><p>公司财务状况良好，例如总负债小于有形资产净值，小于净流动资产的2倍，防止公司破产导致的退市风险。</p>
+<h2 id="偿债能力"><a href="#偿债能力" class="headerlink" title="偿债能力"></a>偿债能力</h2><p>短期偿债能力要强，如流动比率大于2。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;  说到价值投资，就不得不提价值投资之父—本杰明.格雷尔姆，接下来为大家介绍的是其经典的价值投资策略。其要求所选的股票必须要有投资价值，而且通过价格和价值的比较研究，进一步选取具有安全边际的股票，简而言之，就是要在承担最小风险的情况下获取尽可能大的收益。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
+    
+  </entry>
   
   <entry>
     <title>蒙特卡洛模拟计算圆周率PI</title>
@@ -1101,46 +1131,6 @@
       <category term="国债" scheme="http://yoursite.com/tags/%E5%9B%BD%E5%80%BA/"/>
     
       <category term="逆回购" scheme="http://yoursite.com/tags/%E9%80%86%E5%9B%9E%E8%B4%AD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>WeakReference的一小记</title>
-    <link href="http://yoursite.com/2016/09/22/WeakReference%E7%9A%84%E4%B8%80%E5%B0%8F%E8%AE%B0/"/>
-    <id>http://yoursite.com/2016/09/22/WeakReference的一小记/</id>
-    <published>2016-09-21T16:00:00.000Z</published>
-    <updated>2016-12-08T04:02:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近要做一个功能，白名单配置，采用了一个叫做FileMonitor的工具，源码参看链接。新版本JDK是可以用WatchServices来监听文件变化。</p>
-<ul>
-<li><a href="http://geosoft.no/software/filemonitor/FileMonitor.java.html" target="_blank" rel="external">FileMonitor.java</a></li>
-<li><a href="http://geosoft.no/software/filemonitor/FileListener.java.html" target="_blank" rel="external">FileListener.java</a></li>
-</ul>
-<p><strong>坑</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是错误写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是正确写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div></pre></td></tr></table></figure>
-<p>程序开始运行的挺好的，文件变动也能及时反馈调用给Listener，但是运行一段时间之后，程序便不再调用Listener回调。费解。阅读FileMonitor源码实现后，发现采用了WeakReference来包装Listener，使得不容易内存泄漏。后来证明这是作者想多了，在作为配置文件Reload这种特性的情况下，一般是不会有很多new 很多个FileMonitor出来的。</p>
-<p>经过初步猜测是由于WeakReference 弱应用导致Listener被GC掉。遂用VisualVM  Dump类证实为GC时被回收。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div><div class="line"><span class="comment">// 分割线</span></div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
-<p>经过和朋友沟通和自己理解后，认为在new Application()出来的对象的作用域有关。于是将new单独出来，测试后问题解决。</p>
-<p>哎，惭愧</p>
-<ul>
-<li><a href="http://puretech.iteye.com/blog/2008663" target="_blank" rel="external">http://puretech.iteye.com/blog/2008663</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近要做一个功能，白名单配置，采用了一个叫做FileMonitor的工具，源码参看链接。新版本JDK是可以用WatchServices来监听文件变化。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://geosoft.no/software/filemonitor/
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="WeakReference" scheme="http://yoursite.com/tags/WeakReference/"/>
     
   </entry>
   
