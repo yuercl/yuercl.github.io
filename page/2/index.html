@@ -5,13 +5,43 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">首页</a></li><li class="nav-link"><a href="/archives/" target="_self">归档</a></li><li class="nav-link"><a href="/categories/" target="_self">分类</a></li><li class="nav-link"><a href="/tags/" target="_self">标签</a></li><li class="nav-link"><a href="/about/" target="_self">关于</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/05/matplotlib作图/" class="post-link">matplotlib作图</a></h2><span class="post-time">2016年12月5日</span><div class="post-content"><p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/08/十分钟pandas/" class="post-link">十分钟pandas</a></h2><span class="post-time">2016年12月8日</span><div class="post-content"><p>有时候真的要沉下心来，慢慢地看就自然懂了，一味的求快反而浪费大把时间～</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>DataFrames 真是一个神器</p>
+<ul>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/index.html" target="_blank" rel="external">英文官方文档</a></li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/10min.html" target="_blank" rel="external">英文官方稳定pandas十分钟入门</a></li>
+<li><a href="http://pda.readthedocs.io/en/latest/chp5.html" target="_blank" rel="external">中文文档，老旧</a></li>
+<li><a href="http://nbviewer.jupyter.org/github/phelps-sg/python-bigdata/blob/master/src/main/ipynb/pandas.ipynb" target="_blank" rel="external">jupyter上面的一篇pandas的文章</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line">s = pd.Series(data, index=index)</div><div class="line">s = pd.Series(np.random.randn(<span class="number">5</span>), index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</div><div class="line"></div><div class="line">d = &#123;<span class="string">'a'</span> : <span class="number">0.</span>, <span class="string">'b'</span> : <span class="number">1.</span>, <span class="string">'c'</span> : <span class="number">2.</span>&#125;</div><div class="line"></div><div class="line">pd.Series(d)</div><div class="line">pd.Series(d, index=[<span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'a'</span>])</div><div class="line">pd.Series(<span class="number">5.</span>, index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</div><div class="line">s[<span class="number">0</span>]</div><div class="line">s[:<span class="number">3</span>]</div><div class="line">s[s &gt; s.median()]</div><div class="line">s[[<span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>]]</div><div class="line">np.exp(s)</div><div class="line">s[<span class="string">'a'</span>]</div><div class="line">s[<span class="string">'a'</span>] = <span class="number">12</span></div><div class="line"><span class="string">'e'</span> <span class="keyword">in</span> s</div><div class="line"><span class="string">'f'</span> <span class="keyword">in</span> s</div><div class="line">s.get(<span class="string">'f'</span>)</div><div class="line">s.get(<span class="string">'f'</span>, np.nan)</div><div class="line">...</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/07/皮尔逊相关系数/" class="post-link">皮尔逊相关系数</a></h2><span class="post-time">2016年12月7日</span><div class="post-content"><p>在统计学中，皮尔逊积矩相关系数（英语：Pearson product-moment correlation coefficient，又称作 PPMCC或PCCs[1], 文章中常用r或Pearson’s r表示）用于度量两个变量X和Y之间的相关（线性相关），其值介于 -1 与 1 之间。在自然科学领域中，该系数广泛用于度量两个变量之间的相关程度。这个相关系数也称作“皮尔森相关系数r”。</p>
+<p>待完善<br>$$  \rho_{X,Y}={\mathrm{cov}(X,Y) \over \sigma_X \sigma_Y} ={E[(X-\mu_X)(Y-\mu_Y)] \over \sigma_X\sigma_Y} $$</p>
+<p>$$ r = \frac{\sum\limits ^n _{i=1}(X_i - \overline{X})(Y<em>i - \overline{Y})}{\sqrt{\sum\limits ^n </em>{i=1}(X<em>i - \overline{X})^2} \sqrt{\sum\limits ^n </em>{i=1}(Y_i - \overline{Y})^2}}  $$</p>
+<p>$$ r = \frac{1}{n-1} \sum\limits ^n _{i=1} \left( \frac{X_i - \overline{X}}{\sigma_X} \right) \left( \frac{Y_i - \overline{Y}}{\sigma_Y} \right) $$</p>
+<p>$$ cov(X,Y)=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)(Y_i-\bar Y) $$</p>
+<p>$$ r = \frac{cov(X,Y)}{\sqrt{var(X)} \sqrt{var(Y)}} $$ </p>
+<p>均值：</p>
+<p>$$ \bar X = \frac{ \sum_{i=1}^n X_i }{n} $$</p>
+<p>方差：</p>
+<p>$$ s^2 = \frac{ \sum_{i=1}^n (X_i - \bar X)^2 }{n - 1} $$</p>
+<p>标准差：</p>
+<p>$$ s = { \sqrt{ \frac{ \sum_{i=1}^n (X_i - \bar X)^2 } {n - 1}}} $$</p>
+<p>要理解Pearson相关系数，首先要理解协方差（Covariance），协方差是一个反映两个随机变量相关程度的指标，如果一个变量跟随着另一个变量同时变大或者变小，那么这两个变量的协方差就是正值，反之相反，公式如下：</p>
+<p>$$皮尔逊系数 = \frac{x和y的协方差}{(x的标准差 * y的标准差)} $$</p>
+<p>资料：</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//segmentfault.com/q/1010000000094674" target="_blank" rel="external">数据挖掘 - 如何理解皮尔逊相关系数（Pearson Correlation Coefficient）</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/皮尔逊积矩相关系数" target="_blank" rel="external">皮尔逊相关系数－wikipedia.org</a></li>
+<li><a href="https://www.douban.com/note/267043565/" target="_blank" rel="external">pearson、spearman、Kendall’s tau-b三种相关性的区别</a></li>
+<li><a href="http://guessthecorrelation.com/" target="_blank" rel="external">游戏，直观了解点的二维分布和相关系数大小：Guess the Correlation</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/07/协方差矩阵/" class="post-link">协方差矩阵</a></h2><span class="post-time">2016年12月7日</span><div class="post-content"><p>待完善</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/05/matplotlib作图/" class="post-link">matplotlib作图</a></h2><span class="post-time">2016年12月5日</span><div class="post-content"><p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
+<ul>
 <li><a href="http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral">基础介绍</a></li>
 <li><a href="http://www.cnblogs.com/nju2014/p/5620776.html">详解Matplotlib的图像各个部分</a> </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为1的位置，顺着来排</span></div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为2的位置</span></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line"></div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></div><a href="/2016/12/05/matplotlib作图/" class="read-more">阅读全文..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/04/MacOS反编译某研报客户端/" class="post-link">MacOS反编译某研报客户端</a></h2><span class="post-time">2016年12月4日</span><div class="post-content"><p>偶尔看看别人的代码，换一个角度思考，也是一种乐趣～</p>
-<p>好好学习，人生苦短，及时行乐～</p></div><a href="/2016/12/04/MacOS反编译某研报客户端/" class="read-more">阅读全文..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/03/MacOS反编译APK/" class="post-link">MacOS反编译APK</a></h2><span class="post-time">2016年12月3日</span><div class="post-content"><p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为1的位置，顺着来排</span></div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为2的位置</span></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line"></div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></div><a href="/2016/12/05/matplotlib作图/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/04/MacOS反编译某研报客户端/" class="post-link">MacOS反编译某研报客户端</a></h2><span class="post-time">2016年12月4日</span><div class="post-content"><p>偶尔看看别人的代码，换一个角度思考，也是一种乐趣～</p>
+<p>好好学习，人生苦短，及时行乐～</p></div><a href="/2016/12/04/MacOS反编译某研报客户端/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/03/MacOS反编译APK/" class="post-link">MacOS反编译APK</a></h2><span class="post-time">2016年12月3日</span><div class="post-content"><p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
 <h3 id="反编译代码的工具"><a href="#反编译代码的工具" class="headerlink" title="反编译代码的工具"></a>反编译代码的工具</h3><ul>
 <li>dex2jar<ul>
 <li>把dex文件转成jar文件</li>
@@ -23,7 +53,7 @@
 <li>下载地址： <a href="http://jd.benow.ca/">http://jd.benow.ca/</a></li>
 </ul>
 </li>
-</ul></div><a href="/2016/12/03/MacOS反编译APK/" class="read-more">阅读全文..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="post-link">Spring transaction 事务 -- Isolation & Progation</a></h2><span class="post-time">2016年11月28日</span><div class="post-content"><table>
+</ul></div><a href="/2016/12/03/MacOS反编译APK/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="post-link">Spring transaction 事务 -- Isolation & Progation</a></h2><span class="post-time">2016年11月28日</span><div class="post-content"><table>
 <thead>
 <tr>
 <th>属性</th>
@@ -82,7 +112,7 @@
 <td>不需要回滚的异常类名</td>
 </tr>
 </tbody>
-</table></div><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="read-more">阅读全文..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/16/python-matplotlib中文显示问题/" class="post-link">python matplotlib中文显示问题</a></h2><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</div><a href="/2016/11/16/python-matplotlib中文显示问题/" class="read-more">阅读全文..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
+</table></div><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/16/python-matplotlib中文显示问题/" class="post-link">python matplotlib中文显示问题</a></h2><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</div><a href="/2016/11/16/python-matplotlib中文显示问题/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
 <blockquote>
 <p>“Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly for targets which use Swift. Use the [Edit &gt; Convert &gt; To Current Swift Syntax…] menu to choose a Swift version or use the Build Settings editor to configure the build setting directly.</p>
 </blockquote>
@@ -92,28 +122,21 @@
 </div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="post-link">那些年踩过的坑之sed和gsed</a></h2><span class="post-time">2016年10月25日</span><div class="post-content"><p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
 <p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
 <p>这个小程序是在Mac上的，所以里面的sed换成了gsed，不然一直要报错。</p>
-<p>还有一个是否生成额外副本的情况，这个个人用的比较少。</p></div><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="read-more">阅读全文..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/19/投资的Daily-Checklist/" class="post-link">投资的Daily Checklist</a></h2><span class="post-time">2016年10月19日</span><div class="post-content"><ul>
-<li>人民币兑美元汇率 <a href="http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml" target="_blank" rel="external">http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml</a></li>
-<li>融资融卷余额走势图 <a href="http://data.10jqka.com.cn/market/rzrq/" target="_blank" rel="external">http://data.10jqka.com.cn/market/rzrq/</a></li>
-<li>昨夜外盘涨跌</li>
-<li>Shibor隔夜拆借利率走势 <a href="http://value500.com/Shibor.asp" target="_blank" rel="external">http://value500.com/Shibor.asp</a></li>
-<li>交易结算资金余额走势图</li>
-<li>A股历史平均市盈率走势图 , 如果市场异常活跃和异常惨淡需要参考该值</li>
-<li>M1M2走势图，大概每月20号左右发布，关注剪刀手和房价走势。平衡资产配置</li>
-<li>value500的指数百科 <a href="http://value500.com/volv500.html" target="_blank" rel="external">http://value500.com/volv500.html</a></li>
-<li>同花顺数据中心 <a href="http://data.10jqka.com.cn/macro/cpi/" target="_blank" rel="external">http://data.10jqka.com.cn/macro/cpi/</a></li>
-</ul>
-<p>暂时想到这么多，后续增加</p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/19/投资反思2016年10月19日写/" class="post-link">投资反思2016年10月19日写</a></h2><span class="post-time">2016年10月19日</span><div class="post-content"><p>自2014年入市以来，2015年股灾中离开。空仓也有一年有余。</p>
-<p>股灾打击很大，反思很多。之后变忘了股票这回事，安心的写代码。</p>
-<p>这一年在资金方面做的最失败的莫过于把资金沉淀下来，没有去做任何的投资，单纯放在余额宝，对房市理解不透，错过房价大涨。可悲矣。</p>
-<p>任何时候都不能忘记投资，投资是一辈子的事情，anytime。纵然熊市也有相应的策略，一定不能让资金固定在那儿。分级基金套利／分级A投资／房市…</p>
-<p>2016年10月1日，人民币加入SDR，国庆假期各城市限购政策，到今天两周多了，人民币一直在跌，楼市一线城市量价齐跌。</p>
-<p>于是乎，资金们，流动起来吧～</p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/28/国债逆回购/" class="post-link">国债逆回购</a></h2><span class="post-time">2016年9月28日</span><div class="post-content"><h1 id="什么是国债逆回购"><a href="#什么是国债逆回购" class="headerlink" title="什么是国债逆回购"></a>什么是国债逆回购</h1><p>所谓国债逆回购，本质就是一种短期贷款，也就是说，个人通过国债回购市场把自己的资金借出去，获得固定的利息收益；而回购方，也就是借款人用自己的国债作为抵押获得这笔借款，到期后还本付息。通俗来讲，就是将资金通过国债回购市场拆出，其实就是一种短期贷款，即你把钱借给别人，获得固定利息；而别人用国债作抵押，到期还本付息。逆回购的安全性超强，等同于国债。</p>
-<p>简单来说，国债逆回购有三方参与者：</p>
-<ul>
-<li>融资方 即正回购方，需要用手中的国债券换取现金；</li>
-<li>融券方 即逆回购方，需要用手中的现金买国债券，以实现资金增值；</li>
-<li>监督方 上交所和深交所</li>
-</ul></div><a href="/2016/09/28/国债逆回购/" class="read-more">阅读全文..</a></article></li></ul><div class="paginator"><a href="/" class="prev"><i class="iconfont icon-left"></i><span> 上一页</span></a><a href="/page/3/" class="next"><span>下一页</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+<p>还有一个是否生成额外副本的情况，这个个人用的比较少。</p></div><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/3/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>

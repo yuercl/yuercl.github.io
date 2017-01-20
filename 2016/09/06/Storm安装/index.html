@@ -5,7 +5,7 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">首页</a></li><li class="nav-link"><a href="/archives/" target="_self">归档</a></li><li class="nav-link"><a href="/categories/" target="_self">分类</a></li><li class="nav-link"><a href="/tags/" target="_self">标签</a></li><li class="nav-link"><a href="/about/" target="_self">关于</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Storm安装</h1><span class="post-time">2016年9月6日</span><div class="post-content"><p>前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Storm安装</h1><span class="post-time">2016年9月6日</span><div class="post-content"><p>前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程</p>
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
 <li>wget …</li>
 <li>tar -xzvf …</li>
@@ -19,7 +19,7 @@
 <p>开了ui后会打开http的8080端口，里面能看到服务器的状态，之后提交一个Topology到Storm上，Topology 从提交的那一刻就会一直运行，接收spout的数据，直到手动结束</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/storm jar examples/storm-starter/storm-starter-topologies-*.jar storm.starter.StatefulTopology statetopology</div></pre></td></tr></table></figure>
 <p>Let’s get the ball rolling ～～～</p>
-</div></article><div class="tags"><a href="/tags/Storm/">Storm</a></div><div class="paginator"><a href="/2016/09/06/Storm的7种流分组策略Stream-Grouping/" class="prev"><i class="iconfont icon-left"></i><span> 上一页</span></a><a href="/2016/09/06/kafka/" class="next"><span>下一页</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+</div></article><div class="tags"><a href="/tags/Storm/">Storm</a></div><div class="paginator"><a href="/2016/09/06/Storm的7种流分组策略Stream-Grouping/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/09/06/kafka/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
     this.page.url = 'http://yoursite.com/2016/09/06/Storm安装/';
     this.page.identifier = '2016/09/06/Storm安装/';
     this.page.title = 'Storm安装';

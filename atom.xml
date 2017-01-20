@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-01-10T01:20:20.000Z</updated>
+  <updated>2017-01-20T01:24:49.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,127 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ReLu(Rectified Linear Units)激活函数</title>
+    <link href="http://yoursite.com/2017/01/20/ReLu-Rectified-Linear-Units-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/"/>
+    <id>http://yoursite.com/2017/01/20/ReLu-Rectified-Linear-Units-激活函数/</id>
+    <published>2017-01-20T01:17:03.000Z</published>
+    <updated>2017-01-20T01:24:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://wenku.baidu.com/link?url=GtIz68_egY1kBAFgt3LY0f2v89H6doReu6pcNB34yHiG_PEiSekhZVtSszGB28dtRmEfAKrYOQtu5T0EVLeTzKwpZAeTJEfo00XOgbj9l4u" target="_blank" rel="external">Deep Sparse Rectifier Neural Networks</a></li>
+<li><a href="/assets/files/Deep Sparse Rectifier Neural Networks.pdf">Deep Sparse Rectifier Neural Networks.pdf Download</a></li>
+<li><a href="http://www.cnblogs.com/neopenx/p/4453161.html" target="_blank" rel="external">ReLu(Rectified Linear Units) </a></li>
+<li><a href="http://www.tuicool.com/articles/RJzMZvi" target="_blank" rel="external">修正线性单元(Rectified linear unit，ReLU）</a></li>
+<li><a href="http://blog.csdn.net/sheng_ai/article/details/38055209" target="_blank" rel="external">激活函数实现–4 Rectified linear函数实现</a></li>
+<li><a href="http://www.douban.com/note/348196265/" target="_blank" rel="external">Rectified Linear Units</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://wenku.baidu.com/link?url=GtIz68_egY1kBAFgt3LY0f2v89H6doReu6pcNB34yHiG_PEiSekhZVtSszGB28dtRmEfAKrYOQtu5T0EVLeTzKwpZA
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="ReLu" scheme="http://yoursite.com/tags/ReLu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MyBatis运算符转义</title>
+    <link href="http://yoursite.com/2017/01/19/mybatis%E8%BF%90%E7%AE%97%E7%AC%A6%E8%BD%AC%E4%B9%89/"/>
+    <id>http://yoursite.com/2017/01/19/mybatis运算符转义/</id>
+    <published>2017-01-19T09:02:21.000Z</published>
+    <updated>2017-01-20T01:19:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在MyBatis配置文件写SQL语句的时候对于一些比如“&lt;”,”&gt;”,”&lt;&gt;”,”&amp;”,” ‘ “,” “ “是不能够识别的，并且会ERROR。</p>
+<p>可以这样搞：</p>
+<table>
+<thead>
+<tr>
+<th>替换后</th>
+<th>标志</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&amp;lt;</code></td>
+<td>&lt; </td>
+</tr>
+<tr>
+<td><code>&amp;gt;</code></td>
+<td>&gt;  </td>
+</tr>
+<tr>
+<td><code>&amp;lt;\&amp;gt;</code></td>
+<td>&lt;&gt;</td>
+</tr>
+<tr>
+<td><code>&amp;amp;</code></td>
+<td>&amp; </td>
+</tr>
+<tr>
+<td><code>&amp;apos;</code></td>
+<td>‘</td>
+</tr>
+<tr>
+<td><code>&amp;quot;</code></td>
+<td>“</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在MyBatis配置文件写SQL语句的时候对于一些比如“&amp;lt;”,”&amp;gt;”,”&amp;lt;&amp;gt;”,”&amp;amp;”,” ‘ “,” “ “是不能够识别的，并且会ERROR。&lt;/p&gt;
+&lt;p&gt;可以这样搞：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;替换后&lt;/
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="MyBatis" scheme="http://yoursite.com/tags/MyBatis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL千万级大表添加索引</title>
+    <link href="http://yoursite.com/2017/01/12/MySQL%E5%8D%83%E4%B8%87%E7%BA%A7%E5%A4%A7%E8%A1%A8%E6%B7%BB%E5%8A%A0%E7%B4%A2%E5%BC%95/"/>
+    <id>http://yoursite.com/2017/01/12/MySQL千万级大表添加索引/</id>
+    <published>2017-01-12T10:00:00.000Z</published>
+    <updated>2017-01-12T10:57:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h2><p>新建一个表结构，然后建立对应的数据结构，然后复制数据过来，重命名表名。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> tmp <span class="keyword">like</span> <span class="built_in">record</span>;</div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tmp <span class="keyword">ADD</span> <span class="keyword">INDEX</span> ( <span class="string">`vip`</span> )</div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tmp(ooo，...)  <span class="keyword">select</span>  ooo,... <span class="keyword">from</span> <span class="built_in">record</span></div><div class="line"><span class="keyword">Query</span> OK, <span class="number">10000000</span> <span class="keyword">rows</span> affected (<span class="number">10</span> <span class="keyword">min</span> <span class="number">0.00</span> sec)</div><div class="line"><span class="keyword">Records</span>: <span class="number">10000000</span>  Duplicates: <span class="number">0</span>  <span class="keyword">Warnings</span>: <span class="number">0</span></div><div class="line"><span class="keyword">RENAME</span> <span class="keyword">TABLE</span> <span class="built_in">record</span> <span class="keyword">TO</span> tmp2, tmp <span class="keyword">to</span> <span class="built_in">record</span>;</div><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> tmp2;</div></pre></td></tr></table></figure>
+<h2 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h2><p>利用主从来修改。</p>
+<p>就是先改从库，然后追数据到最新，接着将从库改为主库。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;方法一：&quot;&gt;&lt;a href=&quot;#方法一：&quot; class=&quot;headerlink&quot; title=&quot;方法一：&quot;&gt;&lt;/a&gt;方法一：&lt;/h2&gt;&lt;p&gt;新建一个表结构，然后建立对应的数据结构，然后复制数据过来，重命名表名。&lt;/p&gt;
+&lt;figure class=&quot;highlig
+    
+    </summary>
+    
+      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>价值投资法之格雷厄姆经典价值投资策略</title>
@@ -896,241 +1017,6 @@
     
     
       <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>投资的Daily Checklist</title>
-    <link href="http://yoursite.com/2016/10/19/%E6%8A%95%E8%B5%84%E7%9A%84Daily-Checklist/"/>
-    <id>http://yoursite.com/2016/10/19/投资的Daily-Checklist/</id>
-    <published>2016-10-19T06:51:55.000Z</published>
-    <updated>2016-12-08T03:58:33.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li>人民币兑美元汇率 <a href="http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml" target="_blank" rel="external">http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml</a></li>
-<li>融资融卷余额走势图 <a href="http://data.10jqka.com.cn/market/rzrq/" target="_blank" rel="external">http://data.10jqka.com.cn/market/rzrq/</a></li>
-<li>昨夜外盘涨跌</li>
-<li>Shibor隔夜拆借利率走势 <a href="http://value500.com/Shibor.asp" target="_blank" rel="external">http://value500.com/Shibor.asp</a></li>
-<li>交易结算资金余额走势图</li>
-<li>A股历史平均市盈率走势图 , 如果市场异常活跃和异常惨淡需要参考该值</li>
-<li>M1M2走势图，大概每月20号左右发布，关注剪刀手和房价走势。平衡资产配置</li>
-<li>value500的指数百科 <a href="http://value500.com/volv500.html" target="_blank" rel="external">http://value500.com/volv500.html</a></li>
-<li>同花顺数据中心 <a href="http://data.10jqka.com.cn/macro/cpi/" target="_blank" rel="external">http://data.10jqka.com.cn/macro/cpi/</a></li>
-</ul>
-<p>暂时想到这么多，后续增加</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;人民币兑美元汇率 &lt;a href=&quot;http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://finance.sina.com.cn
-    
-    </summary>
-    
-      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="投资" scheme="http://yoursite.com/tags/%E6%8A%95%E8%B5%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>投资反思2016年10月19日写</title>
-    <link href="http://yoursite.com/2016/10/19/%E6%8A%95%E8%B5%84%E5%8F%8D%E6%80%9D2016%E5%B9%B410%E6%9C%8819%E6%97%A5%E5%86%99/"/>
-    <id>http://yoursite.com/2016/10/19/投资反思2016年10月19日写/</id>
-    <published>2016-10-18T16:05:00.000Z</published>
-    <updated>2016-12-08T03:58:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>自2014年入市以来，2015年股灾中离开。空仓也有一年有余。</p>
-<p>股灾打击很大，反思很多。之后变忘了股票这回事，安心的写代码。</p>
-<p>这一年在资金方面做的最失败的莫过于把资金沉淀下来，没有去做任何的投资，单纯放在余额宝，对房市理解不透，错过房价大涨。可悲矣。</p>
-<p>任何时候都不能忘记投资，投资是一辈子的事情，anytime。纵然熊市也有相应的策略，一定不能让资金固定在那儿。分级基金套利／分级A投资／房市…</p>
-<p>2016年10月1日，人民币加入SDR，国庆假期各城市限购政策，到今天两周多了，人民币一直在跌，楼市一线城市量价齐跌。</p>
-<p>于是乎，资金们，流动起来吧～</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;自2014年入市以来，2015年股灾中离开。空仓也有一年有余。&lt;/p&gt;
-&lt;p&gt;股灾打击很大，反思很多。之后变忘了股票这回事，安心的写代码。&lt;/p&gt;
-&lt;p&gt;这一年在资金方面做的最失败的莫过于把资金沉淀下来，没有去做任何的投资，单纯放在余额宝，对房市理解不透，错过房价大涨。可悲
-    
-    </summary>
-    
-      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="投资" scheme="http://yoursite.com/tags/%E6%8A%95%E8%B5%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>国债逆回购</title>
-    <link href="http://yoursite.com/2016/09/28/%E5%9B%BD%E5%80%BA%E9%80%86%E5%9B%9E%E8%B4%AD/"/>
-    <id>http://yoursite.com/2016/09/28/国债逆回购/</id>
-    <published>2016-09-27T16:00:00.000Z</published>
-    <updated>2016-12-08T03:57:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="什么是国债逆回购"><a href="#什么是国债逆回购" class="headerlink" title="什么是国债逆回购"></a>什么是国债逆回购</h1><p>所谓国债逆回购，本质就是一种短期贷款，也就是说，个人通过国债回购市场把自己的资金借出去，获得固定的利息收益；而回购方，也就是借款人用自己的国债作为抵押获得这笔借款，到期后还本付息。通俗来讲，就是将资金通过国债回购市场拆出，其实就是一种短期贷款，即你把钱借给别人，获得固定利息；而别人用国债作抵押，到期还本付息。逆回购的安全性超强，等同于国债。</p>
-<p>简单来说，国债逆回购有三方参与者：</p>
-<ul>
-<li>融资方 即正回购方，需要用手中的国债券换取现金；</li>
-<li>融券方 即逆回购方，需要用手中的现金买国债券，以实现资金增值；</li>
-<li>监督方 上交所和深交所</li>
-</ul>
-<a id="more"></a>
-<h1 id="交易门槛高吗-–-沪市10W起，深市1K起"><a href="#交易门槛高吗-–-沪市10W起，深市1K起" class="headerlink" title="交易门槛高吗 – 沪市10W起，深市1K起"></a>交易门槛高吗 – 沪市10W起，深市1K起</h1><h2 id="沪市的门槛"><a href="#沪市的门槛" class="headerlink" title="沪市的门槛"></a>沪市的门槛</h2><ul>
-<li>起手：1000元为一手，100手起，即至少准备10万元</li>
-<li>封顶：10万的整数倍申购，最高不超过1000万。</li>
-</ul>
-<h2 id="深市的门槛"><a href="#深市的门槛" class="headerlink" title="深市的门槛"></a>深市的门槛</h2><ul>
-<li>起手低：1000元一手，一手起 </li>
-<li>封顶：无。1000的整倍数递增，没有最高限额。</li>
-</ul>
-<h1 id="收益如何-–-略高于一年期存款利率"><a href="#收益如何-–-略高于一年期存款利率" class="headerlink" title="收益如何 – 略高于一年期存款利率"></a>收益如何 – 略高于一年期存款利率</h1><p>既然都是闲置资金实现增值的方法，那么究竟逆回购的收益率如何呢？相对于银行存款利率呢？</p>
-<p>逆回购全年年化收益在 <code>3% ～ 5%</code> ，略高于一年期存款利率，但也有可能会出现突然间的利率猛增，如果出现 &gt; 10% 这样的年化收益，赶紧买。</p>
-<p>收益计算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">收益=本金*交易价格（即利率）/365*回购天数-本金*佣金费率</div></pre></td></tr></table></figure>
-<p>假设小明现在有1万元闲置资金，按照 5% 利率进行7天逆回购，忽略佣金，最终收益是</p>
-<pre><code class="bash">Y=10000*5%*7/365=9.58元
-</code></pre>
-<h1 id="佣金水平-–-很低"><a href="#佣金水平-–-很低" class="headerlink" title="佣金水平 – 很低"></a>佣金水平 – 很低</h1><p>国债一、二、三、四天回购佣金水平为10万元一天一元；<br>七天回购，10万元每笔5元；<br>十四天回购，10万元每笔10元；<br>二十八天回购，10万元每笔20元；<br>二十八天以上回购，10万元每笔30元封顶。</p>
-<p>佣金通常介于收益的4%至6%之间。 </p>
-<h1 id="风险高吗-–-基本等同于国债"><a href="#风险高吗-–-基本等同于国债" class="headerlink" title="风险高吗 – 基本等同于国债"></a>风险高吗 – 基本等同于国债</h1><p>逆回购的风险非常低，基本等同于国债。</p>
-<p>一旦成交，对方的国债就会被都冻结，约定的时间一到，证券交易所就会自动把本金加利息划到你的账户中。对于散户而言，其所进行逆回购的交易对手是结算中心，融资方到期不能按时还款，结算公司会先垫付资金，所以风险非常低。 </p>
-<h1 id="回购品种"><a href="#回购品种" class="headerlink" title="回购品种"></a>回购品种</h1><h2 id="上交所回购品种"><a href="#上交所回购品种" class="headerlink" title="上交所回购品种"></a>上交所回购品种</h2><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>代码</th>
-<th>简称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1天国债回购</td>
-<td>GC001</td>
-<td>204001</td>
-</tr>
-<tr>
-<td>2天国债回购</td>
-<td>GC002</td>
-<td>204002</td>
-</tr>
-<tr>
-<td>3天国债回购</td>
-<td>GC003</td>
-<td>204003</td>
-</tr>
-<tr>
-<td>4天国债回购</td>
-<td>GC004</td>
-<td>204004</td>
-</tr>
-<tr>
-<td>7天国债回购</td>
-<td>GC007</td>
-<td>204007</td>
-</tr>
-<tr>
-<td>14天国债回购</td>
-<td>GC014</td>
-<td>204014</td>
-</tr>
-<tr>
-<td>28天国债回购</td>
-<td>GC028</td>
-<td>204028</td>
-</tr>
-<tr>
-<td>91天国债回购</td>
-<td>GC091</td>
-<td>204091</td>
-</tr>
-<tr>
-<td>182天国债回购</td>
-<td>GC182</td>
-<td>204182</td>
-</tr>
-</tbody>
-</table>
-<h2 id="深交所回购品种"><a href="#深交所回购品种" class="headerlink" title="深交所回购品种"></a>深交所回购品种</h2><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>代码</th>
-<th>简称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1天国债回购</td>
-<td>R-001</td>
-<td>131810 </td>
-</tr>
-<tr>
-<td>2天国债回购</td>
-<td>R-002</td>
-<td>131811 </td>
-</tr>
-<tr>
-<td>3天国债回购</td>
-<td>R-003</td>
-<td>131800 </td>
-</tr>
-<tr>
-<td>4天国债回购</td>
-<td>R-004</td>
-<td>131809 </td>
-</tr>
-<tr>
-<td>7天国债回购</td>
-<td>R-007</td>
-<td>131801 </td>
-</tr>
-<tr>
-<td>14天国债回购</td>
-<td>R-014</td>
-<td>131802 </td>
-</tr>
-<tr>
-<td>28天国债回购</td>
-<td>R-028</td>
-<td>131803 </td>
-</tr>
-<tr>
-<td>91天国债回购</td>
-<td>R-091</td>
-<td>131805 </td>
-</tr>
-<tr>
-<td>182天国债回购</td>
-<td>R-182</td>
-<td>131806</td>
-</tr>
-</tbody>
-</table>
-<p><img src="/assets/images/GC007_20160928.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;什么是国债逆回购&quot;&gt;&lt;a href=&quot;#什么是国债逆回购&quot; class=&quot;headerlink&quot; title=&quot;什么是国债逆回购&quot;&gt;&lt;/a&gt;什么是国债逆回购&lt;/h1&gt;&lt;p&gt;所谓国债逆回购，本质就是一种短期贷款，也就是说，个人通过国债回购市场把自己的资金借出去，获得固定的利息收益；而回购方，也就是借款人用自己的国债作为抵押获得这笔借款，到期后还本付息。通俗来讲，就是将资金通过国债回购市场拆出，其实就是一种短期贷款，即你把钱借给别人，获得固定利息；而别人用国债作抵押，到期还本付息。逆回购的安全性超强，等同于国债。&lt;/p&gt;
-&lt;p&gt;简单来说，国债逆回购有三方参与者：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;融资方 即正回购方，需要用手中的国债券换取现金；&lt;/li&gt;
-&lt;li&gt;融券方 即逆回购方，需要用手中的现金买国债券，以实现资金增值；&lt;/li&gt;
-&lt;li&gt;监督方 上交所和深交所&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="国债" scheme="http://yoursite.com/tags/%E5%9B%BD%E5%80%BA/"/>
-    
-      <category term="逆回购" scheme="http://yoursite.com/tags/%E9%80%86%E5%9B%9E%E8%B4%AD/"/>
     
   </entry>
   
