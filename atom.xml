@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-01-20T01:24:49.000Z</updated>
+  <updated>2017-02-02T13:57:53.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,88 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jQuery Ajax跨域的问题</title>
+    <link href="http://yoursite.com/2017/02/02/jQuery-Ajax%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2017/02/02/jQuery-Ajax跨域的问题/</id>
+    <published>2017-02-02T12:51:54.000Z</published>
+    <updated>2017-02-02T13:57:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>只需改动ajax固定参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">     dataType:<span class="string">"jsonp"</span>,</div><div class="line">  crossDomain:<span class="literal">true</span>,</div><div class="line">jsonpCallback:<span class="string">"jsonpCallbackFunction"</span>,</div><div class="line">        jsonp:<span class="string">"callback"</span>,</div></pre></td></tr></table></figure>
+<p>注意，后台返回的数据格式必须是：jsonpCallbackFunction(json数据);</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">	type: <span class="string">"post"</span>,</div><div class="line">	url: platformUrl + <span class="string">"/check.do"</span>,</div><div class="line">	data: params,</div><div class="line">	dataType: <span class="string">"jsonp"</span>,</div><div class="line">	crossDomain: <span class="literal">true</span>,</div><div class="line">	jsonpCallback: <span class="string">"jsonpCallbackFunction"</span>,</div><div class="line">	jsonp: <span class="string">"callback"</span>,</div><div class="line">	success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">		<span class="comment">//console.log(data);</span></div><div class="line">	&#125;,</div><div class="line">	error: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="comment">//console.log("error");</span></div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;只需改动ajax固定参数&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div c
+    
+    </summary>
+    
+      <category term="Web" scheme="http://yoursite.com/categories/Web/"/>
+    
+    
+      <category term="Web" scheme="http://yoursite.com/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JAVA面试</title>
+    <link href="http://yoursite.com/2017/02/02/JAVA%E9%9D%A2%E8%AF%95/"/>
+    <id>http://yoursite.com/2017/02/02/JAVA面试/</id>
+    <published>2017-02-02T12:00:00.000Z</published>
+    <updated>2017-02-02T14:04:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="https://github.com/it-interview/easy-job/blob/master/面试题/Java研发知识点总结.md" target="_blank" rel="external">Java研发知识点总结</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/50512240" target="_blank" rel="external">Java并发多线程面试题 Top 50</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/50786786" target="_blank" rel="external">面试题总结 —— JAVA高级工程师（一）</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/52917254" target="_blank" rel="external">面试题总结 —— Java高级工程师（二）</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/53086927" target="_blank" rel="external">面试题总结 —— Java高级工程师（三）</a></li>
+<li><a href="https://github.com/scalad/Note" target="_blank" rel="external">别人整理的笔记，多累</a><a id="more"></a></li>
+<li><a href="http://blog.csdn.net/firejuly/article/details/8190229" target="_blank" rel="external">Hibernate与 MyBatis的比较</a></li>
+<li><a href="http://www.cnblogs.com/younggun/archive/2013/07/16/3193800.html" target="_blank" rel="external">Spring事务详解</a></li>
+<li><a href="http://blog.csdn.net/pingnanlee/article/details/11488695" target="_blank" rel="external">Spring事务机制</a></li>
+<li><a href="http://jinnianshilongnian.iteye.com/blog/1989381" target="_blank" rel="external">Spring4新特性</a></li>
+<li><a href="http://blog.csdn.net/generalyy0/article/details/7003974" target="_blank" rel="external">spring mvc与struts的区别</a></li>
+<li><a href="http://blog.itpub.net/751371/viewspace-747988/" target="_blank" rel="external">WEBLOGIC负载均衡原理</a></li>
+<li><a href="http://blog.csdn.net/big1980/article/details/6291416" target="_blank" rel="external">负载均衡和集群的配置</a></li>
+<li><a href="http://wenku.baidu.com/link?url=1rn43T_Fy5rHxwp3W2Sxs7yQngDWftWBYBtf3gtty3XPyTPbKHSrzUSlkyS9rk-Ctc11DV5M9ruD8C8UmyRortko2GKtlZzfB3hIzv0XPR3" target="_blank" rel="external">Nginx+Tomcat+Redis实现负载均衡、资源分离、session共享</a></li>
+<li><a href="http://www.cnblogs.com/xiaogangqq123/archive/2011/03/02/1969006.html" target="_blank" rel="external">Nginx配置文件详细说明</a></li>
+<li><a href="http://bbs.csdn.net/topics/391849317" target="_blank" rel="external">web项目性能优化</a></li>
+<li><a href="http://cantellow.iteye.com/blog/838473" target="_blank" rel="external">单例模式的7种用法</a></li>
+<li><a href="http://blog.csdn.net/hsuxu/article/details/8985931" target="_blank" rel="external">线程池的原理和实现</a></li>
+<li><a href="http://blog.csdn.net/y_h_t/article/details/6322823" target="_blank" rel="external">高并发量网站解决方案</a></li>
+<li><a href="http://www.bubuko.com/infodetail-196677.html" target="_blank" rel="external">水平权限漏洞和解决办法</a></li>
+<li><a href="http://www.wooyun.org/bugs/wooyun-2010-057371" target="_blank" rel="external">垂直权限案例和解决方案</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_701635160100l5hn.html" target="_blank" rel="external">图片如何防盗链</a></li>
+<li><a href="http://blog.csdn.net/blade2001/article/details/5193464" target="_blank" rel="external">消息队列原理</a></li>
+<li><a href="http://blog.csdn.net/jwdstef/article/details/17380471" target="_blank" rel="external">消息队列 ActiveMQ</a></li>
+<li><a href="http://www.cnblogs.com/CareySon/p/3627594.html" target="_blank" rel="external">负载均衡和集群参考</a></li>
+<li><a href="http://blog.csdn.net/jackmacro/article/details/5688687" target="_blank" rel="external">存储过程的优缺点</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/it-interview/easy-job/blob/master/面试题/Java研发知识点总结.md&quot;&gt;Java研发知识点总结&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/moneyshi/article/details/50512240&quot;&gt;Java并发多线程面试题 Top 50&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/moneyshi/article/details/50786786&quot;&gt;面试题总结 —— JAVA高级工程师（一）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/moneyshi/article/details/52917254&quot;&gt;面试题总结 —— Java高级工程师（二）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/moneyshi/article/details/53086927&quot;&gt;面试题总结 —— Java高级工程师（三）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/scalad/Note&quot;&gt;别人整理的笔记，多累&lt;/a&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>ReLu(Rectified Linear Units)激活函数</title>
@@ -951,72 +1033,6 @@
     
     
       <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Xcode8 Use Legacy Swift Language Version的错误解决</title>
-    <link href="http://yoursite.com/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version%E7%9A%84%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/"/>
-    <id>http://yoursite.com/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/</id>
-    <published>2016-11-04T03:50:00.000Z</published>
-    <updated>2016-12-08T04:02:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
-<blockquote>
-<p>“Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly for targets which use Swift. Use the [Edit &gt; Convert &gt; To Current Swift Syntax…] menu to choose a Swift version or use the Build Settings editor to configure the build setting directly.</p>
-</blockquote>
-<p>设置 对应的SWIFT_VERSION = NO 可成。</p>
-<p><img src="/assets/images/SWIFT_VERSION_SETTING.png" alt=""></p>
-<p>参考 <a href="http://blog.csdn.net/u012847940/article/details/52229485" target="_blank" rel="external">http://blog.csdn.net/u012847940/article/details/52229485</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;“Use Legacy Swift Language Version” (SWIFT_VERSION) is required to
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
-    
-    
-      <category term="Xcode" scheme="http://yoursite.com/tags/Xcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>那些年踩过的坑之sed和gsed</title>
-    <link href="http://yoursite.com/2016/10/25/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%E4%B9%8Bsed%E5%92%8Cgsed/"/>
-    <id>http://yoursite.com/2016/10/25/那些年踩过的坑之sed和gsed/</id>
-    <published>2016-10-25T08:08:40.000Z</published>
-    <updated>2016-12-08T03:57:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
-<p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
-<p>这个小程序是在Mac上的，所以里面的sed换成了gsed，不然一直要报错。</p>
-<p>还有一个是否生成额外副本的情况，这个个人用的比较少。</p>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"></div><div class="line">__author__ = <span class="string">'yuer'</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> os.path</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> subprocess</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    array = []</div><div class="line">    config = <span class="string">'''</span></div><div class="line">        [</div><div class="line">            &#123;</div><div class="line">                "stock":"001421",</div><div class="line">                "amount":3805.26,</div><div class="line">                "name":"nanfanglianghua",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"519983",</div><div class="line">                "amount":8709.51,</div><div class="line">                "name":"changxinlianghua",</div><div class="line">                "cost":20000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"519712",</div><div class="line">                "amount":4272.58,</div><div class="line">                "name":"jiaoyinAlpha",</div><div class="line">                "cost":10000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"340009",</div><div class="line">                "amount":3734.21,</div><div class="line">                "name":"quanxinzhaiquan",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"110003",</div><div class="line">                "amount":4951.41,</div><div class="line">                "name":"yifangda50",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"020003",</div><div class="line">                "amount":7063.66,</div><div class="line">                "name":"guotaijinlong",</div><div class="line">                "cost":5000</div><div class="line">            &#125;,&#123;</div><div class="line">                "stock":"001039",</div><div class="line">                "amount":12015.67,</div><div class="line">                "name":"jiashixianjin",</div><div class="line">                "cost":10000</div><div class="line">            &#125;</div><div class="line"></div><div class="line">	]</div><div class="line">    '''</div><div class="line">    stocks = json.loads(config)</div><div class="line"></div><div class="line">    total = <span class="number">0</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'Calculation of earnings...'</span></div><div class="line">    os.system(<span class="string">'date'</span>)</div><div class="line">    <span class="keyword">for</span> stock <span class="keyword">in</span> stocks:</div><div class="line">        cmd = <span class="string">"curl -s  http://fund.eastmoney.com/%s.html?spm=aladin | gsed 's/div/\\n/g' | gsed 's/span/\\n/g'| grep gz_gsz | gsed 's/&gt;/ /g' | gsed 's/&lt;/ /g' | grep large | awk '&#123;print $5&#125;'"</span> % stock[<span class="string">'stock'</span>]</div><div class="line">	result = subprocess.check_output(cmd, shell=<span class="keyword">True</span>)</div><div class="line">	result = result.strip()</div><div class="line">	now = float(result)*stock[<span class="string">'amount'</span>]</div><div class="line">	<span class="keyword">print</span> <span class="string">'Code: %s , Price: %s , Amount: %s , Total: %s , Percent: %s'</span> % (stock[<span class="string">'stock'</span>] , result , stock[<span class="string">'amount'</span>] , now , (now - stock[<span class="string">'cost'</span>] ) / stock[<span class="string">'cost'</span>])</div><div class="line"></div><div class="line">	total = total + float(result)*stock[<span class="string">'amount'</span>]</div><div class="line">    <span class="keyword">print</span> <span class="string">"Total : %s "</span> % total</div></pre></td></tr></table></figure>
-<ul>
-<li>参考地址 <a href="https://stackoverflow.com/questions/10748453/replace-comma-with-newline-in-sed/28773445" target="_blank" rel="external">https://stackoverflow.com/questions/10748453/replace-comma-with-newline-in-sed/28773445</a></li>
-<li><a href="http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x" target="_blank" rel="external">http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;偶然间翻开多年前写过的一个python脚本，恍如昨日～&lt;/p&gt;
-&lt;p&gt;这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。&lt;/p&gt;
-&lt;p&gt;这个小程序是在Mac上的，所以里面的sed换成了gsed，不然一直要报错。&lt;/p&gt;
-&lt;p&gt;还有一个是否生成额外副本的情况，这个个人用的比较少。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-      <category term="Shell" scheme="http://yoursite.com/tags/Shell/"/>
     
   </entry>
   
