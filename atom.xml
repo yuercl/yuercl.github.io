@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-02-02T13:57:53.000Z</updated>
+  <updated>2017-02-06T02:35:21.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>缘起缘去</title>
+    <link href="http://yoursite.com/2017/02/06/%E7%BC%98%E8%B5%B7%E7%BC%98%E5%8E%BB/"/>
+    <id>http://yoursite.com/2017/02/06/缘起缘去/</id>
+    <published>2017-02-05T21:00:00.000Z</published>
+    <updated>2017-02-06T02:35:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<center><b><br><br>缘起<br><br>妙不可言<br><br>缘去<br><br>不可言<br></b></center>]]></content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;b&gt;&lt;br&gt;&lt;br&gt;缘起&lt;br&gt;&lt;br&gt;妙不可言&lt;br&gt;&lt;br&gt;缘去&lt;br&gt;&lt;br&gt;不可言&lt;br&gt;&lt;/b&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="感情" scheme="http://yoursite.com/categories/%E6%84%9F%E6%83%85/"/>
+    
+    
+      <category term="感情" scheme="http://yoursite.com/tags/%E6%84%9F%E6%83%85/"/>
+    
+  </entry>
   
   <entry>
     <title>jQuery Ajax跨域的问题</title>
@@ -803,9 +825,9 @@
       <category term="安全" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8/"/>
     
     
-      <category term="dex2jar" scheme="http://yoursite.com/tags/dex2jar/"/>
-    
       <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
+    
+      <category term="dex2jar" scheme="http://yoursite.com/tags/dex2jar/"/>
     
   </entry>
   
@@ -996,43 +1018,6 @@
       <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
     
       <category term="事务" scheme="http://yoursite.com/tags/%E4%BA%8B%E5%8A%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python matplotlib中文显示问题</title>
-    <link href="http://yoursite.com/2016/11/16/python-matplotlib%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2016/11/16/python-matplotlib中文显示问题/</id>
-    <published>2016-11-15T16:00:00.000Z</published>
-    <updated>2016-12-08T04:01:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：<a id="more"></a></p>
-<ol>
-<li><p>在python的安装目录中找到配置文件： %Python_Home%\Lib\site-packages\matplotlib\mpl-data\matplotlibrc。如果找不到目录，在pycharm里面点击代码引用也可以发现目录。</p>
-</li>
-<li><p>找到139行的font.family : sans-serif将其前面的#注释去掉</p>
-</li>
-<li><p>找到151行的font.sans-serif : <font color="red"><strong>AR PL UMing CN, SimHei,</strong> </font> Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif将【<font color="red"><strong>AR PL UMing CN, SimHei</strong></font>】添加在最前面，其中AR PL UMing CN代表：宋体。SimHei代表：黑体。并将前面的#注释号去掉，重启编辑器后，便可显示中文了。</p>
-</li>
-<li><p>同时需要更改axes.unicode_minus  : False；使其值为False；否则无法显示负号</p>
-</li>
-<li><p>代码如下：</p>
-</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </div><div class="line">plt.xlabel(<span class="string">'x轴'</span>) </div><div class="line">plt.ylabel(<span class="string">'y轴'</span>) </div><div class="line">plt.bar(left = (<span class="number">0</span>,<span class="number">1</span>),height =(<span class="number">1</span>,<span class="number">0.5</span>),width = <span class="number">0.35</span>) </div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="/assets/images/matplotlib_display_chinese.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：
-    
-    </summary>
-    
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
     
   </entry>
   
