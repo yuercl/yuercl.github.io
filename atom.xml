@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-02-06T02:35:21.000Z</updated>
+  <updated>2017-02-09T01:39:54.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>不忘初心、不惑初心、不改初心</title>
+    <link href="http://yoursite.com/2017/02/09/%E4%B8%8D%E5%BF%98%E5%88%9D%E5%BF%83%E3%80%81%E4%B8%8D%E6%83%91%E5%88%9D%E5%BF%83%E3%80%81%E4%B8%8D%E6%94%B9%E5%88%9D%E5%BF%83/"/>
+    <id>http://yoursite.com/2017/02/09/不忘初心、不惑初心、不改初心/</id>
+    <published>2017-02-09T01:35:44.000Z</published>
+    <updated>2017-02-09T01:39:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<center><b><br><br>你的心最好不是招摇的枝柯<br><br>而是静默的根系<br><br>深藏在地下<br><br>不为尘世的一切所蛊惑<br><br>只追求自身的简单和丰富<br><br>不忘初心、不惑初心、不改初心<br><br></b></center>]]></content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;b&gt;&lt;br&gt;&lt;br&gt;你的心最好不是招摇的枝柯&lt;br&gt;&lt;br&gt;而是静默的根系&lt;br&gt;&lt;br&gt;深藏在地下&lt;br&gt;&lt;br&gt;不为尘世的一切所蛊惑&lt;br&gt;&lt;br&gt;只追求自身的简单和丰富&lt;br&gt;&lt;br&gt;不忘初心、不惑初心、不改初心&lt;br&gt;&lt;br&gt;&lt;/b&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="感情" scheme="http://yoursite.com/categories/%E6%84%9F%E6%83%85/"/>
+    
+    
+      <category term="感情" scheme="http://yoursite.com/tags/%E6%84%9F%E6%83%85/"/>
+    
+  </entry>
   
   <entry>
     <title>缘起缘去</title>
@@ -828,196 +850,6 @@
       <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
     
       <category term="dex2jar" scheme="http://yoursite.com/tags/dex2jar/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring transaction 事务 -- Isolation &amp; Progation</title>
-    <link href="http://yoursite.com/2016/11/28/Spring-transaction-%E4%BA%8B%E5%8A%A1-Isolation-Progation/"/>
-    <id>http://yoursite.com/2016/11/28/Spring-transaction-事务-Isolation-Progation/</id>
-    <published>2016-11-27T16:00:00.000Z</published>
-    <updated>2016-12-08T04:01:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>类型</th>
-<th>默认值</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>propagation</td>
-<td>Propagation枚举</td>
-<td>REQUIRED</td>
-<td>事务传播属性 (下有说明)</td>
-</tr>
-<tr>
-<td>isolation</td>
-<td>isolation枚举</td>
-<td>DEFAULT</td>
-<td>事务隔离级别 (另有说明)</td>
-</tr>
-<tr>
-<td>readOnly</td>
-<td>boolean</td>
-<td>false</td>
-<td>是否只读</td>
-</tr>
-<tr>
-<td>timeout</td>
-<td>int</td>
-<td>-1</td>
-<td>超时(秒)</td>
-</tr>
-<tr>
-<td>rollbackFor</td>
-<td>Class[]</td>
-<td>{}</td>
-<td>需要回滚的异常类</td>
-</tr>
-<tr>
-<td>rollbackForClassName</td>
-<td>String[]</td>
-<td>{}</td>
-<td>需要回滚的异常类名</td>
-</tr>
-<tr>
-<td>noRollbackFor</td>
-<td>Class[]</td>
-<td>{}</td>
-<td>不需要回滚的异常类</td>
-</tr>
-<tr>
-<td>noRollbackForClassName</td>
-<td>String[]</td>
-<td>{}</td>
-<td>不需要回滚的异常类名</td>
-</tr>
-</tbody>
-</table>
-<a id="more"></a>
-<font color="red"><strong>注意:</strong></font>
-
-<ul>
-<li><p>@Transactional 只能被应用到public方法上, 对于其它非public的方法,如果标记了@Transactional也不会报错,但方法没有事务功能。</p>
-</li>
-<li><p>默认情况下,一个有事务方法, 遇到RuntiomeException时会回滚。遇到受检查的异常是不会回滚的。要想所有异常都回滚,要加上rollbackFor={Exception.class}。</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>REQUIRED</td>
-<td>业务方法需要在一个事务中运行,如果方法运行时,已处在一个事务中,那么就加入该事务,否则自己创建一个新的事务.这是spring默认的传播行为.</td>
-</tr>
-<tr>
-<td>SUPPORTS</td>
-<td>如果业务方法在某个事务范围内被调用,则方法成为该事务的一部分,如果业务方法在事务范围外被调用,则方法在没有事务的环境下执行.</td>
-</tr>
-<tr>
-<td>MANDATORY</td>
-<td>只能在一个已存在事务中执行,业务方法不能发起自己的事务,如果业务方法在没有事务的环境下调用,就抛异常</td>
-</tr>
-<tr>
-<td>REQUIRES_NEW</td>
-<td>业务方法总是会为自己发起一个新的事务,如果方法已运行在一个事务中,则原有事务被挂起,新的事务被创建,直到方法结束,新事务才结束,原先的事务才会恢复执行.</td>
-</tr>
-<tr>
-<td>NOT_SUPPORTED</td>
-<td>声明方法需要事务,如果方法没有关联到一个事务,容器不会为它开启事务.如果方法在一个事务中被调用,该事务会被挂起,在方法调用结束后,原先的事务便会恢复执行.</td>
-</tr>
-<tr>
-<td>NEVER</td>
-<td>声明方法绝对不能在事务范围内执行,如果方法在某个事务范围内执行,容器就抛异常.只有没关联到事务,才正常执行.</td>
-</tr>
-<tr>
-<td>NESTED</td>
-<td>如果一个活动的事务存在,则运行在一个嵌套的事务中.如果没有活动的事务,则按REQUIRED,属性执行.它使用了一个单独的事务, 这个事务拥有多个可以回滚的保证点.内部事务回滚不会对外部事务造成影响, 它只对DataSourceTransactionManager 事务管理器起效.</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;属性&lt;/th&gt;
-&lt;th&gt;类型&lt;/th&gt;
-&lt;th&gt;默认值&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;propagation&lt;/td&gt;
-&lt;td&gt;Propagation枚举&lt;/td&gt;
-&lt;td&gt;REQUIRED&lt;/td&gt;
-&lt;td&gt;事务传播属性 (下有说明)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;isolation&lt;/td&gt;
-&lt;td&gt;isolation枚举&lt;/td&gt;
-&lt;td&gt;DEFAULT&lt;/td&gt;
-&lt;td&gt;事务隔离级别 (另有说明)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;readOnly&lt;/td&gt;
-&lt;td&gt;boolean&lt;/td&gt;
-&lt;td&gt;false&lt;/td&gt;
-&lt;td&gt;是否只读&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;timeout&lt;/td&gt;
-&lt;td&gt;int&lt;/td&gt;
-&lt;td&gt;-1&lt;/td&gt;
-&lt;td&gt;超时(秒)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;rollbackFor&lt;/td&gt;
-&lt;td&gt;Class[]&lt;/td&gt;
-&lt;td&gt;{}&lt;/td&gt;
-&lt;td&gt;需要回滚的异常类&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;rollbackForClassName&lt;/td&gt;
-&lt;td&gt;String[]&lt;/td&gt;
-&lt;td&gt;{}&lt;/td&gt;
-&lt;td&gt;需要回滚的异常类名&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;noRollbackFor&lt;/td&gt;
-&lt;td&gt;Class[]&lt;/td&gt;
-&lt;td&gt;{}&lt;/td&gt;
-&lt;td&gt;不需要回滚的异常类&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;noRollbackForClassName&lt;/td&gt;
-&lt;td&gt;String[]&lt;/td&gt;
-&lt;td&gt;{}&lt;/td&gt;
-&lt;td&gt;不需要回滚的异常类名&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
-    
-      <category term="事务" scheme="http://yoursite.com/tags/%E4%BA%8B%E5%8A%A1/"/>
     
   </entry>
   
