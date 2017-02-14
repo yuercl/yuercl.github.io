@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-02-09T01:39:54.000Z</updated>
+  <updated>2017-02-14T06:31:09.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MyBatis的一级缓存</title>
+    <link href="http://yoursite.com/2017/02/14/MyBatis%E7%9A%84%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98/"/>
+    <id>http://yoursite.com/2017/02/14/MyBatis的一级缓存/</id>
+    <published>2017-02-14T06:28:42.000Z</published>
+    <updated>2017-02-14T06:31:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>参看这篇文章：</p>
+<p><a href="http://blog.csdn.net/luanlouis/article/details/41280959" target="_blank" rel="external">《深入理解MyBatis原理》MyBatis的一级缓存实现详解及使用注意事项</a><br><a href="http://blog.csdn.net/u010349169/article/category/2309433" target="_blank" rel="external">MyBatis的其他文章</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;参看这篇文章：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/luanlouis/article/details/41280959&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《深入理解MyBatis原理》MyBatis的一级
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="MyBatis" scheme="http://yoursite.com/tags/MyBatis/"/>
+    
+  </entry>
   
   <entry>
     <title>不忘初心、不惑初心、不改初心</title>
@@ -789,67 +814,6 @@
     
     
       <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MacOS反编译APK</title>
-    <link href="http://yoursite.com/2016/12/03/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91APK/"/>
-    <id>http://yoursite.com/2016/12/03/MacOS反编译APK/</id>
-    <published>2016-12-02T16:00:00.000Z</published>
-    <updated>2016-12-08T04:00:43.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
-<h3 id="反编译代码的工具"><a href="#反编译代码的工具" class="headerlink" title="反编译代码的工具"></a>反编译代码的工具</h3><ul>
-<li>dex2jar<ul>
-<li>把dex文件转成jar文件</li>
-<li>下载地址： <a href="https://sourceforge.net/projects/dex2jar/files/" target="_blank" rel="external">https://sourceforge.net/projects/dex2jar/files/</a></li>
-</ul>
-</li>
-<li>jd-gui<ul>
-<li>这个工具用于将jar文件转换成java代码</li>
-<li>下载地址： <a href="http://jd.benow.ca/" target="_blank" rel="external">http://jd.benow.ca/</a></li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-<h3 id="反编译资源的工具"><a href="#反编译资源的工具" class="headerlink" title="反编译资源的工具"></a>反编译资源的工具</h3><ul>
-<li>APKTool: 本文重要工具，APK逆向工具，使用简单<ul>
-<li>下载地址: <a href="http://ibotpeaches.github.io/Apktool/install/" target="_blank" rel="external">http://ibotpeaches.github.io/Apktool/install/</a></li>
-</ul>
-</li>
-</ul>
-<h3 id="反编译代码-资源"><a href="#反编译代码-资源" class="headerlink" title="反编译代码/资源"></a>反编译代码/资源</h3><p>dex2jar 和windows上面的不太一样，对应为d2j-dex2jar，所以执行的时候是，<code>sh d2j-dex2jar.sh classes.dex</code>。如果<code>d2j-dex2jar.sh</code>没有在path里面，需要写全路径或者加入到path变量中。</p>
-<ul>
-<li>sh d2j-dex2jar.sh classes.dex</li>
-<li>sh apktool.sh apktool d FooApp.apk</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">yuer@172-12-1-29.lightspeed.sgnwmi.sbcglobal.net:/usr/<span class="built_in">local</span>/Cellar/dex2jar/2.0&gt; ll bin                                                                                                                                                                            16-12-06 9:41</div><div class="line">total 80</div><div class="line">lrwxr-xr-x  1 yuer  admin    26B 11 23 14:32 d2j-baksmali -&gt; ../libexec/d2j-baksmali.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    40B 11 23 14:32 d2j-dex-recompute-checksum -&gt; ../libexec/d2j-dex-recompute-checksum.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    25B 11 23 14:32 d2j-dex2jar -&gt; ../libexec/d2j-dex2jar.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    27B 11 23 14:32 d2j-dex2smali -&gt; ../libexec/d2j-dex2smali.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    25B 11 23 14:32 d2j-jar2dex -&gt; ../libexec/d2j-jar2dex.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    28B 11 23 14:32 d2j-jar2jasmin -&gt; ../libexec/d2j-jar2jasmin.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    28B 11 23 14:32 d2j-jasmin2jar -&gt; ../libexec/d2j-jasmin2jar.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    23B 11 23 14:32 d2j-smali -&gt; ../libexec/d2j-smali.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    25B 11 23 14:32 d2j-std-apk -&gt; ../libexec/d2j-std-apk.sh</div><div class="line">lrwxr-xr-x  1 yuer  admin    24B 11 23 14:32 d2j_invoke -&gt; ../libexec/d2j_invoke.sh</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓&lt;/p&gt;
-&lt;h3 id=&quot;反编译代码的工具&quot;&gt;&lt;a href=&quot;#反编译代码的工具&quot; class=&quot;headerlink&quot; title=&quot;反编译代码的工具&quot;&gt;&lt;/a&gt;反编译代码的工具&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;dex2jar&lt;ul&gt;
-&lt;li&gt;把dex文件转成jar文件&lt;/li&gt;
-&lt;li&gt;下载地址： &lt;a href=&quot;https://sourceforge.net/projects/dex2jar/files/&quot;&gt;https://sourceforge.net/projects/dex2jar/files/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;jd-gui&lt;ul&gt;
-&lt;li&gt;这个工具用于将jar文件转换成java代码&lt;/li&gt;
-&lt;li&gt;下载地址： &lt;a href=&quot;http://jd.benow.ca/&quot;&gt;http://jd.benow.ca/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="安全" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8/"/>
-    
-    
-      <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
-    
-      <category term="dex2jar" scheme="http://yoursite.com/tags/dex2jar/"/>
     
   </entry>
   
