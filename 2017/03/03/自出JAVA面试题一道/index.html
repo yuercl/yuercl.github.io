@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="最近招人，想了几道面试题，包含基础知识、深入一点、Linux一点、数据库一点。比较基础，但是足够在简历筛选后再过滤一部分人了。其实面试题做的怎么样无所谓，聊一聊也大概知道是什么水平、能深入到什么水平。聊天的时候也还可以问问补充的题，比如一些框架基础、新技术趋势、实现原理什么的，另"><meta name="keywords" content="java"><title>自出JAVA面试题一道 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2017/03/03/自出JAVA面试题一道/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">自出JAVA面试题一道</h1><span class="post-time">2017年3月3日</span><div class="post-content"><p>最近招人，想了几道面试题，包含基础知识、深入一点、Linux一点、数据库一点。比较基础，但是足够在简历筛选后再过滤一部分人了。其实面试题做的怎么样无所谓，聊一聊也大概知道是什么水平、能深入到什么水平。聊天的时候也还可以问问补充的题，比如一些框架基础、新技术趋势、实现原理什么的，另外可以考察下解决问题的思维方式和交流沟通怎么样，实在不行，还可以叫他现场写段代码。或许也就知道对方是什么水平了。感觉要遇到一个特别喜欢的求职者还是比较困难，当然也不只是技术。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>接下来要做的事，就是实现之前想象的一个量化策略，时间不多了。</p>
+<p>也祝我好运吧～，写在深圳，夜，I count the days!!</p>
+<ol>
+<li>== 与 equals的区别</li>
+<li>简要描述String、StringBuffer、StringBuilder的区别。</li>
+<li>Char型变量能否存储一个中文字？为什么？</li>
+<li>请写出ArrayList、LinkedList和Vector的区别？</li>
+<li>如何在两个线程间共享数据？</li>
+<li>请写一个你最熟悉的设计模式的代码，一般在是什么应用场景？如：单例、工厂、观察者、代理、建造者、适配器等…</li>
+<li>java的内存回收机制是什么样的？java是否存在内存泄漏？有什么途径检测内存泄漏？（把知道的都可以写出来）</li>
+<li>在Linux里，如何查看一个监听端口为10086的进程？如果要杀死它呢？</li>
+<li>目前PP停车项目中有一张详细的出入场停车记录表<b> _record\<long id,="" varchar16="" merchant,="" datetime="" enter\_time,="" leave\_time,="" card\_no=""> </long></b>，注: merchant 商户号, enter_time 入场时间, leave_time 出场时间。<br>请写出SQL(数据库不限)来统计指定商户的停车场的今天里面的每小时车辆入场数量。</li>
+<li>一条SQL执行过长的时间，你可以从哪些方面做优化？（希望写出思路）</li>
+<li>以下代码片段存在的主要问题是什么？怎么解决？</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">List&lt;Student&gt; stuList = new ArrayList&lt;Student&gt;();</div><div class="line">stuList.add(new Student(...));</div><div class="line">stuList.add(new Student(...));</div><div class="line">stuList.add(new Student(...));</div><div class="line"></div><div class="line">String[] names = [&quot;aaa&quot;,&quot;bbb&quot;,&quot;ccc&quot;];</div><div class="line">for(Student stu : stuList) &#123;</div><div class="line">　　for(String name : names) &#123;</div><div class="line">　　　　  if(stu.getName() == name) &#123;</div><div class="line">　　　　　　　　stuList.remove(stu);</div><div class="line">    　　  &#125;     </div><div class="line">　　　&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></div></article><div class="tags"><a href="/tags/java/">java</a></div><div class="paginator"><a href="/2017/02/14/MyBatis的一级缓存/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2017/03/03/自出JAVA面试题一道/';
+    this.page.identifier = '2017/03/03/自出JAVA面试题一道/';
+    this.page.title = '自出JAVA面试题一道';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

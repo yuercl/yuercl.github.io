@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-02-14T06:31:09.000Z</updated>
+  <updated>2017-03-03T15:00:25.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>自出JAVA面试题一道</title>
+    <link href="http://yoursite.com/2017/03/03/%E8%87%AA%E5%87%BAJAVA%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B8%80%E9%81%93/"/>
+    <id>http://yoursite.com/2017/03/03/自出JAVA面试题一道/</id>
+    <published>2017-03-02T16:00:00.000Z</published>
+    <updated>2017-03-03T15:00:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近招人，想了几道面试题，包含基础知识、深入一点、Linux一点、数据库一点。比较基础，但是足够在简历筛选后再过滤一部分人了。其实面试题做的怎么样无所谓，聊一聊也大概知道是什么水平、能深入到什么水平。聊天的时候也还可以问问补充的题，比如一些框架基础、新技术趋势、实现原理什么的，另外可以考察下解决问题的思维方式和交流沟通怎么样，实在不行，还可以叫他现场写段代码。或许也就知道对方是什么水平了。感觉要遇到一个特别喜欢的求职者还是比较困难，当然也不只是技术。</p>
+<p>接下来要做的事，就是实现之前想象的一个量化策略，时间不多了。</p>
+<p>也祝我好运吧～，写在深圳，夜，I count the days!!</p>
+<ol>
+<li>== 与 equals的区别</li>
+<li>简要描述String、StringBuffer、StringBuilder的区别。</li>
+<li>Char型变量能否存储一个中文字？为什么？</li>
+<li>请写出ArrayList、LinkedList和Vector的区别？</li>
+<li>如何在两个线程间共享数据？</li>
+<li>请写一个你最熟悉的设计模式的代码，一般在是什么应用场景？如：单例、工厂、观察者、代理、建造者、适配器等…</li>
+<li>java的内存回收机制是什么样的？java是否存在内存泄漏？有什么途径检测内存泄漏？（把知道的都可以写出来）</li>
+<li>在Linux里，如何查看一个监听端口为10086的进程？如果要杀死它呢？</li>
+<li>目前PP停车项目中有一张详细的出入场停车记录表<b> _record\<long id,="" varchar16="" merchant,="" datetime="" enter\_time,="" leave\_time,="" card\_no=""> </long></b>，注: merchant 商户号, enter_time 入场时间, leave_time 出场时间。<br>请写出SQL(数据库不限)来统计指定商户的停车场的今天里面的每小时车辆入场数量。</li>
+<li>一条SQL执行过长的时间，你可以从哪些方面做优化？（希望写出思路）</li>
+<li>以下代码片段存在的主要问题是什么？怎么解决？</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">List&lt;Student&gt; stuList = new ArrayList&lt;Student&gt;();</div><div class="line">stuList.add(new Student(...));</div><div class="line">stuList.add(new Student(...));</div><div class="line">stuList.add(new Student(...));</div><div class="line"></div><div class="line">String[] names = [&quot;aaa&quot;,&quot;bbb&quot;,&quot;ccc&quot;];</div><div class="line">for(Student stu : stuList) &#123;</div><div class="line">　　for(String name : names) &#123;</div><div class="line">　　　　  if(stu.getName() == name) &#123;</div><div class="line">　　　　　　　　stuList.remove(stu);</div><div class="line">    　　  &#125;     </div><div class="line">　　　&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近招人，想了几道面试题，包含基础知识、深入一点、Linux一点、数据库一点。比较基础，但是足够在简历筛选后再过滤一部分人了。其实面试题做的怎么样无所谓，聊一聊也大概知道是什么水平、能深入到什么水平。聊天的时候也还可以问问补充的题，比如一些框架基础、新技术趋势、实现原理什么
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>MyBatis的一级缓存</title>
@@ -784,36 +822,6 @@
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="matplotlib" scheme="http://yoursite.com/tags/matplotlib/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MacOS反编译某研报客户端</title>
-    <link href="http://yoursite.com/2016/12/04/MacOS%E5%8F%8D%E7%BC%96%E8%AF%91%E6%9F%90%E7%A0%94%E6%8A%A5%E5%AE%A2%E6%88%B7%E7%AB%AF/"/>
-    <id>http://yoursite.com/2016/12/04/MacOS反编译某研报客户端/</id>
-    <published>2016-12-03T16:00:00.000Z</published>
-    <updated>2016-12-08T04:00:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>偶尔看看别人的代码，换一个角度思考，也是一种乐趣～</p>
-<p>好好学习，人生苦短，及时行乐～</p>
-<a id="more"></a>
-<p><img src="/assets/images/class_decompiler_overview.png" alt=""></p>
-<p><img src="/assets/images/class_original_fileutils.png" alt=""></p>
-<p>这里使用jd-gui反编译的时候，效果不是很好，需要根据理解来还原代码。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.crypto.Cipher;</div><div class="line"><span class="keyword">import</span> javax.crypto.SecretKeyFactory;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.DESKeySpec;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.IvParameterSpec;</div><div class="line"><span class="keyword">import</span> java.net.URLDecoder;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUtils</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] convertHexString(String paramString) &#123;</div><div class="line">        <span class="keyword">byte</span>[] arrayOfByte = <span class="keyword">new</span> <span class="keyword">byte</span>[paramString.length() / <span class="number">2</span>];</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (i &lt; arrayOfByte.length) &#123;</div><div class="line">            arrayOfByte[i] = ((<span class="keyword">byte</span>) Integer.parseInt(paramString.substring(i * <span class="number">2</span>, i * <span class="number">2</span> + <span class="number">2</span>), <span class="number">16</span>));</div><div class="line">            i += <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> arrayOfByte;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">decrypt</span><span class="params">(String paramString1, String paramString2)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="keyword">byte</span>[] p1 = convertHexString(paramString1);</div><div class="line">        Cipher localCipher = Cipher.getInstance(<span class="string">"DES/CBC/PKCS5Padding"</span>);</div><div class="line">        DESKeySpec localDESKeySpec = <span class="keyword">new</span> DESKeySpec(paramString2.getBytes());</div><div class="line">        localCipher.init(<span class="number">2</span>, SecretKeyFactory.getInstance(<span class="string">"DES"</span>).generateSecret(localDESKeySpec), <span class="keyword">new</span> IvParameterSpec(paramString2.getBytes()));</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(localCipher.doFinal(p1));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getUrl</span><span class="params">(String paramString1, String paramString2, String paramString3, String paramString4)</span> </span>&#123;</div><div class="line">        String[] p2 = paramString2.substring(<span class="number">10</span>).trim().split(<span class="string">":"</span>);</div><div class="line">        StringBuffer localStringBuffer = <span class="keyword">new</span> StringBuffer();</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (i &lt; p2.length) &#123;</div><div class="line">            localStringBuffer = localStringBuffer.append(p2[i]);</div><div class="line">            i += <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        paramString2 = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (paramString1 != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (!paramString3.equals(<span class="string">""</span>)) &#123;</div><div class="line"><span class="comment">//                ;</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (!paramString4.equals(<span class="string">""</span>)) &#123;</div><div class="line"><span class="comment">//                break;</span></div><div class="line">            &#125;</div><div class="line">            paramString2 = localStringBuffer + <span class="string">"W"</span> + <span class="string">"M"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (; ; ) &#123;</div><div class="line">            <span class="keyword">if</span> (paramString2 == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                paramString1 = URLDecoder.decode(decrypt(paramString1, paramString2), <span class="string">"utf-8"</span>);</div><div class="line">                <span class="keyword">return</span> paramString1;</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">            paramString2 = localStringBuffer + <span class="string">"W"</span> + paramString4.substring(<span class="number">0</span>, <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span> (paramString4.equals(<span class="string">""</span>)) &#123;</div><div class="line">                paramString2 = localStringBuffer + paramString3.substring(<span class="number">0</span>, <span class="number">1</span>) + <span class="string">"M"</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                paramString2 = localStringBuffer + paramString3.substring(<span class="number">0</span>, <span class="number">1</span>) + paramString4.substring(<span class="number">0</span>, <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDES</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        String file = <span class="string">"FDAEBB080873D6CF6E67B5AA6D9823......忽略"</span>;</div><div class="line">        String url = FileUtils.getUrl(file, <span class="string">"2016-12-01 10:00:12"</span>, <span class="string">"547952"</span>, <span class="string">"6"</span>);</div><div class="line">        System.out.println(url);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;偶尔看看别人的代码，换一个角度思考，也是一种乐趣～&lt;/p&gt;
-&lt;p&gt;好好学习，人生苦短，及时行乐～&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="安全" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8/"/>
-    
-    
-      <category term="反编译" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/"/>
     
   </entry>
   
