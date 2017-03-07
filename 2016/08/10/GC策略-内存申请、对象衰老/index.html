@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="堆内存GCJVM(采用分代回收的策略)，用较高的频率对年轻的对象(younggeneration)进行YGC，而对老对象(tenuredgeneration)较少(tenuredgeneration满了后才进行)进行FullGC。这样就不需要每次GC都将内存中所有对象都"><meta name="keywords" content="JVM,java"><title>GC策略&amp;内存申请、对象衰老 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="堆内存GCJVM(采用分代回收的策略)，用较高的频率对年轻的对象(younggeneration)进行YGC，而对老对象(tenuredgeneration)较少(tenuredgeneration满了后才进行)进行FullGC。这样就不需要每次GC都将内存中所有对象都"><meta name="keywords" content="java,JVM"><title>GC策略&amp;内存申请、对象衰老 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
@@ -46,7 +46,7 @@
 </tbody>
 </table>
 <p>permanent generation空间不足会引发Full GC,仍然不够会引发PermGen Space错误。</p>
-</div></article><div class="tags"><a href="/tags/JVM/">JVM</a><a href="/tags/java/">java</a></div><div class="paginator"><a href="/2016/08/10/MySQL存储emoji表情/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/08/01/this-is-a-new-beginning/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+</div></article><div class="tags"><a href="/tags/java/">java</a><a href="/tags/JVM/">JVM</a></div><div class="paginator"><a href="/2016/08/10/JVM参数设置、分析/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/08/10/MySQL定时备份/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
     this.page.url = 'http://yoursite.com/2016/08/10/GC策略-内存申请、对象衰老/';
     this.page.identifier = '2016/08/10/GC策略-内存申请、对象衰老/';
     this.page.title = 'GC策略&amp;内存申请、对象衰老';

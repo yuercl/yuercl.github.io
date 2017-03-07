@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/03/07/zookeeper/</loc>
+    
+    <lastmod>2017-03-07T03:17:06.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/03/03/%E8%87%AA%E5%87%BAJAVA%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B8%80%E9%81%93/</loc>
     
-    <lastmod>2017-03-03T15:05:33.000Z</lastmod>
+    <lastmod>2017-03-03T15:29:17.000Z</lastmod>
     
   </url>
   
