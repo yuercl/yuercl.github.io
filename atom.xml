@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-07T03:17:06.000Z</updated>
+  <updated>2017-04-28T04:01:13.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,80 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高并发之限流</title>
+    <link href="http://yoursite.com/2017/04/25/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B9%8B%E9%99%90%E6%B5%81/"/>
+    <id>http://yoursite.com/2017/04/25/高并发之限流/</id>
+    <published>2017-04-25T09:14:06.000Z</published>
+    <updated>2017-04-28T04:01:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h3><p>系统在设计之初就会有一个预估容量，长时间超过系统能承受的TPS/QPS阈值，系统可能会被压垮，最终导致整个服务不够用。为了避免这种情况，我们就需要对接口请求进行限流。 </p>
+<p>当然，先压力测试后给一个容量可能会更好。</p>
+<a id="more"></a>
+<p>限流的目的是通过对并发访问请求进行限速，或者一个时间窗口内的的请求数量进行限速，来保护系统，一旦达到阈值则可以拒绝服务、排队或等待。 </p>
+<p>常见的限流模式有控制并发和控制速率，一个是限制并发的数量，一个是限制并发访问的速率，另外还可以限制单位时间窗口内的请求数量。</p>
+<h4 id="控制并发数量"><a href="#控制并发数量" class="headerlink" title="控制并发数量"></a>控制并发数量</h4><p>属于一种较常见的限流手段，在实际应用中可以通过信号量机制（如Java中的 <code>Semaphore</code> ）来实现。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.monitor;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Semaphore;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSemaphore</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ExecutorService executor = Executors.newCachedThreadPool();</div><div class="line">        <span class="keyword">final</span> Semaphore semp = <span class="keyword">new</span> Semaphore(<span class="number">5</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; <span class="number">100</span>; index++) &#123;</div><div class="line">            <span class="keyword">int</span> finalIndex = index;</div><div class="line">            executor.execute(() -&gt; &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    semp.acquire();</div><div class="line">                    System.out.println(<span class="string">"Accessing Current: "</span> + finalIndex);</div><div class="line">                    Thread.sleep((<span class="keyword">long</span>) (Math.random() * <span class="number">1000</span>));</div><div class="line">                    System.out.println(<span class="string">"Available Permits:"</span> + semp.availablePermits());</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    semp.release();</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        executor.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="控制访问速率"><a href="#控制访问速率" class="headerlink" title="控制访问速率"></a>控制访问速率</h4><ul>
+<li>每过 <code>1 / r</code> 秒桶中增加一个令牌</li>
+<li>桶中最多存放 <code>b</code> 个令牌，如果桶满了，新放入的令牌会被丢弃</li>
+<li>当一个 <code>n</code> 字节的数据包到达时，消耗 <code>n</code> 个令牌，然后发送该数据包</li>
+<li>如果桶中可用令牌小于 <code>n</code>，则该数据包将被缓存或丢弃</li>
+</ul>
+<p>Guava中的 <code>Ratelimiter</code> 可以来做。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//速率是每秒两个许可</span></div><div class="line"><span class="keyword">final</span> RateLimiter rateLimiter = RateLimiter.create(<span class="number">2.0</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">submitTasks</span><span class="params">(List tasks, Executor executor)</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (Runnable task : tasks) &#123;</div><div class="line">        rateLimiter.acquire(); <span class="comment">// 也许需要等待</span></div><div class="line">        executor.execute(task);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="控制单位时间窗口内请求数"><a href="#控制单位时间窗口内请求数" class="headerlink" title="控制单位时间窗口内请求数"></a>控制单位时间窗口内请求数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.alibaba.dubbo.rpc.filter.tps;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</div><div class="line"><span class="keyword">import</span> com.alibaba.dubbo.common.URL;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StatItem</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> lastResetTime;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> interval;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> AtomicInteger token;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> rate;</div><div class="line"></div><div class="line">    StatItem(String name, <span class="keyword">int</span> rate, <span class="keyword">long</span> interval) &#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.rate = rate;</div><div class="line">        <span class="keyword">this</span>.interval = interval;</div><div class="line">        <span class="keyword">this</span>.lastResetTime = System.currentTimeMillis();</div><div class="line">        <span class="keyword">this</span>.token = <span class="keyword">new</span> AtomicInteger(rate);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAllowable</span><span class="params">(URL url, Invocation invocation)</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> now = System.currentTimeMillis();</div><div class="line">        <span class="keyword">if</span> (now &gt; lastResetTime + interval) &#123;</div><div class="line">            token.set(rate);</div><div class="line">            lastResetTime = now;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> value = token.get();</div><div class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">while</span> (value &gt; <span class="number">0</span> &amp;&amp; !flag) &#123;</div><div class="line">            flag = token.compareAndSet(value, value - <span class="number">1</span>);</div><div class="line">            value = token.get();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> flag;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getLastResetTime</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> lastResetTime;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getToken</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> token.get();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuilder(<span class="number">32</span>).append(<span class="string">"StatItem "</span>)</div><div class="line">            .append(<span class="string">"[name="</span>).append(name).append(<span class="string">", "</span>)</div><div class="line">            .append(<span class="string">"rate = "</span>).append(rate).append(<span class="string">", "</span>)</div><div class="line">            .append(<span class="string">"interval = "</span>).append(interval).append(<span class="string">"]"</span>)</div><div class="line">            .toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h3&gt;&lt;p&gt;系统在设计之初就会有一个预估容量，长时间超过系统能承受的TPS/QPS阈值，系统可能会被压垮，最终导致整个服务不够用。为了避免这种情况，我们就需要对接口请求进行限流。 &lt;/p&gt;
+&lt;p&gt;当然，先压力测试后给一个容量可能会更好。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+    
+    
+      <category term="并发编程" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>动态代理、静态代理</title>
+    <link href="http://yoursite.com/2017/03/07/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E3%80%81%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/"/>
+    <id>http://yoursite.com/2017/03/07/动态代理、静态代理/</id>
+    <published>2017-03-07T08:10:32.000Z</published>
+    <updated>2017-03-07T09:44:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://www.cnblogs.com/V1haoge/p/5860749.html" target="_blank" rel="external">java静态代理与动态代理简单分析</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-proxy1/" target="_blank" rel="external">Java 动态代理机制分析及扩展，第 1 部分</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-proxy2/" target="_blank" rel="external">Java 动态代理机制分析及扩展，第 2 部分</a></li>
+<li><a href="http://blog.csdn.net/hintcnuie/article/details/10954631" target="_blank" rel="external">动态代理proxy与CGLib的区别</a></li>
+</ul>
+<p>静态代理就是通过接口和类来实现的普通的代理模式。在代理类、委托类运行之前，代理类已经以<code>.class</code>的格式存在。静态代理共有三个角色，接口、委托类（真正实现类，含业务逻辑）、代理类（内部存在委托人的实例）。</p>
+<p>动态代理是在程序运行时，由反射机制动态创建而成。</p>
+<p>在Java中要想实现动态代理机制，需要两个类的支持。<code>java.lang.reflect.InvocationHandler</code> 和 <code>java.lang.reflect.Proxy</code> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Object proxy:被代理的对象</div><div class="line"> * Method method:要调用的方法</div><div class="line"> * Object[] args:方法调用时所需要参数</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.proxy;</div><div class="line"></div><div class="line"><span class="comment">/** HelloWorld **/</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloWorld</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/** HelloWorldImpl **/</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldImpl</span> <span class="keyword">implements</span> <span class="title">HelloWorld</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Hello World"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldInvocationHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Object obj;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HelloWorldInvocationHandler</span><span class="params">(Object obj)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.obj = obj;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        before();</div><div class="line">        Object result = method.invoke(obj, args);</div><div class="line">        after();</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Begin"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"End"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        HelloWorld helloWorld = <span class="keyword">new</span> HelloWorldImpl();</div><div class="line"></div><div class="line">        InvocationHandler handler = <span class="keyword">new</span> HelloWorldInvocationHandler(helloWorld);</div><div class="line"></div><div class="line">        HelloWorld proxy = (HelloWorld) Proxy.newProxyInstance(</div><div class="line">                helloWorld.getClass().getClassLoader(),</div><div class="line">                helloWorld.getClass().getInterfaces(),</div><div class="line">                handler);</div><div class="line"></div><div class="line">        proxy.print();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/V1haoge/p/5860749.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;java静态代理与动态代理简单分析&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="代理模式" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>zookeeper</title>
@@ -769,73 +843,6 @@
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="pandas" scheme="http://yoursite.com/tags/pandas/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>皮尔逊相关系数</title>
-    <link href="http://yoursite.com/2016/12/07/%E7%9A%AE%E5%B0%94%E9%80%8A%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/"/>
-    <id>http://yoursite.com/2016/12/07/皮尔逊相关系数/</id>
-    <published>2016-12-07T13:44:20.000Z</published>
-    <updated>2016-12-08T03:58:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在统计学中，皮尔逊积矩相关系数（英语：Pearson product-moment correlation coefficient，又称作 PPMCC或PCCs[1], 文章中常用r或Pearson’s r表示）用于度量两个变量X和Y之间的相关（线性相关），其值介于 -1 与 1 之间。在自然科学领域中，该系数广泛用于度量两个变量之间的相关程度。这个相关系数也称作“皮尔森相关系数r”。</p>
-<p>待完善<br>$$  \rho_{X,Y}={\mathrm{cov}(X,Y) \over \sigma_X \sigma_Y} ={E[(X-\mu_X)(Y-\mu_Y)] \over \sigma_X\sigma_Y} $$</p>
-<p>$$ r = \frac{\sum\limits ^n _{i=1}(X_i - \overline{X})(Y<em>i - \overline{Y})}{\sqrt{\sum\limits ^n </em>{i=1}(X<em>i - \overline{X})^2} \sqrt{\sum\limits ^n </em>{i=1}(Y_i - \overline{Y})^2}}  $$</p>
-<p>$$ r = \frac{1}{n-1} \sum\limits ^n _{i=1} \left( \frac{X_i - \overline{X}}{\sigma_X} \right) \left( \frac{Y_i - \overline{Y}}{\sigma_Y} \right) $$</p>
-<p>$$ cov(X,Y)=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)(Y_i-\bar Y) $$</p>
-<p>$$ r = \frac{cov(X,Y)}{\sqrt{var(X)} \sqrt{var(Y)}} $$ </p>
-<p>均值：</p>
-<p>$$ \bar X = \frac{ \sum_{i=1}^n X_i }{n} $$</p>
-<p>方差：</p>
-<p>$$ s^2 = \frac{ \sum_{i=1}^n (X_i - \bar X)^2 }{n - 1} $$</p>
-<p>标准差：</p>
-<p>$$ s = { \sqrt{ \frac{ \sum_{i=1}^n (X_i - \bar X)^2 } {n - 1}}} $$</p>
-<p>要理解Pearson相关系数，首先要理解协方差（Covariance），协方差是一个反映两个随机变量相关程度的指标，如果一个变量跟随着另一个变量同时变大或者变小，那么这两个变量的协方差就是正值，反之相反，公式如下：</p>
-<p>$$皮尔逊系数 = \frac{x和y的协方差}{(x的标准差 * y的标准差)} $$</p>
-<p>资料：</p>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//segmentfault.com/q/1010000000094674" target="_blank" rel="external">数据挖掘 - 如何理解皮尔逊相关系数（Pearson Correlation Coefficient）</a></li>
-<li><a href="https://zh.wikipedia.org/zh-cn/皮尔逊积矩相关系数" target="_blank" rel="external">皮尔逊相关系数－wikipedia.org</a></li>
-<li><a href="https://www.douban.com/note/267043565/" target="_blank" rel="external">pearson、spearman、Kendall’s tau-b三种相关性的区别</a></li>
-<li><a href="http://guessthecorrelation.com/" target="_blank" rel="external">游戏，直观了解点的二维分布和相关系数大小：Guess the Correlation</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在统计学中，皮尔逊积矩相关系数（英语：Pearson product-moment correlation coefficient，又称作 PPMCC或PCCs[1], 文章中常用r或Pearson’s r表示）用于度量两个变量X和Y之间的相关（线性相关），其值介于 -1 
-    
-    </summary>
-    
-      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
-    
-    
-      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>协方差矩阵</title>
-    <link href="http://yoursite.com/2016/12/07/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/"/>
-    <id>http://yoursite.com/2016/12/07/协方差矩阵/</id>
-    <published>2016-12-07T13:43:48.000Z</published>
-    <updated>2016-12-08T03:59:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>待完善</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;待完善&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
-    
-    
-      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
     
   </entry>
   
