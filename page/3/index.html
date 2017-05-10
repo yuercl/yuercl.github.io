@@ -5,142 +5,79 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/07/皮尔逊相关系数/" class="post-link">皮尔逊相关系数</a></h2><span class="post-time">2016年12月7日</span><div class="post-content"><p>在统计学中，皮尔逊积矩相关系数（英语：Pearson product-moment correlation coefficient，又称作 PPMCC或PCCs[1], 文章中常用r或Pearson’s r表示）用于度量两个变量X和Y之间的相关（线性相关），其值介于 -1 与 1 之间。在自然科学领域中，该系数广泛用于度量两个变量之间的相关程度。这个相关系数也称作“皮尔森相关系数r”。</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>待完善<br>$$  \rho_{X,Y}={\mathrm{cov}(X,Y) \over \sigma_X \sigma_Y} ={E[(X-\mu_X)(Y-\mu_Y)] \over \sigma_X\sigma_Y} $$</p>
-<p>$$ r = \frac{\sum\limits ^n _{i=1}(X_i - \overline{X})(Y<em>i - \overline{Y})}{\sqrt{\sum\limits ^n </em>{i=1}(X<em>i - \overline{X})^2} \sqrt{\sum\limits ^n </em>{i=1}(Y_i - \overline{Y})^2}}  $$</p>
-<p>$$ r = \frac{1}{n-1} \sum\limits ^n _{i=1} \left( \frac{X_i - \overline{X}}{\sigma_X} \right) \left( \frac{Y_i - \overline{Y}}{\sigma_Y} \right) $$</p>
-<p>$$ cov(X,Y)=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)(Y_i-\bar Y) $$</p>
-<p>$$ r = \frac{cov(X,Y)}{\sqrt{var(X)} \sqrt{var(Y)}} $$ </p>
-<p>均值：</p>
-<p>$$ \bar X = \frac{ \sum_{i=1}^n X_i }{n} $$</p>
-<p>方差：</p>
-<p>$$ s^2 = \frac{ \sum_{i=1}^n (X_i - \bar X)^2 }{n - 1} $$</p>
-<p>标准差：</p>
-<p>$$ s = { \sqrt{ \frac{ \sum_{i=1}^n (X_i - \bar X)^2 } {n - 1}}} $$</p>
-<p>要理解Pearson相关系数，首先要理解协方差（Covariance），协方差是一个反映两个随机变量相关程度的指标，如果一个变量跟随着另一个变量同时变大或者变小，那么这两个变量的协方差就是正值，反之相反，公式如下：</p>
-<p>$$皮尔逊系数 = \frac{x和y的协方差}{(x的标准差 * y的标准差)} $$</p>
-<p>资料：</p>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//segmentfault.com/q/1010000000094674" target="_blank" rel="external">数据挖掘 - 如何理解皮尔逊相关系数（Pearson Correlation Coefficient）</a></li>
-<li><a href="https://zh.wikipedia.org/zh-cn/皮尔逊积矩相关系数" target="_blank" rel="external">皮尔逊相关系数－wikipedia.org</a></li>
-<li><a href="https://www.douban.com/note/267043565/" target="_blank" rel="external">pearson、spearman、Kendall’s tau-b三种相关性的区别</a></li>
-<li><a href="http://guessthecorrelation.com/" target="_blank" rel="external">游戏，直观了解点的二维分布和相关系数大小：Guess the Correlation</a></li>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/03/03/自出JAVA面试题一道/" class="post-link">自出JAVA面试题一道</a></h2><span class="post-time">2017年3月3日</span><div class="post-content"><p>最近招人，想了几道面试题，包含基础知识、深入一点、Linux一点、数据库一点。比较基础，但是足够在简历筛选后再过滤一部分人了。其实面试题做的怎么样无所谓，聊一聊也大概知道是什么水平、能深入到什么水平。聊天的时候也还可以问问补充的题，比如一些框架基础、新技术趋势、实现原理什么的，另外可以考察下解决问题的思维方式和交流沟通怎么样，实在不行，还可以叫他现场写段代码。或许也就知道对方是什么水平了。感觉要遇到一个特别喜欢的求职者还是比较困难，当然也不只是技术。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>接下来要做的事，就是实现之前想象的一个量化策略，时间不多了。</p>
+<p>也祝我好运吧～，写在深圳，夜，BGM&lt;刚好遇见你&gt;，I count the days!!</p>
+<ol>
+<li>== 与 equals的区别</li>
+<li>简要描述String、StringBuffer、StringBuilder的区别。</li>
+<li>Char型变量能否存储一个中文字？为什么？</li>
+<li>请写出ArrayList、LinkedList和Vector的区别？</li>
+<li>如何在两个线程间共享数据？</li>
+<li>请写一个你最熟悉的设计模式的代码，一般在是什么应用场景？如：单例、工厂、观察者、代理、建造者、适配器等…</li>
+<li>java的内存回收机制是什么样的？java是否存在内存泄漏？有什么途径检测内存泄漏？（把知道的都可以写出来）</li>
+<li>在Linux里，如何查看一个监听端口为10086的进程？如果要杀死它呢？</li>
+<li>目前PP停车项目中有一张详细的出入场停车记录表<b> _record\<long id,="" varchar16="" merchant,="" datetime="" enter\_time,="" leave\_time,="" card\_no=""> </long></b>，注: merchant 商户号, enter_time 入场时间, leave_time 出场时间。<br>请写出SQL(数据库不限)来统计指定商户的停车场的今天里面的每小时车辆入场数量。</li>
+<li>一条SQL执行过长的时间，你可以从哪些方面做优化？（希望写出思路）</li>
+<li>以下代码片段存在的主要问题是什么？怎么解决？</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">List&lt;Student&gt; stuList = <span class="keyword">new</span> ArrayList&lt;Student&gt;();</div><div class="line">stuList.add(<span class="keyword">new</span> Student(...));</div><div class="line">stuList.add(<span class="keyword">new</span> Student(...));</div><div class="line">stuList.add(<span class="keyword">new</span> Student(...));</div><div class="line"></div><div class="line">String[] names = [<span class="string">"aaa"</span>,<span class="string">"bbb"</span>,<span class="string">"ccc"</span>];</div><div class="line"><span class="keyword">for</span>(Student stu : stuList) &#123;</div><div class="line">　　<span class="keyword">for</span>(String name : names) &#123;</div><div class="line">　　　　  <span class="keyword">if</span>(stu.getName() == name) &#123;</div><div class="line">　　　　　　　　stuList.remove(stu);</div><div class="line">    　　  &#125;     </div><div class="line">　　　&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/02/14/MyBatis的一级缓存/" class="post-link">MyBatis的一级缓存</a></h2><span class="post-time">2017年2月14日</span><div class="post-content"><p>参看这篇文章：</p>
+<p><a href="http://blog.csdn.net/luanlouis/article/details/41280959" target="_blank" rel="external">《深入理解MyBatis原理》MyBatis的一级缓存实现详解及使用注意事项</a><br><a href="http://blog.csdn.net/u010349169/article/category/2309433" target="_blank" rel="external">MyBatis的其他文章</a></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/02/09/不忘初心、不惑初心、不改初心/" class="post-link">不忘初心、不惑初心、不改初心</a></h2><span class="post-time">2017年2月9日</span><div class="post-content"><center><b><br><br>你的心最好不是招摇的枝柯<br><br>而是静默的根系<br><br>深藏在地下<br><br>不为尘世的一切所蛊惑<br><br>只追求自身的简单和丰富<br><br>不忘初心、不惑初心、不改初心<br><br></b></center></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/02/06/缘起缘去/" class="post-link">缘起缘去</a></h2><span class="post-time">2017年2月6日</span><div class="post-content"><center><b><br><br>缘起<br><br>妙不可言<br><br>缘去<br><br>不可言<br></b></center></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/02/02/jQuery-Ajax跨域的问题/" class="post-link">jQuery Ajax跨域的问题</a></h2><span class="post-time">2017年2月2日</span><div class="post-content"><p>只需改动ajax固定参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">     dataType:<span class="string">"jsonp"</span>,</div><div class="line">  crossDomain:<span class="literal">true</span>,</div><div class="line">jsonpCallback:<span class="string">"jsonpCallbackFunction"</span>,</div><div class="line">        jsonp:<span class="string">"callback"</span>,</div></pre></td></tr></table></figure>
+<p>注意，后台返回的数据格式必须是：jsonpCallbackFunction(json数据);</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">	type: <span class="string">"post"</span>,</div><div class="line">	url: platformUrl + <span class="string">"/check.do"</span>,</div><div class="line">	data: params,</div><div class="line">	dataType: <span class="string">"jsonp"</span>,</div><div class="line">	crossDomain: <span class="literal">true</span>,</div><div class="line">	jsonpCallback: <span class="string">"jsonpCallbackFunction"</span>,</div><div class="line">	jsonp: <span class="string">"callback"</span>,</div><div class="line">	success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">		<span class="comment">//console.log(data);</span></div><div class="line">	&#125;,</div><div class="line">	error: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="comment">//console.log("error");</span></div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/02/02/JAVA面试/" class="post-link">JAVA面试</a></h2><span class="post-time">2017年2月2日</span><div class="post-content"><ul>
+<li><a href="https://github.com/it-interview/easy-job/blob/master/面试题/Java研发知识点总结.md">Java研发知识点总结</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/50512240">Java并发多线程面试题 Top 50</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/50786786">面试题总结 —— JAVA高级工程师（一）</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/52917254">面试题总结 —— Java高级工程师（二）</a></li>
+<li><a href="http://blog.csdn.net/moneyshi/article/details/53086927">面试题总结 —— Java高级工程师（三）</a></li>
+<li><a href="https://github.com/scalad/Note">别人整理的笔记，多累</a></div><a href="/2017/02/02/JAVA面试/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/01/20/ReLu-Rectified-Linear-Units-激活函数/" class="post-link">ReLu(Rectified Linear Units)激活函数</a></h2><span class="post-time">2017年1月20日</span><div class="post-content"><ul>
+<li><a href="http://wenku.baidu.com/link?url=GtIz68_egY1kBAFgt3LY0f2v89H6doReu6pcNB34yHiG_PEiSekhZVtSszGB28dtRmEfAKrYOQtu5T0EVLeTzKwpZAeTJEfo00XOgbj9l4u" target="_blank" rel="external">Deep Sparse Rectifier Neural Networks</a></li>
+<li><a href="/assets/files/Deep Sparse Rectifier Neural Networks.pdf">Deep Sparse Rectifier Neural Networks.pdf Download</a></li>
+<li><a href="http://www.cnblogs.com/neopenx/p/4453161.html" target="_blank" rel="external">ReLu(Rectified Linear Units) </a></li>
+<li><a href="http://www.tuicool.com/articles/RJzMZvi" target="_blank" rel="external">修正线性单元(Rectified linear unit，ReLU）</a></li>
+<li><a href="http://blog.csdn.net/sheng_ai/article/details/38055209" target="_blank" rel="external">激活函数实现–4 Rectified linear函数实现</a></li>
+<li><a href="http://www.douban.com/note/348196265/" target="_blank" rel="external">Rectified Linear Units</a></li>
 </ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/07/协方差矩阵/" class="post-link">协方差矩阵</a></h2><span class="post-time">2016年12月7日</span><div class="post-content"><p>待完善</p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/05/matplotlib作图/" class="post-link">matplotlib作图</a></h2><span class="post-time">2016年12月5日</span><div class="post-content"><p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
-<ul>
-<li><a href="http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral">基础介绍</a></li>
-<li><a href="http://www.cnblogs.com/nju2014/p/5620776.html">详解Matplotlib的图像各个部分</a> </li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为1的位置，顺着来排</span></div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为2的位置</span></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line"></div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></div><a href="/2016/12/05/matplotlib作图/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/04/MacOS反编译某研报客户端/" class="post-link">MacOS反编译某研报客户端</a></h2><span class="post-time">2016年12月4日</span><div class="post-content"><p>偶尔看看别人的代码，换一个角度思考，也是一种乐趣～</p>
-<p>好好学习，人生苦短，及时行乐～</p></div><a href="/2016/12/04/MacOS反编译某研报客户端/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/03/MacOS反编译APK/" class="post-link">MacOS反编译APK</a></h2><span class="post-time">2016年12月3日</span><div class="post-content"><p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
-<h3 id="反编译代码的工具"><a href="#反编译代码的工具" class="headerlink" title="反编译代码的工具"></a>反编译代码的工具</h3><ul>
-<li>dex2jar<ul>
-<li>把dex文件转成jar文件</li>
-<li>下载地址： <a href="https://sourceforge.net/projects/dex2jar/files/">https://sourceforge.net/projects/dex2jar/files/</a></li>
-</ul>
-</li>
-<li>jd-gui<ul>
-<li>这个工具用于将jar文件转换成java代码</li>
-<li>下载地址： <a href="http://jd.benow.ca/">http://jd.benow.ca/</a></li>
-</ul>
-</li>
-</ul></div><a href="/2016/12/03/MacOS反编译APK/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="post-link">Spring transaction 事务 -- Isolation & Progation</a></h2><span class="post-time">2016年11月28日</span><div class="post-content"><table>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/01/19/mybatis运算符转义/" class="post-link">MyBatis运算符转义</a></h2><span class="post-time">2017年1月19日</span><div class="post-content"><p>在MyBatis配置文件写SQL语句的时候对于一些比如“&lt;”,”&gt;”,”&lt;&gt;”,”&amp;”,” ‘ “,” “ “是不能够识别的，并且会ERROR。</p>
+<p>可以这样搞：</p>
+<table>
 <thead>
 <tr>
-<th>属性</th>
-<th>类型</th>
-<th>默认值</th>
-<th>说明</th>
+<th>替换后</th>
+<th>标志</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>propagation</td>
-<td>Propagation枚举</td>
-<td>REQUIRED</td>
-<td>事务传播属性 (下有说明)</td>
+<td><code>&amp;lt;</code></td>
+<td>&lt; </td>
 </tr>
 <tr>
-<td>isolation</td>
-<td>isolation枚举</td>
-<td>DEFAULT</td>
-<td>事务隔离级别 (另有说明)</td>
+<td><code>&amp;gt;</code></td>
+<td>&gt;  </td>
 </tr>
 <tr>
-<td>readOnly</td>
-<td>boolean</td>
-<td>false</td>
-<td>是否只读</td>
+<td><code>&amp;lt;\&amp;gt;</code></td>
+<td>&lt;&gt;</td>
 </tr>
 <tr>
-<td>timeout</td>
-<td>int</td>
-<td>-1</td>
-<td>超时(秒)</td>
+<td><code>&amp;amp;</code></td>
+<td>&amp; </td>
 </tr>
 <tr>
-<td>rollbackFor</td>
-<td>Class[]</td>
-<td>{}</td>
-<td>需要回滚的异常类</td>
+<td><code>&amp;apos;</code></td>
+<td>‘</td>
 </tr>
 <tr>
-<td>rollbackForClassName</td>
-<td>String[]</td>
-<td>{}</td>
-<td>需要回滚的异常类名</td>
-</tr>
-<tr>
-<td>noRollbackFor</td>
-<td>Class[]</td>
-<td>{}</td>
-<td>不需要回滚的异常类</td>
-</tr>
-<tr>
-<td>noRollbackForClassName</td>
-<td>String[]</td>
-<td>{}</td>
-<td>不需要回滚的异常类名</td>
+<td><code>&amp;quot;</code></td>
+<td>“</td>
 </tr>
 </tbody>
-</table></div><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/16/python-matplotlib中文显示问题/" class="post-link">python matplotlib中文显示问题</a></h2><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</div><a href="/2016/11/16/python-matplotlib中文显示问题/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
-<blockquote>
-<p>“Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly for targets which use Swift. Use the [Edit &gt; Convert &gt; To Current Swift Syntax…] menu to choose a Swift version or use the Build Settings editor to configure the build setting directly.</p>
-</blockquote>
-<p>设置 对应的SWIFT_VERSION = NO 可成。</p>
-<p><img src="/assets/images/SWIFT_VERSION_SETTING.png" alt=""></p>
-<p>参考 <a href="http://blog.csdn.net/u012847940/article/details/52229485" target="_blank" rel="external">http://blog.csdn.net/u012847940/article/details/52229485</a></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="post-link">那些年踩过的坑之sed和gsed</a></h2><span class="post-time">2016年10月25日</span><div class="post-content"><p>偶然间翻开多年前写过的一个python脚本，恍如昨日～</p>
-<p>这个小程序是用来抓取基金的实时估值数据，然后配置好数量和金额，这样可以盘中大概计算出收益率。</p>
-<p>这个小程序是在Mac上的，所以里面的sed换成了gsed，不然一直要报错。</p>
-<p>还有一个是否生成额外副本的情况，这个个人用的比较少。</p></div><a href="/2016/10/25/那些年踩过的坑之sed和gsed/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/10/19/投资的Daily-Checklist/" class="post-link">投资的Daily Checklist</a></h2><span class="post-time">2016年10月19日</span><div class="post-content"><ul>
-<li>人民币兑美元汇率 <a href="http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml" target="_blank" rel="external">http://finance.sina.com.cn/money/forex/hq/USDCNY.shtml</a></li>
-<li>融资融卷余额走势图 <a href="http://data.10jqka.com.cn/market/rzrq/" target="_blank" rel="external">http://data.10jqka.com.cn/market/rzrq/</a></li>
-<li>昨夜外盘涨跌</li>
-<li>Shibor隔夜拆借利率走势 <a href="http://value500.com/Shibor.asp" target="_blank" rel="external">http://value500.com/Shibor.asp</a></li>
-<li>交易结算资金余额走势图</li>
-<li>A股历史平均市盈率走势图 , 如果市场异常活跃和异常惨淡需要参考该值</li>
-<li>M1M2走势图，大概每月20号左右发布，关注剪刀手和房价走势。平衡资产配置</li>
-<li>value500的指数百科 <a href="http://value500.com/volv500.html" target="_blank" rel="external">http://value500.com/volv500.html</a></li>
-<li>同花顺数据中心 <a href="http://data.10jqka.com.cn/macro/cpi/" target="_blank" rel="external">http://data.10jqka.com.cn/macro/cpi/</a></li>
-</ul>
-<p>暂时想到这么多，后续增加</p>
-</div></article></li></ul><div class="paginator"><a href="/page/2/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/4/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end --></body></html>
+</table>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/01/12/MySQL千万级大表添加索引/" class="post-link">MySQL千万级大表添加索引</a></h2><span class="post-time">2017年1月12日</span><div class="post-content"><h2 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h2><p>新建一个表结构，然后建立对应的数据结构，然后复制数据过来，重命名表名。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> tmp <span class="keyword">like</span> <span class="built_in">record</span>;</div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tmp <span class="keyword">ADD</span> <span class="keyword">INDEX</span> ( <span class="string">`vip`</span> )</div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tmp(ooo，...)  <span class="keyword">select</span>  ooo,... <span class="keyword">from</span> <span class="built_in">record</span></div><div class="line"><span class="keyword">Query</span> OK, <span class="number">10000000</span> <span class="keyword">rows</span> affected (<span class="number">10</span> <span class="keyword">min</span> <span class="number">0.00</span> sec)</div><div class="line"><span class="keyword">Records</span>: <span class="number">10000000</span>  Duplicates: <span class="number">0</span>  <span class="keyword">Warnings</span>: <span class="number">0</span></div><div class="line"><span class="keyword">RENAME</span> <span class="keyword">TABLE</span> <span class="built_in">record</span> <span class="keyword">TO</span> tmp2, tmp <span class="keyword">to</span> <span class="built_in">record</span>;</div><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> tmp2;</div></pre></td></tr></table></figure>
+<h2 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h2><p>利用主从来修改。</p>
+<p>就是先改从库，然后追数据到最新，接着将从库改为主库。</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/01/10/价值投资法之格雷厄姆经典价值投资策略/" class="post-link">价值投资法之格雷厄姆经典价值投资策略</a></h2><span class="post-time">2017年1月10日</span><div class="post-content"><p>  说到价值投资，就不得不提价值投资之父—本杰明.格雷尔姆，接下来为大家介绍的是其经典的价值投资策略。其要求所选的股票必须要有投资价值，而且通过价格和价值的比较研究，进一步选取具有安全边际的股票，简而言之，就是要在承担最小风险的情况下获取尽可能大的收益。</p></div><a href="/2017/01/10/价值投资法之格雷厄姆经典价值投资策略/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/2/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/4/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
