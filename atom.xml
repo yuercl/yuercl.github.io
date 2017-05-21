@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-10T15:07:24.000Z</updated>
+  <updated>2017-05-21T02:22:08.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,320 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis 各数据结构</title>
+    <link href="http://yoursite.com/2017/05/21/Redis-%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    <id>http://yoursite.com/2017/05/21/Redis-各数据结构/</id>
+    <published>2017-05-21T01:19:27.000Z</published>
+    <updated>2017-05-21T02:22:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Redis-命令文档"><a href="#Redis-命令文档" class="headerlink" title="Redis 命令文档"></a>Redis 命令文档</h2><ul>
+<li><a href="http://doc.redisfans.com" target="_blank" rel="external">http://doc.redisfans.com</a></li>
+<li><a href="https://redis.io/commands" target="_blank" rel="external">https://redis.io/commands</a></li>
+</ul>
+<h2 id="Redis的六种数据结构"><a href="#Redis的六种数据结构" class="headerlink" title="Redis的六种数据结构"></a>Redis的六种数据结构</h2><ul>
+<li>Strings</li>
+<li>Hashs</li>
+<li>Lists</li>
+<li>Sets</li>
+<li>Sorted Sets</li>
+<li>Pub/Sub</li>
+</ul>
+<a id="more"></a>
+<h3 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h3><p>Strings 数据结构是简单的key-value类型，value其实不仅是String，也可以是数字。可以使用在常规计数方面，比如说：<strong>微博数、粉丝数、key-value数据</strong></p>
+<h3 id="Hashs"><a href="#Hashs" class="headerlink" title="Hashs"></a>Hashs</h3><p>在Memcached中，我们经常将一些结构化的信息打包成hashmap，在客户端序列化后存储为一个字符串的值，比如用户的昵称、年龄、性别、积分等，这时候在需要修改其中某一项时，通常需要将所有值取出反序列化后，修改某一项的值，再序列化存储回去。这样不仅增大了开销，也不适用于一些可能并发操作的场合（比如两个并发的操作都需要修改积分）。</p>
+<p>Redis的Hash结构可以使你像在数据库中Update一个属性一样只修改某一项属性值。</p>
+<p>它是一个String类型的field和value的映射表，它的添加和删除都是平均的，hash特别适合用于存储对象，对于将对象存储成字符串而言，hash会占用更少的内存，并且可以更方便的存取整个对象。它和java的HashMap完全类似。</p>
+<p>通常用在，<strong>存储部分变更数据，如用户信息</strong>等。</p>
+<h3 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h3><p>Lists 就是链表，可以轻松地实现最新消息排序等功能。Lists的另一个应用就是消息队列，可以利用Lists的PUSH操作，将任务存在Lists中，然后工作线程再用POP操作将任务取出进行执行。Redis还提供了操作Lists中某一段的api，你可以直接查询，删除Lists中某一段的元素。</p>
+<p>Redis的list是每个子元素都是String类型的双向链表，可以通过push和pop操作从列表的头部或者尾部添加或者删除元素，这样<font color="red"><strong>List即可以作为栈，也可以作为队列</strong></font>。</p>
+<p>一般情况Lists 会是一个<strong>消息队列系统</strong>，使用list可以构建队列系统，使用sorted set甚至可以构建有优先级的队列系统。比如：将Redis用作日志收集器队列，多个端点将日志信息写入Redis，然后一个worker统一将所有日志写到磁盘。</p>
+<p><strong>取最新N个数据的操作</strong>、记录前N个最新登陆的用户Id列表，超出的范围可以从数据库中获得。</p>
+<h3 id="Sets"><a href="#Sets" class="headerlink" title="Sets"></a>Sets</h3><p>Sets 就是一个集合，集合的概念就是一堆不重复值的组合。利用Redis提供的Sets数据结构，可以存储一些集合性的数据，提供交集，并集，差集操作。Set是集合，是String类型的无序集合，set是通过hashtable实现的，概念和数学中个的集合基本类似，可以交集，并集，差集等等，set中的元素是没有顺序的。</p>
+<p>案例：</p>
+<p><strong>在微博应用中，可以将一个用户所有的关注人存在一个集合中，将其所有粉丝存在一个集合</strong>。</p>
+<p>Redis还为集合提供了求交集、并集、差集等操作，可以非常方便的实现如共同关注、共同喜好、二度好友等功能，对上面的所有集合操作，你还可以使用不同的命令选择将结果返回给客户端还是存集到一个新的集合中。</p>
+<p>使用案例：<strong>获取某段时间所有数据去重值</strong></p>
+<h3 id="Sorted-Sets"><a href="#Sorted-Sets" class="headerlink" title="Sorted Sets"></a>Sorted Sets</h3><p>和Sets相比，Sorted Sets增加了一个权重参数score，使得集合中的元素能够按score进行有序排列，比如一个存储全班同学成绩的Sorted Sets，其集合value可以是同学的学号，而score就可以是其考试得分，这样在数据插入集合的时候，就已经进行了天然的排序。可以用Sorted Sets来做带权重的队列，比如普通消息的score为1，重要消息的score为2，然后工作线程可以选择按score的倒序来获取工作任务。让重要的任务优先执行。</p>
+<p>使用案例：<strong>排行榜应用，取TOP N操作</strong></p>
+<p>这个需求与上面需求的不同之处在于，前面操作以时间为权重，这个是以某个条件为权重，比如按顶的次数排序，这时候就需要我们的sorted set出马了，将你要排序的值设置成sorted set的score，将具体的数据设置成相应的value，每次只需要执行一条ZADD命令即可。</p>
+<h3 id="Pub-Sub"><a href="#Pub-Sub" class="headerlink" title="Pub/Sub"></a>Pub/Sub</h3><p>Pub/Sub 从字面上理解就是发布（Publish）与订阅（Subscribe），在Redis中，你可以设定对某一个key值进行消息发布及消息订阅，当一个key值上进行了消息发布后，所有订阅它的客户端都会收到相应的消息。这一功能最明显的用法就是<strong>用作实时消息系统</strong>，比如普通的<strong>即时聊天，群聊</strong>等功能。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Redis-命令文档&quot;&gt;&lt;a href=&quot;#Redis-命令文档&quot; class=&quot;headerlink&quot; title=&quot;Redis 命令文档&quot;&gt;&lt;/a&gt;Redis 命令文档&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://doc.redisfans.com&quot;&gt;http://doc.redisfans.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://redis.io/commands&quot;&gt;https://redis.io/commands&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Redis的六种数据结构&quot;&gt;&lt;a href=&quot;#Redis的六种数据结构&quot; class=&quot;headerlink&quot; title=&quot;Redis的六种数据结构&quot;&gt;&lt;/a&gt;Redis的六种数据结构&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Strings&lt;/li&gt;
+&lt;li&gt;Hashs&lt;/li&gt;
+&lt;li&gt;Lists&lt;/li&gt;
+&lt;li&gt;Sets&lt;/li&gt;
+&lt;li&gt;Sorted Sets&lt;/li&gt;
+&lt;li&gt;Pub/Sub&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Curator 版本折腾</title>
+    <link href="http://yoursite.com/2017/05/19/Curator-%E7%89%88%E6%9C%AC%E6%8A%98%E8%85%BE/"/>
+    <id>http://yoursite.com/2017/05/19/Curator-版本折腾/</id>
+    <published>2017-05-19T02:01:31.000Z</published>
+    <updated>2017-05-21T02:21:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近接手一个短信系统，其中有一个代理模块是HA高可用的，HA的方法是每次启动proxy，proxy会在zookeeper中去leader election，这样便实现高可用。</p>
+<a id="more"></a>
+<p>迁移老项目osgi到新项目maven + Spring，运行一直提示错误，刚刚Connected就有被Suspend，然后又是Reconnect。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EndOfStreamException: Unable to read additional data from client</div></pre></td></tr></table></figure>
+<p>搜索了好多，给的结果大部分是说，当zookeeper实例的个数不满足集群存活个数的条件的时候，就会无法读取数据。</p>
+<p>因为本机的zookeeper是单实例的情况，应该不是存活个数的问题。</p>
+<p>最后无解，把example弄下来，跑了下example没问题，但是使用本机上的zookeeper一样存在问题，猜测可能是版本问题，去官网找文档，发现Curator对zookeeper的实例版本是有要求的，降低Curator版本，问题解决。</p>
+<p>附官网上面的一句话：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">The are currently two released versions of Curator, 2.x.x and 3.x.x:</div><div class="line"></div><div class="line">Curator 2.x.x - compatible with both ZooKeeper 3.4.x and ZooKeeper 3.5.x</div><div class="line">Curator 3.x.x - compatible only with ZooKeeper 3.5.x and includes support for new features such as dynamic reconfiguration, etc.</div><div class="line">ZooKeeper 3.5.x adds a number of new features including dynamic reconfiguration, watcher removal and others.</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近接手一个短信系统，其中有一个代理模块是HA高可用的，HA的方法是每次启动proxy，proxy会在zookeeper中去leader election，这样便实现高可用。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Curator" scheme="http://yoursite.com/tags/Curator/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>香料</title>
+    <link href="http://yoursite.com/2017/05/14/%E9%A6%99%E6%96%99/"/>
+    <id>http://yoursite.com/2017/05/14/香料/</id>
+    <published>2017-05-14T04:00:00.000Z</published>
+    <updated>2017-05-13T03:03:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这些是一些常用的香料，附带了一些说明，卤水。</p>
+<h4 id="小茴香"><a href="#小茴香" class="headerlink" title="小茴香"></a>小茴香</h4><p><strong>小茴香</strong>，基础调料。所有卤料和一般炖肉均用到小茴香，亲和力高，百搭。一来可去肉腥，二来可重新添香，味道比八角淡，多加一些。</p>
+<h4 id="草果"><a href="#草果" class="headerlink" title="草果"></a>草果</h4><p><strong>草果</strong>，有辛香。和牛羊肉是绝配，特别是羊肉，炖汤的时候加入很鲜美，卤牛肉可多加一颗草果。</p>
+<a id="more"></a>
+<h4 id="香果"><a href="#香果" class="headerlink" title="香果"></a>香果</h4><p><strong>香果</strong>，微苦，有辣味。香果是未去皮的肉豆蔻，味道浓烈，加一颗即可。</p>
+<h4 id="肉豆蔻"><a href="#肉豆蔻" class="headerlink" title="肉豆蔻"></a>肉豆蔻</h4><p><strong>肉豆蔻</strong>，有甜香，喜油腻。炖鸭肉或猪肉的时候可多加一颗，潮汕卤里也多有肉豆蔻。</p>
+<h4 id="山栀"><a href="#山栀" class="headerlink" title="山栀"></a>山栀</h4><p><strong>山栀</strong>，染色明显。有和番红花一样的染色能力，但价格便宜，味清凉略苦。</p>
+<h4 id="川砂仁"><a href="#川砂仁" class="headerlink" title="川砂仁"></a>川砂仁</h4><p><strong>川砂仁</strong>，姜科，有类似于樟木的香味。川卤里必用的调料，微辣。</p>
+<h4 id="八角"><a href="#八角" class="headerlink" title="八角"></a>八角</h4><p><strong>八角</strong>，味重，三颗足够。</p>
+<h4 id="桂皮"><a href="#桂皮" class="headerlink" title="桂皮"></a>桂皮</h4><p><strong>桂皮</strong>，芳香偏甜，去腥一绝。</p>
+<h4 id="山奈"><a href="#山奈" class="headerlink" title="山奈"></a>山奈</h4><p><strong>山奈</strong>，也叫沙姜。属辛辣味调料，跟干姜片明显的区别在于肉质细密一些。</p>
+<h4 id="白蔻"><a href="#白蔻" class="headerlink" title="白蔻"></a>白蔻</h4><p><strong>白蔻</strong>，炖肉用香料，相对其他豆蔻类味道温和，亲和力也高，可多加。</p>
+<h4 id="甘草"><a href="#甘草" class="headerlink" title="甘草"></a>甘草</h4><p><strong>甘草</strong>，有甘甜味，在各类卤水中均有使用。一来可以增甜提鲜，二来也有防腐作用。</p>
+<h4 id="丁香"><a href="#丁香" class="headerlink" title="丁香"></a>丁香</h4><p><strong>丁香</strong>，有异香。卤味有言，若想骨里香，就得放丁香。丁香味浓且烈，又不容易散，三升水最多加三粒。</p>
+<h4 id="干姜片"><a href="#干姜片" class="headerlink" title="干姜片"></a>干姜片</h4><p><strong>干姜片</strong>，去腥。</p>
+<h4 id="陈皮"><a href="#陈皮" class="headerlink" title="陈皮"></a>陈皮</h4><p><strong>陈皮</strong>，作用奇特。可以中和浓烈刺激的味道，比如肉蔻草果煮出太浓的肉味，丁香的异香。同时也有不错的提鲜作用，特别是卤鸡的时候。</p>
+<h4 id="香叶"><a href="#香叶" class="headerlink" title="香叶"></a>香叶</h4><p><strong>香叶</strong>，芳香类调料，味道易散，可稍微多加一些。</p>
+<h4 id="黄冰糖"><a href="#黄冰糖" class="headerlink" title="黄冰糖"></a>黄冰糖</h4><p><strong>黄冰糖</strong>，中和咸味和提鲜。</p>
+<h4 id="红曲米"><a href="#红曲米" class="headerlink" title="红曲米"></a>红曲米</h4><p><strong>红曲米</strong>，添加红色。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这些是一些常用的香料，附带了一些说明，卤水。&lt;/p&gt;
+&lt;h4 id=&quot;小茴香&quot;&gt;&lt;a href=&quot;#小茴香&quot; class=&quot;headerlink&quot; title=&quot;小茴香&quot;&gt;&lt;/a&gt;小茴香&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;小茴香&lt;/strong&gt;，基础调料。所有卤料和一般炖肉均用到小茴香，亲和力高，百搭。一来可去肉腥，二来可重新添香，味道比八角淡，多加一些。&lt;/p&gt;
+&lt;h4 id=&quot;草果&quot;&gt;&lt;a href=&quot;#草果&quot; class=&quot;headerlink&quot; title=&quot;草果&quot;&gt;&lt;/a&gt;草果&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;草果&lt;/strong&gt;，有辛香。和牛羊肉是绝配，特别是羊肉，炖汤的时候加入很鲜美，卤牛肉可多加一颗草果。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="香料" scheme="http://yoursite.com/tags/%E9%A6%99%E6%96%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spark与Storm的对比</title>
+    <link href="http://yoursite.com/2017/05/13/Spark%E4%B8%8EStorm%E7%9A%84%E5%AF%B9%E6%AF%94/"/>
+    <id>http://yoursite.com/2017/05/13/Spark与Storm的对比/</id>
+    <published>2017-05-13T01:08:16.000Z</published>
+    <updated>2017-05-13T01:53:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<table>
+<thead>
+<tr>
+<th>对比点</th>
+<th>Storm</th>
+<th>Spark Streaming</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实时计算模型</td>
+<td>纯实时，来一条数据，处理一条数据</td>
+<td>准实时，对一个时间段内的数据收集起来，作为一个RDD，再处理</td>
+</tr>
+<tr>
+<td>实时计算延迟度</td>
+<td>毫秒级</td>
+<td>秒级</td>
+</tr>
+<tr>
+<td>吞吐量</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>事务机制</td>
+<td>支持完善</td>
+<td>支持，但不够完善</td>
+</tr>
+<tr>
+<td>健壮性 / 容错性</td>
+<td>ZooKeeper，Acker，非常强</td>
+<td>Checkpoint，WAL，一般</td>
+</tr>
+<tr>
+<td>动态调整并行度</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody>
+</table>
+<p>RDD(Resilient Distributed Datasets)，弹性分布式数据集。</p>
+<p>对实时性要求高选择Storm，如银行金融系统等。</p>
+<p>相对于Storm来讲，不满足的实时场景，在不要求纯实时，不要求强大可靠的事务机制，不要求动态调整并行度，那么可以考虑使用Spark Streaming。</p>
+<p>在Spark的生态中，还包含了Spark Core离线批处理、Spark SQL交互式查询，如果在实时计算中需要这些地方的时候，Spark会更好。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;对比点&lt;/th&gt;
+&lt;th&gt;Storm&lt;/th&gt;
+&lt;th&gt;Spark Streaming&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;实时计算模型&lt;/td&gt;
+&lt;td&gt;纯实时，来一条数据，处理一条数据&lt;/
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kcptun</title>
+    <link href="http://yoursite.com/2017/05/12/Kcptun/"/>
+    <id>http://yoursite.com/2017/05/12/Kcptun/</id>
+    <published>2017-05-12T01:43:42.000Z</published>
+    <updated>2017-05-12T01:45:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Kcptun能有效的加速科学上网，目前最低配置的搬瓦工能够看720p。Kcptun客户端非常省资源，可参考GitHub详细说明。</p>
+<ul>
+<li><a href="http://www.gblm.net/209.html" target="_blank" rel="external">Kcptun给Shadowsocks加速</a></li>
+<li><a href="https://github.com/xtaci/kcptun" target="_blank" rel="external">https://github.com/xtaci/kcptun</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Kcptun能有效的加速科学上网，目前最低配置的搬瓦工能够看720p。Kcptun客户端非常省资源，可参考GitHub详细说明。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.gblm.net/209.html&quot; target=&quot;_blank&quot; rel=
+    
+    </summary>
+    
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="Kcptun" scheme="http://yoursite.com/tags/Kcptun/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>删除链表中的某一个节点</title>
+    <link href="http://yoursite.com/2017/05/11/%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E6%9F%90%E4%B8%80%E4%B8%AA%E8%8A%82%E7%82%B9/"/>
+    <id>http://yoursite.com/2017/05/11/删除链表中的某一个节点/</id>
+    <published>2017-05-11T02:19:44.000Z</published>
+    <updated>2017-05-11T02:24:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>以前在学校的时候面试被问过，上个月面试的时候再次被问到，当时想了想竟然想出来了。但是过了几天又一下忘了。</p>
+<p>问题：一个单向链表，给其中的一个节点p，现在要删掉这个节点，需要怎么操作，没有链表的头节点，所以不能遍历。</p>
+<p>参考图片解决方案:</p>
+<p><img src="/assets/images/linked_list_delete_p.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;以前在学校的时候面试被问过，上个月面试的时候再次被问到，当时想了想竟然想出来了。但是过了几天又一下忘了。&lt;/p&gt;
+&lt;p&gt;问题：一个单向链表，给其中的一个节点p，现在要删掉这个节点，需要怎么操作，没有链表的头节点，所以不能遍历。&lt;/p&gt;
+&lt;p&gt;参考图片解决方案:&lt;/p&gt;
+&lt;p
+    
+    </summary>
+    
+      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>负载均衡调度算法</title>
+    <link href="http://yoursite.com/2017/05/11/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2017/05/11/负载均衡调度算法/</id>
+    <published>2017-05-11T01:58:13.000Z</published>
+    <updated>2017-05-11T02:03:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://blog.csdn.net/pzw_0612/article/details/47357221" target="_blank" rel="external">轮询调度算法(Round-Robin Scheduling)</a></li>
+<li><a href="http://www.cnblogs.com/huligong1234/p/3819979.html" target="_blank" rel="external">权重轮询调度算法(WeightedRound-RobinScheduling)</a></li>
+</ul>
+<p>轮询调度算法，数据结构，类需要包含轮训调度计算器AtomicInteger，每次只需要求余即可。</p>
+<p>权重轮询调度算法，第一次返回权值取最大的那个服务器，之后通过权重的不断递减寻找适合的服务器返回，直到轮询结束，权值返回为0。 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/pzw_0612/article/details/47357221&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;轮询调度算法(Round-Robin Scheduling)&lt;/a&gt;&lt;
+    
+    </summary>
+    
+      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="负载均衡" scheme="http://yoursite.com/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python调用通达信交易客户端</title>
     <link href="http://yoursite.com/2017/05/10/Python%E8%B0%83%E7%94%A8%E9%80%9A%E8%BE%BE%E4%BF%A1%E4%BA%A4%E6%98%93%E5%AE%A2%E6%88%B7%E7%AB%AF/"/>
     <id>http://yoursite.com/2017/05/10/Python调用通达信交易客户端/</id>
     <published>2017-05-10T15:06:18.000Z</published>
-    <updated>2017-05-10T15:07:24.000Z</updated>
+    <updated>2017-05-11T02:05:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>没啥说的，方案和Python调用QQ发消息一致。需要通过<code>spy.exe</code>来获取窗口句柄。</p>
+<p>结合RQAlpha等量化工具或量化平台，可实现即时下单。另可采用实盘易方案。</p>
 <p>不多些什么，仅当保存一下代码。</p>
 <a id="more"></a>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> win32api, win32gui, win32con, win32com</div><div class="line"><span class="keyword">import</span> win32clipboard <span class="keyword">as</span> CP</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="comment">#----------------------------utils------------------------------------</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_idxSubHandle</span><span class="params">(pHandle, winClass, index=<span class="number">0</span>)</span>:</span></div><div class="line">    <span class="keyword">assert</span> type(index) == int <span class="keyword">and</span> index&gt;=<span class="number">0</span></div><div class="line">    handle = win32gui.FindWindowEx(pHandle, <span class="number">0</span>, winClass, <span class="keyword">None</span>)</div><div class="line">    <span class="keyword">while</span> index&gt;<span class="number">0</span>:</div><div class="line">        handle = win32gui.FindWindowEx(pHandle, handle, winClass, <span class="keyword">None</span>)</div><div class="line">        index -= <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> handle</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_clipboard</span><span class="params">()</span>:</span></div><div class="line">    win32api.keybd_event(<span class="number">17</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</div><div class="line">    win32api.keybd_event(<span class="number">67</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</div><div class="line">    win32api.keybd_event(<span class="number">67</span>, <span class="number">0</span>, win32con.KEYEVENTF_KEYUP, <span class="number">0</span>)</div><div class="line">    win32api.keybd_event(<span class="number">17</span>, <span class="number">0</span>, win32con.KEYEVENTF_KEYUP, <span class="number">0</span>)</div><div class="line">    time.sleep(<span class="number">0.1</span>)</div><div class="line">    CP.OpenClipboard()</div><div class="line">    raw_text = CP.GetClipboardData(win32con.CF_TEXT)</div><div class="line">    CP.CloseClipboard()</div><div class="line">    decode = raw_text.decode(<span class="string">'gb2312'</span>).split()</div><div class="line">    decode.pop()</div><div class="line">    <span class="keyword">return</span> decode</div><div class="line"></div><div class="line"><span class="comment">#-----------------------------Class_HT------------------------------------</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HT</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.Title = <span class="string">'网上股票交易系统5.0'</span></div><div class="line">        self.__get_handles()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get_handles</span><span class="params">(self)</span>:</span></div><div class="line">        Main = win32gui.FindWindow(<span class="number">0</span>, self.Title)  <span class="comment"># HT交易窗口</span></div><div class="line">        Frame = win32gui.GetDlgItem(Main, <span class="number">59648</span>)  <span class="comment"># 操作窗口框架</span></div><div class="line">        Afxwnd = win32gui.GetDlgItem(Frame, <span class="number">59648</span>) <span class="comment"># 操作窗口框架</span></div><div class="line">        Hexin = win32gui.GetDlgItem(Afxwnd, <span class="number">129</span>)</div><div class="line">        Scrolwnd = win32gui.GetDlgItem(Hexin, <span class="number">200</span>) <span class="comment"># 左部折叠菜单控件</span></div><div class="line">        treev = win32gui.GetDlgItem(Scrolwnd, <span class="number">129</span>) <span class="comment"># 左部折叠菜单控件</span></div><div class="line">        <span class="comment"># 获取委托窗口所有控件句柄</span></div><div class="line">        win32api.PostMessage(treev, win32con.WM_KEYDOWN, win32con.VK_F1, <span class="number">0</span>)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        F_Bentrust = win32gui.GetDlgItem(Frame, <span class="number">59649</span>) <span class="comment"># 委托窗口框架</span></div><div class="line">        self.E_Bsymbol = win32gui.GetDlgItem(F_Bentrust, <span class="number">1032</span>)  <span class="comment"># 买入代码输入框</span></div><div class="line">        self.E_Bprice = win32gui.GetDlgItem(F_Bentrust, <span class="number">1033</span>)  <span class="comment"># 买入价格输入框</span></div><div class="line">        self.E_Bvol = win32gui.GetDlgItem(F_Bentrust, <span class="number">1034</span>)  <span class="comment"># 买入数量输入框</span></div><div class="line">        self.B_Buy = win32gui.GetDlgItem(F_Bentrust, <span class="number">1006</span>)  <span class="comment"># 买入确认按钮</span></div><div class="line">        self.B_refresh = win32gui.GetDlgItem(F_Bentrust, <span class="number">32790</span>)  <span class="comment"># 刷新持仓按钮</span></div><div class="line">        F_Bhexin = win32gui.GetDlgItem(F_Bentrust, <span class="number">1047</span>)  <span class="comment"># 持仓显示框架</span></div><div class="line">        F_Bhexinsub = win32gui.GetDlgItem(F_Bhexin, <span class="number">200</span>)  <span class="comment"># 持仓显示框架</span></div><div class="line">        self.G_position = win32gui.GetDlgItem(F_Bhexinsub, <span class="number">1047</span>)  <span class="comment"># 持仓列表</span></div><div class="line">        win32api.PostMessage(treev, win32con.WM_KEYDOWN, win32con.VK_F2, <span class="number">0</span>)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        F_Sentrust = win32gui.GetDlgItem(Frame, <span class="number">59649</span>)  <span class="comment"># 委托窗口框架</span></div><div class="line">        self.E_Ssymbol = win32gui.GetDlgItem(F_Sentrust, <span class="number">1032</span>)  <span class="comment"># 卖出代码输入框</span></div><div class="line">        self.E_Sprice = win32gui.GetDlgItem(F_Sentrust, <span class="number">1033</span>)  <span class="comment">#卖出价格输入框</span></div><div class="line">        self.E_Svol = win32gui.GetDlgItem(F_Sentrust, <span class="number">1034</span>)  <span class="comment"># 卖出数量输入框</span></div><div class="line">        self.B_Sell = win32gui.GetDlgItem(F_Sentrust, <span class="number">1006</span>)  <span class="comment"># 卖出确认按钮</span></div><div class="line">        <span class="comment">#撤单窗口</span></div><div class="line">        win32api.PostMessage(treev, win32con.WM_KEYDOWN, win32con.VK_F3, <span class="number">0</span>)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        F_Centrust = win32gui.GetDlgItem(Frame, <span class="number">59649</span>)  <span class="comment"># 撤单窗口框架</span></div><div class="line">        self.E_Csymbol = win32gui.GetDlgItem(F_Centrust, <span class="number">3348</span>)  <span class="comment"># 卖出代码输入框</span></div><div class="line">        self.B_Csort = win32gui.GetDlgItem(F_Centrust, <span class="number">3349</span>) <span class="comment"># 查询代码按钮</span></div><div class="line">        self.B_Cbuy = win32gui.GetDlgItem(F_Centrust, <span class="number">30002</span>) <span class="comment"># 撤买</span></div><div class="line">        self.B_Csell = win32gui.GetDlgItem(F_Centrust, <span class="number">30003</span>)  <span class="comment"># 撤卖</span></div><div class="line">        F_Chexin = win32gui.GetDlgItem(F_Centrust, <span class="number">1047</span>)</div><div class="line">        F_Chexinsub = win32gui.GetDlgItem(F_Chexin, <span class="number">200</span>)</div><div class="line">        self.G_entrust = win32gui.GetDlgItem(F_Chexinsub, <span class="number">1047</span>)  <span class="comment"># 委托列表</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">buy</span><span class="params">(self, symbol, price, vol)</span>:</span></div><div class="line">        win32gui.SendMessage(self.E_Bsymbol, win32con.WM_SETTEXT, <span class="keyword">None</span>, symbol) <span class="comment"># 输入买入代码</span></div><div class="line">        win32gui.SendMessage(self.E_Bprice, win32con.WM_SETTEXT, <span class="keyword">None</span>, price)  <span class="comment"># 输入买入价格</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.E_Bvol, win32con.WM_SETTEXT, <span class="keyword">None</span>, vol)  <span class="comment"># 输入买入数量</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.B_Buy, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>) <span class="comment"># 买入确定</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sell</span><span class="params">(self, symbol, price, vol)</span>:</span></div><div class="line">        win32gui.SendMessage(self.E_Ssymbol, win32con.WM_SETTEXT, <span class="keyword">None</span>, symbol) <span class="comment"># 输入卖出代码</span></div><div class="line">        win32gui.SendMessage(self.E_Sprice, win32con.WM_SETTEXT, <span class="keyword">None</span>, price)  <span class="comment"># 输入卖出价格</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.E_Svol, win32con.WM_SETTEXT, <span class="keyword">None</span>, vol)  <span class="comment"># 输入卖出数量</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.B_Sell, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>) <span class="comment"># 卖出确定</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cancle</span><span class="params">(self, symbol, direction)</span>:</span></div><div class="line">        win32gui.SendMessage(self.B_refresh, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 刷新持仓</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        win32gui.SendMessage(self.E_Csymbol, win32con.WM_SETTEXT, <span class="keyword">None</span>, symbol)  <span class="comment"># 输入撤单</span></div><div class="line">        win32gui.SendMessage(self.B_Csort, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 查询代码</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        <span class="keyword">if</span> direction == <span class="number">0</span>:</div><div class="line">            win32gui.SendMessage(self.B_Cbuy, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 撤买</span></div><div class="line">        <span class="keyword">elif</span> direction == <span class="number">1</span>:</div><div class="line">            win32gui.SendMessage(self.B_Csell, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 撤卖</span></div><div class="line">        time.sleep(<span class="number">0.3</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">position</span><span class="params">(self)</span>:</span></div><div class="line">        win32gui.SendMessage(self.B_refresh, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 刷新持仓</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        win32gui.SetForegroundWindow(self.G_position)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        position = []</div><div class="line">        data = get_clipboard()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, int((len(data)<span class="number">-14</span>)/<span class="number">14</span>)+<span class="number">1</span>):</div><div class="line">            item = data[<span class="number">14</span>*i:<span class="number">14</span>*(i+<span class="number">1</span>)]</div><div class="line">            position.append(item)</div><div class="line">        df = pd.DataFrame(position, columns=data[:<span class="number">14</span>])</div><div class="line">        <span class="keyword">return</span> df</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">entrusts</span><span class="params">(self)</span>:</span></div><div class="line">        win32gui.SendMessage(self.B_refresh, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 刷新持仓</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        win32gui.SetForegroundWindow(self.G_entrust)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        entrust=[]</div><div class="line">        data = get_clipboard()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, int((len(data)<span class="number">-13</span>)/<span class="number">13</span>)+<span class="number">1</span>):</div><div class="line">            item = data[<span class="number">13</span>*i:<span class="number">13</span>*(i+<span class="number">1</span>)]</div><div class="line">            entrust.append(item)</div><div class="line">        df = pd.DataFrame(entrust, columns=data[:<span class="number">13</span>])</div><div class="line">        <span class="keyword">return</span> df</div><div class="line"></div><div class="line"><span class="comment">#------------------------------Test-------------------------------------------</span></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    trader = HT()</div><div class="line">    time.sleep(<span class="number">1</span>)</div><div class="line">    trader.buy(<span class="string">'000002'</span>, <span class="string">'24.76'</span>, <span class="string">'100'</span>)</div><div class="line">    trader.cancle(<span class="string">'000002'</span>, <span class="number">0</span>)</div><div class="line">    <span class="comment">#df = trader.position()</span></div><div class="line">    <span class="comment">#print(trader.entrusts())</span></div></pre></td></tr></table></figure>]]></content>
@@ -30,6 +337,7 @@
     <summary type="html">
     
       &lt;p&gt;没啥说的，方案和Python调用QQ发消息一致。需要通过&lt;code&gt;spy.exe&lt;/code&gt;来获取窗口句柄。&lt;/p&gt;
+&lt;p&gt;结合RQAlpha等量化工具或量化平台，可实现即时下单。另可采用实盘易方案。&lt;/p&gt;
 &lt;p&gt;不多些什么，仅当保存一下代码。&lt;/p&gt;
     
     </summary>
@@ -427,281 +735,6 @@
     
     
       <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式之适配器模式</title>
-    <link href="http://yoursite.com/2017/04/29/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/04/29/设计模式之适配器模式/</id>
-    <published>2017-04-29T03:51:26.000Z</published>
-    <updated>2017-05-01T14:28:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;废话&quot;&gt;&lt;a href=&quot;#废话&quot; class=&quot;headerlink&quot; title=&quot;废话&quot;&gt;&lt;/a&gt;废话&lt;/h1&gt;
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="适配器模式" scheme="http://yoursite.com/tags/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="Adapter" scheme="http://yoursite.com/tags/Adapter/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式之单例模式</title>
-    <link href="http://yoursite.com/2017/04/29/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/04/29/设计模式之单例模式/</id>
-    <published>2017-04-29T03:33:34.000Z</published>
-    <updated>2017-04-29T15:48:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>这个类被创建后，只能产生一个实例供外部访问，并且提供一个全局的访问点。</p>
-<p>设计上一般遵循这三点：</p>
-<ul>
-<li>将采用单例模式的类的构造方法私有化（采用private修饰）</li>
-<li>在其内部产生该类的实例化对象，并将其封装成private static类型</li>
-<li>定义一个静态方法返回该类的实例</li>
-</ul>
-<a id="more"></a>
-<h3 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** </span></div><div class="line"> * 饿汉式</div><div class="line"> * 优点：线程安全、效率比较低、不存在线程同步问题、也不会加synchronized导致性能问题</div><div class="line"> * 缺点：当类SingletonTest被加载的时候，会初始化static的instance，静态变量被创建并分配内存空间，从这以后，这个static的instance对象便一直占着这段内存（即便你还没有用到这个实例），当类被卸载时，静态变量被摧毁，并释放所占有的内存，因此在某些特定条件下会耗费内存 </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonTest</span> </span>&#123;  </div><div class="line">    <span class="comment">// 私有构造方法、防止通过new SingletonTest()实例化</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonTest</span><span class="params">()</span> </span>&#123;&#125; </div><div class="line"></div><div class="line">    <span class="comment">// 将自身的实例对象设置为一个属性，并加上Static和final修饰符</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> SingletonTest instance = <span class="keyword">new</span> SingletonTest();  </div><div class="line"></div><div class="line">    <span class="comment">// 静态方法返回该类的实例</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonTest <span class="title">getInstance</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> instance;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="饱汉式"><a href="#饱汉式" class="headerlink" title="饱汉式"></a>饱汉式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**  </span></div><div class="line"> * 饱汉式</div><div class="line"> * 非线程安全   </div><div class="line"> * 优点是：写起来比较简单，当类SingletonTest被加载的时候，静态变量static的instance未被创建并分配内存空间，当getInstance方法第一次被调用时，初始化instance变量，并分配内存，因此在某些特定条件下会节约了内存；</div><div class="line"> * 缺点是：并发环境下很可能出现多个SingletonTest实例。</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonTest</span><span class="params">()</span> </span>&#123;&#125;    </div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SingletonTest instance;   </div><div class="line"></div><div class="line">    <span class="comment">// 静态方法，调用时初始化，多线程访问时，可能造成重复初始化问题</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonTest <span class="title">getInstance</span><span class="params">()</span> </span>&#123;   </div><div class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>)   </div><div class="line">            instance = <span class="keyword">new</span> SingletonTest();   </div><div class="line">        <span class="keyword">return</span> instance;   </div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="饱汉式-线程安全实现"><a href="#饱汉式-线程安全实现" class="headerlink" title="饱汉式 + 线程安全实现"></a>饱汉式 + 线程安全实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**  </span></div><div class="line"> * 饱汉式 + 线程安全实现   </div><div class="line"> * 优点：使用synchronized关键字避免多线程访问时，出现多个SingletonTest实例。</div><div class="line"> * 缺点是：同步方法频繁调用时，效率低</div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonTest</span><span class="params">()</span> </span>&#123;&#125;   </div><div class="line"></div><div class="line">    <span class="comment">// 定义一个SingletonTest类型的变量（不初始化，注意这里没有使用final关键字）</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SingletonTest instance;   </div><div class="line"></div><div class="line">    <span class="comment">// 静态方法、调用时再初始化，使用synchronized避免多线程访问</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> SingletonTest <span class="title">getInstance</span><span class="params">()</span> </span>&#123;   </div><div class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>)   </div><div class="line">            instance = <span class="keyword">new</span> SingletonTest();   </div><div class="line">        <span class="keyword">return</span> instance;   </div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="线程安全-效率高"><a href="#线程安全-效率高" class="headerlink" title="线程安全 + 效率高"></a>线程安全 + 效率高</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**  </span></div><div class="line"> * 线程安全 + 效率高    </div><div class="line"> * 优点：内存占用少，效率高，线程安全，多线程操作原子性</div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonTest</span> </span>&#123; </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonTest</span><span class="params">()</span> </span>&#123;&#125;   </div><div class="line">    </div><div class="line">    <span class="comment">//volatile保证了多线程访问时instance变量的可见性，避免了instance初始化时其他变量属性还没赋值完时，被另外线程调用</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> SingletonTest instance;  </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonTest <span class="title">getIstance</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="comment">// 对象实例化时与否判断（不使用同步代码块，instance不等于null时，直接返回对象，提高运行效率）</span></div><div class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">//对象未初始化时，使用同步代码块，保证多线程访问时对象在第一次创建后，不再重复被创建</span></div><div class="line">            <span class="keyword">synchronized</span> (SingletonTest.class) &#123;</div><div class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">                    instance = <span class="keyword">new</span> SingletonTest();   </div><div class="line">                &#125;   </div><div class="line">            &#125;   </div><div class="line">        &#125;   </div><div class="line">        <span class="keyword">return</span> instance;   </div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;废话&quot;&gt;&lt;a href=&quot;#废话&quot; class=&quot;headerlink&quot; title=&quot;废话&quot;&gt;&lt;/a&gt;废话&lt;/h1&gt;&lt;p&gt;这个类被创建后，只能产生一个实例供外部访问，并且提供一个全局的访问点。&lt;/p&gt;
-&lt;p&gt;设计上一般遵循这三点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;将采用单例模式的类的构造方法私有化（采用private修饰）&lt;/li&gt;
-&lt;li&gt;在其内部产生该类的实例化对象，并将其封装成private static类型&lt;/li&gt;
-&lt;li&gt;定义一个静态方法返回该类的实例&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="单例模式" scheme="http://yoursite.com/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="Singleton" scheme="http://yoursite.com/tags/Singleton/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>高并发之服务降级</title>
-    <link href="http://yoursite.com/2017/04/29/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7/"/>
-    <id>http://yoursite.com/2017/04/29/高并发之服务降级/</id>
-    <published>2017-04-29T03:20:48.000Z</published>
-    <updated>2017-04-29T03:28:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>降级，也就是丢车保帅，不是直接挂掉。当然对用户来讲是有损服务，不过总比拒绝服务好。</p>
-<p>通常降级的策略需要根据自己的场景来设计相应的策略。</p>
-<p>降级有手动降级和自动降级的区别，不过这不是重点。</p>
-<p>都是一些策略上的东西，可以参考下面的文章，写的很全面。</p>
-<ul>
-<li><a href="http://blog.csdn.net/enweitech/article/details/52061126" target="_blank" rel="external">高并发系统的降级特技</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;降级，也就是丢车保帅，不是直接挂掉。当然对用户来讲是有损服务，不过总比拒绝服务好。&lt;/p&gt;
-&lt;p&gt;通常降级的策略需要根据自己的场景来设计相应的策略。&lt;/p&gt;
-&lt;p&gt;降级有手动降级和自动降级的区别，不过这不是重点。&lt;/p&gt;
-&lt;p&gt;都是一些策略上的东西，可以参考下面的文章，写的
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="并发编程" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>垃圾收集算法</title>
-    <link href="http://yoursite.com/2017/04/28/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2017/04/28/垃圾收集算法/</id>
-    <published>2017-04-28T04:12:02.000Z</published>
-    <updated>2017-04-28T04:19:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>GC注意考虑这些问题：</p>
-<ul>
-<li>哪些内存需要回收？</li>
-<li>什么时候回收？</li>
-<li>如何回收？</li>
-</ul>
-<h3 id="对象“存活”判定算法"><a href="#对象“存活”判定算法" class="headerlink" title="对象“存活”判定算法"></a>对象“存活”判定算法</h3><h4 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h4><p>原理：给对象中添加一个引用计数器，每当有一个地方引用它时，计数器加1；引用失效时，计数器减1；任何时刻计数器为0的对象就是不可能再被使用的。 </p>
-<p>缺点：很难解决对象相互循环引用的问题（两个对象相互循环引用，但其实他们都已经没有用了）。 </p>
-<h4 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h4><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>无论是通过引用计数算法判断对象的引用数量，还是通过可达性分析算法判断对象的引用链是否可达，判定对象是否存活都与“引用”有关。 </p>
-<ul>
-<li>强引用（Strong Reference）</li>
-<li>软引用（Soft Reference）</li>
-<li>弱引用（Weak Reference）</li>
-<li>虚引用（Phantom Reference）</li>
-</ul>
-<p>强引用， <code>Object object = new Object()</code> 这类的引用，只要强引用还存在，垃圾收集器永远不会回收掉被引用的对象。 </p>
-<p>软引用是用来描述一些还在用但并非必需的对象。对于软引用关联着的对象，在系统将要发生内存溢出异常之前，将会把这些对象列进回收范围之中进行第二次回收，如果这次回收完成还没有足够的内存，才会抛出内存溢出异常。在JDK1.2之后，提供了SoftReference类来实现软引用。 </p>
-<p>弱引用也是用来描述非必需对象的，但是它的强度比软引用要更弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生之前。当垃圾收集器工作时，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。在JDK1.2之后，提供了WeakReference类来实现弱引用。 </p>
-<p>虚引用也称为幽灵引用或者幻影引用，它是最弱的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。在JDK1.2之后，提供了PhantomReference类来实现虚引用。</p>
-<p><a href="http://blog.csdn.net/top_code/article/details/51289452" target="_blank" rel="external">http://blog.csdn.net/top_code/article/details/51289452</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;GC注意考虑这些问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;哪些内存需要回收？&lt;/li&gt;
-&lt;li&gt;什么时候回收？&lt;/li&gt;
-&lt;li&gt;如何回收？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;对象“存活”判定算法&quot;&gt;&lt;a href=&quot;#对象“存活”判定算法&quot; class=&quot;headerlink
-    
-    </summary>
-    
-      <category term="JVM" scheme="http://yoursite.com/categories/JVM/"/>
-    
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>高并发之限流</title>
-    <link href="http://yoursite.com/2017/04/25/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B9%8B%E9%99%90%E6%B5%81/"/>
-    <id>http://yoursite.com/2017/04/25/高并发之限流/</id>
-    <published>2017-04-25T09:14:06.000Z</published>
-    <updated>2017-04-29T03:28:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h3><p>系统在设计之初就会有一个预估容量，长时间超过系统能承受的TPS/QPS阈值，系统可能会被压垮，最终导致整个服务不够用。为了避免这种情况，我们就需要对接口请求进行限流。 </p>
-<p>当然，先压力测试后给一个容量可能会更好。</p>
-<a id="more"></a>
-<p>限流的目的是通过对并发访问请求进行限速，或者一个时间窗口内的的请求数量进行限速，来保护系统，一旦达到阈值则可以拒绝服务、排队或等待。 </p>
-<p>常见的限流模式有控制并发和控制速率，一个是限制并发的数量，一个是限制并发访问的速率，另外还可以限制单位时间窗口内的请求数量。</p>
-<h4 id="控制并发数量"><a href="#控制并发数量" class="headerlink" title="控制并发数量"></a>控制并发数量</h4><p>属于一种较常见的限流手段，在实际应用中可以通过信号量机制（如Java中的 <code>Semaphore</code> ）来实现。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.monitor;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Semaphore;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSemaphore</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ExecutorService executor = Executors.newCachedThreadPool();</div><div class="line">        <span class="keyword">final</span> Semaphore semp = <span class="keyword">new</span> Semaphore(<span class="number">5</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; <span class="number">100</span>; index++) &#123;</div><div class="line">            <span class="keyword">int</span> finalIndex = index;</div><div class="line">            executor.execute(() -&gt; &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    semp.acquire();</div><div class="line">                    System.out.println(<span class="string">"Accessing Current: "</span> + finalIndex);</div><div class="line">                    Thread.sleep((<span class="keyword">long</span>) (Math.random() * <span class="number">1000</span>));</div><div class="line">                    System.out.println(<span class="string">"Available Permits:"</span> + semp.availablePermits());</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    semp.release();</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        executor.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="控制访问速率"><a href="#控制访问速率" class="headerlink" title="控制访问速率"></a>控制访问速率</h4><ul>
-<li>每过 <code>1 / r</code> 秒桶中增加一个令牌</li>
-<li>桶中最多存放 <code>b</code> 个令牌，如果桶满了，新放入的令牌会被丢弃</li>
-<li>当一个 <code>n</code> 字节的数据包到达时，消耗 <code>n</code> 个令牌，然后发送该数据包</li>
-<li>如果桶中可用令牌小于 <code>n</code>，则该数据包将被缓存或丢弃</li>
-</ul>
-<p>Guava中的 <code>Ratelimiter</code> 可以来做。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//速率是每秒两个许可</span></div><div class="line"><span class="keyword">final</span> RateLimiter rateLimiter = RateLimiter.create(<span class="number">2.0</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">submitTasks</span><span class="params">(List tasks, Executor executor)</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (Runnable task : tasks) &#123;</div><div class="line">        rateLimiter.acquire(); <span class="comment">// 也许需要等待</span></div><div class="line">        executor.execute(task);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="控制单位时间窗口内请求数"><a href="#控制单位时间窗口内请求数" class="headerlink" title="控制单位时间窗口内请求数"></a>控制单位时间窗口内请求数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.alibaba.dubbo.rpc.filter.tps;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</div><div class="line"><span class="keyword">import</span> com.alibaba.dubbo.common.URL;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StatItem</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> lastResetTime;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> interval;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> AtomicInteger token;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> rate;</div><div class="line"></div><div class="line">    StatItem(String name, <span class="keyword">int</span> rate, <span class="keyword">long</span> interval) &#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.rate = rate;</div><div class="line">        <span class="keyword">this</span>.interval = interval;</div><div class="line">        <span class="keyword">this</span>.lastResetTime = System.currentTimeMillis();</div><div class="line">        <span class="keyword">this</span>.token = <span class="keyword">new</span> AtomicInteger(rate);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAllowable</span><span class="params">(URL url, Invocation invocation)</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> now = System.currentTimeMillis();</div><div class="line">        <span class="keyword">if</span> (now &gt; lastResetTime + interval) &#123;</div><div class="line">            token.set(rate);</div><div class="line">            lastResetTime = now;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> value = token.get();</div><div class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">while</span> (value &gt; <span class="number">0</span> &amp;&amp; !flag) &#123;</div><div class="line">            flag = token.compareAndSet(value, value - <span class="number">1</span>);</div><div class="line">            value = token.get();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> flag;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getLastResetTime</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> lastResetTime;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getToken</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> token.get();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuilder(<span class="number">32</span>).append(<span class="string">"StatItem "</span>)</div><div class="line">            .append(<span class="string">"[name="</span>).append(name).append(<span class="string">", "</span>)</div><div class="line">            .append(<span class="string">"rate = "</span>).append(rate).append(<span class="string">", "</span>)</div><div class="line">            .append(<span class="string">"interval = "</span>).append(interval).append(<span class="string">"]"</span>)</div><div class="line">            .toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h3&gt;&lt;p&gt;系统在设计之初就会有一个预估容量，长时间超过系统能承受的TPS/QPS阈值，系统可能会被压垮，最终导致整个服务不够用。为了避免这种情况，我们就需要对接口请求进行限流。 &lt;/p&gt;
-&lt;p&gt;当然，先压力测试后给一个容量可能会更好。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="并发编程" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>动态代理、静态代理</title>
-    <link href="http://yoursite.com/2017/03/07/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E3%80%81%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/"/>
-    <id>http://yoursite.com/2017/03/07/动态代理、静态代理/</id>
-    <published>2017-03-07T08:10:32.000Z</published>
-    <updated>2017-03-07T09:44:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://www.cnblogs.com/V1haoge/p/5860749.html" target="_blank" rel="external">java静态代理与动态代理简单分析</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-proxy1/" target="_blank" rel="external">Java 动态代理机制分析及扩展，第 1 部分</a></li>
-<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-proxy2/" target="_blank" rel="external">Java 动态代理机制分析及扩展，第 2 部分</a></li>
-<li><a href="http://blog.csdn.net/hintcnuie/article/details/10954631" target="_blank" rel="external">动态代理proxy与CGLib的区别</a></li>
-</ul>
-<p>静态代理就是通过接口和类来实现的普通的代理模式。在代理类、委托类运行之前，代理类已经以<code>.class</code>的格式存在。静态代理共有三个角色，接口、委托类（真正实现类，含业务逻辑）、代理类（内部存在委托人的实例）。</p>
-<p>动态代理是在程序运行时，由反射机制动态创建而成。</p>
-<p>在Java中要想实现动态代理机制，需要两个类的支持。<code>java.lang.reflect.InvocationHandler</code> 和 <code>java.lang.reflect.Proxy</code> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Object proxy:被代理的对象</div><div class="line"> * Method method:要调用的方法</div><div class="line"> * Object[] args:方法调用时所需要参数</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.proxy;</div><div class="line"></div><div class="line"><span class="comment">/** HelloWorld **/</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloWorld</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/** HelloWorldImpl **/</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldImpl</span> <span class="keyword">implements</span> <span class="title">HelloWorld</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Hello World"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldInvocationHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Object obj;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HelloWorldInvocationHandler</span><span class="params">(Object obj)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.obj = obj;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        before();</div><div class="line">        Object result = method.invoke(obj, args);</div><div class="line">        after();</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Begin"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"End"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.chinaroad.proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        HelloWorld helloWorld = <span class="keyword">new</span> HelloWorldImpl();</div><div class="line"></div><div class="line">        InvocationHandler handler = <span class="keyword">new</span> HelloWorldInvocationHandler(helloWorld);</div><div class="line"></div><div class="line">        HelloWorld proxy = (HelloWorld) Proxy.newProxyInstance(</div><div class="line">                helloWorld.getClass().getClassLoader(),</div><div class="line">                helloWorld.getClass().getInterfaces(),</div><div class="line">                handler);</div><div class="line"></div><div class="line">        proxy.print();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/V1haoge/p/5860749.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;java静态代理与动态代理简单分析&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="代理模式" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>zookeeper</title>
-    <link href="http://yoursite.com/2017/03/07/zookeeper/"/>
-    <id>http://yoursite.com/2017/03/07/zookeeper/</id>
-    <published>2017-03-07T03:11:44.000Z</published>
-    <updated>2017-03-07T03:17:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://blog.csdn.net/tswisdom/article/details/41522069" target="_blank" rel="external">ZooKeeper系列(一)</a></li>
-<li><a href="http://blog.csdn.net/tswisdom/article/details/41522041" target="_blank" rel="external">ZooKeeper系列(二)</a></li>
-<li><a href="http://blog.csdn.net/tswisdom/article/details/41522099" target="_blank" rel="external">ZooKeeper系列(三)</a></li>
-</ul>
-<p>可以先了解上面的原理，比较详细，再看看下面的总结。</p>
-<a id="more"></a>
-<h3 id="数据发布与订阅（配置中心）"><a href="#数据发布与订阅（配置中心）" class="headerlink" title="数据发布与订阅（配置中心）"></a>数据发布与订阅（配置中心）</h3><p>发布与订阅模型，即所谓的配置中心，顾名思义就是发布者将数据发布到ZK节点上，供订阅者动态获取数据，实现配置信息的集中式管理和动态更新。例如全局的配置信息，服务式服务框架的服务地址列表等就非常适合使用。<br>应用中用到的一些配置信息放到ZK上进行集中管理。这类场景通常是这样：应用在启动的时候会主动来获取一次配置，同时，在节点上注册一个Watcher，这样一来，以后每次配置有更新的时候，都会实时通知到订阅的客户端，从来达到获取最新配置信息的目的。<br>分布式搜索服务中，索引的元信息和服务器集群机器的节点状态存放在ZK的一些指定节点，供各个客户端订阅使用。<br>分布式日志收集系统。这个系统的核心工作是收集分布在不同机器的日志。收集器通常是按照应用来分配收集任务单元，因此需要在ZK上创建一个以应用名作为path的节点P，并将这个应用的所有机器ip，以子节点的形式注册到节点P上，这样一来就能够实现机器变动的时候，能够实时通知到收集器调整任务分配。<br>系统中有些信息需要动态获取，并且还会存在人工手动去修改这个信息的发问。通常是暴露出接口，例如JMX接口，来获取一些运行时的信息。引入ZK之后，就不用自己实现一套方案了，只要将这些信息存放到指定的ZK节点上即可。<br>注意：在上面提到的应用场景中，有个默认前提是：数据量很小，但是数据更新可能会比较快的场景。</p>
-<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><p>这里说的负载均衡是指软负载均衡。在分布式环境中，为了保证高可用性，通常同一个应用或同一个服务的提供方都会部署多份，达到对等服务。而消费者就须要在这些对等的服务器中选择一个来执行相关的业务逻辑，其中比较典型的是消息中间件中的生产者，消费者负载均衡。<br>消息中间件中发布者和订阅者的负载均衡，linkedin开源的KafkaMQ和阿里开源的metaq都是通过zookeeper来做到生产者、消费者的负载均衡。这里以metaq为例如讲下：<br>生产者负载均衡：metaq发送消息的时候，生产者在发送消息的时候必须选择一台broker上的一个分区来发送消息，因此metaq在运行过程中，会把所有broker和对应的分区信息全部注册到ZK指定节点上，默认的策略是一个依次轮询的过程，生产者在通过ZK获取分区列表之后，会按照brokerId和partition的顺序排列组织成一个有序的分区列表，发送的时候按照从头到尾循环往复的方式选择一个分区来发送消息。<br>消费负载均衡：</p>
-<p>在消费过程中，一个消费者会消费一个或多个分区中的消息，但是一个分区只会由一个消费者来消费。MetaQ的消费策略是：</p>
-<p>每个分区针对同一个group只挂载一个消费者。<br>如果同一个group的消费者数目大于分区数目，则多出来的消费者将不参与消费。<br>如果同一个group的消费者数目小于分区数目，则有部分消费者需要额外承担消费任务。<br>在某个消费者故障或者重启等情况下，其他消费者会感知到这一变化（通过 zookeeper watch消费者列表），然后重新进行负载均衡，保证所有的分区都有消费者进行消费。</p>
-<h3 id="命名服务-Naming-Service"><a href="#命名服务-Naming-Service" class="headerlink" title="命名服务(Naming Service)"></a>命名服务(Naming Service)</h3><p>命名服务也是分布式系统中比较常见的一类场景。在分布式系统中，通过使用命名服务，客户端应用能够根据指定名字来获取资源或服务的地址，提供者等信息。被命名的实体通常可以是集群中的机器，提供的服务地址，远程对象等等——这些我们都可以统称他们为名字（Name）。其中较为常见的就是一些分布式服务框架中的服务地址列表。通过调用ZK提供的创建节点的API，能够很容易创建一个全局唯一的path，这个path就可以作为一个名称。<br>阿里巴巴集团开源的分布式服务框架Dubbo中使用ZooKeeper来作为其命名服务，维护全局的服务地址列表，点击这里查看Dubbo开源项目。在Dubbo实现中：<br>服务提供者在启动的时候，向ZK上的指定节点/dubbo/${serviceName}/providers目录下写入自己的URL地址，这个操作就完成了服务的发布。</p>
-<p>服务消费者启动的时候，订阅/dubbo/${serviceName}/providers目录下的提供者URL地址， 并向/dubbo/${serviceName} /consumers目录下写入自己的URL地址。</p>
-<p>注意，所有向ZK上注册的地址都是临时节点，这样就能够保证服务提供者和消费者能够自动感应资源的变化。</p>
-<p>另外，Dubbo还有针对服务粒度的监控，方法是订阅/dubbo/${serviceName}目录下所有提供者和消费者的信息。</p>
-<h3 id="分布式通知-协调"><a href="#分布式通知-协调" class="headerlink" title="分布式通知/协调"></a>分布式通知/协调</h3><p>ZooKeeper中特有watcher注册与异步通知机制，能够很好的实现分布式环境下不同系统之间的通知与协调，实现对数据变更的实时处理。使用方法通常是不同系统都对ZK上同一个znode进行注册，监听znode的变化（包括znode本身内容及子节点的），其中一个系统update了znode，那么另一个系统能够收到通知，并作出相应处理<br>另一种心跳检测机制：检测系统和被检测系统之间并不直接关联起来，而是通过zk上某个节点关联，大大减少系统耦合。<br>另一种系统调度模式：某系统有控制台和推送系统两部分组成，控制台的职责是控制推送系统进行相应的推送工作。管理人员在控制台作的一些操作，实际上是修改了ZK上某些节点的状态，而ZK就把这些变化通知给他们注册Watcher的客户端，即推送系统，于是，作出相应的推送任务。<br>另一种工作汇报模式：一些类似于任务分发系统，子任务启动后，到zk来注册一个临时节点，并且定时将自己的进度进行汇报（将进度写回这个临时节点），这样任务管理者就能够实时知道任务进度。<br>总之，使用zookeeper来进行分布式通知和协调能够大大降低系统之间的耦合</p>
-<h3 id="集群管理与Master选举"><a href="#集群管理与Master选举" class="headerlink" title="集群管理与Master选举"></a>集群管理与Master选举</h3><p>集群机器监控：这通常用于那种对集群中机器状态，机器在线率有较高要求的场景，能够快速对集群中机器变化作出响应。这样的场景中，往往有一个监控系统，实时检测集群机器是否存活。过去的做法通常是：监控系统通过某种手段（比如ping）定时检测每个机器，或者每个机器自己定时向监控系统汇报“我还活着”。 这种做法可行，但是存在两个比较明显的问题：<br>集群中机器有变动的时候，牵连修改的东西比较多。<br>有一定的延时。<br>利用ZooKeeper有两个特性，就可以实时另一种集群机器存活性监控系统：</p>
-<p>客户端在节点 x 上注册一个Watcher，那么如果 x?的子节点变化了，会通知该客户端。<br>创建EPHEMERAL类型的节点，一旦客户端和服务器的会话结束或过期，那么该节点就会消失。<br>例如，监控系统在 /clusterServers 节点上注册一个Watcher，以后每动态加机器，那么就往 /clusterServers 下创建一个 EPHEMERAL类型的节点：/clusterServers/{hostname}. 这样，监控系统就能够实时知道机器的增减情况，至于后续处理就是监控系统的业务了。</p>
-<p>Master选举则是zookeeper中最为经典的应用场景了。<br>在分布式环境中，相同的业务应用分布在不同的机器上，有些业务逻辑（例如一些耗时的计算，网络I/O处理），往往只需要让整个集群中的某一台机器进行执行，其余机器可以共享这个结果，这样可以大大减少重复劳动，提高性能，于是这个master选举便是这种场景下的碰到的主要问题。</p>
-<p>利用ZooKeeper的强一致性，能够保证在分布式高并发情况下节点创建的全局唯一性，即：同时有多个客户端请求创建 /currentMaster 节点，最终一定只有一个客户端请求能够创建成功。利用这个特性，就能很轻易的在分布式环境中进行集群选取了。</p>
-<p>另外，这种场景演化一下，就是动态Master选举。这就要用到?EPHEMERAL_SEQUENTIAL类型节点的特性了。</p>
-<p>上文中提到，所有客户端创建请求，最终只有一个能够创建成功。在这里稍微变化下，就是允许所有请求都能够创建成功，但是得有个创建顺序，于是所有的请求最终在ZK上创建结果的一种可能情况是这样： /currentMaster/{sessionId}-1 ,?/currentMaster/{sessionId}-2 ,?/currentMaster/{sessionId}-3 ….. 每次选取序列号最小的那个机器作为Master，如果这个机器挂了，由于他创建的节点会马上小时，那么之后最小的那个机器就是Master了。</p>
-<p>在搜索系统中，如果集群中每个机器都生成一份全量索引，不仅耗时，而且不能保证彼此之间索引数据一致。因此让集群中的Master来进行全量索引的生成，然后同步到集群中其它机器。另外，Master选举的容灾措施是，可以随时进行手动指定master，就是说应用在zk在无法获取master信息时，可以通过比如http方式，向一个地方获取master。<br>在Hbase中，也是使用ZooKeeper来实现动态HMaster的选举。在Hbase实现中，会在ZK上存储一些ROOT表的地址和HMaster的地址，HRegionServer也会把自己以临时节点（Ephemeral）的方式注册到Zookeeper中，使得HMaster可以随时感知到各个HRegionServer的存活状态，同时，一旦HMaster出现问题，会重新选举出一个HMaster来运行，从而避免了HMaster的单点问题</p>
-<h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><p>分布式锁，这个主要得益于ZooKeeper为我们保证了数据的强一致性。锁服务可以分为两类，一个是保持独占，另一个是控制时序。<br>所谓保持独占，就是所有试图来获取这个锁的客户端，最终只有一个可以成功获得这把锁。通常的做法是把zk上的一个znode看作是一把锁，通过create znode的方式来实现。所有客户端都去创建 /distribute_lock 节点，最终成功创建的那个客户端也即拥有了这把锁。<br>控制时序，就是所有视图来获取这个锁的客户端，最终都是会被安排执行，只是有个全局时序了。做法和上面基本类似，只是这里 /distribute_lock 已经预先存在，客户端在它下面创建临时有序节点（这个可以通过节点的属性控制：CreateMode.EPHEMERAL_SEQUENTIAL来指定）。Zk的父节点（/distribute_lock）维持一份sequence,保证子节点创建的时序性，从而也形成了每个客户端的全局时序。</p>
-<h3 id="分布式队列"><a href="#分布式队列" class="headerlink" title="分布式队列"></a>分布式队列</h3><p>队列方面，简单地讲有两种，一种是常规的先进先出队列，另一种是要等到队列成员聚齐之后的才统一按序执行。对于第一种先进先出队列，和分布式锁服务中的控制时序场景基本原理一致，这里不再赘述。<br>第二种队列其实是在FIFO队列的基础上作了一个增强。通常可以在 /queue 这个znode下预先建立一个/queue/num 节点，并且赋值为n（或者直接给/queue赋值n），表示队列大小，之后每次有队列成员加入后，就判断下是否已经到达队列大小，决定是否可以开始执行了。这种用法的典型场景是，分布式环境中，一个大任务Task A，需要在很多子任务完成（或条件就绪）情况下才能进行。这个时候，凡是其中一个子任务完成（就绪），那么就去 /taskList 下建立自己的临时时序节点（CreateMode.EPHEMERAL_SEQUENTIAL），当 /taskList 发现自己下面的子节点满足指定个数，就可以进行下一步按序进行处理了。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/tswisdom/article/details/41522069&quot;&gt;ZooKeeper系列(一)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/tswisdom/article/details/41522041&quot;&gt;ZooKeeper系列(二)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/tswisdom/article/details/41522099&quot;&gt;ZooKeeper系列(三)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;可以先了解上面的原理，比较详细，再看看下面的总结。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="分布式" scheme="http://yoursite.com/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-    
-      <category term="zookeeper" scheme="http://yoursite.com/tags/zookeeper/"/>
     
   </entry>
   

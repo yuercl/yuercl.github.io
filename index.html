@@ -5,50 +5,86 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/10/Python调用通达信交易客户端/" class="post-link">Python调用通达信交易客户端</a></h2><span class="post-time">2017年5月10日</span><div class="post-content"><p>没啥说的，方案和Python调用QQ发消息一致。需要通过<code>spy.exe</code>来获取窗口句柄。</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>不多些什么，仅当保存一下代码。</p></div><a href="/2017/05/10/Python调用通达信交易客户端/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/10/BlockingQueue/" class="post-link">BlockingQueue</a></h2><span class="post-time">2017年5月10日</span><div class="post-content"><ul>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/21/Redis-各数据结构/" class="post-link">Redis 各数据结构</a></h2><span class="post-time">2017年5月21日</span><div class="post-content"><h2 id="Redis-命令文档"><a href="#Redis-命令文档" class="headerlink" title="Redis 命令文档"></a>Redis 命令文档</h2><ul>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><li><a href="http://doc.redisfans.com">http://doc.redisfans.com</a></li>
+<li><a href="https://redis.io/commands">https://redis.io/commands</a></li>
+</ul>
+<h2 id="Redis的六种数据结构"><a href="#Redis的六种数据结构" class="headerlink" title="Redis的六种数据结构"></a>Redis的六种数据结构</h2><ul>
+<li>Strings</li>
+<li>Hashs</li>
+<li>Lists</li>
+<li>Sets</li>
+<li>Sorted Sets</li>
+<li>Pub/Sub</li>
+</ul></div><a href="/2017/05/21/Redis-各数据结构/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/19/Curator-版本折腾/" class="post-link">Curator 版本折腾</a></h2><span class="post-time">2017年5月19日</span><div class="post-content"><p>最近接手一个短信系统，其中有一个代理模块是HA高可用的，HA的方法是每次启动proxy，proxy会在zookeeper中去leader election，这样便实现高可用。</p></div><a href="/2017/05/19/Curator-版本折腾/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/14/香料/" class="post-link">香料</a></h2><span class="post-time">2017年5月14日</span><div class="post-content"><p>这些是一些常用的香料，附带了一些说明，卤水。</p>
+<h4 id="小茴香"><a href="#小茴香" class="headerlink" title="小茴香"></a>小茴香</h4><p><strong>小茴香</strong>，基础调料。所有卤料和一般炖肉均用到小茴香，亲和力高，百搭。一来可去肉腥，二来可重新添香，味道比八角淡，多加一些。</p>
+<h4 id="草果"><a href="#草果" class="headerlink" title="草果"></a>草果</h4><p><strong>草果</strong>，有辛香。和牛羊肉是绝配，特别是羊肉，炖汤的时候加入很鲜美，卤牛肉可多加一颗草果。</p></div><a href="/2017/05/14/香料/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/13/Spark与Storm的对比/" class="post-link">Spark与Storm的对比</a></h2><span class="post-time">2017年5月13日</span><div class="post-content"><table>
+<thead>
+<tr>
+<th>对比点</th>
+<th>Storm</th>
+<th>Spark Streaming</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实时计算模型</td>
+<td>纯实时，来一条数据，处理一条数据</td>
+<td>准实时，对一个时间段内的数据收集起来，作为一个RDD，再处理</td>
+</tr>
+<tr>
+<td>实时计算延迟度</td>
+<td>毫秒级</td>
+<td>秒级</td>
+</tr>
+<tr>
+<td>吞吐量</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>事务机制</td>
+<td>支持完善</td>
+<td>支持，但不够完善</td>
+</tr>
+<tr>
+<td>健壮性 / 容错性</td>
+<td>ZooKeeper，Acker，非常强</td>
+<td>Checkpoint，WAL，一般</td>
+</tr>
+<tr>
+<td>动态调整并行度</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody>
+</table>
+<p>RDD(Resilient Distributed Datasets)，弹性分布式数据集。</p>
+<p>对实时性要求高选择Storm，如银行金融系统等。</p>
+<p>相对于Storm来讲，不满足的实时场景，在不要求纯实时，不要求强大可靠的事务机制，不要求动态调整并行度，那么可以考虑使用Spark Streaming。</p>
+<p>在Spark的生态中，还包含了Spark Core离线批处理、Spark SQL交互式查询，如果在实时计算中需要这些地方的时候，Spark会更好。</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/12/Kcptun/" class="post-link">Kcptun</a></h2><span class="post-time">2017年5月12日</span><div class="post-content"><p>Kcptun能有效的加速科学上网，目前最低配置的搬瓦工能够看720p。Kcptun客户端非常省资源，可参考GitHub详细说明。</p>
+<ul>
+<li><a href="http://www.gblm.net/209.html" target="_blank" rel="external">Kcptun给Shadowsocks加速</a></li>
+<li><a href="https://github.com/xtaci/kcptun" target="_blank" rel="external">https://github.com/xtaci/kcptun</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/11/删除链表中的某一个节点/" class="post-link">删除链表中的某一个节点</a></h2><span class="post-time">2017年5月11日</span><div class="post-content"><p>以前在学校的时候面试被问过，上个月面试的时候再次被问到，当时想了想竟然想出来了。但是过了几天又一下忘了。</p>
+<p>问题：一个单向链表，给其中的一个节点p，现在要删掉这个节点，需要怎么操作，没有链表的头节点，所以不能遍历。</p>
+<p>参考图片解决方案:</p>
+<p><img src="/assets/images/linked_list_delete_p.jpg" alt=""></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/11/负载均衡调度算法/" class="post-link">负载均衡调度算法</a></h2><span class="post-time">2017年5月11日</span><div class="post-content"><ul>
+<li><a href="http://blog.csdn.net/pzw_0612/article/details/47357221" target="_blank" rel="external">轮询调度算法(Round-Robin Scheduling)</a></li>
+<li><a href="http://www.cnblogs.com/huligong1234/p/3819979.html" target="_blank" rel="external">权重轮询调度算法(WeightedRound-RobinScheduling)</a></li>
+</ul>
+<p>轮询调度算法，数据结构，类需要包含轮训调度计算器AtomicInteger，每次只需要求余即可。</p>
+<p>权重轮询调度算法，第一次返回权值取最大的那个服务器，之后通过权重的不断递减寻找适合的服务器返回，直到轮询结束，权值返回为0。 </p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/10/Python调用通达信交易客户端/" class="post-link">Python调用通达信交易客户端</a></h2><span class="post-time">2017年5月10日</span><div class="post-content"><p>没啥说的，方案和Python调用QQ发消息一致。需要通过<code>spy.exe</code>来获取窗口句柄。</p>
+<p>结合RQAlpha等量化工具或量化平台，可实现即时下单。另可采用实盘易方案。</p>
+<p>不多些什么，仅当保存一下代码。</p></div><a href="/2017/05/10/Python调用通达信交易客户端/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/10/BlockingQueue/" class="post-link">BlockingQueue</a></h2><span class="post-time">2017年5月10日</span><div class="post-content"><ul>
 <li><a href="http://www.cnblogs.com/szlbm/p/5588518.html">Queue、BlockingQueue以及利用BlockingQueue实现生产者/消费者模型</a></li>
 <li><a href="http://blog.csdn.net/longeremmy/article/details/8225989">集合框架 Queue—BlockingQueue详解</a></li>
 </ul>
 <p>BlockingQueue，如果BlockingQueue是空的，从BlockingQueue取东西的操作将会被阻断进入等待状态，直到BlockingQueue进了东西才会被唤醒，同样，如果BlockingQueue是满的，任何试图往里存东西的操作也会被阻断进入等待状态，直到BlockingQueue里有空间时才会被唤醒继续操作。Queue不是线程安全的。因此可以将Blockingqueue用于用于生产者-使用者队列。</p></div><a href="/2017/05/10/BlockingQueue/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/09/Maven项目默认JDK版本/" class="post-link">Maven项目默认JDK版本</a></h2><span class="post-time">2017年5月9日</span><div class="post-content"><ul>
 <li>pom.xml 仅作用于当前项目</li>
 <li>settings.xml 配置是全局的项目</li>
-</ul></div><a href="/2017/05/09/Maven项目默认JDK版本/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/08/python发送QQ消息/" class="post-link">Python发送QQ消息</a></h2><span class="post-time">2017年5月8日</span><div class="post-content"><p>利用Python win32来操作窗口句柄触发QQ消息发送。同理可以用其他语言实现。参考下面源码。如果窗口获取存在问题，通过 <code>spy.exe</code> 工具来重新获取句柄。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> win32gui</div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"><span class="keyword">import</span> win32clipboard <span class="keyword">as</span> w</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getText</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""获取剪贴板文本"""</span></div><div class="line">    w.OpenClipboard()</div><div class="line">    d = w.GetClipboardData(win32con.CF_UNICODETEXT)</div><div class="line">    w.CloseClipboard()</div><div class="line">    <span class="keyword">return</span> d</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">setText</span><span class="params">(aString)</span>:</span></div><div class="line">    <span class="string">"""设置剪贴板文本"""</span></div><div class="line">    w.OpenClipboard()</div><div class="line">    w.EmptyClipboard()</div><div class="line">    w.SetClipboardData(win32con.CF_UNICODETEXT, aString)</div><div class="line">    w.CloseClipboard()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_qq</span><span class="params">(to_who, msg)</span>:</span></div><div class="line">    <span class="string">"""发送qq消息</span></div><div class="line">    to_who：qq消息接收人</div><div class="line">    msg：需要发送的消息</div><div class="line">    """</div><div class="line">    <span class="comment"># 将消息写到剪贴板</span></div><div class="line">    setText(msg)</div><div class="line">    <span class="comment"># 获取qq窗口句柄</span></div><div class="line">    qq = win32gui.FindWindow(<span class="keyword">None</span>, to_who)</div><div class="line">    <span class="comment"># 投递剪贴板消息到QQ窗体</span></div><div class="line">    win32gui.SendMessage(qq, <span class="number">258</span>, <span class="number">22</span>, <span class="number">2080193</span>)</div><div class="line">    win32gui.SendMessage(qq, <span class="number">770</span>, <span class="number">0</span>, <span class="number">0</span>)</div><div class="line">    <span class="comment"># 模拟按下回车键</span></div><div class="line">    win32gui.SendMessage(qq, win32con.WM_KEYDOWN, win32con.VK_RETURN, <span class="number">0</span>)</div><div class="line">    win32gui.SendMessage(qq, win32con.WM_KEYUP, win32con.VK_RETURN, <span class="number">0</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 测试</span></div><div class="line">to_who=<span class="string">'xxx'</span></div><div class="line">msg=<span class="string">'这是测试消息'</span></div><div class="line">send_qq(to_who, msg)</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/07/Bloom-Filter/" class="post-link">Bloom Filter</a></h2><span class="post-time">2017年5月7日</span><div class="post-content"><ul>
-<li><a href="http://blog.csdn.net/jiaomeng/article/details/1496329" target="_blank" rel="external">从哈希存储到Bloom Filter</a></li>
-<li><a href="http://blog.csdn.net/jiaomeng/article/details/1495500" target="_blank" rel="external">Bloom Filter概念和原理</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/JVM-思维导图/" class="post-link">JVM 思维导图</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><p><img src="/assets/images/JVM.jpg" alt=""></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/JVM-GC调优例子/" class="post-link">JVM GC调优例子</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><p>新生代（Young generation）的空间太小，导致有一些本应该可以很快就被回收的对象被放到了老生代（Old generation）里，导致老生代上涨很快，频繁Full GC。</p>
-<ul>
-<li><a href="http://blog.csdn.net/hengyunabc/article/details/24924843" target="_blank" rel="external">JVM GC调优一则–增大Eden Space提高性能</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/CyclicBarrier/" class="post-link">CyclicBarrier</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><p>CyclicBarrier 和 CountDownLatch 的功能类似，不过CyclicBarrier 是相反的。</p>
-<ul>
-<li>CyclicBarrier 当线程数达到了这个数目时，所有进入等待状态的线程被唤醒并继续。</li>
-<li>CountDownLatch 允许一个线程或者多个线程一直等待，直到其他线程完成以后再执行接下来的逻辑。</li>
-</ul>
-<p><strong>Example :</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.concurrent.CyclicBarrier;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CyclicBarrierTest</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THREAD_NUM = <span class="number">5</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">        CyclicBarrier barrier;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">(CyclicBarrier b)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.barrier = b;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                System.out.println(<span class="string">"Worker's waiting"</span>);</div><div class="line">                barrier.await();<span class="comment">//线程在这里等待，直到所有线程都到达barrier。</span></div><div class="line">                System.out.println(<span class="string">"ID:"</span> + Thread.currentThread().getId() + <span class="string">" Working"</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        CyclicBarrier cb = <span class="keyword">new</span> CyclicBarrier(THREAD_NUM, <span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="comment">//当所有线程到达barrier时执行</span></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"Inside Barrier"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; THREAD_NUM; i++) &#123;</div><div class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> WorkerThread(cb)).start();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">以下是输出：</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Inside Barrier</div><div class="line">ID:12 Working</div><div class="line">ID:8 Working</div><div class="line">ID:11 Working</div><div class="line">ID:9 Working</div><div class="line">ID:10 Working</div><div class="line">*/</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/北斗七星英文名/" class="post-link">北斗七星英文名</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><p>北斗七星的英文名。</p>
-<p>《晋书·天文志》说北斗七星在太微北，枢为天，璇为地，玑为人，权为时，衡为音，开阳为律，摇光为星。</p>
-<ul>
-<li>天枢 Dubhe</li>
-<li>天璇 Merak</li>
-<li>天玑 Phecda</li>
-<li>天权 Megrez</li>
-<li>玉衡 Alioth</li>
-<li>开阳 Mixar</li>
-<li>摇光 Alkaid</li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/CountDownLatch/" class="post-link">CountDownLatch</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><p>CountDownLatch 是一个同步工具类，允许一个线程或者多个线程一直等待，直到其他线程完成以后再执行接下来的逻辑。</p>
-<p>一个场景就是，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。</p>
-<p>实现的方式是一个计数器。每次完成一个就相应的减少一，直到最后计数器归零，等待线程就继续执行接下来任务。</p>
-<p><img src="/assets/images/CountDownLatch.png" alt=""></p>
-<p>可以用在下面三种场景：</p>
-<ul>
-<li>实现最大的并行性</li>
-<li>等待多个线程执行完成后再执行任务</li>
-<li>死锁检测</li>
-</ul>
-<p><a href="http://www.importnew.com/15731.html" target="_blank" rel="external">CountDownLatch的介绍，含一个健康检查的例子</a></p>
-</div></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+</ul></div><a href="/2017/05/09/Maven项目默认JDK版本/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
