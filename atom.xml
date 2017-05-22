@@ -512,11 +512,12 @@
     <link href="http://yoursite.com/2017/05/05/JVM-GC%E8%B0%83%E4%BC%98%E4%BE%8B%E5%AD%90/"/>
     <id>http://yoursite.com/2017/05/05/JVM-GC调优例子/</id>
     <published>2017-05-05T15:19:51.000Z</published>
-    <updated>2017-05-05T15:23:51.000Z</updated>
+    <updated>2017-05-21T02:42:28.000Z</updated>
     
     <content type="html"><![CDATA[<p>新生代（Young generation）的空间太小，导致有一些本应该可以很快就被回收的对象被放到了老生代（Old generation）里，导致老生代上涨很快，频繁Full GC。</p>
 <ul>
 <li><a href="http://blog.csdn.net/hengyunabc/article/details/24924843" target="_blank" rel="external">JVM GC调优一则–增大Eden Space提高性能</a></li>
+<li><a href="http://www.importnew.com/24393.html#comment-555494" target="_blank" rel="external">一次线上OOM排查经过</a></li>
 </ul>
 ]]></content>
     
