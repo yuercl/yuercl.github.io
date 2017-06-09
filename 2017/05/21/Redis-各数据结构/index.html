@@ -36,7 +36,7 @@
 <p>使用案例：<strong>排行榜应用，取TOP N操作</strong></p>
 <p>这个需求与上面需求的不同之处在于，前面操作以时间为权重，这个是以某个条件为权重，比如按顶的次数排序，这时候就需要我们的sorted set出马了，将你要排序的值设置成sorted set的score，将具体的数据设置成相应的value，每次只需要执行一条ZADD命令即可。</p>
 <h3 id="Pub-Sub"><a href="#Pub-Sub" class="headerlink" title="Pub/Sub"></a>Pub/Sub</h3><p>Pub/Sub 从字面上理解就是发布（Publish）与订阅（Subscribe），在Redis中，你可以设定对某一个key值进行消息发布及消息订阅，当一个key值上进行了消息发布后，所有订阅它的客户端都会收到相应的消息。这一功能最明显的用法就是<strong>用作实时消息系统</strong>，比如普通的<strong>即时聊天，群聊</strong>等功能。</p>
-</div></article><div class="tags"><a href="/tags/Redis/">Redis</a></div><div class="paginator"><a href="/2017/05/19/Curator-版本折腾/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+</div></article><div class="tags"><a href="/tags/Redis/">Redis</a></div><div class="paginator"><a href="/2017/05/29/上传验证绕过/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2017/05/19/Curator-版本折腾/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
     this.page.url = 'http://yoursite.com/2017/05/21/Redis-各数据结构/';
     this.page.identifier = '2017/05/21/Redis-各数据结构/';
     this.page.title = 'Redis 各数据结构';

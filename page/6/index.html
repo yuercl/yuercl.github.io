@@ -5,8 +5,85 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/16/python-matplotlib中文显示问题/" class="post-link">python matplotlib中文显示问题</a></h2><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</div><a href="/2016/11/16/python-matplotlib中文显示问题/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><blockquote>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/05/matplotlib作图/" class="post-link">matplotlib作图</a></h2><span class="post-time">2016年12月5日</span><div class="post-content"><p>matplotlib作图备忘，有些地方时间久了就变得模糊，记不清楚～～</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li><a href="http://blog.csdn.net/jasonding1354/article/details/42125555?utm_source=tuicool&amp;utm_medium=referral">基础介绍</a></li>
+<li><a href="http://www.cnblogs.com/nju2014/p/5620776.html">详解Matplotlib的图像各个部分</a> </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为1的位置，顺着来排</span></div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 211 两行一列，编号为2的位置</span></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line"></div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></div><a href="/2016/12/05/matplotlib作图/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/04/MacOS反编译某研报客户端/" class="post-link">MacOS反编译某研报客户端</a></h2><span class="post-time">2016年12月4日</span><div class="post-content"><p>偶尔看看别人的代码，换一个角度思考，也是一种乐趣～</p>
+<p>好好学习，人生苦短，及时行乐～</p></div><a href="/2016/12/04/MacOS反编译某研报客户端/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/12/03/MacOS反编译APK/" class="post-link">MacOS反编译APK</a></h2><span class="post-time">2016年12月3日</span><div class="post-content"><p>因为我老是记不住在Mac下面的名字是d2j-dex2jar。😓</p>
+<h3 id="反编译代码的工具"><a href="#反编译代码的工具" class="headerlink" title="反编译代码的工具"></a>反编译代码的工具</h3><ul>
+<li>dex2jar<ul>
+<li>把dex文件转成jar文件</li>
+<li>下载地址： <a href="https://sourceforge.net/projects/dex2jar/files/">https://sourceforge.net/projects/dex2jar/files/</a></li>
+</ul>
+</li>
+<li>jd-gui<ul>
+<li>这个工具用于将jar文件转换成java代码</li>
+<li>下载地址： <a href="http://jd.benow.ca/">http://jd.benow.ca/</a></li>
+</ul>
+</li>
+</ul></div><a href="/2016/12/03/MacOS反编译APK/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="post-link">Spring transaction 事务 -- Isolation & Progation</a></h2><span class="post-time">2016年11月28日</span><div class="post-content"><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>propagation</td>
+<td>Propagation枚举</td>
+<td>REQUIRED</td>
+<td>事务传播属性 (下有说明)</td>
+</tr>
+<tr>
+<td>isolation</td>
+<td>isolation枚举</td>
+<td>DEFAULT</td>
+<td>事务隔离级别 (另有说明)</td>
+</tr>
+<tr>
+<td>readOnly</td>
+<td>boolean</td>
+<td>false</td>
+<td>是否只读</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>int</td>
+<td>-1</td>
+<td>超时(秒)</td>
+</tr>
+<tr>
+<td>rollbackFor</td>
+<td>Class[]</td>
+<td>{}</td>
+<td>需要回滚的异常类</td>
+</tr>
+<tr>
+<td>rollbackForClassName</td>
+<td>String[]</td>
+<td>{}</td>
+<td>需要回滚的异常类名</td>
+</tr>
+<tr>
+<td>noRollbackFor</td>
+<td>Class[]</td>
+<td>{}</td>
+<td>不需要回滚的异常类</td>
+</tr>
+<tr>
+<td>noRollbackForClassName</td>
+<td>String[]</td>
+<td>{}</td>
+<td>不需要回滚的异常类名</td>
+</tr>
+</tbody>
+</table></div><a href="/2016/11/28/Spring-transaction-事务-Isolation-Progation/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/16/python-matplotlib中文显示问题/" class="post-link">python matplotlib中文显示问题</a></h2><span class="post-time">2016年11月16日</span><div class="post-content"><p>Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：</div><a href="/2016/11/16/python-matplotlib中文显示问题/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/11/04/Xcode8-Use-Legacy-Swift-Language-Version的错误解决/" class="post-link">Xcode8 Use Legacy Swift Language Version的错误解决</a></h2><span class="post-time">2016年11月4日</span><div class="post-content"><p>升级监控iOS程序，因为用到了Charts这个swift库，恰好前段时间升级系统Xcode也升级了。</p>
+<blockquote>
 <p>“Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly for targets which use Swift. Use the [Edit &gt; Convert &gt; To Current Swift Syntax…] menu to choose a Swift version or use the Build Settings editor to configure the build setting directly.</p>
 </blockquote>
 <p>设置 对应的SWIFT_VERSION = NO 可成。</p>
@@ -39,35 +116,4 @@
 <li>融资方 即正回购方，需要用手中的国债券换取现金；</li>
 <li>融券方 即逆回购方，需要用手中的现金买国债券，以实现资金增值；</li>
 <li>监督方 上交所和深交所</li>
-</ul></div><a href="/2016/09/28/国债逆回购/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/22/WeakReference的一小记/" class="post-link">WeakReference的一小记</a></h2><span class="post-time">2016年9月22日</span><div class="post-content"><p>最近要做一个功能，白名单配置，采用了一个叫做FileMonitor的工具，源码参看链接。新版本JDK是可以用WatchServices来监听文件变化。</p>
-<ul>
-<li><a href="http://geosoft.no/software/filemonitor/FileMonitor.java.html" target="_blank" rel="external">FileMonitor.java</a></li>
-<li><a href="http://geosoft.no/software/filemonitor/FileListener.java.html" target="_blank" rel="external">FileListener.java</a></li>
-</ul>
-<p><strong>坑</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是错误写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Application 已实现了FileListener 的fileChanged 接口，这是正确写法</span></div><div class="line">FileMonitor monitor = <span class="keyword">new</span> FileMonitor(<span class="number">1000</span>);</div><div class="line">monitor.addFile(<span class="keyword">new</span> File(Application.class.getResource(<span class="string">"/config/whitelist.ini"</span>).getPath()));</div><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div></pre></td></tr></table></figure>
-<p>程序开始运行的挺好的，文件变动也能及时反馈调用给Listener，但是运行一段时间之后，程序便不再调用Listener回调。费解。阅读FileMonitor源码实现后，发现采用了WeakReference来包装Listener，使得不容易内存泄漏。后来证明这是作者想多了，在作为配置文件Reload这种特性的情况下，一般是不会有很多new 很多个FileMonitor出来的。</p>
-<p>经过初步猜测是由于WeakReference 弱应用导致Listener被GC掉。遂用VisualVM  Dump类证实为GC时被回收。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Application application = <span class="keyword">new</span> Application();</div><div class="line">monitor.addListener(application);</div><div class="line"><span class="comment">// 分割线</span></div><div class="line">monitor.addListener(<span class="keyword">new</span> Application());</div></pre></td></tr></table></figure>
-<p>经过和朋友沟通和自己理解后，认为在new Application()出来的对象的作用域有关。于是将new单独出来，测试后问题解决。</p>
-<p>哎，惭愧</p>
-<ul>
-<li><a href="http://puretech.iteye.com/blog/2008663" target="_blank" rel="external">http://puretech.iteye.com/blog/2008663</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/07/终极Shell－－zsh/" class="post-link">终极Shell－－zsh</a></h2><span class="post-time">2016年9月7日</span><div class="post-content"><p>如果你在用Shell，默认那用bash，那一定要试试zsh，配合<code>oh-my-zsh</code>那必须推荐，很骚，真的很骚～～</p>
-<ul>
-<li>官网地址: <a href="http://ohmyz.sh">http://ohmyz.sh</a></li>
-<li>Github: <a href="https://github.com/robbyrussell/oh-my-zsh">https://github.com/robbyrussell/oh-my-zsh</a></li>
-</ul>
-<p>官网写着</p>
-<blockquote>
-<p>Your terminal never felt this good before.</p>
-</blockquote></div><a href="/2016/09/07/终极Shell－－zsh/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/06/Storm的7种流分组策略Stream-Grouping/" class="post-link">Storm的7种流分组策略Stream Grouping</a></h2><span class="post-time">2016年9月6日</span><div class="post-content"><h2 id="流分组策略-Stream-Grouping"><a href="#流分组策略-Stream-Grouping" class="headerlink" title="流分组策略(Stream Grouping)"></a>流分组策略(Stream Grouping)</h2><p>Stream Grouping，告诉topology如何在两个组件之间发送tuple<br>定义一个topology的其中一步是定义每个bolt接收什么样的流作为输入。stream grouping就是用来定义一个stream应该如果分配数据给bolts上面的多个tasks </p>
-<p>Storm里面有7种类型的stream grouping，也可以通过实现CustomStreamGrouping接口来实现自定义Grouping </p></div><a href="/2016/09/06/Storm的7种流分组策略Stream-Grouping/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2016/09/06/Storm安装/" class="post-link">Storm安装</a></h2><span class="post-time">2016年9月6日</span><div class="post-content"><p>前提需要一个zookeeper，一个节点或者一个cluster，接下来标准流程</p>
-<ul>
-<li>wget …</li>
-<li>tar -xzvf …</li>
-<li>cd …</li>
-<li>vim conf/storm.yaml</li>
-</ul></div><a href="/2016/09/06/Storm安装/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/5/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/7/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+</ul></div><a href="/2016/09/28/国债逆回购/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/5/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/7/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

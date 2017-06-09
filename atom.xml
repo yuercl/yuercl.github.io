@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-21T02:22:08.000Z</updated>
+  <updated>2017-06-09T03:27:50.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,100 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>redis锁</title>
+    <link href="http://yoursite.com/2017/06/09/redis%E9%94%81/"/>
+    <id>http://yoursite.com/2017/06/09/redis锁/</id>
+    <published>2017-06-09T03:22:20.000Z</published>
+    <updated>2017-06-09T03:27:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>在程序多开的情况下，锁实现只有一个Timer，或者说Schedule运行。通过Redis 的 setnx命令实现。类似也可以利用zookeeper来做。  </p>
+<h3 id="参考redis文档"><a href="#参考redis文档" class="headerlink" title="参考redis文档"></a>参考redis文档</h3><font color="red"><strong>SETNX key value</strong></font>
+
+<p>将 key 的值设为 value ，当且仅当 key 不存在。</p>
+<p>若给定的 key 已经存在，则 SETNX 不做任何动作。</p>
+<p>SETNX 是『SET if Not eXists』(如果不存在，则 SET)的简写。</p>
+<a id="more"></a>
+<p><strong>可用版本</strong>：>= 1.0.0<br><strong>时间复杂度</strong>：O(1)<br><strong>返回值：</strong><br>设置成功，返回 1 。<br>设置失败，返回 0 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">redis&gt; EXISTS job                <span class="comment"># job 不存在</span></div><div class="line">(<span class="built_in">integer</span>) 0</div><div class="line"></div><div class="line">redis&gt; SETNX job <span class="string">"programmer"</span>    <span class="comment"># job 设置成功</span></div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line"></div><div class="line">redis&gt; SETNX job <span class="string">"code-farmer"</span>   <span class="comment"># 尝试覆盖 job ，失败</span></div><div class="line">(<span class="built_in">integer</span>) 0</div><div class="line"></div><div class="line">redis&gt; GET job                   <span class="comment"># 没有被覆盖</span></div><div class="line"><span class="string">"programmer"</span></div></pre></td></tr></table></figure>
+<h3 id="JAVA实现"><a href="#JAVA实现" class="headerlink" title="JAVA实现"></a>JAVA实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="keyword">private</span> StringRedisTemplate redisTemplate;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LOCK_KEY = <span class="string">"lock:"</span> + getClass().getSimpleName();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">_getLock</span><span class="params">()</span> </span>&#123;</div><div class="line">    String expireAtString = redisTemplate.opsForValue().get(LOCK_KEY);</div><div class="line">    <span class="keyword">if</span> (expireAtString != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">long</span> expireAt = Long.valueOf(expireAtString);</div><div class="line">        <span class="keyword">if</span> (expireAt &gt; System.currentTimeMillis()) &#123;</div><div class="line">            logger.info(<span class="string">"[开始][当前锁已被其他线程占领:&#123;&#125;][过期时间:&#123;&#125;]"</span>, LOCK_KEY, expireAtString);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            logger.info(<span class="string">"[开始][当前锁已过期:&#123;&#125;][删除]"</span>, LOCK_KEY);</div><div class="line">            redisTemplate.delete(LOCK_KEY);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String expire = String.valueOf(DateTime.now().plusMinutes(<span class="number">1</span>).toDate().getTime());</div><div class="line">    logger.info(<span class="string">"[开始][准备获取锁:&#123;&#125; expire at &#123;&#125;]"</span>, LOCK_KEY, expire);</div><div class="line">    <span class="keyword">return</span> redisTemplate.opsForValue().setIfAbsent(LOCK_KEY, expire);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">_releaseLock</span><span class="params">()</span> </span>&#123;</div><div class="line">    redisTemplate.delete(LOCK_KEY);</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h3&gt;&lt;p&gt;在程序多开的情况下，锁实现只有一个Timer，或者说Schedule运行。通过Redis 的 setnx命令实现。类似也可以利用zookeeper来做。  &lt;/p&gt;
+&lt;h3 id=&quot;参考redis文档&quot;&gt;&lt;a href=&quot;#参考redis文档&quot; class=&quot;headerlink&quot; title=&quot;参考redis文档&quot;&gt;&lt;/a&gt;参考redis文档&lt;/h3&gt;&lt;font color=&#39;red&#39;&gt;&lt;strong&gt;SETNX key value&lt;/strong&gt;&lt;/font&gt;
+
+&lt;p&gt;将 key 的值设为 value ，当且仅当 key 不存在。&lt;/p&gt;
+&lt;p&gt;若给定的 key 已经存在，则 SETNX 不做任何动作。&lt;/p&gt;
+&lt;p&gt;SETNX 是『SET if Not eXists』(如果不存在，则 SET)的简写。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+    
+    
+      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
+    
+      <category term="分布式锁" scheme="http://yoursite.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+    
+      <category term="lock" scheme="http://yoursite.com/tags/lock/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JAVA IO 流</title>
+    <link href="http://yoursite.com/2017/06/09/JAVA-IO-%E6%B5%81/"/>
+    <id>http://yoursite.com/2017/06/09/JAVA-IO-流/</id>
+    <published>2017-06-09T01:49:35.000Z</published>
+    <updated>2017-06-09T01:59:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>流分为：文件(File/RandomAccessFile)、字符(Reader/Writer)、字节(InputStream/OutputStream)的操作。字符、字节是一一对应的，一个读取一个输出。</p>
+<p>对应的设计模式：装饰器模式</p>
+<p><img src="/assets/images/java_io.jpg" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">_excuteSaveFile</span><span class="params">(Request request)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    request.addHeader(<span class="string">"User-Agent"</span>, Constant.HTTP_USER_AGENT).addHeader(<span class="string">"Accept-Language"</span>, <span class="string">"zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2"</span>);</div><div class="line">    InputStream inputStream = <span class="keyword">this</span>.executor.execute(request).returnContent().asStream();</div><div class="line"></div><div class="line">    String filename = <span class="string">"/tmp/sms/"</span> + UUID.randomUUID().toString() + <span class="string">".png"</span>;</div><div class="line"></div><div class="line">    File file = <span class="keyword">new</span> File(filename);</div><div class="line">    OutputStream outputStream = <span class="keyword">new</span> FileOutputStream(file);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> inByte;</div><div class="line">    <span class="keyword">while</span> ((inByte = inputStream.read()) != -<span class="number">1</span>) &#123;</div><div class="line">        outputStream.write(inByte);</div><div class="line">    &#125;</div><div class="line">    outputStream.close();</div><div class="line">    inputStream.close();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> filename;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;流分为：文件(File/RandomAccessFile)、字符(Reader/Writer)、字节(InputStream/OutputStream)的操作。字符、字节是一一对应的，一个读取一个输出。&lt;/p&gt;
+&lt;p&gt;对应的设计模式：装饰器模式&lt;/p&gt;
+&lt;p&gt;&lt;img sr
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+    
+    
+      <category term="IO流" scheme="http://yoursite.com/tags/IO%E6%B5%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>上传验证绕过</title>
+    <link href="http://yoursite.com/2017/05/29/%E4%B8%8A%E4%BC%A0%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87/"/>
+    <id>http://yoursite.com/2017/05/29/上传验证绕过/</id>
+    <published>2017-05-29T13:27:57.000Z</published>
+    <updated>2017-05-29T13:31:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>整理文档发现了这个文件，回想当年在学校黑网站的日子历历在目。</p>
+<p>上传文件绕过附件整理了常见的技巧、验证方法。在自己实现上传功能的时候应该注意。</p>
+<p><a href="/assets/files/Bypass Upload ValidationFramework.pdf">文件上传绕过整理.pdf</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;整理文档发现了这个文件，回想当年在学校黑网站的日子历历在目。&lt;/p&gt;
+&lt;p&gt;上传文件绕过附件整理了常见的技巧、验证方法。在自己实现上传功能的时候应该注意。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/files/Bypass Upload ValidationFrame
+    
+    </summary>
+    
+      <category term="安全" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="安全" scheme="http://yoursite.com/tags/%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis 各数据结构</title>
@@ -644,98 +738,6 @@
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="并发" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringMVC工作原理</title>
-    <link href="http://yoursite.com/2017/05/05/SpringMVC%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
-    <id>http://yoursite.com/2017/05/05/SpringMVC工作原理/</id>
-    <published>2017-05-05T02:10:48.000Z</published>
-    <updated>2017-05-05T14:28:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/assets/images/springmvc_01.png" alt=""></p>
-<p><a href="http://blog.csdn.net/lu1005287365/article/details/52287952" target="_blank" rel="external">http://blog.csdn.net/lu1005287365/article/details/52287952</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/assets/images/springmvc_01.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/lu1005287365/article/details/52287952&quot; target=&quot;_b
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="SpringMVC" scheme="http://yoursite.com/tags/SpringMVC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Apache和Nginx对比</title>
-    <link href="http://yoursite.com/2017/05/05/apache%E5%92%8CNginx%E5%AF%B9%E6%AF%94/"/>
-    <id>http://yoursite.com/2017/05/05/apache和Nginx对比/</id>
-    <published>2017-05-05T01:42:33.000Z</published>
-    <updated>2017-05-10T15:13:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>面试的时候，问了一个很久以前考虑的问题，那时候还是第一次接触到Nginx。问题是，Apache、Nginx和Tomcat有什么区别？然后就是为什么Nginx这么优秀，那Apache还有什么存在的地位呢？</p>
-<p>这个问题得从几个方面来看。</p>
-<p>效率、稳定性、配置、模块、性能、线程模型、rewrite</p>
-<p>Apache每次请求都要读取.htccess文件，而且每个文件夹都遍历一下看有没有.htaccess</p>
-<p>//TODO 未完待续</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;面试的时候，问了一个很久以前考虑的问题，那时候还是第一次接触到Nginx。问题是，Apache、Nginx和Tomcat有什么区别？然后就是为什么Nginx这么优秀，那Apache还有什么存在的地位呢？&lt;/p&gt;
-&lt;p&gt;这个问题得从几个方面来看。&lt;/p&gt;
-&lt;p&gt;效率、稳定性、
-    
-    </summary>
-    
-      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-      <category term="Nginx" scheme="http://yoursite.com/tags/Nginx/"/>
-    
-      <category term="Apache" scheme="http://yoursite.com/tags/Apache/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL索引</title>
-    <link href="http://yoursite.com/2017/05/05/MySQL%E7%B4%A2%E5%BC%95/"/>
-    <id>http://yoursite.com/2017/05/05/MySQL索引/</id>
-    <published>2017-05-05T01:27:05.000Z</published>
-    <updated>2017-05-05T02:14:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://blog.csdn.net/kaka1121/article/details/53395628" target="_blank" rel="external">MYSQL 索引类型、什么情况下用不上索引、什么情况下不推荐使用索引</a></li>
-<li><a href="http://www.cnblogs.com/xiaoboluo768/p/5400990.html" target="_blank" rel="external">mysql explain的使用</a></li>
-<li><a href="http://blog.csdn.net/zhuxineli/article/details/14455029" target="_blank" rel="external">MYSQL explain详解</a></li>
-</ul>
-<p>索引的类型有四种：</p>
-<ul>
-<li>普通索引</li>
-<li>唯一索引</li>
-<li>主键索引</li>
-<li>组合索引</li>
-</ul>
-<p>关键词：组合索引的<strong>最左前缀</strong>原则</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/kaka1121/article/details/53395628&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MYSQL 索引类型、什么情况下用不上索引、什么情况下不推荐使用索引&lt;
-    
-    </summary>
-    
-      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
   </entry>
   

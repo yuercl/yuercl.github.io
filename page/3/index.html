@@ -5,8 +5,28 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/04/29/设计模式之适配器模式/" class="post-link">设计模式之适配器模式</a></h2><span class="post-time">2017年4月29日</span><div class="post-content"><h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/04/29/设计模式之单例模式/" class="post-link">设计模式之单例模式</a></h2><span class="post-time">2017年4月29日</span><div class="post-content"><h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>这个类被创建后，只能产生一个实例供外部访问，并且提供一个全局的访问点。</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>设计上一般遵循这三点：</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/SpringMVC工作原理/" class="post-link">SpringMVC工作原理</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><p><img src="/assets/images/springmvc_01.png" alt=""></p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p><a href="http://blog.csdn.net/lu1005287365/article/details/52287952" target="_blank" rel="external">http://blog.csdn.net/lu1005287365/article/details/52287952</a></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/apache和Nginx对比/" class="post-link">Apache和Nginx对比</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><p>面试的时候，问了一个很久以前考虑的问题，那时候还是第一次接触到Nginx。问题是，Apache、Nginx和Tomcat有什么区别？然后就是为什么Nginx这么优秀，那Apache还有什么存在的地位呢？</p>
+<p>这个问题得从几个方面来看。</p>
+<p>效率、稳定性、配置、模块、性能、线程模型、rewrite</p>
+<p>Apache每次请求都要读取.htccess文件，而且每个文件夹都遍历一下看有没有.htaccess</p>
+<p>//TODO 未完待续</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/05/05/MySQL索引/" class="post-link">MySQL索引</a></h2><span class="post-time">2017年5月5日</span><div class="post-content"><ul>
+<li><a href="http://blog.csdn.net/kaka1121/article/details/53395628" target="_blank" rel="external">MYSQL 索引类型、什么情况下用不上索引、什么情况下不推荐使用索引</a></li>
+<li><a href="http://www.cnblogs.com/xiaoboluo768/p/5400990.html" target="_blank" rel="external">mysql explain的使用</a></li>
+<li><a href="http://blog.csdn.net/zhuxineli/article/details/14455029" target="_blank" rel="external">MYSQL explain详解</a></li>
+</ul>
+<p>索引的类型有四种：</p>
+<ul>
+<li>普通索引</li>
+<li>唯一索引</li>
+<li>主键索引</li>
+<li>组合索引</li>
+</ul>
+<p>关键词：组合索引的<strong>最左前缀</strong>原则</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/04/29/设计模式之适配器模式/" class="post-link">设计模式之适配器模式</a></h2><span class="post-time">2017年4月29日</span><div class="post-content"><h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/04/29/设计模式之单例模式/" class="post-link">设计模式之单例模式</a></h2><span class="post-time">2017年4月29日</span><div class="post-content"><h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>这个类被创建后，只能产生一个实例供外部访问，并且提供一个全局的访问点。</p>
+<p>设计上一般遵循这三点：</p>
 <ul>
 <li>将采用单例模式的类的构造方法私有化（采用private修饰）</li>
 <li>在其内部产生该类的实例化对象，并将其封装成private static类型</li>
@@ -56,22 +76,4 @@
 <li><a href="http://blog.csdn.net/tswisdom/article/details/41522041">ZooKeeper系列(二)</a></li>
 <li><a href="http://blog.csdn.net/tswisdom/article/details/41522099">ZooKeeper系列(三)</a></li>
 </ul>
-<p>可以先了解上面的原理，比较详细，再看看下面的总结。</p></div><a href="/2017/03/07/zookeeper/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/03/03/自出JAVA面试题一道/" class="post-link">自出JAVA面试题一道</a></h2><span class="post-time">2017年3月3日</span><div class="post-content"><p>最近招人，想了几道面试题，包含基础知识、深入一点、Linux一点、数据库一点。比较基础，但是足够在简历筛选后再过滤一部分人了。其实面试题做的怎么样无所谓，聊一聊也大概知道是什么水平、能深入到什么水平。聊天的时候也还可以问问补充的题，比如一些框架基础、新技术趋势、实现原理什么的，另外可以考察下解决问题的思维方式和交流沟通怎么样，实在不行，还可以叫他现场写段代码。或许也就知道对方是什么水平了。感觉要遇到一个特别喜欢的求职者还是比较困难，当然也不只是技术。</p>
-<p>接下来要做的事，就是实现之前想象的一个量化策略，时间不多了。</p>
-<p>也祝我好运吧～，写在深圳，夜，BGM&lt;刚好遇见你&gt;，I count the days!!</p>
-<ol>
-<li>== 与 equals的区别</li>
-<li>简要描述String、StringBuffer、StringBuilder的区别。</li>
-<li>Char型变量能否存储一个中文字？为什么？</li>
-<li>请写出ArrayList、LinkedList和Vector的区别？</li>
-<li>如何在两个线程间共享数据？</li>
-<li>请写一个你最熟悉的设计模式的代码，一般在是什么应用场景？如：单例、工厂、观察者、代理、建造者、适配器等…</li>
-<li>java的内存回收机制是什么样的？java是否存在内存泄漏？有什么途径检测内存泄漏？（把知道的都可以写出来）</li>
-<li>在Linux里，如何查看一个监听端口为10086的进程？如果要杀死它呢？</li>
-<li>目前PP停车项目中有一张详细的出入场停车记录表<b> _record\<long id,="" varchar16="" merchant,="" datetime="" enter\_time,="" leave\_time,="" card\_no=""> </long></b>，注: merchant 商户号, enter_time 入场时间, leave_time 出场时间。<br>请写出SQL(数据库不限)来统计指定商户的停车场的今天里面的每小时车辆入场数量。</li>
-<li>一条SQL执行过长的时间，你可以从哪些方面做优化？（希望写出思路）</li>
-<li>以下代码片段存在的主要问题是什么？怎么解决？</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">List&lt;Student&gt; stuList = <span class="keyword">new</span> ArrayList&lt;Student&gt;();</div><div class="line">stuList.add(<span class="keyword">new</span> Student(...));</div><div class="line">stuList.add(<span class="keyword">new</span> Student(...));</div><div class="line">stuList.add(<span class="keyword">new</span> Student(...));</div><div class="line"></div><div class="line">String[] names = [<span class="string">"aaa"</span>,<span class="string">"bbb"</span>,<span class="string">"ccc"</span>];</div><div class="line"><span class="keyword">for</span>(Student stu : stuList) &#123;</div><div class="line">　　<span class="keyword">for</span>(String name : names) &#123;</div><div class="line">　　　　  <span class="keyword">if</span>(stu.getName() == name) &#123;</div><div class="line">　　　　　　　　stuList.remove(stu);</div><div class="line">    　　  &#125;     </div><div class="line">　　　&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/02/14/MyBatis的一级缓存/" class="post-link">MyBatis的一级缓存</a></h2><span class="post-time">2017年2月14日</span><div class="post-content"><p>参看这篇文章：</p>
-<p><a href="http://blog.csdn.net/luanlouis/article/details/41280959" target="_blank" rel="external">《深入理解MyBatis原理》MyBatis的一级缓存实现详解及使用注意事项</a><br><a href="http://blog.csdn.net/u010349169/article/category/2309433" target="_blank" rel="external">MyBatis的其他文章</a></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/02/09/不忘初心、不惑初心、不改初心/" class="post-link">不忘初心、不惑初心、不改初心</a></h2><span class="post-time">2017年2月9日</span><div class="post-content"><center><b><br><br>你的心最好不是招摇的枝柯<br><br>而是静默的根系<br><br>深藏在地下<br><br>不为尘世的一切所蛊惑<br><br>只追求自身的简单和丰富<br><br>不忘初心、不惑初心、不改初心<br><br></b></center></div></article></li></ul><div class="paginator"><a href="/page/2/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/4/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+<p>可以先了解上面的原理，比较详细，再看看下面的总结。</p></div><a href="/2017/03/07/zookeeper/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/2/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/page/4/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
