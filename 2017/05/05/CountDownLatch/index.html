@@ -5,7 +5,7 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">CountDownLatch</h1><span class="post-time">2017年5月5日</span><div class="post-content"><p>CountDownLatch 是一个同步工具类，允许一个线程或者多个线程一直等待，直到其他线程完成以后再执行接下来的逻辑。</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Accueil</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Catégories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">À propos</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">CountDownLatch</h1><span class="post-time">2017年5月5日</span><div class="post-content"><p>CountDownLatch 是一个同步工具类，允许一个线程或者多个线程一直等待，直到其他线程完成以后再执行接下来的逻辑。</p>
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><p>一个场景就是，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。</p>
 <p>实现的方式是一个计数器。每次完成一个就相应的减少一，直到最后计数器归零，等待线程就继续执行接下来任务。</p>
 <p><img src="/assets/images/CountDownLatch.png" alt=""></p>
@@ -16,7 +16,7 @@
 <li>死锁检测</li>
 </ul>
 <p><a href="http://www.importnew.com/15731.html" target="_blank" rel="external">CountDownLatch的介绍，含一个健康检查的例子</a></p>
-</div></article><div class="tags"><a href="/tags/java/">java</a><a href="/tags/并发/">并发</a></div><div class="paginator"><a href="/2017/05/05/北斗七星英文名/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2017/05/05/SpringMVC工作原理/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+</div></article><div class="tags"><a href="/tags/java/">java</a><a href="/tags/并发/">并发</a></div><div class="paginator"><a href="/2017/05/05/北斗七星英文名/" class="prev"><i class="iconfont icon-left"></i><span> Précédent</span></a><a href="/2017/05/05/SpringMVC工作原理/" class="next"><span>Suivant</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
     this.page.url = 'http://yoursite.com/2017/05/05/CountDownLatch/';
     this.page.identifier = '2017/05/05/CountDownLatch/';
     this.page.title = 'CountDownLatch';

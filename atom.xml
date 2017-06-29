@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-06-09T03:27:50.000Z</updated>
+  <updated>2017-06-22T07:36:19.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>redis锁</title>
-    <link href="http://yoursite.com/2017/06/09/redis%E9%94%81/"/>
-    <id>http://yoursite.com/2017/06/09/redis锁/</id>
+    <title>Alfred workflows Times插件</title>
+    <link href="http://yoursite.com/2017/06/22/Aflred%E6%97%B6%E9%97%B4%E8%BD%AC%E6%8D%A2%E6%8F%92%E4%BB%B6/"/>
+    <id>http://yoursite.com/2017/06/22/Aflred时间转换插件/</id>
+    <published>2017-06-22T07:30:03.000Z</published>
+    <updated>2017-06-22T07:36:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/assets/images/alfred_times_default.png" alt=""></p>
+<p><img src="/assets/images/alfred_times_with_parm.png" alt=""></p>
+<p>在Alfred中新增一个workflow，keywords为times，参数可选。</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># coding=utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="keyword">from</span> alfred.feedback <span class="keyword">import</span> Feedback</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_feedback_results</span><span class="params">(now)</span>:</span></div><div class="line">    <span class="string">'''Generate the feedback results.'''</span></div><div class="line">    fb = Feedback()</div><div class="line"></div><div class="line">    <span class="keyword">if</span> now == <span class="number">0</span>:</div><div class="line">        kwargsOfMilliseconds = &#123;</div><div class="line">            <span class="string">'title'</span>: datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d'</span>),</div><div class="line">            <span class="string">'subtitle'</span>: <span class="string">u'当前日期'</span>,</div><div class="line">            <span class="string">'arg'</span>: <span class="string">'%s\n%s'</span> % (datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d'</span>), <span class="string">u'当前日期'</span>)</div><div class="line">        &#125;</div><div class="line">        fb.addItem(**kwargsOfMilliseconds)</div><div class="line"></div><div class="line">        kwargsOfSecondIsofomat = &#123;</div><div class="line">            <span class="string">'title'</span>: datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>),</div><div class="line">            <span class="string">'subtitle'</span>: <span class="string">u'当前日期'</span>,</div><div class="line">            <span class="string">'arg'</span>: <span class="string">'%s\n%s'</span> % (datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>), <span class="string">u'当前日期'</span>)</div><div class="line">        &#125;</div><div class="line">        fb.addItem(**kwargsOfSecondIsofomat)</div><div class="line"></div><div class="line">        kwargsOfMilliseconds = &#123;</div><div class="line">            <span class="string">'title'</span>: datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d %H:%M:%S.%f'</span>),</div><div class="line">            <span class="string">'subtitle'</span>: <span class="string">u'当前日期'</span>,</div><div class="line">            <span class="string">'arg'</span>: <span class="string">'%s\n%s'</span> % (datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d %H:%M:%S.%f'</span>), <span class="string">u'当前日期'</span>)</div><div class="line">        &#125;</div><div class="line">        fb.addItem(**kwargsOfMilliseconds)</div><div class="line">        </div><div class="line">        kwargsOfSeconds = &#123;</div><div class="line">            <span class="string">'title'</span>: str(time.time()),</div><div class="line">            <span class="string">'subtitle'</span>: <span class="string">u'当前日期'</span>,</div><div class="line">            <span class="string">'arg'</span>: <span class="string">'%s\n%s'</span> % (str(time.time()), <span class="string">u'当前日期'</span>)</div><div class="line">        &#125;</div><div class="line">        fb.addItem(**kwargsOfSeconds)</div><div class="line"></div><div class="line">        kwargsOfMilliseconds = &#123;</div><div class="line">            <span class="string">'title'</span>: str(time.time() * <span class="number">1000</span>),</div><div class="line">            <span class="string">'subtitle'</span>: <span class="string">u'当前日期'</span>,</div><div class="line">            <span class="string">'arg'</span>: <span class="string">'%s\n%s'</span> % (str(time.time() * <span class="number">1000</span>), <span class="string">u'当前日期'</span>)</div><div class="line">        &#125;</div><div class="line">        fb.addItem(**kwargsOfMilliseconds)</div><div class="line">       </div><div class="line">    <span class="keyword">elif</span> long(now) &gt; <span class="number">0</span>:</div><div class="line">        timeWithNomal = datetime.datetime.fromtimestamp(now).strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line">        timeWithMilliseconds = datetime.datetime.fromtimestamp(now).strftime(<span class="string">'%Y-%m-%d %H:%M:%S.%f'</span>)</div><div class="line"></div><div class="line">        title = timeWithMilliseconds</div><div class="line">        subtitle = <span class="string">u'毫秒时间'</span></div><div class="line">        kwargsOfMilliseconds = &#123;</div><div class="line">            <span class="string">'title'</span>: title,</div><div class="line">            <span class="string">'subtitle'</span>: subtitle,</div><div class="line">            <span class="string">'arg'</span>: <span class="string">'%s\n%s'</span> % (title, subtitle)</div><div class="line">        &#125;</div><div class="line">        fb.addItem(**kwargsOfMilliseconds)</div><div class="line"></div><div class="line">        title = timeWithNomal</div><div class="line">        subtitle = <span class="string">u'标准时间'</span></div><div class="line">        kwargsOfNormal = &#123;</div><div class="line">            <span class="string">'title'</span>: title,</div><div class="line">            <span class="string">'subtitle'</span>: subtitle,</div><div class="line">            <span class="string">'arg'</span>: <span class="string">'%s\n%s'</span> % (title, subtitle)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        fb.addItem(**kwargsOfNormal)</div><div class="line"></div><div class="line">    fb.output()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">'''The main entry.'''</span></div><div class="line">    <span class="comment"># Note: do not use single quote here, because Alfred doesn't give choice to</span></div><div class="line">    <span class="comment"># escape a single quote.</span></div><div class="line">    now = <span class="string">"&#123;query&#125;"</span></div><div class="line">    <span class="keyword">if</span> len(str(now)) == <span class="number">0</span>:</div><div class="line">        now = long(<span class="number">0</span>)</div><div class="line">    <span class="keyword">elif</span> len(str(now)) &gt; <span class="number">10</span>:</div><div class="line">        now = long(now) / <span class="number">1000</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        now = long(now)</div><div class="line">    generate_feedback_results(now)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/assets/images/alfred_times_default.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/alfred_times_with_parm.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在Alfred中新增一个workflow，keywords为times，参数可选。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Others" scheme="http://yoursite.com/categories/Others/"/>
+    
+    
+      <category term="Alfred" scheme="http://yoursite.com/tags/Alfred/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis锁</title>
+    <link href="http://yoursite.com/2017/06/09/Redis%E9%94%81/"/>
+    <id>http://yoursite.com/2017/06/09/Redis锁/</id>
     <published>2017-06-09T03:22:20.000Z</published>
-    <updated>2017-06-09T03:27:50.000Z</updated>
+    <updated>2017-06-09T03:31:51.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>在程序多开的情况下，锁实现只有一个Timer，或者说Schedule运行。通过Redis 的 setnx命令实现。类似也可以利用zookeeper来做。  </p>
 <h3 id="参考redis文档"><a href="#参考redis文档" class="headerlink" title="参考redis文档"></a>参考redis文档</h3><font color="red"><strong>SETNX key value</strong></font>
@@ -47,9 +75,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
-    
       <category term="分布式锁" scheme="http://yoursite.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+    
+      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
     
       <category term="lock" scheme="http://yoursite.com/tags/lock/"/>
     
@@ -701,43 +729,6 @@
     
     
       <category term="天文" scheme="http://yoursite.com/tags/%E5%A4%A9%E6%96%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CountDownLatch</title>
-    <link href="http://yoursite.com/2017/05/05/CountDownLatch/"/>
-    <id>http://yoursite.com/2017/05/05/CountDownLatch/</id>
-    <published>2017-05-05T06:41:40.000Z</published>
-    <updated>2017-05-05T14:57:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>CountDownLatch 是一个同步工具类，允许一个线程或者多个线程一直等待，直到其他线程完成以后再执行接下来的逻辑。</p>
-<p>一个场景就是，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。</p>
-<p>实现的方式是一个计数器。每次完成一个就相应的减少一，直到最后计数器归零，等待线程就继续执行接下来任务。</p>
-<p><img src="/assets/images/CountDownLatch.png" alt=""></p>
-<p>可以用在下面三种场景：</p>
-<ul>
-<li>实现最大的并行性</li>
-<li>等待多个线程执行完成后再执行任务</li>
-<li>死锁检测</li>
-</ul>
-<p><a href="http://www.importnew.com/15731.html" target="_blank" rel="external">CountDownLatch的介绍，含一个健康检查的例子</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;CountDownLatch 是一个同步工具类，允许一个线程或者多个线程一直等待，直到其他线程完成以后再执行接下来的逻辑。&lt;/p&gt;
-&lt;p&gt;一个场景就是，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。&lt;/p&gt;
-&lt;p&gt;实现的方式是一个计数器。每次
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-      <category term="并发" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
