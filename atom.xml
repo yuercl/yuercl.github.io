@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-06-22T07:36:19.000Z</updated>
+  <updated>2017-07-29T03:15:05.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,459 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>删除CleanMyMac</title>
+    <link href="http://yoursite.com/2017/07/29/%E5%88%A0%E9%99%A4CleanMyMac/"/>
+    <id>http://yoursite.com/2017/07/29/删除CleanMyMac/</id>
+    <published>2017-07-29T03:13:32.000Z</published>
+    <updated>2017-07-29T03:15:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>终结命令，<code>mdfind -name CleanMyMac</code>，挨着挨着删除。</p>
+<p>官方的说明，CleanMyMac需要自己删除自己。可是我已经不想再安装这个了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fblog.csdn.net%2Fsoindy%2Farticle%2Fdetails%2F53028844.webhistory</div><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fbbs.feng.com%2Fread-htm-tid-7792802.html.webhistory</div><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fwww.mycleanmymac.com%2Fxiazaianzhuang%2Fshanchu-cmm.html.webhistory</div><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fbbs.feng.com%2Fread-htm-tid-6410162.html.webhistory</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 3/CleanMyMac 3 Scheduler.app</div><div class="line">/Users/Shared/CleanMyMac 3</div><div class="line">/Library/PrivilegedHelperTools/com.macpaw.CleanMyMac3.Agent</div><div class="line">/Library/LaunchDaemons/com.macpaw.CleanMyMac3.Agent.plist</div><div class="line">/Users/yuer/Pictures/照片 图库.photoslibrary/private/com.macpaw.CleanMyMac3</div><div class="line">/Users/yuer/Library/LaunchAgents/com.macpaw.CleanMyMac3.Scheduler.plist</div><div class="line">/Users/Shared/CleanMyMac 3 Menu</div><div class="line">/Users/yuer/Library/Application Scripts/com.macpaw.CleanMyMac3.StorageManagement</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 3 Menu</div><div class="line">/Users/yuer/Library/Containers/com.macpaw.CleanMyMac3.StorageManagement</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 3</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 2</div><div class="line">/Users/Shared/CleanMyMac 2</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;终结命令，&lt;code&gt;mdfind -name CleanMyMac&lt;/code&gt;，挨着挨着删除。&lt;/p&gt;
+&lt;p&gt;官方的说明，CleanMyMac需要自己删除自己。可是我已经不想再安装这个了。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;tab
+    
+    </summary>
+    
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="CleanMyMac" scheme="http://yoursite.com/tags/CleanMyMac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>开始玩mycat</title>
+    <link href="http://yoursite.com/2017/07/29/%E5%BC%80%E5%A7%8B%E7%8E%A9mycat/"/>
+    <id>http://yoursite.com/2017/07/29/开始玩mycat/</id>
+    <published>2017-07-29T02:00:00.000Z</published>
+    <updated>2017-07-29T03:16:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。</p>
+<p>默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器如vim可以参考stackoverflow的回答，<a href="https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container" target="_blank" rel="external">https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">列举几个可能需要的命令</div><div class="line"></div><div class="line">docker pull mysql</div><div class="line">docker run -p 12345:3306 --name mysql <span class="_">-e</span> MYSQL_ROOT_PASSWORD=x <span class="_">-d</span> </div><div class="line">docker run -p 12346:3306 --name mysql_1 <span class="_">-e</span> MYSQL_ROOT_PASSWORD=x <span class="_">-d</span> </div><div class="line">docker.io/mysql</div><div class="line">docker ps <span class="_">-a</span></div><div class="line">docker rm f mysql</div><div class="line">mysql -uroot -h127.0.0.1 -P12345 -px</div><div class="line">mysql -uroot -h127.0.0.1 -P12346 -px</div><div class="line">docker cp <span class="built_in">source</span> romote</div><div class="line">docker cp sources.list mysql_1:/etc/apt/sources.list</div><div class="line">apt-get update</div><div class="line">apt-get install vim</div></pre></td></tr></table></figure>
+<p>参考链接</p>
+<ul>
+<li><a href="http://github.com/MyCATApache/Mycat-Server" target="_blank" rel="external">http://github.com/MyCATApache/Mycat-Server</a></li>
+<li><a href="http://dl.mycat.io/1.6-RELEASE/" target="_blank" rel="external">http://dl.mycat.io/1.6-RELEASE/</a></li>
+<li><a href="https://severalnines.com/blog/mysql-docker-containers-understanding-basics" target="_blank" rel="external">https://severalnines.com/blog/mysql-docker-containers-understanding-basics</a></li>
+<li><a href="http://mirrors.ustc.edu.cn/help/debian-security.html" target="_blank" rel="external">中科大debian-security源</a></li>
+<li><a href="http://mirrors.ustc.edu.cn/help/debian.html" target="_blank" rel="external">中科大debian源</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。&lt;/p&gt;
+&lt;p&gt;默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器
+    
+    </summary>
+    
+      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+      <category term="mycat" scheme="http://yoursite.com/tags/mycat/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Felix 相关</title>
+    <link href="http://yoursite.com/2017/07/23/Felix-%E7%9B%B8%E5%85%B3/"/>
+    <id>http://yoursite.com/2017/07/23/Felix-相关/</id>
+    <published>2017-07-23T15:53:15.000Z</published>
+    <updated>2017-07-23T16:02:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>注意，Felix目前最新的版本只能使用JDK7，在JDK8上面无法正常启动服务。bundle 导出后放入到plugins中，felix回自动reload这个包，实现无缝升级，但是前提是你的代码中处理了destroy相关的代码，不然可能无法正常uninstall plugin bundle。</p>
+<p>help<br>ps<br>start<br>install  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:port/system/console/shell</div></pre></td></tr></table></figure>
+<p>这货很好，但是也很坑，在某一个时代来看，是一种比较好的方案。未来都是微服务…</p>
+<ul>
+<li><a href="http://zqc-0101.iteye.com/blog/1153291" target="_blank" rel="external">在Eclipse中搭建Apache Felix环境</a></li>
+<li><a href="http://zqc-0101.iteye.com/blog/1183452" target="_blank" rel="external">在Apache Felix中运行bundle</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;注意，Felix目前最新的版本只能使用JDK7，在JDK8上面无法正常启动服务。bundle 导出后放入到plugins中，felix回自动reload这个包，实现无缝升级，但是前提是你的代码中处理了destroy相关的代码，不然可能无法正常uninstall plugin
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Felix" scheme="http://yoursite.com/tags/Felix/"/>
+    
+      <category term="OSGI" scheme="http://yoursite.com/tags/OSGI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>动态更新slf4j日志的级别</title>
+    <link href="http://yoursite.com/2017/07/21/%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0slf4j%E6%97%A5%E5%BF%97%E7%9A%84%E7%BA%A7%E5%88%AB/"/>
+    <id>http://yoursite.com/2017/07/21/动态更新slf4j日志的级别/</id>
+    <published>2017-07-21T10:41:50.000Z</published>
+    <updated>2017-07-21T10:42:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>动态更新slf4j日志的级别</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String RESULT_LOGGER = <span class="string">"logger level update %s! key = %s, level = %s."</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">freshLogback</span><span class="params">(String key, String level)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (StringUtils.isBlank(key) || StringUtils.isBlank(level)) &#123;</div><div class="line">        <span class="keyword">return</span> String.format(RESULT_LOGGER, <span class="string">"faill"</span>, key, level);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();</div><div class="line"></div><div class="line">    ch.qos.logback.classic.Logger clogger;</div><div class="line">    <span class="comment">// 设置全局日志级别</span></div><div class="line">    <span class="keyword">if</span> (<span class="string">"*"</span>.equals(key)) &#123; <span class="comment">// 设置全局日志级别</span></div><div class="line">        clogger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);</div><div class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 设置某个类日志级别-可以实现定向日志级别调整</span></div><div class="line">        clogger = loggerContext.getLogger(key);</div><div class="line">    &#125;</div><div class="line">    clogger.setLevel(Level.toLevel(level, Level.INFO));</div><div class="line"></div><div class="line">    <span class="comment">//List&lt;ch.qos.logback.classic.Logger&gt; loggerList = loggerContext.getLoggerList();</span></div><div class="line">    <span class="comment">//for (ch.qos.logback.classic.Logger clogger1 : loggerList) &#123;</span></div><div class="line">    <span class="comment">//    LOGGER.info(clogger1.getName());</span></div><div class="line">    <span class="comment">//&#125;</span></div><div class="line">    <span class="keyword">return</span> String.format(RESULT_LOGGER, <span class="string">"ok"</span>, key, level);</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;动态更新slf4j日志的级别&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;d
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="slf4j" scheme="http://yoursite.com/tags/slf4j/"/>
+    
+      <category term="logback" scheme="http://yoursite.com/tags/logback/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JAVA线程池</title>
+    <link href="http://yoursite.com/2017/07/18/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
+    <id>http://yoursite.com/2017/07/18/Java线程池/</id>
+    <published>2017-07-18T09:47:19.000Z</published>
+    <updated>2017-07-18T10:41:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>源于面试的时候被问到了一个问题，创建线程池需要什么参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ThreadPoolExecutor(<span class="keyword">int</span> corePoolSize, <span class="keyword">int</span> maximumPoolSize, <span class="keyword">long</span> keepAliveTime,TimeUnit unit,BlockingQueue&lt;Runnable&gt; workQueue,ThreadFactory threadFactory,RejectedExecutionHandler handler)</div></pre></td></tr></table></figure>
+<p>然后就是，创建好了，我不停的往里面塞线程，那么比如说我创建的是size是10的线程池，那么我塞第11个线程池的时候，此时发生了什么。读文下面两个文章就理解了。</p>
+<ul>
+<li><a href="http://www.cnblogs.com/dolphin0520/p/3932921.html" target="_blank" rel="external">Java并发编程：线程池的使用</a></li>
+<li><a href="http://blog.csdn.net/menxu_work/article/details/9358795" target="_blank" rel="external"> ThreadPoolExecutor使用和思考-线程池大小设置与BlockingQueue的三种实现区别</a></li>
+</ul>
+<p>那天面试的那个人说了JDK里面这里有一个注释。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * Proceed in 3 steps:</div><div class="line"> *</div><div class="line"> * 1. If fewer than corePoolSize threads are running, try to</div><div class="line"> * start a new thread with the given command as its first</div><div class="line"> * task.  The call to addWorker atomically checks runState and</div><div class="line"> * workerCount, and so prevents false alarms that would add</div><div class="line"> * threads when it shouldn&apos;t, by returning false.</div><div class="line"> *</div><div class="line"> * 2. If a task can be successfully queued, then we still need</div><div class="line"> * to double-check whether we should have added a thread</div><div class="line"> * (because existing ones died since last checking) or that</div><div class="line"> * the pool shut down since entry into this method. So we</div><div class="line"> * recheck state and if necessary roll back the enqueuing if</div><div class="line"> * stopped, or start a new thread if there are none.</div><div class="line"> *</div><div class="line"> * 3. If we cannot queue task, then we try to add a new</div><div class="line"> * thread.  If it fails, we know we are shut down or saturated</div><div class="line"> * and so reject the task.</div><div class="line"> */</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;源于面试的时候被问到了一个问题，创建线程池需要什么参数&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java线程池" scheme="http://yoursite.com/tags/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CMPP中国移动短信网关</title>
+    <link href="http://yoursite.com/2017/07/18/CMPP%E4%B8%AD%E5%9B%BD%E7%A7%BB%E5%8A%A8%E7%9F%AD%E4%BF%A1%E7%BD%91%E5%85%B3/"/>
+    <id>http://yoursite.com/2017/07/18/CMPP中国移动短信网关/</id>
+    <published>2017-07-18T04:00:00.000Z</published>
+    <updated>2017-07-17T10:11:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近的短信系统久经波折终于要准备上线了。可以写一个总结。</p>
+<p>CMPP是中国移动的短信网关，提供了TCP长链接／短链接接入方法。在这次重构的时候，把以前用的Socket流替换为Netty NIO实现一次。说说遇到了什么坑吧。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近的短信系统久经波折终于要准备上线了。可以写一个总结。&lt;/p&gt;
+&lt;p&gt;CMPP是中国移动的短信网关，提供了TCP长链接／短链接接入方法。在这次重构的时候，把以前用的Socket流替换为Netty NIO实现一次。说说遇到了什么坑吧。&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="CMPP" scheme="http://yoursite.com/tags/CMPP/"/>
+    
+      <category term="短信网关" scheme="http://yoursite.com/tags/%E7%9F%AD%E4%BF%A1%E7%BD%91%E5%85%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BitSet</title>
+    <link href="http://yoursite.com/2017/07/18/BitSet/"/>
+    <id>http://yoursite.com/2017/07/18/BitSet/</id>
+    <published>2017-07-18T02:28:42.000Z</published>
+    <updated>2017-07-18T03:52:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://www.cnblogs.com/lqminn/archive/2012/08/30/2664122.html" target="_blank" rel="external">BitSet的源码研究</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/lqminn/archive/2012/08/30/2664122.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;BitSet的源码研究&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="BitSet" scheme="http://yoursite.com/tags/BitSet/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HbaseTest.java 一例</title>
+    <link href="http://yoursite.com/2017/07/18/HbaseTest-java-%E4%B8%80%E4%BE%8B/"/>
+    <id>http://yoursite.com/2017/07/18/HbaseTest-java-一例/</id>
+    <published>2017-07-18T02:28:42.000Z</published>
+    <updated>2017-07-18T02:47:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>抄的一段Hbase的demo代码，包含了些基本操作</p>
+<p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hbase<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hbase-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.*;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.*;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.Filter;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.FilterList;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.SingleColumnValueFilter;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HBaseTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 声明静态配置，配置zookeeper</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Configuration configuration = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Connection connection = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        configuration = HBaseConfiguration.create();</div><div class="line"><span class="comment">//        configuration.set("hbase.zookeeper.quorum", "study-90:2181,study-91:2181,study-92:2181");</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            connection = ConnectionFactory.createConnection(configuration);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 创建表</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">createTable</span><span class="params">(String tableStr, String[] familyNames)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"start create table ......"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Admin admin = connection.getAdmin();</div><div class="line">            TableName tableName = TableName.valueOf(tableStr);</div><div class="line">            <span class="keyword">if</span> (admin.tableExists(tableName)) &#123;<span class="comment">// 如果存在要创建的表，那么先删除，再创建</span></div><div class="line">                admin.disableTable(tableName);</div><div class="line">                admin.deleteTable(tableName);</div><div class="line">                System.out.println(tableName + <span class="string">" is exist,detele...."</span>);</div><div class="line">            &#125;</div><div class="line">            HTableDescriptor tableDescriptor = <span class="keyword">new</span> HTableDescriptor(tableName);</div><div class="line">            <span class="comment">// 添加表列信息</span></div><div class="line">            <span class="keyword">if</span> (familyNames != <span class="keyword">null</span> &amp;&amp; familyNames.length &gt; <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">for</span> (String familyName : familyNames) &#123;</div><div class="line">                    tableDescriptor.addFamily(<span class="keyword">new</span> HColumnDescriptor(familyName));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            admin.createTable(tableDescriptor);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"end create table ......"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 添加行列数据数据</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertData</span><span class="params">(String tableName, String rowId, String familyName, String qualifier, String value)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"start insert data ......"</span>);</div><div class="line">        Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">        Put put = <span class="keyword">new</span> Put(rowId.getBytes());<span class="comment">// 一个PUT代表一行数据，再NEW一个PUT表示第二行数据,每行一个唯一的ROWKEY，此处rowkey为put构造方法中传入的值</span></div><div class="line">        put.addColumn(familyName.getBytes(), qualifier.getBytes(), value.getBytes());<span class="comment">// 本行数据的第一列</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            table.put(put);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"end insert data ......"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除行</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deleteRow</span><span class="params">(String tablename, String rowkey)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Table table = connection.getTable(TableName.valueOf(tablename));</div><div class="line">            Delete d1 = <span class="keyword">new</span> Delete(rowkey.getBytes());</div><div class="line">            table.delete(d1);<span class="comment">//d1.addColumn(family, qualifier);d1.addFamily(family);</span></div><div class="line">            System.out.println(<span class="string">"删除行成功!"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 查询所有数据</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryAll</span><span class="params">(String tableName)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            ResultScanner rs = table.getScanner(<span class="keyword">new</span> Scan());</div><div class="line">            <span class="keyword">for</span> (Result r : rs) &#123;</div><div class="line">                System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">                <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                    System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            rs.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据rowId查询</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryByRowId</span><span class="params">(String tableName, String rowId)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Get scan = <span class="keyword">new</span> Get(rowId.getBytes());<span class="comment">// 根据rowkey查询</span></div><div class="line">            Result r = table.get(scan);</div><div class="line">            System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">            <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据列条件查询</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryByCondition</span><span class="params">(String tableName, String familyName, String qualifier, String value)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">            Filter filter = <span class="keyword">new</span> SingleColumnValueFilter(Bytes.toBytes(familyName), Bytes.toBytes(qualifier), CompareOp.EQUAL, Bytes.toBytes(value)); <span class="comment">// 当列familyName的值为value时进行查询</span></div><div class="line">            Scan s = <span class="keyword">new</span> Scan();</div><div class="line">            s.setFilter(filter);</div><div class="line">            ResultScanner rs = table.getScanner(s);</div><div class="line">            <span class="keyword">for</span> (Result r : rs) &#123;</div><div class="line">                System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">                <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                    System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            rs.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 多条件查询</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryByConditions</span><span class="params">(String tableName, String[] familyNames, String[] qualifiers, String[] values)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">            List&lt;Filter&gt; filters = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="keyword">if</span> (familyNames != <span class="keyword">null</span> &amp;&amp; familyNames.length &gt; <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">                <span class="keyword">for</span> (String familyName : familyNames) &#123;</div><div class="line">                    Filter filter = <span class="keyword">new</span> SingleColumnValueFilter(Bytes.toBytes(familyName), Bytes.toBytes(qualifiers[i]), CompareOp.EQUAL, Bytes.toBytes(values[i]));</div><div class="line">                    filters.add(filter);</div><div class="line">                    i++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            FilterList filterList = <span class="keyword">new</span> FilterList(filters);</div><div class="line">            Scan scan = <span class="keyword">new</span> Scan();</div><div class="line">            scan.setFilter(filterList);</div><div class="line">            ResultScanner rs = table.getScanner(scan);</div><div class="line">            <span class="keyword">for</span> (Result r : rs) &#123;</div><div class="line">                System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">                <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                    System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            rs.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除表</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dropTable</span><span class="params">(String tableStr)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Admin admin = connection.getAdmin();</div><div class="line">            TableName tableName = TableName.valueOf(tableStr);</div><div class="line">            admin.disableTable(tableName);</div><div class="line">            admin.deleteTable(tableName);</div><div class="line">            admin.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//创建表</span></div><div class="line">        createTable(<span class="string">"t_table"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"f1"</span>, <span class="string">"f2"</span>, <span class="string">"f3"</span>&#125;);</div><div class="line">        <span class="comment">//添加数据</span></div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>, <span class="string">"f1"</span>, <span class="string">"a"</span>, <span class="string">"fffaaa"</span>);</div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>, <span class="string">"f2"</span>, <span class="string">"b"</span>, <span class="string">"fffbbb"</span>);</div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>, <span class="string">"f3"</span>, <span class="string">"c"</span>, <span class="string">"fffccc"</span>);</div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0002"</span>, <span class="string">"f1"</span>, <span class="string">"a"</span>, <span class="string">"eeeeee"</span>);</div><div class="line">        <span class="comment">//查询全部数据</span></div><div class="line">        queryAll(<span class="string">"t_table"</span>);</div><div class="line">        <span class="comment">//根据rowid查询数据</span></div><div class="line">        queryByRowId(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>);</div><div class="line">        <span class="comment">//列条件查询</span></div><div class="line">        queryByCondition(<span class="string">"t_table"</span>, <span class="string">"f1"</span>, <span class="string">"a"</span>, <span class="string">"eeeeee"</span>);</div><div class="line">        <span class="comment">//多条件查询</span></div><div class="line">        queryByConditions(<span class="string">"t_table"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"f1"</span>, <span class="string">"f3"</span>&#125;, <span class="keyword">new</span> String[]&#123;<span class="string">"a"</span>, <span class="string">"c"</span>&#125;, <span class="keyword">new</span> String[]&#123;<span class="string">"fffaaa"</span>, <span class="string">"fffccc"</span>&#125;);</div><div class="line">        <span class="comment">//删除记录</span></div><div class="line">        deleteRow(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>);</div><div class="line">        <span class="comment">//删除表</span></div><div class="line">        dropTable(<span class="string">"t_table"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;抄的一段Hbase的demo代码，包含了些基本操作&lt;/p&gt;
+&lt;p&gt;添加依赖&lt;/p&gt;
+&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.apache.hbase&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;hbase-client&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;1.2.6&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="Hbase" scheme="http://yoursite.com/tags/Hbase/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hbase 安装</title>
+    <link href="http://yoursite.com/2017/07/18/Hbase-%E5%AE%89%E8%A3%85/"/>
+    <id>http://yoursite.com/2017/07/18/Hbase-安装/</id>
+    <published>2017-07-18T01:59:06.000Z</published>
+    <updated>2017-07-18T02:10:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hbase安装需要先安装Hadoop，底层依赖。相对来讲Hbase的安装相对简单很多，通常情况下只需要更改下hbase-site.xml就可以了，存储都交由hdfs管理。</p>
+<p>改一个配置文件</p>
+<p>conf/hbase-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>可能出现错误无法找到 <code>Error: JAVA_HOME is not set</code>，设置 <code>conf/hbase-env.sh</code> 中JAVA_HOME为正确的路径</p>
+<p><img src="/assets/images/hbase.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Hbase安装需要先安装Hadoop，底层依赖。相对来讲Hbase的安装相对简单很多，通常情况下只需要更改下hbase-site.xml就可以了，存储都交由hdfs管理。&lt;/p&gt;
+&lt;p&gt;改一个配置文件&lt;/p&gt;
+&lt;p&gt;conf/hbase-site.xml&lt;/p&gt;
+&lt;figu
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="Hbase" scheme="http://yoursite.com/tags/Hbase/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>redis-dump</title>
+    <link href="http://yoursite.com/2017/07/17/redis-dump/"/>
+    <id>http://yoursite.com/2017/07/17/redis-dump/</id>
+    <published>2017-07-17T10:02:54.000Z</published>
+    <updated>2017-07-17T10:06:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="https://github.com/delano/redis-dump" target="_blank" rel="external">Github redis-dump</a></li>
+</ul>
+<p>在尝试的过程中，有一个问题需要注意：</p>
+<p>如果一个redis里面已经存在了某一个key，在<code>redis-load</code>的时候不能覆盖掉。</p>
+<p>load的时候，不会删掉redis已经存在的数据。</p>
+<p>测试简单的redis数据结构,key-value / hash set ／list 没有问题，建议使用的时候先测试下自己的数据结构能不能load成功回来。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/delano/redis-dump&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github redis-dump&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在尝试的过程中，有一个问题需要注意
+    
+    </summary>
+    
+      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
+    
+    
+      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop遇到的问题</title>
+    <link href="http://yoursite.com/2017/07/17/Hadoop%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2017/07/17/Hadoop遇到的问题/</id>
+    <published>2017-07-17T09:31:15.000Z</published>
+    <updated>2017-07-17T10:23:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-common/SingleCluster.html" target="_blank" rel="external">SingleCluster install</a></li>
+<li><a href="http://blog.csdn.net/jack85986370/article/details/51902871" target="_blank" rel="external">解决 Unable to load native-hadoop library for your platform</a></li>
+<li>如果提示<code>core-site.xml</code>无法找到可以检查一下环境变量是否配置正确了。我遇到是因为之前的版本升级改了profile，忘了source了。</li>
+<li>看日志如果无法启动，提示有<code>account.jetbrains.com</code> 可能原因是<code>/ets/hosts</code>加了idea的激活ip</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-common/SingleCluster.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux中wheel组的概念</title>
+    <link href="http://yoursite.com/2017/07/13/Linux%E4%B8%ADwheel%E7%BB%84%E7%9A%84%E6%A6%82%E5%BF%B5/"/>
+    <id>http://yoursite.com/2017/07/13/Linux中wheel组的概念/</id>
+    <published>2017-07-13T07:00:16.000Z</published>
+    <updated>2017-07-13T07:01:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>同事每次给我创建用户都没弄对，不能切换root，vim /etc/group 中 wheel 组配置有问题。</p>
+<ul>
+<li><a href="http://www.cnblogs.com/codingnutter/p/5634494.html" target="_blank" rel="external">Linux中wheel组的概念</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;同事每次给我创建用户都没弄对，不能切换root，vim /etc/group 中 wheel 组配置有问题。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/codingnutter/p/5634494.html&quot; target=&quot;
+    
+    </summary>
+    
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="天文" scheme="http://yoursite.com/tags/%E5%A4%A9%E6%96%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SSH 代理详细解释</title>
+    <link href="http://yoursite.com/2017/07/12/ssh-%E4%BB%A3%E7%90%86%E8%AF%A6%E7%BB%86%E8%A7%A3%E9%87%8A/"/>
+    <id>http://yoursite.com/2017/07/12/ssh-代理详细解释/</id>
+    <published>2017-07-12T08:43:40.000Z</published>
+    <updated>2017-07-12T08:44:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>老是记不清楚这几个参数，又不想去看一大堆的man</p>
+<ul>
+<li><a href="http://www.cnblogs.com/wangkangluo1/archive/2011/06/29/2093727.html" target="_blank" rel="external">SSH 代理详细解释</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;老是记不清楚这几个参数，又不想去看一大堆的man&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/wangkangluo1/archive/2011/06/29/2093727.html&quot; target=&quot;_blank&quot; rel=&quot;
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+      <category term="ssh" scheme="http://yoursite.com/tags/ssh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring 多数据源</title>
+    <link href="http://yoursite.com/2017/07/04/Spring-%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90/"/>
+    <id>http://yoursite.com/2017/07/04/Spring-多数据源/</id>
+    <published>2017-07-04T02:05:20.000Z</published>
+    <updated>2017-07-04T02:14:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>可以使用切片，实现<code>AbstractRoutingDataSource</code>，这样的做法可以做更多的有想象的事，因为完全自己操作数据源的选择，可参考链接来实现 </p>
+<p><a href="https://lanjingling.github.io/2016/02/15/spring-aop-dynamicdatasource/" target="_blank" rel="external">基于spring的aop实现多数据源动态切换</a></p>
+<p>多数据源的另一种就是，在SpringApplicationContext.xml中配置多个datasource，并指定不同的mapper。这样存在的问题就是在运行中会提示事务非spring管理。新增事务部分切片配置。默认的Spring只能管理一个事务。</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[2017-06-15 17:02:37.424] [DEBUG] [http-nio-9100-exec-1] org.mybatis.spring.SqlSessionUtils [SqlSessionUtils.java:148] - SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d86a13] was not registered <span class="keyword">for</span> synchronization because synchronization is not active</div><div class="line">[2017-06-15 17:02:37.425] [DEBUG] [http-nio-9100-exec-1] o.m.s.t.SpringManagedTransaction [SpringManagedTransaction.java:87] - JDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@6b6caaa2] will not be managed by Spring</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 事务传播特性配置 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"infoTransactionAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"infoTxManager"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"insert"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span> <span class="attr">rollback-for</span>=<span class="string">"Exception"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"delete*"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span> <span class="attr">rollback-for</span>=<span class="string">"Exception"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"update*"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span> <span class="attr">rollback-for</span>=<span class="string">"Exception"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"get*"</span> <span class="attr">read-only</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"find*"</span> <span class="attr">read-only</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 配置哪些方法参与事务 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">aop:config</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">"infoTransactionxPointcut"</span> <span class="attr">expression</span>=<span class="string">"execution(* com.chinawayltd.sms.schedule.mapper.info.*.*(..))"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"infoTransactionAdvice"</span> <span class="attr">pointcut-ref</span>=<span class="string">"infoTransactionxPointcut"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 事务传播特性配置 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"transactionAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"smsTxManager"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"insert"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span> <span class="attr">rollback-for</span>=<span class="string">"Exception"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"delete*"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span> <span class="attr">rollback-for</span>=<span class="string">"Exception"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"update*"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span> <span class="attr">rollback-for</span>=<span class="string">"Exception"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"get*"</span> <span class="attr">read-only</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"find*"</span> <span class="attr">read-only</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 配置哪些方法参与事务 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">aop:config</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">"transactionxPointcut"</span> <span class="attr">expression</span>=<span class="string">"execution(* com.chinawayltd.sms.schedule.mapper.sms.*.*(..))"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"transactionAdvice"</span> <span class="attr">pointcut-ref</span>=<span class="string">"transactionxPointcut"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;可以使用切片，实现&lt;code&gt;AbstractRoutingDataSource&lt;/code&gt;，这样的做法可以做更多的有想象的事，因为完全自己操作数据源的选择，可参考链接来实现 &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://lanjingling.github.io/2016/02/15/spring-aop-dynamicdatasource/&quot;&gt;基于spring的aop实现多数据源动态切换&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;多数据源的另一种就是，在SpringApplicationContext.xml中配置多个datasource，并指定不同的mapper。这样存在的问题就是在运行中会提示事务非spring管理。新增事务部分切片配置。默认的Spring只能管理一个事务。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2017上半年投资篇小结</title>
+    <link href="http://yoursite.com/2017/07/01/2017%E4%B8%8A%E5%8D%8A%E5%B9%B4%E6%8A%95%E8%B5%84%E7%AF%87%E5%B0%8F%E7%BB%93/"/>
+    <id>http://yoursite.com/2017/07/01/2017上半年投资篇小结/</id>
+    <published>2017-07-01T14:13:04.000Z</published>
+    <updated>2017-07-04T02:17:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>2017年已经过去了一半了，仔细想了一下，时间过的真快。</p>
+<p>这里小结下上半年的历程。</p>
+<p>请务必相信这一条铁律：<font color="red"><strong>任何时候控制住风险、控制回撤、控制诱惑、控制贪婪！！！</strong></font></p>
+<a id="more"></a>
+<p>前期1、2月份的时候，主要投资思路在于JoinQuant上面编写量化策略，该策略一定环境下有正alpha，但是不同行情中不够稳定，加上1、2月份在思考离职的事情，有时候策略提示不够及时，或者说买入的时候并不符合自己的操作策略，所以策略在这两个月出现了比较大的波动，总体来讲，一亏一赢，并无亏损。</p>
+<p>之后三月正式离职，丽江大理走了一圈。比较开心的事，在即将启程离开大理回成都的那天，收到了新股中签的通知，于是带来了四月的一个好的收益。同时，四月大盘其实走势并不好，仓位中有股票还是走的量化策略的，有好多次和自己的判断违背，但是妥协了，加之存在判断失误，本该有更多余的收益，结果被我弄丢，实在是可惜。</p>
+<p>5月正式加入新公司，由于新公司网络限制不能上股票财经累的网站，所以只能偶尔看一下盘。慢慢也就习惯了不怎么看，晚上分析一下下，5月走势一般，筑底盘整中。朋友借钱，个人资金也有点紧，但是又不愿意错过这样的地位，于是支付宝借呗弄了两万五补仓，还好，五月没亏，6月一样，是不是看看，得益于指数满满走强，有几个点的收益，还算不错。</p>
+<p>忌频繁操作、有理论依据支撑、有酿酒那样的耐心、相信自己，反思，总结。大环境、行业热点、行业龙头、资金青睐。</p>
+<p>下半年展望，保持较久级别的仓位，尽量配合自己的时间来操作，适当时候空仓或者做低风险的票，又或者是逆回购。个人判断，下半年会有结构性的小行情，存在机会。但是个人来说下半年有一笔大额支出，会导致仓位容量减少，这个比较不爽。再说吧，适当时刻再支付宝或者其他渠道融资。</p>
+<p>加油！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2017年已经过去了一半了，仔细想了一下，时间过的真快。&lt;/p&gt;
+&lt;p&gt;这里小结下上半年的历程。&lt;/p&gt;
+&lt;p&gt;请务必相信这一条铁律：&lt;font color=red&gt;&lt;strong&gt;任何时候控制住风险、控制回撤、控制诱惑、控制贪婪！！！&lt;/strong&gt;&lt;/font&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="金融" scheme="http://yoursite.com/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="投资" scheme="http://yoursite.com/tags/%E6%8A%95%E8%B5%84/"/>
+    
+      <category term="总结" scheme="http://yoursite.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Alfred workflows Times插件</title>
     <link href="http://yoursite.com/2017/06/22/Aflred%E6%97%B6%E9%97%B4%E8%BD%AC%E6%8D%A2%E6%8F%92%E4%BB%B6/"/>
     <id>http://yoursite.com/2017/06/22/Aflred时间转换插件/</id>
     <published>2017-06-22T07:30:03.000Z</published>
-    <updated>2017-06-22T07:36:19.000Z</updated>
+    <updated>2017-07-17T10:07:14.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="/assets/images/alfred_times_default.png" alt=""></p>
 <p><img src="/assets/images/alfred_times_with_parm.png" alt=""></p>
@@ -36,7 +484,7 @@
     
     </summary>
     
-      <category term="Others" scheme="http://yoursite.com/categories/Others/"/>
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
     
     
       <category term="Alfred" scheme="http://yoursite.com/tags/Alfred/"/>
@@ -48,7 +496,7 @@
     <link href="http://yoursite.com/2017/06/09/Redis%E9%94%81/"/>
     <id>http://yoursite.com/2017/06/09/Redis锁/</id>
     <published>2017-06-09T03:22:20.000Z</published>
-    <updated>2017-06-09T03:31:51.000Z</updated>
+    <updated>2017-07-04T02:15:30.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>在程序多开的情况下，锁实现只有一个Timer，或者说Schedule运行。通过Redis 的 setnx命令实现。类似也可以利用zookeeper来做。  </p>
 <h3 id="参考redis文档"><a href="#参考redis文档" class="headerlink" title="参考redis文档"></a>参考redis文档</h3><font color="red"><strong>SETNX key value</strong></font>
@@ -59,7 +507,8 @@
 <a id="more"></a>
 <p><strong>可用版本</strong>：>= 1.0.0<br><strong>时间复杂度</strong>：O(1)<br><strong>返回值：</strong><br>设置成功，返回 1 。<br>设置失败，返回 0 。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">redis&gt; EXISTS job                <span class="comment"># job 不存在</span></div><div class="line">(<span class="built_in">integer</span>) 0</div><div class="line"></div><div class="line">redis&gt; SETNX job <span class="string">"programmer"</span>    <span class="comment"># job 设置成功</span></div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line"></div><div class="line">redis&gt; SETNX job <span class="string">"code-farmer"</span>   <span class="comment"># 尝试覆盖 job ，失败</span></div><div class="line">(<span class="built_in">integer</span>) 0</div><div class="line"></div><div class="line">redis&gt; GET job                   <span class="comment"># 没有被覆盖</span></div><div class="line"><span class="string">"programmer"</span></div></pre></td></tr></table></figure>
-<h3 id="JAVA实现"><a href="#JAVA实现" class="headerlink" title="JAVA实现"></a>JAVA实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="keyword">private</span> StringRedisTemplate redisTemplate;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LOCK_KEY = <span class="string">"lock:"</span> + getClass().getSimpleName();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">_getLock</span><span class="params">()</span> </span>&#123;</div><div class="line">    String expireAtString = redisTemplate.opsForValue().get(LOCK_KEY);</div><div class="line">    <span class="keyword">if</span> (expireAtString != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">long</span> expireAt = Long.valueOf(expireAtString);</div><div class="line">        <span class="keyword">if</span> (expireAt &gt; System.currentTimeMillis()) &#123;</div><div class="line">            logger.info(<span class="string">"[开始][当前锁已被其他线程占领:&#123;&#125;][过期时间:&#123;&#125;]"</span>, LOCK_KEY, expireAtString);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            logger.info(<span class="string">"[开始][当前锁已过期:&#123;&#125;][删除]"</span>, LOCK_KEY);</div><div class="line">            redisTemplate.delete(LOCK_KEY);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String expire = String.valueOf(DateTime.now().plusMinutes(<span class="number">1</span>).toDate().getTime());</div><div class="line">    logger.info(<span class="string">"[开始][准备获取锁:&#123;&#125; expire at &#123;&#125;]"</span>, LOCK_KEY, expire);</div><div class="line">    <span class="keyword">return</span> redisTemplate.opsForValue().setIfAbsent(LOCK_KEY, expire);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">_releaseLock</span><span class="params">()</span> </span>&#123;</div><div class="line">    redisTemplate.delete(LOCK_KEY);</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+<h3 id="JAVA实现"><a href="#JAVA实现" class="headerlink" title="JAVA实现"></a>JAVA实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="keyword">private</span> StringRedisTemplate redisTemplate;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LOCK_KEY = <span class="string">"lock:"</span> + getClass().getSimpleName();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">_getLock</span><span class="params">()</span> </span>&#123;</div><div class="line">    String expireAtString = redisTemplate.opsForValue().get(LOCK_KEY);</div><div class="line">    <span class="keyword">if</span> (expireAtString != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">long</span> expireAt = Long.valueOf(expireAtString);</div><div class="line">        <span class="keyword">if</span> (expireAt &gt; System.currentTimeMillis()) &#123;</div><div class="line">            logger.info(<span class="string">"[开始][当前锁已被其他线程占领:&#123;&#125;][过期时间:&#123;&#125;]"</span>, LOCK_KEY, expireAtString);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            logger.info(<span class="string">"[开始][当前锁已过期:&#123;&#125;][删除]"</span>, LOCK_KEY);</div><div class="line">            redisTemplate.delete(LOCK_KEY);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String expire = String.valueOf(DateTime.now().plusMinutes(<span class="number">1</span>).toDate().getTime());</div><div class="line">    logger.info(<span class="string">"[开始][准备获取锁:&#123;&#125; expire at &#123;&#125;]"</span>, LOCK_KEY, expire);</div><div class="line">    <span class="keyword">return</span> redisTemplate.opsForValue().setIfAbsent(LOCK_KEY, expire);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">_releaseLock</span><span class="params">()</span> </span>&#123;</div><div class="line">    redisTemplate.delete(LOCK_KEY);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
     
     <summary type="html">
     
@@ -72,7 +521,7 @@
     
     </summary>
     
-      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="分布式锁" scheme="http://yoursite.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
@@ -88,12 +537,13 @@
     <link href="http://yoursite.com/2017/06/09/JAVA-IO-%E6%B5%81/"/>
     <id>http://yoursite.com/2017/06/09/JAVA-IO-流/</id>
     <published>2017-06-09T01:49:35.000Z</published>
-    <updated>2017-06-09T01:59:01.000Z</updated>
+    <updated>2017-07-04T02:15:42.000Z</updated>
     
     <content type="html"><![CDATA[<p>流分为：文件(File/RandomAccessFile)、字符(Reader/Writer)、字节(InputStream/OutputStream)的操作。字符、字节是一一对应的，一个读取一个输出。</p>
 <p>对应的设计模式：装饰器模式</p>
 <p><img src="/assets/images/java_io.jpg" alt=""></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">_excuteSaveFile</span><span class="params">(Request request)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    request.addHeader(<span class="string">"User-Agent"</span>, Constant.HTTP_USER_AGENT).addHeader(<span class="string">"Accept-Language"</span>, <span class="string">"zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2"</span>);</div><div class="line">    InputStream inputStream = <span class="keyword">this</span>.executor.execute(request).returnContent().asStream();</div><div class="line"></div><div class="line">    String filename = <span class="string">"/tmp/sms/"</span> + UUID.randomUUID().toString() + <span class="string">".png"</span>;</div><div class="line"></div><div class="line">    File file = <span class="keyword">new</span> File(filename);</div><div class="line">    OutputStream outputStream = <span class="keyword">new</span> FileOutputStream(file);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> inByte;</div><div class="line">    <span class="keyword">while</span> ((inByte = inputStream.read()) != -<span class="number">1</span>) &#123;</div><div class="line">        outputStream.write(inByte);</div><div class="line">    &#125;</div><div class="line">    outputStream.close();</div><div class="line">    inputStream.close();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> filename;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">_excuteSaveFile</span><span class="params">(Request request)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    request.addHeader(<span class="string">"User-Agent"</span>, Constant.HTTP_USER_AGENT).addHeader(<span class="string">"Accept-Language"</span>, <span class="string">"zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2"</span>);</div><div class="line">    InputStream inputStream = <span class="keyword">this</span>.executor.execute(request).returnContent().asStream();</div><div class="line"></div><div class="line">    String filename = <span class="string">"/tmp/sms/"</span> + UUID.randomUUID().toString() + <span class="string">".png"</span>;</div><div class="line"></div><div class="line">    File file = <span class="keyword">new</span> File(filename);</div><div class="line">    OutputStream outputStream = <span class="keyword">new</span> FileOutputStream(file);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> inByte;</div><div class="line">    <span class="keyword">while</span> ((inByte = inputStream.read()) != -<span class="number">1</span>) &#123;</div><div class="line">        outputStream.write(inByte);</div><div class="line">    &#125;</div><div class="line">    outputStream.close();</div><div class="line">    inputStream.close();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> filename;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
     
     <summary type="html">
     
@@ -103,7 +553,7 @@
     
     </summary>
     
-      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="IO流" scheme="http://yoursite.com/tags/IO%E6%B5%81/"/>
@@ -198,537 +648,6 @@
     
     
       <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Curator 版本折腾</title>
-    <link href="http://yoursite.com/2017/05/19/Curator-%E7%89%88%E6%9C%AC%E6%8A%98%E8%85%BE/"/>
-    <id>http://yoursite.com/2017/05/19/Curator-版本折腾/</id>
-    <published>2017-05-19T02:01:31.000Z</published>
-    <updated>2017-05-21T02:21:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近接手一个短信系统，其中有一个代理模块是HA高可用的，HA的方法是每次启动proxy，proxy会在zookeeper中去leader election，这样便实现高可用。</p>
-<a id="more"></a>
-<p>迁移老项目osgi到新项目maven + Spring，运行一直提示错误，刚刚Connected就有被Suspend，然后又是Reconnect。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EndOfStreamException: Unable to read additional data from client</div></pre></td></tr></table></figure>
-<p>搜索了好多，给的结果大部分是说，当zookeeper实例的个数不满足集群存活个数的条件的时候，就会无法读取数据。</p>
-<p>因为本机的zookeeper是单实例的情况，应该不是存活个数的问题。</p>
-<p>最后无解，把example弄下来，跑了下example没问题，但是使用本机上的zookeeper一样存在问题，猜测可能是版本问题，去官网找文档，发现Curator对zookeeper的实例版本是有要求的，降低Curator版本，问题解决。</p>
-<p>附官网上面的一句话：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">The are currently two released versions of Curator, 2.x.x and 3.x.x:</div><div class="line"></div><div class="line">Curator 2.x.x - compatible with both ZooKeeper 3.4.x and ZooKeeper 3.5.x</div><div class="line">Curator 3.x.x - compatible only with ZooKeeper 3.5.x and includes support for new features such as dynamic reconfiguration, etc.</div><div class="line">ZooKeeper 3.5.x adds a number of new features including dynamic reconfiguration, watcher removal and others.</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近接手一个短信系统，其中有一个代理模块是HA高可用的，HA的方法是每次启动proxy，proxy会在zookeeper中去leader election，这样便实现高可用。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Curator" scheme="http://yoursite.com/tags/Curator/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>香料</title>
-    <link href="http://yoursite.com/2017/05/14/%E9%A6%99%E6%96%99/"/>
-    <id>http://yoursite.com/2017/05/14/香料/</id>
-    <published>2017-05-14T04:00:00.000Z</published>
-    <updated>2017-05-13T03:03:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这些是一些常用的香料，附带了一些说明，卤水。</p>
-<h4 id="小茴香"><a href="#小茴香" class="headerlink" title="小茴香"></a>小茴香</h4><p><strong>小茴香</strong>，基础调料。所有卤料和一般炖肉均用到小茴香，亲和力高，百搭。一来可去肉腥，二来可重新添香，味道比八角淡，多加一些。</p>
-<h4 id="草果"><a href="#草果" class="headerlink" title="草果"></a>草果</h4><p><strong>草果</strong>，有辛香。和牛羊肉是绝配，特别是羊肉，炖汤的时候加入很鲜美，卤牛肉可多加一颗草果。</p>
-<a id="more"></a>
-<h4 id="香果"><a href="#香果" class="headerlink" title="香果"></a>香果</h4><p><strong>香果</strong>，微苦，有辣味。香果是未去皮的肉豆蔻，味道浓烈，加一颗即可。</p>
-<h4 id="肉豆蔻"><a href="#肉豆蔻" class="headerlink" title="肉豆蔻"></a>肉豆蔻</h4><p><strong>肉豆蔻</strong>，有甜香，喜油腻。炖鸭肉或猪肉的时候可多加一颗，潮汕卤里也多有肉豆蔻。</p>
-<h4 id="山栀"><a href="#山栀" class="headerlink" title="山栀"></a>山栀</h4><p><strong>山栀</strong>，染色明显。有和番红花一样的染色能力，但价格便宜，味清凉略苦。</p>
-<h4 id="川砂仁"><a href="#川砂仁" class="headerlink" title="川砂仁"></a>川砂仁</h4><p><strong>川砂仁</strong>，姜科，有类似于樟木的香味。川卤里必用的调料，微辣。</p>
-<h4 id="八角"><a href="#八角" class="headerlink" title="八角"></a>八角</h4><p><strong>八角</strong>，味重，三颗足够。</p>
-<h4 id="桂皮"><a href="#桂皮" class="headerlink" title="桂皮"></a>桂皮</h4><p><strong>桂皮</strong>，芳香偏甜，去腥一绝。</p>
-<h4 id="山奈"><a href="#山奈" class="headerlink" title="山奈"></a>山奈</h4><p><strong>山奈</strong>，也叫沙姜。属辛辣味调料，跟干姜片明显的区别在于肉质细密一些。</p>
-<h4 id="白蔻"><a href="#白蔻" class="headerlink" title="白蔻"></a>白蔻</h4><p><strong>白蔻</strong>，炖肉用香料，相对其他豆蔻类味道温和，亲和力也高，可多加。</p>
-<h4 id="甘草"><a href="#甘草" class="headerlink" title="甘草"></a>甘草</h4><p><strong>甘草</strong>，有甘甜味，在各类卤水中均有使用。一来可以增甜提鲜，二来也有防腐作用。</p>
-<h4 id="丁香"><a href="#丁香" class="headerlink" title="丁香"></a>丁香</h4><p><strong>丁香</strong>，有异香。卤味有言，若想骨里香，就得放丁香。丁香味浓且烈，又不容易散，三升水最多加三粒。</p>
-<h4 id="干姜片"><a href="#干姜片" class="headerlink" title="干姜片"></a>干姜片</h4><p><strong>干姜片</strong>，去腥。</p>
-<h4 id="陈皮"><a href="#陈皮" class="headerlink" title="陈皮"></a>陈皮</h4><p><strong>陈皮</strong>，作用奇特。可以中和浓烈刺激的味道，比如肉蔻草果煮出太浓的肉味，丁香的异香。同时也有不错的提鲜作用，特别是卤鸡的时候。</p>
-<h4 id="香叶"><a href="#香叶" class="headerlink" title="香叶"></a>香叶</h4><p><strong>香叶</strong>，芳香类调料，味道易散，可稍微多加一些。</p>
-<h4 id="黄冰糖"><a href="#黄冰糖" class="headerlink" title="黄冰糖"></a>黄冰糖</h4><p><strong>黄冰糖</strong>，中和咸味和提鲜。</p>
-<h4 id="红曲米"><a href="#红曲米" class="headerlink" title="红曲米"></a>红曲米</h4><p><strong>红曲米</strong>，添加红色。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这些是一些常用的香料，附带了一些说明，卤水。&lt;/p&gt;
-&lt;h4 id=&quot;小茴香&quot;&gt;&lt;a href=&quot;#小茴香&quot; class=&quot;headerlink&quot; title=&quot;小茴香&quot;&gt;&lt;/a&gt;小茴香&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;小茴香&lt;/strong&gt;，基础调料。所有卤料和一般炖肉均用到小茴香，亲和力高，百搭。一来可去肉腥，二来可重新添香，味道比八角淡，多加一些。&lt;/p&gt;
-&lt;h4 id=&quot;草果&quot;&gt;&lt;a href=&quot;#草果&quot; class=&quot;headerlink&quot; title=&quot;草果&quot;&gt;&lt;/a&gt;草果&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;草果&lt;/strong&gt;，有辛香。和牛羊肉是绝配，特别是羊肉，炖汤的时候加入很鲜美，卤牛肉可多加一颗草果。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-      <category term="香料" scheme="http://yoursite.com/tags/%E9%A6%99%E6%96%99/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark与Storm的对比</title>
-    <link href="http://yoursite.com/2017/05/13/Spark%E4%B8%8EStorm%E7%9A%84%E5%AF%B9%E6%AF%94/"/>
-    <id>http://yoursite.com/2017/05/13/Spark与Storm的对比/</id>
-    <published>2017-05-13T01:08:16.000Z</published>
-    <updated>2017-05-13T01:53:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<table>
-<thead>
-<tr>
-<th>对比点</th>
-<th>Storm</th>
-<th>Spark Streaming</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>实时计算模型</td>
-<td>纯实时，来一条数据，处理一条数据</td>
-<td>准实时，对一个时间段内的数据收集起来，作为一个RDD，再处理</td>
-</tr>
-<tr>
-<td>实时计算延迟度</td>
-<td>毫秒级</td>
-<td>秒级</td>
-</tr>
-<tr>
-<td>吞吐量</td>
-<td>低</td>
-<td>高</td>
-</tr>
-<tr>
-<td>事务机制</td>
-<td>支持完善</td>
-<td>支持，但不够完善</td>
-</tr>
-<tr>
-<td>健壮性 / 容错性</td>
-<td>ZooKeeper，Acker，非常强</td>
-<td>Checkpoint，WAL，一般</td>
-</tr>
-<tr>
-<td>动态调整并行度</td>
-<td>支持</td>
-<td>不支持</td>
-</tr>
-</tbody>
-</table>
-<p>RDD(Resilient Distributed Datasets)，弹性分布式数据集。</p>
-<p>对实时性要求高选择Storm，如银行金融系统等。</p>
-<p>相对于Storm来讲，不满足的实时场景，在不要求纯实时，不要求强大可靠的事务机制，不要求动态调整并行度，那么可以考虑使用Spark Streaming。</p>
-<p>在Spark的生态中，还包含了Spark Core离线批处理、Spark SQL交互式查询，如果在实时计算中需要这些地方的时候，Spark会更好。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;对比点&lt;/th&gt;
-&lt;th&gt;Storm&lt;/th&gt;
-&lt;th&gt;Spark Streaming&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;实时计算模型&lt;/td&gt;
-&lt;td&gt;纯实时，来一条数据，处理一条数据&lt;/
-    
-    </summary>
-    
-      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kcptun</title>
-    <link href="http://yoursite.com/2017/05/12/Kcptun/"/>
-    <id>http://yoursite.com/2017/05/12/Kcptun/</id>
-    <published>2017-05-12T01:43:42.000Z</published>
-    <updated>2017-05-12T01:45:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Kcptun能有效的加速科学上网，目前最低配置的搬瓦工能够看720p。Kcptun客户端非常省资源，可参考GitHub详细说明。</p>
-<ul>
-<li><a href="http://www.gblm.net/209.html" target="_blank" rel="external">Kcptun给Shadowsocks加速</a></li>
-<li><a href="https://github.com/xtaci/kcptun" target="_blank" rel="external">https://github.com/xtaci/kcptun</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Kcptun能有效的加速科学上网，目前最低配置的搬瓦工能够看720p。Kcptun客户端非常省资源，可参考GitHub详细说明。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.gblm.net/209.html&quot; target=&quot;_blank&quot; rel=
-    
-    </summary>
-    
-      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-      <category term="Kcptun" scheme="http://yoursite.com/tags/Kcptun/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>删除链表中的某一个节点</title>
-    <link href="http://yoursite.com/2017/05/11/%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E6%9F%90%E4%B8%80%E4%B8%AA%E8%8A%82%E7%82%B9/"/>
-    <id>http://yoursite.com/2017/05/11/删除链表中的某一个节点/</id>
-    <published>2017-05-11T02:19:44.000Z</published>
-    <updated>2017-05-11T02:24:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>以前在学校的时候面试被问过，上个月面试的时候再次被问到，当时想了想竟然想出来了。但是过了几天又一下忘了。</p>
-<p>问题：一个单向链表，给其中的一个节点p，现在要删掉这个节点，需要怎么操作，没有链表的头节点，所以不能遍历。</p>
-<p>参考图片解决方案:</p>
-<p><img src="/assets/images/linked_list_delete_p.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;以前在学校的时候面试被问过，上个月面试的时候再次被问到，当时想了想竟然想出来了。但是过了几天又一下忘了。&lt;/p&gt;
-&lt;p&gt;问题：一个单向链表，给其中的一个节点p，现在要删掉这个节点，需要怎么操作，没有链表的头节点，所以不能遍历。&lt;/p&gt;
-&lt;p&gt;参考图片解决方案:&lt;/p&gt;
-&lt;p
-    
-    </summary>
-    
-      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>负载均衡调度算法</title>
-    <link href="http://yoursite.com/2017/05/11/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2017/05/11/负载均衡调度算法/</id>
-    <published>2017-05-11T01:58:13.000Z</published>
-    <updated>2017-05-11T02:03:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://blog.csdn.net/pzw_0612/article/details/47357221" target="_blank" rel="external">轮询调度算法(Round-Robin Scheduling)</a></li>
-<li><a href="http://www.cnblogs.com/huligong1234/p/3819979.html" target="_blank" rel="external">权重轮询调度算法(WeightedRound-RobinScheduling)</a></li>
-</ul>
-<p>轮询调度算法，数据结构，类需要包含轮训调度计算器AtomicInteger，每次只需要求余即可。</p>
-<p>权重轮询调度算法，第一次返回权值取最大的那个服务器，之后通过权重的不断递减寻找适合的服务器返回，直到轮询结束，权值返回为0。 </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/pzw_0612/article/details/47357221&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;轮询调度算法(Round-Robin Scheduling)&lt;/a&gt;&lt;
-    
-    </summary>
-    
-      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="负载均衡" scheme="http://yoursite.com/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python调用通达信交易客户端</title>
-    <link href="http://yoursite.com/2017/05/10/Python%E8%B0%83%E7%94%A8%E9%80%9A%E8%BE%BE%E4%BF%A1%E4%BA%A4%E6%98%93%E5%AE%A2%E6%88%B7%E7%AB%AF/"/>
-    <id>http://yoursite.com/2017/05/10/Python调用通达信交易客户端/</id>
-    <published>2017-05-10T15:06:18.000Z</published>
-    <updated>2017-05-11T02:05:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>没啥说的，方案和Python调用QQ发消息一致。需要通过<code>spy.exe</code>来获取窗口句柄。</p>
-<p>结合RQAlpha等量化工具或量化平台，可实现即时下单。另可采用实盘易方案。</p>
-<p>不多些什么，仅当保存一下代码。</p>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> win32api, win32gui, win32con, win32com</div><div class="line"><span class="keyword">import</span> win32clipboard <span class="keyword">as</span> CP</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="comment">#----------------------------utils------------------------------------</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_idxSubHandle</span><span class="params">(pHandle, winClass, index=<span class="number">0</span>)</span>:</span></div><div class="line">    <span class="keyword">assert</span> type(index) == int <span class="keyword">and</span> index&gt;=<span class="number">0</span></div><div class="line">    handle = win32gui.FindWindowEx(pHandle, <span class="number">0</span>, winClass, <span class="keyword">None</span>)</div><div class="line">    <span class="keyword">while</span> index&gt;<span class="number">0</span>:</div><div class="line">        handle = win32gui.FindWindowEx(pHandle, handle, winClass, <span class="keyword">None</span>)</div><div class="line">        index -= <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> handle</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_clipboard</span><span class="params">()</span>:</span></div><div class="line">    win32api.keybd_event(<span class="number">17</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</div><div class="line">    win32api.keybd_event(<span class="number">67</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</div><div class="line">    win32api.keybd_event(<span class="number">67</span>, <span class="number">0</span>, win32con.KEYEVENTF_KEYUP, <span class="number">0</span>)</div><div class="line">    win32api.keybd_event(<span class="number">17</span>, <span class="number">0</span>, win32con.KEYEVENTF_KEYUP, <span class="number">0</span>)</div><div class="line">    time.sleep(<span class="number">0.1</span>)</div><div class="line">    CP.OpenClipboard()</div><div class="line">    raw_text = CP.GetClipboardData(win32con.CF_TEXT)</div><div class="line">    CP.CloseClipboard()</div><div class="line">    decode = raw_text.decode(<span class="string">'gb2312'</span>).split()</div><div class="line">    decode.pop()</div><div class="line">    <span class="keyword">return</span> decode</div><div class="line"></div><div class="line"><span class="comment">#-----------------------------Class_HT------------------------------------</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HT</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.Title = <span class="string">'网上股票交易系统5.0'</span></div><div class="line">        self.__get_handles()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get_handles</span><span class="params">(self)</span>:</span></div><div class="line">        Main = win32gui.FindWindow(<span class="number">0</span>, self.Title)  <span class="comment"># HT交易窗口</span></div><div class="line">        Frame = win32gui.GetDlgItem(Main, <span class="number">59648</span>)  <span class="comment"># 操作窗口框架</span></div><div class="line">        Afxwnd = win32gui.GetDlgItem(Frame, <span class="number">59648</span>) <span class="comment"># 操作窗口框架</span></div><div class="line">        Hexin = win32gui.GetDlgItem(Afxwnd, <span class="number">129</span>)</div><div class="line">        Scrolwnd = win32gui.GetDlgItem(Hexin, <span class="number">200</span>) <span class="comment"># 左部折叠菜单控件</span></div><div class="line">        treev = win32gui.GetDlgItem(Scrolwnd, <span class="number">129</span>) <span class="comment"># 左部折叠菜单控件</span></div><div class="line">        <span class="comment"># 获取委托窗口所有控件句柄</span></div><div class="line">        win32api.PostMessage(treev, win32con.WM_KEYDOWN, win32con.VK_F1, <span class="number">0</span>)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        F_Bentrust = win32gui.GetDlgItem(Frame, <span class="number">59649</span>) <span class="comment"># 委托窗口框架</span></div><div class="line">        self.E_Bsymbol = win32gui.GetDlgItem(F_Bentrust, <span class="number">1032</span>)  <span class="comment"># 买入代码输入框</span></div><div class="line">        self.E_Bprice = win32gui.GetDlgItem(F_Bentrust, <span class="number">1033</span>)  <span class="comment"># 买入价格输入框</span></div><div class="line">        self.E_Bvol = win32gui.GetDlgItem(F_Bentrust, <span class="number">1034</span>)  <span class="comment"># 买入数量输入框</span></div><div class="line">        self.B_Buy = win32gui.GetDlgItem(F_Bentrust, <span class="number">1006</span>)  <span class="comment"># 买入确认按钮</span></div><div class="line">        self.B_refresh = win32gui.GetDlgItem(F_Bentrust, <span class="number">32790</span>)  <span class="comment"># 刷新持仓按钮</span></div><div class="line">        F_Bhexin = win32gui.GetDlgItem(F_Bentrust, <span class="number">1047</span>)  <span class="comment"># 持仓显示框架</span></div><div class="line">        F_Bhexinsub = win32gui.GetDlgItem(F_Bhexin, <span class="number">200</span>)  <span class="comment"># 持仓显示框架</span></div><div class="line">        self.G_position = win32gui.GetDlgItem(F_Bhexinsub, <span class="number">1047</span>)  <span class="comment"># 持仓列表</span></div><div class="line">        win32api.PostMessage(treev, win32con.WM_KEYDOWN, win32con.VK_F2, <span class="number">0</span>)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        F_Sentrust = win32gui.GetDlgItem(Frame, <span class="number">59649</span>)  <span class="comment"># 委托窗口框架</span></div><div class="line">        self.E_Ssymbol = win32gui.GetDlgItem(F_Sentrust, <span class="number">1032</span>)  <span class="comment"># 卖出代码输入框</span></div><div class="line">        self.E_Sprice = win32gui.GetDlgItem(F_Sentrust, <span class="number">1033</span>)  <span class="comment">#卖出价格输入框</span></div><div class="line">        self.E_Svol = win32gui.GetDlgItem(F_Sentrust, <span class="number">1034</span>)  <span class="comment"># 卖出数量输入框</span></div><div class="line">        self.B_Sell = win32gui.GetDlgItem(F_Sentrust, <span class="number">1006</span>)  <span class="comment"># 卖出确认按钮</span></div><div class="line">        <span class="comment">#撤单窗口</span></div><div class="line">        win32api.PostMessage(treev, win32con.WM_KEYDOWN, win32con.VK_F3, <span class="number">0</span>)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        F_Centrust = win32gui.GetDlgItem(Frame, <span class="number">59649</span>)  <span class="comment"># 撤单窗口框架</span></div><div class="line">        self.E_Csymbol = win32gui.GetDlgItem(F_Centrust, <span class="number">3348</span>)  <span class="comment"># 卖出代码输入框</span></div><div class="line">        self.B_Csort = win32gui.GetDlgItem(F_Centrust, <span class="number">3349</span>) <span class="comment"># 查询代码按钮</span></div><div class="line">        self.B_Cbuy = win32gui.GetDlgItem(F_Centrust, <span class="number">30002</span>) <span class="comment"># 撤买</span></div><div class="line">        self.B_Csell = win32gui.GetDlgItem(F_Centrust, <span class="number">30003</span>)  <span class="comment"># 撤卖</span></div><div class="line">        F_Chexin = win32gui.GetDlgItem(F_Centrust, <span class="number">1047</span>)</div><div class="line">        F_Chexinsub = win32gui.GetDlgItem(F_Chexin, <span class="number">200</span>)</div><div class="line">        self.G_entrust = win32gui.GetDlgItem(F_Chexinsub, <span class="number">1047</span>)  <span class="comment"># 委托列表</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">buy</span><span class="params">(self, symbol, price, vol)</span>:</span></div><div class="line">        win32gui.SendMessage(self.E_Bsymbol, win32con.WM_SETTEXT, <span class="keyword">None</span>, symbol) <span class="comment"># 输入买入代码</span></div><div class="line">        win32gui.SendMessage(self.E_Bprice, win32con.WM_SETTEXT, <span class="keyword">None</span>, price)  <span class="comment"># 输入买入价格</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.E_Bvol, win32con.WM_SETTEXT, <span class="keyword">None</span>, vol)  <span class="comment"># 输入买入数量</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.B_Buy, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>) <span class="comment"># 买入确定</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sell</span><span class="params">(self, symbol, price, vol)</span>:</span></div><div class="line">        win32gui.SendMessage(self.E_Ssymbol, win32con.WM_SETTEXT, <span class="keyword">None</span>, symbol) <span class="comment"># 输入卖出代码</span></div><div class="line">        win32gui.SendMessage(self.E_Sprice, win32con.WM_SETTEXT, <span class="keyword">None</span>, price)  <span class="comment"># 输入卖出价格</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.E_Svol, win32con.WM_SETTEXT, <span class="keyword">None</span>, vol)  <span class="comment"># 输入卖出数量</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        win32gui.SendMessage(self.B_Sell, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>) <span class="comment"># 卖出确定</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cancle</span><span class="params">(self, symbol, direction)</span>:</span></div><div class="line">        win32gui.SendMessage(self.B_refresh, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 刷新持仓</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        win32gui.SendMessage(self.E_Csymbol, win32con.WM_SETTEXT, <span class="keyword">None</span>, symbol)  <span class="comment"># 输入撤单</span></div><div class="line">        win32gui.SendMessage(self.B_Csort, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 查询代码</span></div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        <span class="keyword">if</span> direction == <span class="number">0</span>:</div><div class="line">            win32gui.SendMessage(self.B_Cbuy, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 撤买</span></div><div class="line">        <span class="keyword">elif</span> direction == <span class="number">1</span>:</div><div class="line">            win32gui.SendMessage(self.B_Csell, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 撤卖</span></div><div class="line">        time.sleep(<span class="number">0.3</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">position</span><span class="params">(self)</span>:</span></div><div class="line">        win32gui.SendMessage(self.B_refresh, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 刷新持仓</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        win32gui.SetForegroundWindow(self.G_position)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        position = []</div><div class="line">        data = get_clipboard()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, int((len(data)<span class="number">-14</span>)/<span class="number">14</span>)+<span class="number">1</span>):</div><div class="line">            item = data[<span class="number">14</span>*i:<span class="number">14</span>*(i+<span class="number">1</span>)]</div><div class="line">            position.append(item)</div><div class="line">        df = pd.DataFrame(position, columns=data[:<span class="number">14</span>])</div><div class="line">        <span class="keyword">return</span> df</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">entrusts</span><span class="params">(self)</span>:</span></div><div class="line">        win32gui.SendMessage(self.B_refresh, win32con.BM_CLICK, <span class="keyword">None</span>, <span class="keyword">None</span>)  <span class="comment"># 刷新持仓</span></div><div class="line">        time.sleep(<span class="number">0.2</span>)</div><div class="line">        win32gui.SetForegroundWindow(self.G_entrust)</div><div class="line">        time.sleep(<span class="number">0.1</span>)</div><div class="line">        entrust=[]</div><div class="line">        data = get_clipboard()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, int((len(data)<span class="number">-13</span>)/<span class="number">13</span>)+<span class="number">1</span>):</div><div class="line">            item = data[<span class="number">13</span>*i:<span class="number">13</span>*(i+<span class="number">1</span>)]</div><div class="line">            entrust.append(item)</div><div class="line">        df = pd.DataFrame(entrust, columns=data[:<span class="number">13</span>])</div><div class="line">        <span class="keyword">return</span> df</div><div class="line"></div><div class="line"><span class="comment">#------------------------------Test-------------------------------------------</span></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    trader = HT()</div><div class="line">    time.sleep(<span class="number">1</span>)</div><div class="line">    trader.buy(<span class="string">'000002'</span>, <span class="string">'24.76'</span>, <span class="string">'100'</span>)</div><div class="line">    trader.cancle(<span class="string">'000002'</span>, <span class="number">0</span>)</div><div class="line">    <span class="comment">#df = trader.position()</span></div><div class="line">    <span class="comment">#print(trader.entrusts())</span></div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;没啥说的，方案和Python调用QQ发消息一致。需要通过&lt;code&gt;spy.exe&lt;/code&gt;来获取窗口句柄。&lt;/p&gt;
-&lt;p&gt;结合RQAlpha等量化工具或量化平台，可实现即时下单。另可采用实盘易方案。&lt;/p&gt;
-&lt;p&gt;不多些什么，仅当保存一下代码。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BlockingQueue</title>
-    <link href="http://yoursite.com/2017/05/10/BlockingQueue/"/>
-    <id>http://yoursite.com/2017/05/10/BlockingQueue/</id>
-    <published>2017-05-10T03:35:48.000Z</published>
-    <updated>2017-05-10T15:13:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://www.cnblogs.com/szlbm/p/5588518.html" target="_blank" rel="external">Queue、BlockingQueue以及利用BlockingQueue实现生产者/消费者模型</a></li>
-<li><a href="http://blog.csdn.net/longeremmy/article/details/8225989" target="_blank" rel="external">集合框架 Queue—BlockingQueue详解</a></li>
-</ul>
-<p>BlockingQueue，如果BlockingQueue是空的，从BlockingQueue取东西的操作将会被阻断进入等待状态，直到BlockingQueue进了东西才会被唤醒，同样，如果BlockingQueue是满的，任何试图往里存东西的操作也会被阻断进入等待状态，直到BlockingQueue里有空间时才会被唤醒继续操作。Queue不是线程安全的。因此可以将Blockingqueue用于用于生产者-使用者队列。</p>
-<a id="more"></a>
-<h4 id="BlockingQueue定义的常用方法如下："><a href="#BlockingQueue定义的常用方法如下：" class="headerlink" title="BlockingQueue定义的常用方法如下："></a>BlockingQueue定义的常用方法如下：</h4><ul>
-<li><font color="red"><strong>add(object)</strong></font>：把object加到BlockingQueue里，如果BlockingQueue可以容纳，则返回true，否则抛出异常。</li>
-<li><font color="red"><strong>offer(object)</strong></font>：表示如果可能的话，将object加到BlockingQueue里，即如果BlockingQueue可以容纳，则返回true，否则返回false。</li>
-<li><font color="red"><strong>put(object)</strong></font>：把object加到BlockingQueue里，如果BlockingQueue没有空间，则调用此方法的线程被阻断直到BlockingQueue里有空间再继续。</li>
-<li><font color="red"><strong>poll(time)</strong></font>：取走BlockingQueue里排在首位的对象，若不能立即取出，则可以等time参数规定的时间，取不到时返回null。</li>
-<li><font color="red"><strong>take()</strong></font>：取走BlockingQueue里排在首位的对象，若BlockingQueue为空，阻断进入等待状态直到BlockingQueue有新的对象被加入为止。</li>
-</ul>
-<h4 id="BlockingQueue有四个具体的实现类，根据不同需求，选择不同的实现类："><a href="#BlockingQueue有四个具体的实现类，根据不同需求，选择不同的实现类：" class="headerlink" title="BlockingQueue有四个具体的实现类，根据不同需求，选择不同的实现类："></a>BlockingQueue有四个具体的实现类，根据不同需求，选择不同的实现类：</h4><ul>
-<li><font color="red"><strong>ArrayBlockingQueue</strong></font>：规定大小的BlockingQueue，其构造函数必须带一个int参数来指明其大小。其所含的对象是以FIFO（先入先出）顺序排序</li>
-<li><font color="red"><strong>LinkedBlockingQueue</strong></font>：大小不定的BlockingQueue，若其构造函数带一个规定大小的参数，生成的BlockingQueue有大小限制，若不带大小参数，所生成的BlockingQueue的大小由Integer.MAX_VALUE来决定。其所含的对象是以FIFO顺序排序的。</li>
-<li><font color="red"><strong>PriorityBlockingQueue</strong></font>：类似于<strong><code>LinkedBlockingQueue</code></strong>,但其所含对象的排序不是FIFO，而是依据对象的自然排序顺序或者是构造函数所带的Comparator决定的顺序。</li>
-<li><p><font color="red"><strong>SynchronousQueue</strong></font>：特殊的BlockingQueue，对其的操作必须是放和取交替完成的。  </p>
-<p> LinkedBlockingQueue和ArrayBlockingQueue比较起来，它们背后所用的数据结构不一样，导致LinkedBlockingQueue的数据吞吐量要大于ArrayBlockingQueue，但在线程数量很大时其性能的可预见性低于ArrayBlockingQueue。</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/szlbm/p/5588518.html&quot;&gt;Queue、BlockingQueue以及利用BlockingQueue实现生产者/消费者模型&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/longeremmy/article/details/8225989&quot;&gt;集合框架 Queue—BlockingQueue详解&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;BlockingQueue，如果BlockingQueue是空的，从BlockingQueue取东西的操作将会被阻断进入等待状态，直到BlockingQueue进了东西才会被唤醒，同样，如果BlockingQueue是满的，任何试图往里存东西的操作也会被阻断进入等待状态，直到BlockingQueue里有空间时才会被唤醒继续操作。Queue不是线程安全的。因此可以将Blockingqueue用于用于生产者-使用者队列。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-      <category term="并发" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Maven项目默认JDK版本</title>
-    <link href="http://yoursite.com/2017/05/09/Maven%E9%A1%B9%E7%9B%AE%E9%BB%98%E8%AE%A4JDK%E7%89%88%E6%9C%AC/"/>
-    <id>http://yoursite.com/2017/05/09/Maven项目默认JDK版本/</id>
-    <published>2017-05-09T07:22:57.000Z</published>
-    <updated>2017-05-09T07:23:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li>pom.xml 仅作用于当前项目</li>
-<li>settings.xml 配置是全局的项目</li>
-</ul>
-<a id="more"></a>
-<h3 id="settings-xml-配置"><a href="#settings-xml-配置" class="headerlink" title="settings.xml 配置"></a>settings.xml 配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">profiles</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">profile</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>development<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">activation</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">jdk</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">jdk</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">maven.compiler.compilerVersion</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.compilerVersion</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="pom-xml-配置"><a href="#pom-xml-配置" class="headerlink" title="pom.xml 配置"></a>pom.xml 配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;pom.xml 仅作用于当前项目&lt;/li&gt;
-&lt;li&gt;settings.xml 配置是全局的项目&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python发送QQ消息</title>
-    <link href="http://yoursite.com/2017/05/08/python%E5%8F%91%E9%80%81QQ%E6%B6%88%E6%81%AF/"/>
-    <id>http://yoursite.com/2017/05/08/python发送QQ消息/</id>
-    <published>2017-05-08T01:36:55.000Z</published>
-    <updated>2017-05-08T01:43:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>利用Python win32来操作窗口句柄触发QQ消息发送。同理可以用其他语言实现。参考下面源码。如果窗口获取存在问题，通过 <code>spy.exe</code> 工具来重新获取句柄。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> win32gui</div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"><span class="keyword">import</span> win32clipboard <span class="keyword">as</span> w</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getText</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""获取剪贴板文本"""</span></div><div class="line">    w.OpenClipboard()</div><div class="line">    d = w.GetClipboardData(win32con.CF_UNICODETEXT)</div><div class="line">    w.CloseClipboard()</div><div class="line">    <span class="keyword">return</span> d</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">setText</span><span class="params">(aString)</span>:</span></div><div class="line">    <span class="string">"""设置剪贴板文本"""</span></div><div class="line">    w.OpenClipboard()</div><div class="line">    w.EmptyClipboard()</div><div class="line">    w.SetClipboardData(win32con.CF_UNICODETEXT, aString)</div><div class="line">    w.CloseClipboard()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_qq</span><span class="params">(to_who, msg)</span>:</span></div><div class="line">    <span class="string">"""发送qq消息</span></div><div class="line">    to_who：qq消息接收人</div><div class="line">    msg：需要发送的消息</div><div class="line">    """</div><div class="line">    <span class="comment"># 将消息写到剪贴板</span></div><div class="line">    setText(msg)</div><div class="line">    <span class="comment"># 获取qq窗口句柄</span></div><div class="line">    qq = win32gui.FindWindow(<span class="keyword">None</span>, to_who)</div><div class="line">    <span class="comment"># 投递剪贴板消息到QQ窗体</span></div><div class="line">    win32gui.SendMessage(qq, <span class="number">258</span>, <span class="number">22</span>, <span class="number">2080193</span>)</div><div class="line">    win32gui.SendMessage(qq, <span class="number">770</span>, <span class="number">0</span>, <span class="number">0</span>)</div><div class="line">    <span class="comment"># 模拟按下回车键</span></div><div class="line">    win32gui.SendMessage(qq, win32con.WM_KEYDOWN, win32con.VK_RETURN, <span class="number">0</span>)</div><div class="line">    win32gui.SendMessage(qq, win32con.WM_KEYUP, win32con.VK_RETURN, <span class="number">0</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 测试</span></div><div class="line">to_who=<span class="string">'xxx'</span></div><div class="line">msg=<span class="string">'这是测试消息'</span></div><div class="line">send_qq(to_who, msg)</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;利用Python win32来操作窗口句柄触发QQ消息发送。同理可以用其他语言实现。参考下面源码。如果窗口获取存在问题，通过 &lt;code&gt;spy.exe&lt;/code&gt; 工具来重新获取句柄。&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;tabl
-    
-    </summary>
-    
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Bloom Filter</title>
-    <link href="http://yoursite.com/2017/05/07/Bloom-Filter/"/>
-    <id>http://yoursite.com/2017/05/07/Bloom-Filter/</id>
-    <published>2017-05-07T13:41:15.000Z</published>
-    <updated>2017-05-07T13:47:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://blog.csdn.net/jiaomeng/article/details/1496329" target="_blank" rel="external">从哈希存储到Bloom Filter</a></li>
-<li><a href="http://blog.csdn.net/jiaomeng/article/details/1495500" target="_blank" rel="external">Bloom Filter概念和原理</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/jiaomeng/article/details/1496329&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;从哈希存储到Bloom Filter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a h
-    
-    </summary>
-    
-      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM 思维导图</title>
-    <link href="http://yoursite.com/2017/05/05/JVM-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/"/>
-    <id>http://yoursite.com/2017/05/05/JVM-思维导图/</id>
-    <published>2017-05-05T15:28:30.000Z</published>
-    <updated>2017-05-05T15:37:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/assets/images/JVM.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/assets/images/JVM.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM GC调优例子</title>
-    <link href="http://yoursite.com/2017/05/05/JVM-GC%E8%B0%83%E4%BC%98%E4%BE%8B%E5%AD%90/"/>
-    <id>http://yoursite.com/2017/05/05/JVM-GC调优例子/</id>
-    <published>2017-05-05T15:19:51.000Z</published>
-    <updated>2017-05-21T02:42:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>新生代（Young generation）的空间太小，导致有一些本应该可以很快就被回收的对象被放到了老生代（Old generation）里，导致老生代上涨很快，频繁Full GC。</p>
-<ul>
-<li><a href="http://blog.csdn.net/hengyunabc/article/details/24924843" target="_blank" rel="external">JVM GC调优一则–增大Eden Space提高性能</a></li>
-<li><a href="http://www.importnew.com/24393.html#comment-555494" target="_blank" rel="external">一次线上OOM排查经过</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;新生代（Young generation）的空间太小，导致有一些本应该可以很快就被回收的对象被放到了老生代（Old generation）里，导致老生代上涨很快，频繁Full GC。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/he
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CyclicBarrier</title>
-    <link href="http://yoursite.com/2017/05/05/CyclicBarrier/"/>
-    <id>http://yoursite.com/2017/05/05/CyclicBarrier/</id>
-    <published>2017-05-05T14:59:17.000Z</published>
-    <updated>2017-05-05T15:06:53.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>CyclicBarrier 和 CountDownLatch 的功能类似，不过CyclicBarrier 是相反的。</p>
-<ul>
-<li>CyclicBarrier 当线程数达到了这个数目时，所有进入等待状态的线程被唤醒并继续。</li>
-<li>CountDownLatch 允许一个线程或者多个线程一直等待，直到其他线程完成以后再执行接下来的逻辑。</li>
-</ul>
-<p><strong>Example :</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.concurrent.CyclicBarrier;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CyclicBarrierTest</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THREAD_NUM = <span class="number">5</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">        CyclicBarrier barrier;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">(CyclicBarrier b)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.barrier = b;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                System.out.println(<span class="string">"Worker's waiting"</span>);</div><div class="line">                barrier.await();<span class="comment">//线程在这里等待，直到所有线程都到达barrier。</span></div><div class="line">                System.out.println(<span class="string">"ID:"</span> + Thread.currentThread().getId() + <span class="string">" Working"</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        CyclicBarrier cb = <span class="keyword">new</span> CyclicBarrier(THREAD_NUM, <span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="comment">//当所有线程到达barrier时执行</span></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"Inside Barrier"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; THREAD_NUM; i++) &#123;</div><div class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> WorkerThread(cb)).start();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">以下是输出：</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Worker's waiting</div><div class="line">Inside Barrier</div><div class="line">ID:12 Working</div><div class="line">ID:8 Working</div><div class="line">ID:11 Working</div><div class="line">ID:9 Working</div><div class="line">ID:10 Working</div><div class="line">*/</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;CyclicBarrier 和 CountDownLatch 的功能类似，不过CyclicBarrier 是相反的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;CyclicBarrier 当线程数达到了这个数目时，所有进入等待状态的线程被唤醒并继续。&lt;/li&gt;
-&lt;li&gt;CountDownL
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-      <category term="并发" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>北斗七星英文名</title>
-    <link href="http://yoursite.com/2017/05/05/%E5%8C%97%E6%96%97%E4%B8%83%E6%98%9F%E8%8B%B1%E6%96%87%E5%90%8D/"/>
-    <id>http://yoursite.com/2017/05/05/北斗七星英文名/</id>
-    <published>2017-05-05T14:21:20.000Z</published>
-    <updated>2017-05-05T14:25:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>北斗七星的英文名。</p>
-<p>《晋书·天文志》说北斗七星在太微北，枢为天，璇为地，玑为人，权为时，衡为音，开阳为律，摇光为星。</p>
-<ul>
-<li>天枢 Dubhe</li>
-<li>天璇 Merak</li>
-<li>天玑 Phecda</li>
-<li>天权 Megrez</li>
-<li>玉衡 Alioth</li>
-<li>开阳 Mixar</li>
-<li>摇光 Alkaid</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;北斗七星的英文名。&lt;/p&gt;
-&lt;p&gt;《晋书·天文志》说北斗七星在太微北，枢为天，璇为地，玑为人，权为时，衡为音，开阳为律，摇光为星。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;天枢 Dubhe&lt;/li&gt;
-&lt;li&gt;天璇 Merak&lt;/li&gt;
-&lt;li&gt;天玑 Phecda&lt;/li&gt;
-&lt;li&gt;天权 
-    
-    </summary>
-    
-      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-      <category term="天文" scheme="http://yoursite.com/tags/%E5%A4%A9%E6%96%87/"/>
     
   </entry>
   

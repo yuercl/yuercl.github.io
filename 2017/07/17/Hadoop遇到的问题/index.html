@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="SingleClusterinstall解决Unabletoloadnative-hadooplibraryforyourplatform如果提示core-site.xml无法找到可以检查一下环境变量是否配置正确了。我遇到是因为之前的版本升级改了profi"><meta name="keywords" content="Hadoop"><title>Hadoop遇到的问题 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2017/07/17/Hadoop遇到的问题/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Hadoop遇到的问题</h1><span class="post-time">2017年7月17日</span><div class="post-content"><ul>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><li><a href="http://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-common/SingleCluster.html" target="_blank" rel="external">SingleCluster install</a></li>
+<li><a href="http://blog.csdn.net/jack85986370/article/details/51902871" target="_blank" rel="external">解决 Unable to load native-hadoop library for your platform</a></li>
+<li>如果提示<code>core-site.xml</code>无法找到可以检查一下环境变量是否配置正确了。我遇到是因为之前的版本升级改了profile，忘了source了。</li>
+<li>看日志如果无法启动，提示有<code>account.jetbrains.com</code> 可能原因是<code>/ets/hosts</code>加了idea的激活ip</li>
+</ul>
+</div></article><div class="tags"><a href="/tags/Hadoop/">Hadoop</a></div><div class="paginator"><a href="/2017/07/17/redis-dump/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2017/07/13/Linux中wheel组的概念/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2017/07/17/Hadoop遇到的问题/';
+    this.page.identifier = '2017/07/17/Hadoop遇到的问题/';
+    this.page.title = 'Hadoop遇到的问题';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
