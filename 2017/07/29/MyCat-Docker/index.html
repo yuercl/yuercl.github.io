@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器如vim可以参考st"><meta name="keywords" content="mycat,mysql,docker"><title>MyCat(Docker) · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2017/07/29/MyCat-Docker/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">MyCat(Docker)</h1><span class="post-time">2017年7月29日</span><div class="post-content"><p>为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器如vim可以参考stackoverflow的回答，<a href="https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container" target="_blank" rel="external">https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container</a>。</p>
+<p>在Container重启后发现存在一个问题，之前修改的/etc/apt/source.list 在重启后恢复了原样，不能找回之前修改后的地方，同样，如果是创建一个文件，但是当这个container退出以后，如果以同一个的image启动了另一个container，在这个container中是看不到之前那个container创建的文件的。</p>
+<p>如果想让后面的container看到之前那个container创建的文件，就要把之前那个container保存成一个镜像commit，然后基于这个镜像来启动后面的那个container。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">列举几个可能需要的命令</div><div class="line"></div><div class="line">docker pull mysql</div><div class="line">docker run -p 12345:3306 --name mysql <span class="_">-e</span> MYSQL_ROOT_PASSWORD=x <span class="_">-d</span> </div><div class="line">docker run -p 12346:3306 --name mysql_1 <span class="_">-e</span> MYSQL_ROOT_PASSWORD=x <span class="_">-d</span> </div><div class="line">docker.io/mysql</div><div class="line">docker ps <span class="_">-a</span></div><div class="line">docker rm f mysql</div><div class="line">mysql -uroot -h127.0.0.1 -P12345 -px</div><div class="line">mysql -uroot -h127.0.0.1 -P12346 -px</div><div class="line">docker cp <span class="built_in">source</span> romote</div><div class="line">docker cp sources.list mysql_1:/etc/apt/sources.list</div><div class="line">apt-get update</div><div class="line">apt-get install vim</div><div class="line">docker commit mysql mysql:1.0</div></pre></td></tr></table></figure>
+<p>参考链接</p>
+<ul>
+<li><a href="http://github.com/MyCATApache/Mycat-Server" target="_blank" rel="external">http://github.com/MyCATApache/Mycat-Server</a></li>
+<li><a href="http://dl.mycat.io/1.6-RELEASE/" target="_blank" rel="external">http://dl.mycat.io/1.6-RELEASE/</a></li>
+<li><a href="https://severalnines.com/blog/mysql-docker-containers-understanding-basics" target="_blank" rel="external">https://severalnines.com/blog/mysql-docker-containers-understanding-basics</a></li>
+<li><a href="http://mirrors.ustc.edu.cn/help/debian-security.html" target="_blank" rel="external">中科大debian-security源</a></li>
+<li><a href="http://mirrors.ustc.edu.cn/help/debian.html" target="_blank" rel="external">中科大debian源</a></li>
+<li><a href="http://blog.csdn.net/permike/article/details/51879578" target="_blank" rel="external">docker常用命令详解</a></li>
+<li><a href="https://my.oschina.net/nyp/blog/735622" target="_blank" rel="external">详解使用DockerHub官方的mysql镜像生成容器</a></li>
+<li><a href="https://severalnines.com/blog/mysql-docker-containers-understanding-basics" target="_blank" rel="external">MySQL Docker Containers: Understanding the basics</a></li>
+</ul>
+</div></article><div class="tags"><a href="/tags/mycat/">mycat</a><a href="/tags/mysql/">mysql</a><a href="/tags/docker/">docker</a></div><div class="paginator"><a href="/2017/07/29/删除CleanMyMac/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2017/07/23/Felix-相关/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2017/07/29/MyCat-Docker/';
+    this.page.identifier = '2017/07/29/MyCat-Docker/';
+    this.page.title = 'MyCat(Docker)';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

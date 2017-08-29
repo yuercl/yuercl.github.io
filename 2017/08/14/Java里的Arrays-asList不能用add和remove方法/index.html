@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="12345678910111213@Testpublicvoidtest()&amp;#123;List&amp;lt;Integer&amp;gt;list=Arrays.asList(1,2,3);list.add(4);System.out.print(li"><meta name="keywords" content="集合类"><title>Java里的Arrays.asList不能用add和remove方法 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2017/08/14/Java里的Arrays-asList不能用add和remove方法/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Java里的Arrays.asList不能用add和remove方法</h1><span class="post-time">2017年8月14日</span><div class="post-content"><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    list.add(<span class="number">4</span>);</div><div class="line">    System.out.print(list.toString());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; list = Lists.newArrayList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    list.add(<span class="number">5</span>);</div><div class="line">    System.out.print(list.toString());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>上面的代码test会throw UnsupportedOperationException。test2使用了Guava工具类，正常输出数组内容。</p>
+<p>查看源代码，Arrays.asList 创建的ArrayList是一个内部类，继承自AbstractList同时实现了RandomAccess和Serializable接口。而在抽象类AbstractList中，set add remove的定义是空的，默认<code>throw new UnsupportedOperationException();</code>。</p>
+<p>所以呢，在Arrays.asList出来的List是一个只读的列表，不支持新增、删除、设置。</p>
+<p><img src="/assets/images/Arrays.png" alt=""></p>
+</div></article><div class="tags"><a href="/tags/集合类/">集合类</a></div><div class="paginator"><a href="/2017/08/22/ElasticSearch-默认size为10/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2017/08/12/设计模式之装饰器模式/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2017/08/14/Java里的Arrays-asList不能用add和remove方法/';
+    this.page.identifier = '2017/08/14/Java里的Arrays-asList不能用add和remove方法/';
+    this.page.title = 'Java里的Arrays.asList不能用add和remove方法';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

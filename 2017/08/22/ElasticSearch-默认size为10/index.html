@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="在ElasticSearch中，默认的搜索个数是10条数据。在没有传递size的时候，如果有聚合函数，最后返回后的size也是10条，所以就导致返回了部分数据的情况。在搜索分页的时候也是一样的情况。如果搜索size大于10000，需要设置index.max_result_"><meta name="keywords" content="ElasticSearch"><title>ElasticSearch 默认size为10 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2017/08/22/ElasticSearch-默认size为10/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">ElasticSearch 默认size为10</h1><span class="post-time">2017年8月22日</span><div class="post-content"><p>在ElasticSearch中，默认的搜索个数是10条数据。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>在没有传递size的时候，如果有聚合函数，最后返回后的size也是10条，所以就导致返回了部分数据的情况。</p>
+<p>在搜索分页的时候也是一样的情况。</p>
+<p>如果搜索size大于10000，需要设置 <code>index.max_result_window</code> 参数 ，默认为10000。</p>
+</div></article><div class="tags"><a href="/tags/ElasticSearch/">ElasticSearch</a></div><div class="paginator"><a href="/2017/08/29/HashMap的工作原理/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2017/08/14/Java里的Arrays-asList不能用add和remove方法/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2017/08/22/ElasticSearch-默认size为10/';
+    this.page.identifier = '2017/08/22/ElasticSearch-默认size为10/';
+    this.page.title = 'ElasticSearch 默认size为10';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
