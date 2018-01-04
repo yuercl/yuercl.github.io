@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-29T02:02:26.000Z</updated>
+  <updated>2018-01-04T10:22:48.807Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,355 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Golang 交叉编译跨平台的可执行程序 (Mac、Linux、Windows )</title>
+    <link href="http://yoursite.com/2018/01/04/Golang-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F-Mac%E3%80%81Linux%E3%80%81Windows/"/>
+    <id>http://yoursite.com/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/</id>
+    <published>2018-01-04T10:22:44.000Z</published>
+    <updated>2018-01-04T10:22:48.807Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="各平台的GOOS和GOARCH参考"><a href="#各平台的GOOS和GOARCH参考" class="headerlink" title="各平台的GOOS和GOARCH参考"></a>各平台的GOOS和GOARCH参考</h4><p>交叉编译依赖下面几个环境变量：</p>
+<ul>
+<li><code>$GOARCH</code> 目标平台（编译后的目标平台）的处理器架构（386、amd64、arm）</li>
+<li><code>$GOOS</code> 目标平台（编译后的目标平台）的操作系统（darwin、freebsd、linux、windows）</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">OS ARCH OS version</div><div class="line">linux 386 / amd64 / arm &gt;= Linux 2.6</div><div class="line">darwin 386 / amd64 OS X (Snow Leopard + Lion)</div><div class="line">freebsd 386 / amd64 &gt;= FreeBSD 7</div><div class="line">windows 386 / amd64 &gt;= Windows 2000</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Mac 下编译 Linux 和 Windows 64位可执行程序</span></div><div class="line">CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go</div><div class="line">CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go</div><div class="line"></div><div class="line"><span class="comment"># Linux 下编译 Mac 和 Windows 64位可执行程序</span></div><div class="line">CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go</div><div class="line">CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go</div><div class="line"></div><div class="line"><span class="comment"># Windows 下编译 Mac 64位 可执行程序</span></div><div class="line">SET CGO_ENABLED=0</div><div class="line">SET GOOS=darwin</div><div class="line">SET GOARCH=amd64</div><div class="line">go build main.go</div><div class="line"></div><div class="line"><span class="comment"># Windows 下编译 Linux 64位可执行程序</span></div><div class="line">SET CGO_ENABLED=0</div><div class="line">SET GOOS=linux</div><div class="line">SET GOARCH=amd64</div><div class="line">go build main.go</div><div class="line"></div><div class="line"><span class="comment"># 不带前面参数的 go build 只是编译出开发环境适用的执行文件</span></div><div class="line">go build main.go</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"log"</span></div><div class="line">    <span class="string">"fmt"</span></div><div class="line">    <span class="string">"time"</span></div><div class="line">    <span class="string">"github.com/cactus/go-statsd-client/statsd"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="comment">//时间转化为string，layout必须为 "2006-01-02 15:04:05"</span></div><div class="line">    timeNow := time.Now().Format(<span class="string">"2006-01-02 15:04:05"</span>)</div><div class="line">	fmt.Println(<span class="string">"health check at "</span>, timeNow ,  <span class="string">"\n"</span>)</div><div class="line"></div><div class="line">    <span class="comment">// first create a client</span></div><div class="line">    client, err := statsd.NewClient(<span class="string">"ip:8125"</span>, <span class="string">"modem"</span>)</div><div class="line"></div><div class="line">    <span class="comment">// handle any errors</span></div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        log.Fatal(err)</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// make sure to clean up</span></div><div class="line">    <span class="keyword">defer</span> client.Close()</div><div class="line"></div><div class="line">    <span class="comment">// Send a stat</span></div><div class="line">    client.Inc(<span class="string">"health.offline"</span>, <span class="number">1</span>, <span class="number">1.0</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;各平台的GOOS和GOARCH参考&quot;&gt;&lt;a href=&quot;#各平台的GOOS和GOARCH参考&quot; class=&quot;headerlink&quot; title=&quot;各平台的GOOS和GOARCH参考&quot;&gt;&lt;/a&gt;各平台的GOOS和GOARCH参考&lt;/h4&gt;&lt;p&gt;交叉编译依赖下面几个环境变量：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$GOARCH&lt;/code&gt; 目标平台（编译后的目标平台）的处理器架构（386、amd64、arm）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$GOOS&lt;/code&gt; 目标平台（编译后的目标平台）的操作系统（darwin、freebsd、linux、windows）&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="Go" scheme="http://yoursite.com/categories/Go/"/>
+    
+    
+      <category term="Go" scheme="http://yoursite.com/tags/Go/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Zookeeper的maxClientCnxns配置错误导致的拒绝服务</title>
+    <link href="http://yoursite.com/2017/12/20/Zookeeper%E7%9A%84maxClientCnxns%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF%E5%AF%BC%E8%87%B4%E7%9A%84%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/"/>
+    <id>http://yoursite.com/2017/12/20/Zookeeper的maxClientCnxns配置错误导致的拒绝服务/</id>
+    <published>2017-12-20T11:29:09.000Z</published>
+    <updated>2017-12-20T11:30:27.893Z</updated>
+    
+    <content type="html"><![CDATA[<p>在最近的一个项目中，遇到一个问题，就是一边是连接Zookeeper做服务发现、一边是连接Zookeeper做Kafka的消费者。因为设计的时候，客户端会监听N多的Topic，在最初测试的时候，没有发现什么异常，但是一导入线上数据就初出问题。总是会发现无法连接到Zookeeper，导致不能正常启动Kafka consumer 的情况。经过排查各种配置之后，发现了 <code>maxClientCnxns</code> 这一项配置。</p>
+<p>注意，这里是指单IP的限制！</p>
+<blockquote>
+<p>Limits the number of concurrent connections (at the socket level) that a single client, identified by IP address, may make to a single member of the ZooKeeper ensemble. This is used to prevent certain classes of DoS attacks, including file descriptor exhaustion. The default is 60. Setting this to 0 entirely removes the limit on concurrent connections.</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在最近的一个项目中，遇到一个问题，就是一边是连接Zookeeper做服务发现、一边是连接Zookeeper做Kafka的消费者。因为设计的时候，客户端会监听N多的Topic，在最初测试的时候，没有发现什么异常，但是一导入线上数据就初出问题。总是会发现无法连接到Zookeep
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="zookeeper" scheme="http://yoursite.com/tags/zookeeper/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IDEA Mybatis Plugin 3.21 破解方法</title>
+    <link href="http://yoursite.com/2017/12/18/IDEA-Mybatis-Plugin-3-21-%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95/"/>
+    <id>http://yoursite.com/2017/12/18/IDEA-Mybatis-Plugin-3-21-破解方法/</id>
+    <published>2017-12-18T06:15:34.000Z</published>
+    <updated>2017-12-18T06:16:14.570Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/" target="_blank" rel="external">IDEA Mybatis Plugin 3.21 破解方法</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;IDEA Mybatis Plug
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+    
+    
+      <category term="Mybatis" scheme="http://yoursite.com/tags/Mybatis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Apache Kylin</title>
+    <link href="http://yoursite.com/2017/12/05/Apache-Kylin/"/>
+    <id>http://yoursite.com/2017/12/05/Apache-Kylin/</id>
+    <published>2017-12-05T10:24:23.000Z</published>
+    <updated>2017-12-07T07:25:13.185Z</updated>
+    
+    <content type="html"><![CDATA[<p>Kylin的依赖于Hive、Hbase、Hadoop的。所以配置起来相对是最复杂的。</p>
+<ul>
+<li><a href="http://blog.csdn.net/se7en_q/article/details/47258007" target="_blank" rel="external">http://blog.csdn.net/se7en_q/article/details/47258007</a></li>
+<li><a href="https://www.cnblogs.com/lzxlfly/p/7221890.html" target="_blank" rel="external">https://www.cnblogs.com/lzxlfly/p/7221890.html</a></li>
+<li><a href="https://www.cnblogs.com/hunttown/p/5803341.html" target="_blank" rel="external">https://www.cnblogs.com/hunttown/p/5803341.html</a></li>
+<li><a href="https://www.cnblogs.com/hmy-blog/p/6506417.html" target="_blank" rel="external">https://www.cnblogs.com/hmy-blog/p/6506417.html</a></li>
+<li><a href="http://blog.csdn.net/wzy0623/article/details/50685966" target="_blank" rel="external">http://blog.csdn.net/wzy0623/article/details/50685966</a></li>
+<li><a href="http://blog.csdn.net/wulantian/article/details/46341043" target="_blank" rel="external">hadoop能用到的系统端口</a></li>
+</ul>
+<p>遇到问题需要清楚Job生成的数据，这里官方文档写的没更新，用这个类执行。</p>
+<pre><code>hbase org.apache.hadoop.util.RunJar lib/kylin-job-2.2.0.jar org.apache.kylin.storage.hbase.util.StorageCleanupJob --delete false
+</code></pre><a id="more"></a>
+<p><code>/etc/profile</code> 的内容，KYLIN环境需要的东西。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/product/jdk1.8.0_92</div><div class="line"><span class="built_in">export</span> ZOOKEEPER_HOME=/usr/<span class="built_in">local</span>/product/zookeeper-3.4.11</div><div class="line"></div><div class="line"><span class="built_in">export</span> HBASE_HOME=/usr/<span class="built_in">local</span>/product/hbase-1.2.6</div><div class="line"><span class="built_in">export</span> HBASE_CLASSPATH=<span class="variable">$HBASE_HOME</span>/conf</div><div class="line"></div><div class="line"><span class="built_in">export</span> HIVE_HOME=/usr/<span class="built_in">local</span>/product/apache-hive-1.2.2-bin</div><div class="line"></div><div class="line"><span class="built_in">export</span> HADOOP_HOME=/usr/<span class="built_in">local</span>/product/hadoop-2.9.0</div><div class="line"><span class="built_in">export</span> HADOOP_COMMON_LIB_NATIVE_DIR=<span class="variable">$HADOOP_HOME</span>/lib/native</div><div class="line"><span class="built_in">export</span> HADOOP_OPTS=<span class="string">"-Djava.library.path=<span class="variable">$HADOOP_HOME</span>/lib/native"</span></div><div class="line"></div><div class="line"><span class="built_in">export</span> KYLIN_HOME=/usr/<span class="built_in">local</span>/product/apache-kylin-2.2.0-bin</div><div class="line"></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$ZOOKEEPER_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/bin/:<span class="variable">$HIVE_HOME</span>/bin:<span class="variable">$HIVE_HOME</span>/conf:<span class="variable">$HBASE_HOME</span>/bin:<span class="variable">$KYLIN_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/bin</div><div class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/lib:<span class="variable">$PATH</span></div></pre></td></tr></table></figure>
+<p>遇到的问题：</p>
+<ul>
+<li>Failed to find metadata store by url: kylin_metadata@hbase。后来进入zookeeper，/hbase/table，发现kylin_metadata还在，删除掉后正常启动</li>
+<li>9000 端口和php-fpm冲突，将php-fpm的端口、nginx中代理的端口修改成另一个端口可解决。</li>
+<li>配置hive时，需要使用mysql驱动，这个要改下配置和上传mysql-connnector*.jar</li>
+<li>在建立cube的时候非常慢，要有耐心。</li>
+<li>Hadoop 中需要的JAVA_HOME配置。</li>
+<li>Hadoop 需要启动 history  与 WebAppProxyServer。</li>
+<li><a href="http://blog.csdn.net/fenghuibian/article/details/53689833" target="_blank" rel="external">kylin误删hdfs上kylin_metadata下数据出现java.lang.IllegalStateException错误
+</a></li>
+<li>登陆的地址需要是，<a href="http://ip:7070/kylin，密码，Kylin默认账号为：ADMIN，默认密码：KYLIN（区分大小写，必须全都大写）" target="_blank" rel="external">http://ip:7070/kylin，密码，Kylin默认账号为：ADMIN，默认密码：KYLIN（区分大小写，必须全都大写）</a></li>
+<li>如果cube在build中出现错误，需要在monitor中discard对应的cube才能重新build</li>
+<li>删除model前必须先drop掉里面的cube，而drop掉cube前如果cube是Ready状态需要先disable。</li>
+<li>Kylin使用HBase来进行存储，而不是普通的文件系统。Kylin的配置文件kylin.properties中查看到：<code>kylin.metadata.url=kylin_metadata@hbase</code>。表示Kylin的元数据被保存在HBase的kylin_metadata表中。</li>
+<li>Hive没有<code>hdfs:/tmp</code>目录的权限，赋权限即可<code>hadoop dfs -chmod -R 777 /tmp</code>.<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(Permission denied: user=anonymous, access=EXECUTE, inode=&quot;/tmp&quot;:hadoop:supergroup:drwx------</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="The-metadata-store-in-hbase"><a href="#The-metadata-store-in-hbase" class="headerlink" title="The metadata store in hbase"></a>The metadata store in hbase</h2><p>kylin.metadata.url=kylin_metadata@hbase</p>
+<p>表示Kylin的元数据被保存在HBase的kylin_metadata表中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># Hadoop 需要启动 history</div><div class="line">./mr-jobhistory-daemon.sh start historyserver  </div><div class="line">./yarn-daemon.sh --config $HADOOP_CONF_DIR start proxyserver</div></pre></td></tr></table></figure>
+<h3 id="格式化Hadoop的NameNode"><a href="#格式化Hadoop的NameNode" class="headerlink" title="格式化Hadoop的NameNode"></a>格式化Hadoop的NameNode</h3><ul>
+<li>bin/hadoop namenode -format。因为中途弄错了一个东西，导致想重新安装kylin，折腾N多问题后，将所有的数据全部删除，忘记了格式化namenode导致namenode无法启动。</li>
+</ul>
+<h3 id="从Kylin元数据中清理掉无用的资源"><a href="#从Kylin元数据中清理掉无用的资源" class="headerlink" title="从Kylin元数据中清理掉无用的资源"></a>从Kylin元数据中清理掉无用的资源</h3><p>随着时间的推移，有些资源，比如字典、表的快照等变得无用了(cube的segment被删除或合并了)，但是他们仍然占用空间。可以执行如下命令查找和清理无用的元数据：</p>
+<ul>
+<li>首先，执行检查，这是安全的操作，不会修改任何内容： </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 将需要被删除的资源(resources)罗列出来</div><div class="line">./bin/metastore.sh clean</div><div class="line">```	</div><div class="line">- 在上面的命令中，添加`--delete true`参数，这样就会清理掉哪些无用的资源。切记，在这个命令操作之前，一定要备份Kylin元数据：</div></pre></td></tr></table></figure>
+<p>./bin/metastore.sh clean –delete true<br>```</p>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ul>
+<li><a href="http://kylin.apache.org/docs21/index.html" target="_blank" rel="external">官方文档</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Kylin的依赖于Hive、Hbase、Hadoop的。所以配置起来相对是最复杂的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/se7en_q/article/details/47258007&quot;&gt;http://blog.csdn.net/se7en_q/article/details/47258007&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/lzxlfly/p/7221890.html&quot;&gt;https://www.cnblogs.com/lzxlfly/p/7221890.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/hunttown/p/5803341.html&quot;&gt;https://www.cnblogs.com/hunttown/p/5803341.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/hmy-blog/p/6506417.html&quot;&gt;https://www.cnblogs.com/hmy-blog/p/6506417.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/wzy0623/article/details/50685966&quot;&gt;http://blog.csdn.net/wzy0623/article/details/50685966&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/wulantian/article/details/46341043&quot;&gt;hadoop能用到的系统端口&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;遇到问题需要清楚Job生成的数据，这里官方文档写的没更新，用这个类执行。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase org.apache.hadoop.util.RunJar lib/kylin-job-2.2.0.jar org.apache.kylin.storage.hbase.util.StorageCleanupJob --delete false
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="数据分析" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Apache Kylin" scheme="http://yoursite.com/tags/Apache-Kylin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>metabase</title>
+    <link href="http://yoursite.com/2017/12/05/metabase/"/>
+    <id>http://yoursite.com/2017/12/05/metabase/</id>
+    <published>2017-12-05T10:16:23.000Z</published>
+    <updated>2017-12-07T08:21:10.892Z</updated>
+    
+    <content type="html"><![CDATA[<p>官网：</p>
+<ul>
+<li><a href="https://hub.docker.com/r/metabase/metabase" target="_blank" rel="external">https://hub.docker.com/r/metabase/metabase</a></li>
+<li><a href="https://www.metabase.com" target="_blank" rel="external">https://www.metabase.com</a></li>
+<li><a href="https://www.metabase.com/docs/latest/" target="_blank" rel="external">https://www.metabase.com/docs/latest/</a></li>
+</ul>
+<p>官方文档写的很详细，几乎没有什么异常的配置，metabase 使用 Cojure和React 实现。</p>
+<p>在使用过程中，出现了新增数据源，但是在新增Question的时候不能显示出来，但是过了一段时间后又显示出来了，可能是某个地方的缓存吧。</p>
+<p>正常使用也非常简单，新增Question，然后选择数据源、过滤条件、聚合函数，保存Question后可以添加到Dashboard去。</p>
+<p><img src="https://github.com/metabase/metabase/raw/master/docs/metabase-product-screenshot.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># The Zen of Metabase</div><div class="line"></div><div class="line">- Give the user value as soon as possible</div><div class="line"></div><div class="line">- Structure things so that we can automagically infer things for the user</div><div class="line"></div><div class="line">- Don’t ask the user for information the system should already know</div><div class="line"></div><div class="line">- Make it easy for the user to do the right thing</div><div class="line"></div><div class="line">- Don’t leave the user booby traps</div><div class="line"></div><div class="line">- Go the extra mile to make the user experience pleasant</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;官网：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://hub.docker.com/r/metabase/metabase&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hub.docker.com/r/metabase/me
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="数据分析" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="metabase" scheme="http://yoursite.com/tags/metabase/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>superset</title>
+    <link href="http://yoursite.com/2017/12/05/superset/"/>
+    <id>http://yoursite.com/2017/12/05/superset/</id>
+    <published>2017-12-05T10:09:26.000Z</published>
+    <updated>2017-12-07T10:30:55.138Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code># docker 安装
+https://hub.docker.com/r/amancevice/superset/
+
+# 创建管理员用户名和密码 
+fabmanager create-admin --app superset 
+
+# 初始化Superset 
+superset db upgrade 
+
+# 装载初始化样例数据 
+superset load_examples 
+
+# 创建默认角色和权限 
+superset init 
+
+# 启动Superset 
+superset runserver 
+</code></pre><p>可能遇到的问题:</p>
+<ul>
+<li>生成分布柱状图的时候，x轴默认被排序了，目前没好的方案。</li>
+<li>乱码问题，设置连接的编码，格式参考SqlAlchemy格式。如：mysql://root:XXXXXXXXXX@127.0.0.1:3306/info?charset=utf8</li>
+<li>参考链接，<a href="http://www.jianshu.com/p/d5978b439080" target="_blank" rel="external">http://www.jianshu.com/p/d5978b439080</a></li>
+<li>GitHub官方，<a href="https://github.com/apache/incubator-superset" target="_blank" rel="external">https://github.com/apache/incubator-superset</a></li>
+</ul>
+<p><img src="https://cloud.githubusercontent.com/assets/130878/20234704/0f40778c-a835-11e6-9556-983a62ea061b.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;# docker 安装
+https://hub.docker.com/r/amancevice/superset/
+
+# 创建管理员用户名和密码 
+fabmanager create-admin --app superset 
+
+# 初始化Superset 
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="数据分析" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="superset" scheme="http://yoursite.com/tags/superset/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SSH原理与应用</title>
+    <link href="http://yoursite.com/2017/11/07/SSH%E5%8E%9F%E7%90%86%E4%B8%8E%E5%BA%94%E7%94%A8/"/>
+    <id>http://yoursite.com/2017/11/07/SSH原理与应用/</id>
+    <published>2017-11-07T07:18:27.000Z</published>
+    <updated>2017-11-07T07:19:31.076Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="external">远程登录</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html" target="_blank" rel="external">远程操作与端口转发</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;远程登录&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;ht
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+      <category term="ssh" scheme="http://yoursite.com/tags/ssh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>valid-number at leetcode</title>
+    <link href="http://yoursite.com/2017/08/31/valid-number-at-leetcode/"/>
+    <id>http://yoursite.com/2017/08/31/valid-number-at-leetcode/</id>
+    <published>2017-08-31T07:59:55.000Z</published>
+    <updated>2017-08-31T07:59:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>有穷状态自动机 DFA 解题、提供一个新的思路来判断是不是一个数字。</p>
+<ul>
+<li><a href="https://leetcode.com/problems/valid-number/description/" target="_blank" rel="external">Leetcode Description</a></li>
+<li><a href="https://leetcode.com/problems/valid-number/discuss/" target="_blank" rel="external">Leetcode Discuss</a></li>
+<li><a href="http://blog.csdn.net/yukuninfoaxiom/article/details/6057736" target="_blank" rel="external">NFA/DFA算法</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">isNumber</span><span class="params">(self, s)</span>:</span></div><div class="line">      <span class="string">"""</span></div><div class="line">      :type s: str</div><div class="line">      :rtype: bool</div><div class="line">      """</div><div class="line">      <span class="comment">#define a DFA</span></div><div class="line">      state = [&#123;&#125;, </div><div class="line">              &#123;<span class="string">'blank'</span>: <span class="number">1</span>, <span class="string">'sign'</span>: <span class="number">2</span>, <span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">4</span>&#125;, </div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">4</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">5</span>, <span class="string">'e'</span>:<span class="number">6</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">5</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">5</span>, <span class="string">'e'</span>:<span class="number">6</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'sign'</span>:<span class="number">7</span>, <span class="string">'digit'</span>:<span class="number">8</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">8</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">8</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'blank'</span>:<span class="number">9</span>&#125;]</div><div class="line">      currentState = <span class="number">1</span></div><div class="line">      <span class="keyword">for</span> c <span class="keyword">in</span> s:</div><div class="line">          <span class="keyword">if</span> c &gt;= <span class="string">'0'</span> <span class="keyword">and</span> c &lt;= <span class="string">'9'</span>:</div><div class="line">              c = <span class="string">'digit'</span></div><div class="line">          <span class="keyword">if</span> c == <span class="string">' '</span>:</div><div class="line">              c = <span class="string">'blank'</span></div><div class="line">          <span class="keyword">if</span> c <span class="keyword">in</span> [<span class="string">'+'</span>, <span class="string">'-'</span>]:</div><div class="line">              c = <span class="string">'sign'</span></div><div class="line">          <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> state[currentState].keys():</div><div class="line">              <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">          currentState = state[currentState][c]</div><div class="line">      <span class="keyword">if</span> currentState <span class="keyword">not</span> <span class="keyword">in</span> [<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">9</span>]:</div><div class="line">          <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p><img src="http://normanyahq.github.io/static/files/valid_number_dfa.svg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有穷状态自动机 DFA 解题、提供一个新的思路来判断是不是一个数字。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://leetcode.com/problems/valid-number/description/&quot; target=&quot;_blank&quot; rel=&quot;ex
+    
+    </summary>
+    
+      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="DFA" scheme="http://yoursite.com/tags/DFA/"/>
+    
+      <category term="有穷状态自动机" scheme="http://yoursite.com/tags/%E6%9C%89%E7%A9%B7%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>背包问题</title>
+    <link href="http://yoursite.com/2017/08/30/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2017/08/30/背包问题/</id>
+    <published>2017-08-29T16:00:00.000Z</published>
+    <updated>2017-08-31T07:59:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://www.importnew.com/13072.html" target="_blank" rel="external">01背包</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.importnew.com/13072.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;01背包&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+    
+    </summary>
+    
+      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="背包问题" scheme="http://yoursite.com/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>HashMap的工作原理</title>
@@ -280,7 +629,7 @@
     <link href="http://yoursite.com/2017/08/08/ElasticSearch/"/>
     <id>http://yoursite.com/2017/08/08/ElasticSearch/</id>
     <published>2017-08-08T08:34:57.000Z</published>
-    <updated>2017-08-08T09:16:02.000Z</updated>
+    <updated>2017-09-05T07:53:57.000Z</updated>
     
     <content type="html"><![CDATA[<ul>
 <li><a href="http://www.wklken.me/posts/2016/06/29/deploy-es.html#9-zheng-shi-qi-dong" target="_blank" rel="external">ELASTICSEARCH集群部署文档</a></li>
@@ -289,6 +638,7 @@
 <p>ElasticSearch 的 mapping修改比较坑，需要新建、迁移数据、删除老索引。</p>
 <ul>
 <li><a href="http://www.cnblogs.com/Creator/p/3722408.html" target="_blank" rel="external">记录一次mapping field修改过程</a></li>
+<li><a href="http://blog.csdn.net/napoay/article/details/52119957" target="_blank" rel="external">删除文档的field以及field的属性</a></li>
 </ul>
 <p>可以参考下面的demo</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"order"</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">"template"</span>: <span class="string">"truck_*"</span>,</div><div class="line">    <span class="attr">"settings"</span>: &#123;</div><div class="line">        <span class="attr">"index"</span>: &#123;</div><div class="line">            <span class="attr">"number_of_shards"</span>: <span class="string">"5"</span>,</div><div class="line">            <span class="attr">"number_of_replicas"</span>: <span class="string">"1"</span>,</div><div class="line">            <span class="attr">"store"</span>: &#123;</div><div class="line">                <span class="attr">"compress"</span>: &#123;</div><div class="line">                    <span class="attr">"tv"</span>: <span class="string">"true"</span>,</div><div class="line">                    <span class="attr">"stored"</span>: <span class="string">"false"</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"mappings"</span>: &#123;</div><div class="line">        <span class="attr">"mileage"</span>: &#123;</div><div class="line">            <span class="attr">"_source"</span>: &#123;</div><div class="line">                <span class="attr">"enabled"</span>: <span class="literal">false</span></div><div class="line">            &#125;,</div><div class="line">            <span class="attr">"_all"</span>: &#123;</div><div class="line">                <span class="attr">"enabled"</span>: <span class="literal">false</span></div><div class="line">            &#125;,</div><div class="line">            <span class="attr">"properties"</span>: &#123;</div><div class="line">                <span class="attr">"id"</span>: &#123;</div><div class="line">                    <span class="attr">"index"</span>: <span class="string">"not_analyzed"</span>,</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"string"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"gps_id"</span>: &#123;</div><div class="line">                    <span class="attr">"index"</span>: <span class="string">"not_analyzed"</span>,</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"string"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"distance"</span>: &#123;</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"integer"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"start_time_ms"</span>: &#123;</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"date"</span>,</div><div class="line">                    <span class="attr">"format"</span>: <span class="string">"epoch_millis"</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"aliases"</span>: &#123;</div><div class="line">        <span class="attr">"truck_location"</span>: &#123;&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
@@ -363,285 +713,6 @@
     
     
       <category term="CleanMyMac" scheme="http://yoursite.com/tags/CleanMyMac/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MyCat(Docker)</title>
-    <link href="http://yoursite.com/2017/07/29/MyCat-Docker/"/>
-    <id>http://yoursite.com/2017/07/29/MyCat-Docker/</id>
-    <published>2017-07-29T02:00:00.000Z</published>
-    <updated>2017-08-11T15:20:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。</p>
-<p>默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器如vim可以参考stackoverflow的回答，<a href="https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container" target="_blank" rel="external">https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container</a>。</p>
-<p>在Container重启后发现存在一个问题，之前修改的/etc/apt/source.list 在重启后恢复了原样，不能找回之前修改后的地方，同样，如果是创建一个文件，但是当这个container退出以后，如果以同一个的image启动了另一个container，在这个container中是看不到之前那个container创建的文件的。</p>
-<p>如果想让后面的container看到之前那个container创建的文件，就要把之前那个container保存成一个镜像commit，然后基于这个镜像来启动后面的那个container。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">列举几个可能需要的命令</div><div class="line"></div><div class="line">docker pull mysql</div><div class="line">docker run -p 12345:3306 --name mysql <span class="_">-e</span> MYSQL_ROOT_PASSWORD=x <span class="_">-d</span> </div><div class="line">docker run -p 12346:3306 --name mysql_1 <span class="_">-e</span> MYSQL_ROOT_PASSWORD=x <span class="_">-d</span> </div><div class="line">docker.io/mysql</div><div class="line">docker ps <span class="_">-a</span></div><div class="line">docker rm f mysql</div><div class="line">mysql -uroot -h127.0.0.1 -P12345 -px</div><div class="line">mysql -uroot -h127.0.0.1 -P12346 -px</div><div class="line">docker cp <span class="built_in">source</span> romote</div><div class="line">docker cp sources.list mysql_1:/etc/apt/sources.list</div><div class="line">apt-get update</div><div class="line">apt-get install vim</div><div class="line">docker commit mysql mysql:1.0</div></pre></td></tr></table></figure>
-<p>参考链接</p>
-<ul>
-<li><a href="http://github.com/MyCATApache/Mycat-Server" target="_blank" rel="external">http://github.com/MyCATApache/Mycat-Server</a></li>
-<li><a href="http://dl.mycat.io/1.6-RELEASE/" target="_blank" rel="external">http://dl.mycat.io/1.6-RELEASE/</a></li>
-<li><a href="https://severalnines.com/blog/mysql-docker-containers-understanding-basics" target="_blank" rel="external">https://severalnines.com/blog/mysql-docker-containers-understanding-basics</a></li>
-<li><a href="http://mirrors.ustc.edu.cn/help/debian-security.html" target="_blank" rel="external">中科大debian-security源</a></li>
-<li><a href="http://mirrors.ustc.edu.cn/help/debian.html" target="_blank" rel="external">中科大debian源</a></li>
-<li><a href="http://blog.csdn.net/permike/article/details/51879578" target="_blank" rel="external">docker常用命令详解</a></li>
-<li><a href="https://my.oschina.net/nyp/blog/735622" target="_blank" rel="external">详解使用DockerHub官方的mysql镜像生成容器</a></li>
-<li><a href="https://severalnines.com/blog/mysql-docker-containers-understanding-basics" target="_blank" rel="external">MySQL Docker Containers: Understanding the basics</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。&lt;/p&gt;
-&lt;p&gt;默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器
-    
-    </summary>
-    
-      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-      <category term="mycat" scheme="http://yoursite.com/tags/mycat/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-      <category term="docker" scheme="http://yoursite.com/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Felix 相关</title>
-    <link href="http://yoursite.com/2017/07/23/Felix-%E7%9B%B8%E5%85%B3/"/>
-    <id>http://yoursite.com/2017/07/23/Felix-相关/</id>
-    <published>2017-07-23T15:53:15.000Z</published>
-    <updated>2017-07-23T16:02:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>注意，Felix目前最新的版本只能使用JDK7，在JDK8上面无法正常启动服务。bundle 导出后放入到plugins中，felix回自动reload这个包，实现无缝升级，但是前提是你的代码中处理了destroy相关的代码，不然可能无法正常uninstall plugin bundle。</p>
-<p>help<br>ps<br>start<br>install  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:port/system/console/shell</div></pre></td></tr></table></figure>
-<p>这货很好，但是也很坑，在某一个时代来看，是一种比较好的方案。未来都是微服务…</p>
-<ul>
-<li><a href="http://zqc-0101.iteye.com/blog/1153291" target="_blank" rel="external">在Eclipse中搭建Apache Felix环境</a></li>
-<li><a href="http://zqc-0101.iteye.com/blog/1183452" target="_blank" rel="external">在Apache Felix中运行bundle</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;注意，Felix目前最新的版本只能使用JDK7，在JDK8上面无法正常启动服务。bundle 导出后放入到plugins中，felix回自动reload这个包，实现无缝升级，但是前提是你的代码中处理了destroy相关的代码，不然可能无法正常uninstall plugin
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Felix" scheme="http://yoursite.com/tags/Felix/"/>
-    
-      <category term="OSGI" scheme="http://yoursite.com/tags/OSGI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>动态更新slf4j日志的级别</title>
-    <link href="http://yoursite.com/2017/07/21/%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0slf4j%E6%97%A5%E5%BF%97%E7%9A%84%E7%BA%A7%E5%88%AB/"/>
-    <id>http://yoursite.com/2017/07/21/动态更新slf4j日志的级别/</id>
-    <published>2017-07-21T10:41:50.000Z</published>
-    <updated>2017-07-21T10:42:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>动态更新slf4j日志的级别</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String RESULT_LOGGER = <span class="string">"logger level update %s! key = %s, level = %s."</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">freshLogback</span><span class="params">(String key, String level)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (StringUtils.isBlank(key) || StringUtils.isBlank(level)) &#123;</div><div class="line">        <span class="keyword">return</span> String.format(RESULT_LOGGER, <span class="string">"faill"</span>, key, level);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();</div><div class="line"></div><div class="line">    ch.qos.logback.classic.Logger clogger;</div><div class="line">    <span class="comment">// 设置全局日志级别</span></div><div class="line">    <span class="keyword">if</span> (<span class="string">"*"</span>.equals(key)) &#123; <span class="comment">// 设置全局日志级别</span></div><div class="line">        clogger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);</div><div class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 设置某个类日志级别-可以实现定向日志级别调整</span></div><div class="line">        clogger = loggerContext.getLogger(key);</div><div class="line">    &#125;</div><div class="line">    clogger.setLevel(Level.toLevel(level, Level.INFO));</div><div class="line"></div><div class="line">    <span class="comment">//List&lt;ch.qos.logback.classic.Logger&gt; loggerList = loggerContext.getLoggerList();</span></div><div class="line">    <span class="comment">//for (ch.qos.logback.classic.Logger clogger1 : loggerList) &#123;</span></div><div class="line">    <span class="comment">//    LOGGER.info(clogger1.getName());</span></div><div class="line">    <span class="comment">//&#125;</span></div><div class="line">    <span class="keyword">return</span> String.format(RESULT_LOGGER, <span class="string">"ok"</span>, key, level);</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;动态更新slf4j日志的级别&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;d
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="slf4j" scheme="http://yoursite.com/tags/slf4j/"/>
-    
-      <category term="logback" scheme="http://yoursite.com/tags/logback/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JAVA线程池</title>
-    <link href="http://yoursite.com/2017/07/18/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
-    <id>http://yoursite.com/2017/07/18/Java线程池/</id>
-    <published>2017-07-18T09:47:19.000Z</published>
-    <updated>2017-07-18T10:41:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>源于面试的时候被问到了一个问题，创建线程池需要什么参数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ThreadPoolExecutor(<span class="keyword">int</span> corePoolSize, <span class="keyword">int</span> maximumPoolSize, <span class="keyword">long</span> keepAliveTime,TimeUnit unit,BlockingQueue&lt;Runnable&gt; workQueue,ThreadFactory threadFactory,RejectedExecutionHandler handler)</div></pre></td></tr></table></figure>
-<p>然后就是，创建好了，我不停的往里面塞线程，那么比如说我创建的是size是10的线程池，那么我塞第11个线程池的时候，此时发生了什么。读文下面两个文章就理解了。</p>
-<ul>
-<li><a href="http://www.cnblogs.com/dolphin0520/p/3932921.html" target="_blank" rel="external">Java并发编程：线程池的使用</a></li>
-<li><a href="http://blog.csdn.net/menxu_work/article/details/9358795" target="_blank" rel="external"> ThreadPoolExecutor使用和思考-线程池大小设置与BlockingQueue的三种实现区别</a></li>
-</ul>
-<p>那天面试的那个人说了JDK里面这里有一个注释。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * Proceed in 3 steps:</div><div class="line"> *</div><div class="line"> * 1. If fewer than corePoolSize threads are running, try to</div><div class="line"> * start a new thread with the given command as its first</div><div class="line"> * task.  The call to addWorker atomically checks runState and</div><div class="line"> * workerCount, and so prevents false alarms that would add</div><div class="line"> * threads when it shouldn&apos;t, by returning false.</div><div class="line"> *</div><div class="line"> * 2. If a task can be successfully queued, then we still need</div><div class="line"> * to double-check whether we should have added a thread</div><div class="line"> * (because existing ones died since last checking) or that</div><div class="line"> * the pool shut down since entry into this method. So we</div><div class="line"> * recheck state and if necessary roll back the enqueuing if</div><div class="line"> * stopped, or start a new thread if there are none.</div><div class="line"> *</div><div class="line"> * 3. If we cannot queue task, then we try to add a new</div><div class="line"> * thread.  If it fails, we know we are shut down or saturated</div><div class="line"> * and so reject the task.</div><div class="line"> */</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;源于面试的时候被问到了一个问题，创建线程池需要什么参数&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java线程池" scheme="http://yoursite.com/tags/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CMPP中国移动短信网关</title>
-    <link href="http://yoursite.com/2017/07/18/CMPP%E4%B8%AD%E5%9B%BD%E7%A7%BB%E5%8A%A8%E7%9F%AD%E4%BF%A1%E7%BD%91%E5%85%B3/"/>
-    <id>http://yoursite.com/2017/07/18/CMPP中国移动短信网关/</id>
-    <published>2017-07-18T04:00:00.000Z</published>
-    <updated>2017-07-17T10:11:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近的短信系统久经波折终于要准备上线了。可以写一个总结。</p>
-<p>CMPP是中国移动的短信网关，提供了TCP长链接／短链接接入方法。在这次重构的时候，把以前用的Socket流替换为Netty NIO实现一次。说说遇到了什么坑吧。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近的短信系统久经波折终于要准备上线了。可以写一个总结。&lt;/p&gt;
-&lt;p&gt;CMPP是中国移动的短信网关，提供了TCP长链接／短链接接入方法。在这次重构的时候，把以前用的Socket流替换为Netty NIO实现一次。说说遇到了什么坑吧。&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-      <category term="CMPP" scheme="http://yoursite.com/tags/CMPP/"/>
-    
-      <category term="短信网关" scheme="http://yoursite.com/tags/%E7%9F%AD%E4%BF%A1%E7%BD%91%E5%85%B3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HbaseTest.java 一例</title>
-    <link href="http://yoursite.com/2017/07/18/HbaseTest-java-%E4%B8%80%E4%BE%8B/"/>
-    <id>http://yoursite.com/2017/07/18/HbaseTest-java-一例/</id>
-    <published>2017-07-18T02:28:42.000Z</published>
-    <updated>2017-07-18T02:47:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>抄的一段Hbase的demo代码，包含了些基本操作</p>
-<p>添加依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hbase<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hbase-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.*;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.*;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.Filter;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.FilterList;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.filter.SingleColumnValueFilter;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HBaseTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 声明静态配置，配置zookeeper</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Configuration configuration = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Connection connection = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        configuration = HBaseConfiguration.create();</div><div class="line"><span class="comment">//        configuration.set("hbase.zookeeper.quorum", "study-90:2181,study-91:2181,study-92:2181");</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            connection = ConnectionFactory.createConnection(configuration);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 创建表</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">createTable</span><span class="params">(String tableStr, String[] familyNames)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"start create table ......"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Admin admin = connection.getAdmin();</div><div class="line">            TableName tableName = TableName.valueOf(tableStr);</div><div class="line">            <span class="keyword">if</span> (admin.tableExists(tableName)) &#123;<span class="comment">// 如果存在要创建的表，那么先删除，再创建</span></div><div class="line">                admin.disableTable(tableName);</div><div class="line">                admin.deleteTable(tableName);</div><div class="line">                System.out.println(tableName + <span class="string">" is exist,detele...."</span>);</div><div class="line">            &#125;</div><div class="line">            HTableDescriptor tableDescriptor = <span class="keyword">new</span> HTableDescriptor(tableName);</div><div class="line">            <span class="comment">// 添加表列信息</span></div><div class="line">            <span class="keyword">if</span> (familyNames != <span class="keyword">null</span> &amp;&amp; familyNames.length &gt; <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">for</span> (String familyName : familyNames) &#123;</div><div class="line">                    tableDescriptor.addFamily(<span class="keyword">new</span> HColumnDescriptor(familyName));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            admin.createTable(tableDescriptor);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"end create table ......"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 添加行列数据数据</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertData</span><span class="params">(String tableName, String rowId, String familyName, String qualifier, String value)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"start insert data ......"</span>);</div><div class="line">        Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">        Put put = <span class="keyword">new</span> Put(rowId.getBytes());<span class="comment">// 一个PUT代表一行数据，再NEW一个PUT表示第二行数据,每行一个唯一的ROWKEY，此处rowkey为put构造方法中传入的值</span></div><div class="line">        put.addColumn(familyName.getBytes(), qualifier.getBytes(), value.getBytes());<span class="comment">// 本行数据的第一列</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            table.put(put);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"end insert data ......"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除行</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deleteRow</span><span class="params">(String tablename, String rowkey)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Table table = connection.getTable(TableName.valueOf(tablename));</div><div class="line">            Delete d1 = <span class="keyword">new</span> Delete(rowkey.getBytes());</div><div class="line">            table.delete(d1);<span class="comment">//d1.addColumn(family, qualifier);d1.addFamily(family);</span></div><div class="line">            System.out.println(<span class="string">"删除行成功!"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 查询所有数据</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryAll</span><span class="params">(String tableName)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            ResultScanner rs = table.getScanner(<span class="keyword">new</span> Scan());</div><div class="line">            <span class="keyword">for</span> (Result r : rs) &#123;</div><div class="line">                System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">                <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                    System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            rs.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据rowId查询</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryByRowId</span><span class="params">(String tableName, String rowId)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Get scan = <span class="keyword">new</span> Get(rowId.getBytes());<span class="comment">// 根据rowkey查询</span></div><div class="line">            Result r = table.get(scan);</div><div class="line">            System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">            <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据列条件查询</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryByCondition</span><span class="params">(String tableName, String familyName, String qualifier, String value)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">            Filter filter = <span class="keyword">new</span> SingleColumnValueFilter(Bytes.toBytes(familyName), Bytes.toBytes(qualifier), CompareOp.EQUAL, Bytes.toBytes(value)); <span class="comment">// 当列familyName的值为value时进行查询</span></div><div class="line">            Scan s = <span class="keyword">new</span> Scan();</div><div class="line">            s.setFilter(filter);</div><div class="line">            ResultScanner rs = table.getScanner(s);</div><div class="line">            <span class="keyword">for</span> (Result r : rs) &#123;</div><div class="line">                System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">                <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                    System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            rs.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 多条件查询</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">queryByConditions</span><span class="params">(String tableName, String[] familyNames, String[] qualifiers, String[] values)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Table table = connection.getTable(TableName.valueOf(tableName));</div><div class="line">            List&lt;Filter&gt; filters = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="keyword">if</span> (familyNames != <span class="keyword">null</span> &amp;&amp; familyNames.length &gt; <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">                <span class="keyword">for</span> (String familyName : familyNames) &#123;</div><div class="line">                    Filter filter = <span class="keyword">new</span> SingleColumnValueFilter(Bytes.toBytes(familyName), Bytes.toBytes(qualifiers[i]), CompareOp.EQUAL, Bytes.toBytes(values[i]));</div><div class="line">                    filters.add(filter);</div><div class="line">                    i++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            FilterList filterList = <span class="keyword">new</span> FilterList(filters);</div><div class="line">            Scan scan = <span class="keyword">new</span> Scan();</div><div class="line">            scan.setFilter(filterList);</div><div class="line">            ResultScanner rs = table.getScanner(scan);</div><div class="line">            <span class="keyword">for</span> (Result r : rs) &#123;</div><div class="line">                System.out.println(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> String(r.getRow()));</div><div class="line">                <span class="keyword">for</span> (Cell keyValue : r.rawCells()) &#123;</div><div class="line">                    System.out.println(<span class="string">"列："</span> + <span class="keyword">new</span> String(CellUtil.cloneFamily(keyValue)) + <span class="string">":"</span> + <span class="keyword">new</span> String(CellUtil.cloneQualifier(keyValue)) + <span class="string">"====值:"</span> + <span class="keyword">new</span> String(CellUtil.cloneValue(keyValue)));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            rs.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除表</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dropTable</span><span class="params">(String tableStr)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Admin admin = connection.getAdmin();</div><div class="line">            TableName tableName = TableName.valueOf(tableStr);</div><div class="line">            admin.disableTable(tableName);</div><div class="line">            admin.deleteTable(tableName);</div><div class="line">            admin.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//创建表</span></div><div class="line">        createTable(<span class="string">"t_table"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"f1"</span>, <span class="string">"f2"</span>, <span class="string">"f3"</span>&#125;);</div><div class="line">        <span class="comment">//添加数据</span></div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>, <span class="string">"f1"</span>, <span class="string">"a"</span>, <span class="string">"fffaaa"</span>);</div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>, <span class="string">"f2"</span>, <span class="string">"b"</span>, <span class="string">"fffbbb"</span>);</div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>, <span class="string">"f3"</span>, <span class="string">"c"</span>, <span class="string">"fffccc"</span>);</div><div class="line">        insertData(<span class="string">"t_table"</span>, <span class="string">"row-0002"</span>, <span class="string">"f1"</span>, <span class="string">"a"</span>, <span class="string">"eeeeee"</span>);</div><div class="line">        <span class="comment">//查询全部数据</span></div><div class="line">        queryAll(<span class="string">"t_table"</span>);</div><div class="line">        <span class="comment">//根据rowid查询数据</span></div><div class="line">        queryByRowId(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>);</div><div class="line">        <span class="comment">//列条件查询</span></div><div class="line">        queryByCondition(<span class="string">"t_table"</span>, <span class="string">"f1"</span>, <span class="string">"a"</span>, <span class="string">"eeeeee"</span>);</div><div class="line">        <span class="comment">//多条件查询</span></div><div class="line">        queryByConditions(<span class="string">"t_table"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"f1"</span>, <span class="string">"f3"</span>&#125;, <span class="keyword">new</span> String[]&#123;<span class="string">"a"</span>, <span class="string">"c"</span>&#125;, <span class="keyword">new</span> String[]&#123;<span class="string">"fffaaa"</span>, <span class="string">"fffccc"</span>&#125;);</div><div class="line">        <span class="comment">//删除记录</span></div><div class="line">        deleteRow(<span class="string">"t_table"</span>, <span class="string">"row-0001"</span>);</div><div class="line">        <span class="comment">//删除表</span></div><div class="line">        dropTable(<span class="string">"t_table"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;抄的一段Hbase的demo代码，包含了些基本操作&lt;/p&gt;
-&lt;p&gt;添加依赖&lt;/p&gt;
-&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.apache.hbase&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;hbase-client&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;1.2.6&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hbase" scheme="http://yoursite.com/tags/Hbase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BitSet</title>
-    <link href="http://yoursite.com/2017/07/18/BitSet/"/>
-    <id>http://yoursite.com/2017/07/18/BitSet/</id>
-    <published>2017-07-18T02:28:42.000Z</published>
-    <updated>2017-08-16T02:32:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://www.cnblogs.com/lqminn/archive/2012/08/30/2664122.html" target="_blank" rel="external">BitSet的源码研究</a></li>
-<li><a href="http://blog.csdn.net/u013291394/article/details/50211181" target="_blank" rel="external">大数据常用技巧之位图法</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/lqminn/archive/2012/08/30/2664122.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;BitSet的源码研究&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a 
-    
-    </summary>
-    
-      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="BitSet" scheme="http://yoursite.com/tags/BitSet/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hbase 安装</title>
-    <link href="http://yoursite.com/2017/07/18/Hbase-%E5%AE%89%E8%A3%85/"/>
-    <id>http://yoursite.com/2017/07/18/Hbase-安装/</id>
-    <published>2017-07-18T01:59:06.000Z</published>
-    <updated>2017-07-18T02:10:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Hbase安装需要先安装Hadoop，底层依赖。相对来讲Hbase的安装相对简单很多，通常情况下只需要更改下hbase-site.xml就可以了，存储都交由hdfs管理。</p>
-<p>改一个配置文件</p>
-<p>conf/hbase-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>可能出现错误无法找到 <code>Error: JAVA_HOME is not set</code>，设置 <code>conf/hbase-env.sh</code> 中JAVA_HOME为正确的路径</p>
-<p><img src="/assets/images/hbase.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Hbase安装需要先安装Hadoop，底层依赖。相对来讲Hbase的安装相对简单很多，通常情况下只需要更改下hbase-site.xml就可以了，存储都交由hdfs管理。&lt;/p&gt;
-&lt;p&gt;改一个配置文件&lt;/p&gt;
-&lt;p&gt;conf/hbase-site.xml&lt;/p&gt;
-&lt;figu
-    
-    </summary>
-    
-      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hbase" scheme="http://yoursite.com/tags/Hbase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis-dump</title>
-    <link href="http://yoursite.com/2017/07/17/redis-dump/"/>
-    <id>http://yoursite.com/2017/07/17/redis-dump/</id>
-    <published>2017-07-17T10:02:54.000Z</published>
-    <updated>2017-07-17T10:06:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="https://github.com/delano/redis-dump" target="_blank" rel="external">Github redis-dump</a></li>
-</ul>
-<p>在尝试的过程中，有一个问题需要注意：</p>
-<p>如果一个redis里面已经存在了某一个key，在<code>redis-load</code>的时候不能覆盖掉。</p>
-<p>load的时候，不会删掉redis已经存在的数据。</p>
-<p>测试简单的redis数据结构,key-value / hash set ／list 没有问题，建议使用的时候先测试下自己的数据结构能不能load成功回来。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/delano/redis-dump&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github redis-dump&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在尝试的过程中，有一个问题需要注意
-    
-    </summary>
-    
-      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
-    
-    
-      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
     
   </entry>
   

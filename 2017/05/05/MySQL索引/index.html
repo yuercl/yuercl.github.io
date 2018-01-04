@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="MYSQL索引类型、什么情况下用不上索引、什么情况下不推荐使用索引mysqlexplain的使用MYSQLexplain详解索引的类型有四种：普通索引唯一索引主键索引组合索引关键词：组合索引的最左前缀原则"><meta name="keywords" content="MySQL"><title>MySQL索引 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2017/05/05/MySQL索引/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="MYSQL索引类型、什么情况下用不上索引、什么情况下不推荐使用索引mysqlexplain的使用MYSQLexplain详解MySQL索引原理及慢查询优化索引的类型有四种：普通索引唯一索引主键索引组合索引关键词：组合索引的最左前缀原则"><meta name="keywords" content="MySQL"><title>MySQL索引 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2017/05/05/MySQL索引/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
@@ -9,6 +9,7 @@
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><li><a href="http://blog.csdn.net/kaka1121/article/details/53395628" target="_blank" rel="external">MYSQL 索引类型、什么情况下用不上索引、什么情况下不推荐使用索引</a></li>
 <li><a href="http://www.cnblogs.com/xiaoboluo768/p/5400990.html" target="_blank" rel="external">mysql explain的使用</a></li>
 <li><a href="http://blog.csdn.net/zhuxineli/article/details/14455029" target="_blank" rel="external">MYSQL explain详解</a></li>
+<li><a href="https://tech.meituan.com/mysql-index.html" target="_blank" rel="external">MySQL索引原理及慢查询优化</a></li>
 </ul>
 <p>索引的类型有四种：</p>
 <ul>
@@ -30,4 +31,4 @@ s.src = '//Your disqus ID.disqus.com/embed.js';
 
 s.setAttribute('data-timestamp', +new Date());
 (d.head || d.body).appendChild(s);
-})();</script></section><footer><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+})();</script></section><footer><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

@@ -5,81 +5,84 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/29/HashMap的工作原理/" class="post-link">HashMap的工作原理</a></h2><span class="post-time">2017年8月29日</span><div class="post-content"><p>设计的非常优雅，必须要研究下源码</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="post-link">Golang 交叉编译跨平台的可执行程序 (Mac、Linux、Windows )</a></h2><span class="post-time">2018年1月4日</span><div class="post-content"><h4 id="各平台的GOOS和GOARCH参考"><a href="#各平台的GOOS和GOARCH参考" class="headerlink" title="各平台的GOOS和GOARCH参考"></a>各平台的GOOS和GOARCH参考</h4><p>交叉编译依赖下面几个环境变量：</p>
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li><code>$GOARCH</code> 目标平台（编译后的目标平台）的处理器架构（386、amd64、arm）</li>
+<li><code>$GOOS</code> 目标平台（编译后的目标平台）的操作系统（darwin、freebsd、linux、windows）</li>
+</ul></div><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/20/Zookeeper的maxClientCnxns配置错误导致的拒绝服务/" class="post-link">Zookeeper的maxClientCnxns配置错误导致的拒绝服务</a></h2><span class="post-time">2017年12月20日</span><div class="post-content"><p>在最近的一个项目中，遇到一个问题，就是一边是连接Zookeeper做服务发现、一边是连接Zookeeper做Kafka的消费者。因为设计的时候，客户端会监听N多的Topic，在最初测试的时候，没有发现什么异常，但是一导入线上数据就初出问题。总是会发现无法连接到Zookeeper，导致不能正常启动Kafka consumer 的情况。经过排查各种配置之后，发现了 <code>maxClientCnxns</code> 这一项配置。</p>
+<p>注意，这里是指单IP的限制！</p>
+<blockquote>
+<p>Limits the number of concurrent connections (at the socket level) that a single client, identified by IP address, may make to a single member of the ZooKeeper ensemble. This is used to prevent certain classes of DoS attacks, including file descriptor exhaustion. The default is 60. Setting this to 0 entirely removes the limit on concurrent connections.</p>
+</blockquote>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/18/IDEA-Mybatis-Plugin-3-21-破解方法/" class="post-link">IDEA Mybatis Plugin 3.21 破解方法</a></h2><span class="post-time">2017年12月18日</span><div class="post-content"><ul>
+<li><a href="https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/" target="_blank" rel="external">IDEA Mybatis Plugin 3.21 破解方法</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/05/Apache-Kylin/" class="post-link">Apache Kylin</a></h2><span class="post-time">2017年12月5日</span><div class="post-content"><p>Kylin的依赖于Hive、Hbase、Hadoop的。所以配置起来相对是最复杂的。</p>
+<ul>
+<li><a href="http://blog.csdn.net/se7en_q/article/details/47258007">http://blog.csdn.net/se7en_q/article/details/47258007</a></li>
+<li><a href="https://www.cnblogs.com/lzxlfly/p/7221890.html">https://www.cnblogs.com/lzxlfly/p/7221890.html</a></li>
+<li><a href="https://www.cnblogs.com/hunttown/p/5803341.html">https://www.cnblogs.com/hunttown/p/5803341.html</a></li>
+<li><a href="https://www.cnblogs.com/hmy-blog/p/6506417.html">https://www.cnblogs.com/hmy-blog/p/6506417.html</a></li>
+<li><a href="http://blog.csdn.net/wzy0623/article/details/50685966">http://blog.csdn.net/wzy0623/article/details/50685966</a></li>
+<li><a href="http://blog.csdn.net/wulantian/article/details/46341043">hadoop能用到的系统端口</a></li>
+</ul>
+<p>遇到问题需要清楚Job生成的数据，这里官方文档写的没更新，用这个类执行。</p>
+<pre><code>hbase org.apache.hadoop.util.RunJar lib/kylin-job-2.2.0.jar org.apache.kylin.storage.hbase.util.StorageCleanupJob --delete false
+</code></pre></div><a href="/2017/12/05/Apache-Kylin/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/05/metabase/" class="post-link">metabase</a></h2><span class="post-time">2017年12月5日</span><div class="post-content"><p>官网：</p>
+<ul>
+<li><a href="https://hub.docker.com/r/metabase/metabase" target="_blank" rel="external">https://hub.docker.com/r/metabase/metabase</a></li>
+<li><a href="https://www.metabase.com" target="_blank" rel="external">https://www.metabase.com</a></li>
+<li><a href="https://www.metabase.com/docs/latest/" target="_blank" rel="external">https://www.metabase.com/docs/latest/</a></li>
+</ul>
+<p>官方文档写的很详细，几乎没有什么异常的配置，metabase 使用 Cojure和React 实现。</p>
+<p>在使用过程中，出现了新增数据源，但是在新增Question的时候不能显示出来，但是过了一段时间后又显示出来了，可能是某个地方的缓存吧。</p>
+<p>正常使用也非常简单，新增Question，然后选择数据源、过滤条件、聚合函数，保存Question后可以添加到Dashboard去。</p>
+<p><img src="https://github.com/metabase/metabase/raw/master/docs/metabase-product-screenshot.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># The Zen of Metabase</div><div class="line"></div><div class="line">- Give the user value as soon as possible</div><div class="line"></div><div class="line">- Structure things so that we can automagically infer things for the user</div><div class="line"></div><div class="line">- Don’t ask the user for information the system should already know</div><div class="line"></div><div class="line">- Make it easy for the user to do the right thing</div><div class="line"></div><div class="line">- Don’t leave the user booby traps</div><div class="line"></div><div class="line">- Go the extra mile to make the user experience pleasant</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/05/superset/" class="post-link">superset</a></h2><span class="post-time">2017年12月5日</span><div class="post-content"><pre><code># docker 安装
+https://hub.docker.com/r/amancevice/superset/
+
+# 创建管理员用户名和密码 
+fabmanager create-admin --app superset 
+
+# 初始化Superset 
+superset db upgrade 
+
+# 装载初始化样例数据 
+superset load_examples 
+
+# 创建默认角色和权限 
+superset init 
+
+# 启动Superset 
+superset runserver 
+</code></pre><p>可能遇到的问题:</p>
+<ul>
+<li>生成分布柱状图的时候，x轴默认被排序了，目前没好的方案。</li>
+<li>乱码问题，设置连接的编码，格式参考SqlAlchemy格式。如：mysql://root:XXXXXXXXXX@127.0.0.1:3306/info?charset=utf8</li>
+<li>参考链接，<a href="http://www.jianshu.com/p/d5978b439080" target="_blank" rel="external">http://www.jianshu.com/p/d5978b439080</a></li>
+<li>GitHub官方，<a href="https://github.com/apache/incubator-superset" target="_blank" rel="external">https://github.com/apache/incubator-superset</a></li>
+</ul>
+<p><img src="https://cloud.githubusercontent.com/assets/130878/20234704/0f40778c-a835-11e6-9556-983a62ea061b.png" alt=""></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/11/07/SSH原理与应用/" class="post-link">SSH原理与应用</a></h2><span class="post-time">2017年11月7日</span><div class="post-content"><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="external">远程登录</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html" target="_blank" rel="external">远程操作与端口转发</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/31/valid-number-at-leetcode/" class="post-link">valid-number at leetcode</a></h2><span class="post-time">2017年8月31日</span><div class="post-content"><p>有穷状态自动机 DFA 解题、提供一个新的思路来判断是不是一个数字。</p>
+<ul>
+<li><a href="https://leetcode.com/problems/valid-number/description/" target="_blank" rel="external">Leetcode Description</a></li>
+<li><a href="https://leetcode.com/problems/valid-number/discuss/" target="_blank" rel="external">Leetcode Discuss</a></li>
+<li><a href="http://blog.csdn.net/yukuninfoaxiom/article/details/6057736" target="_blank" rel="external">NFA/DFA算法</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">isNumber</span><span class="params">(self, s)</span>:</span></div><div class="line">      <span class="string">"""</span></div><div class="line">      :type s: str</div><div class="line">      :rtype: bool</div><div class="line">      """</div><div class="line">      <span class="comment">#define a DFA</span></div><div class="line">      state = [&#123;&#125;, </div><div class="line">              &#123;<span class="string">'blank'</span>: <span class="number">1</span>, <span class="string">'sign'</span>: <span class="number">2</span>, <span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">4</span>&#125;, </div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">4</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">5</span>, <span class="string">'e'</span>:<span class="number">6</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">5</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">5</span>, <span class="string">'e'</span>:<span class="number">6</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'sign'</span>:<span class="number">7</span>, <span class="string">'digit'</span>:<span class="number">8</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">8</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">8</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'blank'</span>:<span class="number">9</span>&#125;]</div><div class="line">      currentState = <span class="number">1</span></div><div class="line">      <span class="keyword">for</span> c <span class="keyword">in</span> s:</div><div class="line">          <span class="keyword">if</span> c &gt;= <span class="string">'0'</span> <span class="keyword">and</span> c &lt;= <span class="string">'9'</span>:</div><div class="line">              c = <span class="string">'digit'</span></div><div class="line">          <span class="keyword">if</span> c == <span class="string">' '</span>:</div><div class="line">              c = <span class="string">'blank'</span></div><div class="line">          <span class="keyword">if</span> c <span class="keyword">in</span> [<span class="string">'+'</span>, <span class="string">'-'</span>]:</div><div class="line">              c = <span class="string">'sign'</span></div><div class="line">          <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> state[currentState].keys():</div><div class="line">              <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">          currentState = state[currentState][c]</div><div class="line">      <span class="keyword">if</span> currentState <span class="keyword">not</span> <span class="keyword">in</span> [<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">9</span>]:</div><div class="line">          <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p><img src="http://normanyahq.github.io/static/files/valid_number_dfa.svg" alt=""></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/30/背包问题/" class="post-link">背包问题</a></h2><span class="post-time">2017年8月30日</span><div class="post-content"><ul>
+<li><a href="http://www.importnew.com/13072.html" target="_blank" rel="external">01背包</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/29/HashMap的工作原理/" class="post-link">HashMap的工作原理</a></h2><span class="post-time">2017年8月29日</span><div class="post-content"><p>设计的非常优雅，必须要研究下源码</p>
+<ul>
 <li><a href="http://www.importnew.com/7099.html" target="_blank" rel="external">HashMap的工作原理</a></li>
 </ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/22/ElasticSearch-默认size为10/" class="post-link">ElasticSearch 默认size为10</a></h2><span class="post-time">2017年8月22日</span><div class="post-content"><p>在ElasticSearch中，默认的搜索个数是10条数据。</p>
-<p>在没有传递size的时候，如果有聚合函数，最后返回后的size也是10条，所以就导致返回了部分数据的情况。</p>
-<p>在搜索分页的时候也是一样的情况。</p>
-<p>如果搜索size大于10000，需要设置 <code>index.max_result_window</code> 参数 ，默认为10000。</p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/14/Java里的Arrays-asList不能用add和remove方法/" class="post-link">Java里的Arrays.asList不能用add和remove方法</a></h2><span class="post-time">2017年8月14日</span><div class="post-content"><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    list.add(<span class="number">4</span>);</div><div class="line">    System.out.print(list.toString());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; list = Lists.newArrayList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    list.add(<span class="number">5</span>);</div><div class="line">    System.out.print(list.toString());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的代码test会throw UnsupportedOperationException。test2使用了Guava工具类，正常输出数组内容。</p>
-<p>查看源代码，Arrays.asList 创建的ArrayList是一个内部类，继承自AbstractList同时实现了RandomAccess和Serializable接口。而在抽象类AbstractList中，set add remove的定义是空的，默认<code>throw new UnsupportedOperationException();</code>。</p>
-<p>所以呢，在Arrays.asList出来的List是一个只读的列表，不支持新增、删除、设置。</p>
-<p><img src="/assets/images/Arrays.png" alt=""></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/12/设计模式之装饰器模式/" class="post-link">设计模式之装饰器模式</a></h2><span class="post-time">2017年8月12日</span><div class="post-content"><h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>装饰器模式的典型应用就是JAVA的IO操作里面。</p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/11/曾经折腾的黑客工具/" class="post-link">曾经折腾的黑客工具</a></h2><span class="post-time">2017年8月11日</span><div class="post-content"><p>那些年折腾过的黑客工具</p>
-<ul>
-<li>Google hack</li>
-<li>nc(Netcat)</li>
-<li>who am i</li>
-<li>ping </li>
-<li>nmap </li>
-<li>Acunetix</li>
-<li>wireshark </li>
-<li>BurpSuite</li>
-<li>sqlmap</li>
-<li>Metasploit</li>
-<li>中国菜刀</li>
-<li>Aircrack-ng</li>
-<li>vim</li>
-<li>hsf(http file system)开源的</li>
-<li>灰鸽子</li>
-<li>dig/nslookup</li>
-<li>Havij pro</li>
-<li>…</li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/11/卡方分布与卡方检验/" class="post-link">卡方分布与卡方检验</a></h2><span class="post-time">2017年8月11日</span><div class="post-content"><p>若 $k$ 个独立的随机变量 $ Z_1 Z_2 … Z_k $，且符合标准正态分布$N(0,1)$，则这 $k$ 个随机变量的平方和 </p>
-<p>$$ X = \sum_{i=1}^k Z_i^2 $$</p>
-<p>为服从自由度为 $k$ 的卡方分布，记为： </p>
-<p>$ X \sim \chi^2(k) $ 也可以记为 $ X \sim \chi_k^2 $</p>
-<p>卡方分布的期望与方差分为为：$E(χ2)=n$，$D(χ2)=2n$，其中 $n$ 为卡方分布的自由度。</p>
-<p>有一个计算的例子可以参考链接。</p>
-<ul>
-<li><a href="http://blog.csdn.net/bitcarmanlee/article/details/52279907" target="_blank" rel="external">卡方分布与卡方检验</a></li>
-<li><a href="http://www.cnblogs.com/baiboy/p/tjx11.html" target="_blank" rel="external">卡方分布的应用</a></li>
-<li><a href="http://guoze.me/2015/09/07/chi-square/" target="_blank" rel="external">卡方检验原理及应用</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/09/坐标系旋转矩阵/" class="post-link">坐标系旋转矩阵</a></h2><span class="post-time">2017年8月9日</span><div class="post-content"><p>$$ \left[<br>    \begin{array}{cc}<br>      cos(α) &amp; -sin(α) \\<br>      sin(α) &amp; cos(α)<br>    \end{array}<br>\right] $$</p>
-<p>$$<br>\left[<br>    \begin{array}{c}<br>      x’ \\<br>      y’<br>    \end{array}<br>\right]<br> =<br>\left[<br>    \begin{array}{cc}<br>      cos(α) &amp; -sin(α) \\<br>      sin(α) &amp; cos(α)<br>    \end{array}<br>\right]<br>\left[<br>    \begin{array}{c}<br>      x \\<br>      y<br>    \end{array}<br>\right]<br>$$</p>
-<ul>
-<li><a href="http://blog.csdn.net/tom_00001/article/details/62054572" target="_blank" rel="external">坐标系旋转矩阵推导过程</a></li>
-<li><a href="http://blog.miskcoo.com/2016/12/rotation-in-3d-space" target="_blank" rel="external">三维空间中的旋转：旋转矩阵、欧拉角</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/08/RocketMQ/" class="post-link">RocketMQ</a></h2><span class="post-time">2017年8月8日</span><div class="post-content"><ul>
-<li><a href="http://blog.csdn.net/lovesomnus/article/details/51754820" target="_blank" rel="external">RocketMQ介绍</a></li>
-<li><a href="http://blog.csdn.net/lovesomnus/article/details/51769977" target="_blank" rel="external">RocketMQ集群配置</a></li>
-<li><a href="http://www.jianshu.com/p/453c6e7ff81c" target="_blank" rel="external">分布式开放消息系统(RocketMQ)的原理与实践</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/08/ElasticSearch/" class="post-link">ElasticSearch</a></h2><span class="post-time">2017年8月8日</span><div class="post-content"><ul>
-<li><a href="http://www.wklken.me/posts/2016/06/29/deploy-es.html#9-zheng-shi-qi-dong" target="_blank" rel="external">ELASTICSEARCH集群部署文档</a></li>
-<li><a href="http://www.wklken.me/posts/2016/05/24/elk-mysql-slolog.html" target="_blank" rel="external">LOGSTASH+ELASTICSEARCH处理MYSQL慢查询日志</a></li>
-</ul>
-<p>ElasticSearch 的 mapping修改比较坑，需要新建、迁移数据、删除老索引。</p>
-<ul>
-<li><a href="http://www.cnblogs.com/Creator/p/3722408.html" target="_blank" rel="external">记录一次mapping field修改过程</a></li>
-</ul>
-<p>可以参考下面的demo</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"order"</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">"template"</span>: <span class="string">"truck_*"</span>,</div><div class="line">    <span class="attr">"settings"</span>: &#123;</div><div class="line">        <span class="attr">"index"</span>: &#123;</div><div class="line">            <span class="attr">"number_of_shards"</span>: <span class="string">"5"</span>,</div><div class="line">            <span class="attr">"number_of_replicas"</span>: <span class="string">"1"</span>,</div><div class="line">            <span class="attr">"store"</span>: &#123;</div><div class="line">                <span class="attr">"compress"</span>: &#123;</div><div class="line">                    <span class="attr">"tv"</span>: <span class="string">"true"</span>,</div><div class="line">                    <span class="attr">"stored"</span>: <span class="string">"false"</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"mappings"</span>: &#123;</div><div class="line">        <span class="attr">"mileage"</span>: &#123;</div><div class="line">            <span class="attr">"_source"</span>: &#123;</div><div class="line">                <span class="attr">"enabled"</span>: <span class="literal">false</span></div><div class="line">            &#125;,</div><div class="line">            <span class="attr">"_all"</span>: &#123;</div><div class="line">                <span class="attr">"enabled"</span>: <span class="literal">false</span></div><div class="line">            &#125;,</div><div class="line">            <span class="attr">"properties"</span>: &#123;</div><div class="line">                <span class="attr">"id"</span>: &#123;</div><div class="line">                    <span class="attr">"index"</span>: <span class="string">"not_analyzed"</span>,</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"string"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"gps_id"</span>: &#123;</div><div class="line">                    <span class="attr">"index"</span>: <span class="string">"not_analyzed"</span>,</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"string"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"distance"</span>: &#123;</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"integer"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"start_time_ms"</span>: &#123;</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"date"</span>,</div><div class="line">                    <span class="attr">"format"</span>: <span class="string">"epoch_millis"</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"aliases"</span>: &#123;</div><div class="line">        <span class="attr">"truck_location"</span>: &#123;&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/03/UPDATE-单列和多列效率对比/" class="post-link">UPDATE 单列和多列效率对比</a></h2><span class="post-time">2017年8月3日</span><div class="post-content"><p>UPDATE 单列和多列效率对比，比如说</p>
-<ul>
-<li>update student set name=’foo’ where id = 1</li>
-<li>update student set name=’foo’ , age = 10 where id = 1</li>
-</ul>
-<p>考虑索引数量和重构索引的逻辑。</p>
-<p>数据库更新数据是怎么做的？先删除后新增</p>
-<p><a href="http://use-the-index-luke.com/sql/dml/update" target="_blank" rel="external">http://use-the-index-luke.com/sql/dml/update</a></p>
-</div></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2017<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</div></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
