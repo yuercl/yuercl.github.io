@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-04T10:22:48.807Z</updated>
+  <updated>2018-01-11T12:01:02.418Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,48 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>排查Java程序CPU占用过高的线程</title>
+    <link href="http://yoursite.com/2018/01/11/%E6%8E%92%E6%9F%A5Java%E7%A8%8B%E5%BA%8FCPU%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E7%9A%84%E7%BA%BF%E7%A8%8B/"/>
+    <id>http://yoursite.com/2018/01/11/排查Java程序CPU占用过高的线程/</id>
+    <published>2018-01-11T11:44:14.000Z</published>
+    <updated>2018-01-11T12:01:02.418Z</updated>
+    
+    <content type="html"><![CDATA[<p>基本思路是找到线程占用CPU过高的那个线程ID，然后通过dump的线程栈来搜索想要的线程。</p>
+<ul>
+<li>jstack -l 10086 &gt; 10086.stack</li>
+<li>使用top -H -p PID 命令查看对应进程是哪个线程占用CPU过高。如果有htop，也可以通过htop查询占有CPU高的线程id</li>
+<li>将线程的pid 转成16进制，比如8618 = 0x21aa</li>
+<li>到第一步dump出来的 10086.stack 里面找 0x21aa 就可以定位到具体是什么现场。</li>
+</ul>
+<p>这里提到一点就是，在启动线程的时候，最好手动给线程起上名字。</p>
+<p>如果是线程池，也是一样起好名字。</p>
+<p>Guava中提供了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ThreadFactory nameThreadFactory = <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(<span class="string">"thread - pool-%d"</span>).build();</div><div class="line">ExecutorService executorService = Executors.newSingleThreadExecutor(namedThreadFactory);</div></pre></td></tr></table></figure>
+<p><img src="/assets/images/stack.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;基本思路是找到线程占用CPU过高的那个线程ID，然后通过dump的线程栈来搜索想要的线程。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;jstack -l 10086 &amp;gt; 10086.stack&lt;/li&gt;
+&lt;li&gt;使用top -H -p PID 命令查看对应进程是哪个线程占用CPU过高
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Golang 交叉编译跨平台的可执行程序 (Mac、Linux、Windows )</title>
     <link href="http://yoursite.com/2018/01/04/Golang-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F-Mac%E3%80%81Linux%E3%80%81Windows/"/>
     <id>http://yoursite.com/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/</id>
     <published>2018-01-04T10:22:44.000Z</published>
-    <updated>2018-01-04T10:22:48.807Z</updated>
+    <updated>2018-01-05T09:55:55.284Z</updated>
     
     <content type="html"><![CDATA[<h4 id="各平台的GOOS和GOARCH参考"><a href="#各平台的GOOS和GOARCH参考" class="headerlink" title="各平台的GOOS和GOARCH参考"></a>各平台的GOOS和GOARCH参考</h4><p>交叉编译依赖下面几个环境变量：</p>
 <ul>
@@ -81,21 +118,25 @@
     <link href="http://yoursite.com/2017/12/18/IDEA-Mybatis-Plugin-3-21-%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95/"/>
     <id>http://yoursite.com/2017/12/18/IDEA-Mybatis-Plugin-3-21-破解方法/</id>
     <published>2017-12-18T06:15:34.000Z</published>
-    <updated>2017-12-18T06:16:14.570Z</updated>
+    <updated>2018-01-11T11:59:46.561Z</updated>
     
-    <content type="html"><![CDATA[<ul>
+    <content type="html"><![CDATA[<p>有钱还是买正版的吧！</p>
+<p>这里看看别人的思路。</p>
+<ul>
 <li><a href="https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/" target="_blank" rel="external">IDEA Mybatis Plugin 3.21 破解方法</a></li>
 </ul>
 ]]></content>
     
     <summary type="html">
     
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;IDEA Mybatis Plug
+      &lt;p&gt;有钱还是买正版的吧！&lt;/p&gt;
+&lt;p&gt;这里看看别人的思路。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/&quot; target=&quot;_bla
     
     </summary>
     
-      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="Mybatis" scheme="http://yoursite.com/tags/Mybatis/"/>
@@ -687,32 +728,6 @@ fabmanager create-admin --app superset
     
     
       <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>删除CleanMyMac</title>
-    <link href="http://yoursite.com/2017/07/29/%E5%88%A0%E9%99%A4CleanMyMac/"/>
-    <id>http://yoursite.com/2017/07/29/删除CleanMyMac/</id>
-    <published>2017-07-29T03:13:32.000Z</published>
-    <updated>2017-07-29T03:15:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>终结命令，<code>mdfind -name CleanMyMac</code>，挨着挨着删除。</p>
-<p>官方的说明，CleanMyMac需要自己删除自己。可是我已经不想再安装这个了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fblog.csdn.net%2Fsoindy%2Farticle%2Fdetails%2F53028844.webhistory</div><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fbbs.feng.com%2Fread-htm-tid-7792802.html.webhistory</div><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fwww.mycleanmymac.com%2Fxiazaianzhuang%2Fshanchu-cmm.html.webhistory</div><div class="line">/Users/yuer/Library/Caches/Metadata/Safari/History/http:%2F%2Fbbs.feng.com%2Fread-htm-tid-6410162.html.webhistory</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 3/CleanMyMac 3 Scheduler.app</div><div class="line">/Users/Shared/CleanMyMac 3</div><div class="line">/Library/PrivilegedHelperTools/com.macpaw.CleanMyMac3.Agent</div><div class="line">/Library/LaunchDaemons/com.macpaw.CleanMyMac3.Agent.plist</div><div class="line">/Users/yuer/Pictures/照片 图库.photoslibrary/private/com.macpaw.CleanMyMac3</div><div class="line">/Users/yuer/Library/LaunchAgents/com.macpaw.CleanMyMac3.Scheduler.plist</div><div class="line">/Users/Shared/CleanMyMac 3 Menu</div><div class="line">/Users/yuer/Library/Application Scripts/com.macpaw.CleanMyMac3.StorageManagement</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 3 Menu</div><div class="line">/Users/yuer/Library/Containers/com.macpaw.CleanMyMac3.StorageManagement</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 3</div><div class="line">/Users/yuer/Library/Application Support/CleanMyMac 2</div><div class="line">/Users/Shared/CleanMyMac 2</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;终结命令，&lt;code&gt;mdfind -name CleanMyMac&lt;/code&gt;，挨着挨着删除。&lt;/p&gt;
-&lt;p&gt;官方的说明，CleanMyMac需要自己删除自己。可是我已经不想再安装这个了。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;tab
-    
-    </summary>
-    
-      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-      <category term="CleanMyMac" scheme="http://yoursite.com/tags/CleanMyMac/"/>
     
   </entry>
   

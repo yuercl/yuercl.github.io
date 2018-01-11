@@ -5,8 +5,20 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="post-link">Golang 交叉编译跨平台的可执行程序 (Mac、Linux、Windows )</a></h2><span class="post-time">2018年1月4日</span><div class="post-content"><h4 id="各平台的GOOS和GOARCH参考"><a href="#各平台的GOOS和GOARCH参考" class="headerlink" title="各平台的GOOS和GOARCH参考"></a>各平台的GOOS和GOARCH参考</h4><p>交叉编译依赖下面几个环境变量：</p>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/11/排查Java程序CPU占用过高的线程/" class="post-link">排查Java程序CPU占用过高的线程</a></h2><span class="post-time">2018年1月11日</span><div class="post-content"><p>基本思路是找到线程占用CPU过高的那个线程ID，然后通过dump的线程栈来搜索想要的线程。</p>
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li>jstack -l 10086 &gt; 10086.stack</li>
+<li>使用top -H -p PID 命令查看对应进程是哪个线程占用CPU过高。如果有htop，也可以通过htop查询占有CPU高的线程id</li>
+<li>将线程的pid 转成16进制，比如8618 = 0x21aa</li>
+<li>到第一步dump出来的 10086.stack 里面找 0x21aa 就可以定位到具体是什么现场。</li>
+</ul>
+<p>这里提到一点就是，在启动线程的时候，最好手动给线程起上名字。</p>
+<p>如果是线程池，也是一样起好名字。</p>
+<p>Guava中提供了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ThreadFactory nameThreadFactory = <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(<span class="string">"thread - pool-%d"</span>).build();</div><div class="line">ExecutorService executorService = Executors.newSingleThreadExecutor(namedThreadFactory);</div></pre></td></tr></table></figure>
+<p><img src="/assets/images/stack.png" alt=""></p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="post-link">Golang 交叉编译跨平台的可执行程序 (Mac、Linux、Windows )</a></h2><span class="post-time">2018年1月4日</span><div class="post-content"><h4 id="各平台的GOOS和GOARCH参考"><a href="#各平台的GOOS和GOARCH参考" class="headerlink" title="各平台的GOOS和GOARCH参考"></a>各平台的GOOS和GOARCH参考</h4><p>交叉编译依赖下面几个环境变量：</p>
+<ul>
 <li><code>$GOARCH</code> 目标平台（编译后的目标平台）的处理器架构（386、amd64、arm）</li>
 <li><code>$GOOS</code> 目标平台（编译后的目标平台）的操作系统（darwin、freebsd、linux、windows）</li>
 </ul></div><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/20/Zookeeper的maxClientCnxns配置错误导致的拒绝服务/" class="post-link">Zookeeper的maxClientCnxns配置错误导致的拒绝服务</a></h2><span class="post-time">2017年12月20日</span><div class="post-content"><p>在最近的一个项目中，遇到一个问题，就是一边是连接Zookeeper做服务发现、一边是连接Zookeeper做Kafka的消费者。因为设计的时候，客户端会监听N多的Topic，在最初测试的时候，没有发现什么异常，但是一导入线上数据就初出问题。总是会发现无法连接到Zookeeper，导致不能正常启动Kafka consumer 的情况。经过排查各种配置之后，发现了 <code>maxClientCnxns</code> 这一项配置。</p>
@@ -14,7 +26,9 @@
 <blockquote>
 <p>Limits the number of concurrent connections (at the socket level) that a single client, identified by IP address, may make to a single member of the ZooKeeper ensemble. This is used to prevent certain classes of DoS attacks, including file descriptor exhaustion. The default is 60. Setting this to 0 entirely removes the limit on concurrent connections.</p>
 </blockquote>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/18/IDEA-Mybatis-Plugin-3-21-破解方法/" class="post-link">IDEA Mybatis Plugin 3.21 破解方法</a></h2><span class="post-time">2017年12月18日</span><div class="post-content"><ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/18/IDEA-Mybatis-Plugin-3-21-破解方法/" class="post-link">IDEA Mybatis Plugin 3.21 破解方法</a></h2><span class="post-time">2017年12月18日</span><div class="post-content"><p>有钱还是买正版的吧！</p>
+<p>这里看看别人的思路。</p>
+<ul>
 <li><a href="https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/" target="_blank" rel="external">IDEA Mybatis Plugin 3.21 破解方法</a></li>
 </ul>
 </div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/05/Apache-Kylin/" class="post-link">Apache Kylin</a></h2><span class="post-time">2017年12月5日</span><div class="post-content"><p>Kylin的依赖于Hive、Hbase、Hadoop的。所以配置起来相对是最复杂的。</p>
@@ -77,10 +91,6 @@ superset runserver
 <p><img src="http://normanyahq.github.io/static/files/valid_number_dfa.svg" alt=""></p>
 </div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/30/背包问题/" class="post-link">背包问题</a></h2><span class="post-time">2017年8月30日</span><div class="post-content"><ul>
 <li><a href="http://www.importnew.com/13072.html" target="_blank" rel="external">01背包</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/29/HashMap的工作原理/" class="post-link">HashMap的工作原理</a></h2><span class="post-time">2017年8月29日</span><div class="post-content"><p>设计的非常优雅，必须要研究下源码</p>
-<ul>
-<li><a href="http://www.importnew.com/7099.html" target="_blank" rel="external">HashMap的工作原理</a></li>
 </ul>
 </div></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">

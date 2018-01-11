@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="基本思路是找到线程占用CPU过高的那个线程ID，然后通过dump的线程栈来搜索想要的线程。jstack-l10086&amp;gt;10086.stack使用top-H-pPID命令查看对应进程是哪个线程占用CPU过高。如果有htop，也可以通过htop查询占有CP"><meta name="keywords" content="java"><title>排查Java程序CPU占用过高的线程 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2018/01/11/排查Java程序CPU占用过高的线程/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">排查Java程序CPU占用过高的线程</h1><span class="post-time">2018年1月11日</span><div class="post-content"><p>基本思路是找到线程占用CPU过高的那个线程ID，然后通过dump的线程栈来搜索想要的线程。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li>jstack -l 10086 &gt; 10086.stack</li>
+<li>使用top -H -p PID 命令查看对应进程是哪个线程占用CPU过高。如果有htop，也可以通过htop查询占有CPU高的线程id</li>
+<li>将线程的pid 转成16进制，比如8618 = 0x21aa</li>
+<li>到第一步dump出来的 10086.stack 里面找 0x21aa 就可以定位到具体是什么现场。</li>
+</ul>
+<p>这里提到一点就是，在启动线程的时候，最好手动给线程起上名字。</p>
+<p>如果是线程池，也是一样起好名字。</p>
+<p>Guava中提供了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ThreadFactory nameThreadFactory = <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(<span class="string">"thread - pool-%d"</span>).build();</div><div class="line">ExecutorService executorService = Executors.newSingleThreadExecutor(namedThreadFactory);</div></pre></td></tr></table></figure>
+<p><img src="/assets/images/stack.png" alt=""></p>
+</div></article><div class="tags"><a href="/tags/java/">java</a></div><div class="paginator"><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2018/01/11/排查Java程序CPU占用过高的线程/';
+    this.page.identifier = '2018/01/11/排查Java程序CPU占用过高的线程/';
+    this.page.title = '排查Java程序CPU占用过高的线程';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
