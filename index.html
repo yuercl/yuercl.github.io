@@ -5,8 +5,54 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/11/排查Java程序CPU占用过高的线程/" class="post-link">排查Java程序CPU占用过高的线程</a></h2><span class="post-time">2018年1月11日</span><div class="post-content"><p>基本思路是找到线程占用CPU过高的那个线程ID，然后通过dump的线程栈来搜索想要的线程。</p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" class="active">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><ul class="home"><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/02/02/磨刀/" class="post-link">磨刀</a></h2><span class="post-time">2018年2月2日</span><div class="post-content"><p>刀使用久了会钝，是需要磨的，在很久以前，觉得磨刀是一件没什么学问的事情。</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>拿着刀，在磨刀石上面蹭蹭蹭就可以了。后来才发现，其实不是那么简单的。</p>
+<p>刀的核心东西还是材质，只有好的材质才能开出好的刃，和朽木不可雕也，是一个道理。</p>
+<h1 id="磨刀石的目数"><a href="#磨刀石的目数" class="headerlink" title="磨刀石的目数"></a>磨刀石的目数</h1><p>简单说，就是指每平方厘米的磨石表面有多少颗粒。</p>
+<p>五金市场常见的那种双面磨石，一般是200/400目或者600/800目之类的。</p>
+<p>目数越高，从刀刃上剥落的金属越小越细，宏观上看就是刀刃越光滑。</p>
+<p>低目数的磨石用来粗磨，高目数的修刃，再高点的抛光，不能混用。</p>
+<p><img src="/assets/images/磨刀石.jpg" alt=""> </p>
+<p>所以一般磨刀的话，先从低目数开始打磨，之后慢慢增加目数，比如说，可以先用300目、800目、1200目、2000目这样上去。</p>
+<p>之前看到有一个磨刀视频，不知道在哪儿去了。</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/02/02/分布式领域CAP理论/" class="post-link">分布式领域CAP理论</a></h2><span class="post-time">2018年2月2日</span><div class="post-content"><p>分布式领域CAP理论 </p>
+<ul>
+<li>Consistency(一致性), 数据一致更新, 所有数据变动都是同步的</li>
+<li>Availability(可用性), 好的响应性能</li>
+<li>Partition tolerance(分区容忍性), 可靠性</li>
+</ul></div><a href="/2018/02/02/分布式领域CAP理论/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/02/01/sharding-jdbc/" class="post-link">sharding-jdbc</a></h2><span class="post-time">2018年2月1日</span><div class="post-content"><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><ul>
+<li><a href="https://github.com/shardingjdbc/sharding-jdbc">https://github.com/shardingjdbc/sharding-jdbc</a></li>
+<li><a href="http://shardingjdbc.io/docs/00-overview">官方文档</a></li>
+<li><a href="https://www.cnblogs.com/zwt1990/p/6762135.html">sharding-jdbc结合mybatis实现分库分表功能</a></li>
+<li><a href="https://www.cnblogs.com/yjmyzz/p/sharding-jdbc-turotial.html">利用sharding-jdbc分库分表</a></li>
+<li>官方的example，提供了注解、Spring namespace、MyBatis、代码等配置情况。</li>
+</ul>
+<p>sharding-jdbc 是一个优秀的分库分表的工具类。同样的分库分表的数据库中间件有mycat。</p>
+<p>sharding-jdbc 接管连接池、分析SQL来达到在程序内的sharding功能；而mycat 更像是一个中间件产品，对程序来讲，是认为mycat就是mysql。</p></div><a href="/2018/02/01/sharding-jdbc/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/28/Cloud-not-resolve-placeholder-…-in-string-value/" class="post-link">Cloud not resolve placeholder … in string value</a></h2><span class="post-time">2018年1月28日</span><div class="post-content"><p>sharding jdbc中的inline表达式，Spring Property 冲突。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;context:property-placeholder location=<span class="string">"classpath:property/*.properties"</span> ignore-unresolvable=<span class="string">"true"</span> /&gt;</div></pre></td></tr></table></figure>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/22/ifconfig/" class="post-link">ifconfig</a></h2><span class="post-time">2018年1月22日</span><div class="post-content"><ul>
+<li><a href="https://github.com/mpolden/ipd" target="_blank" rel="external">https://github.com/mpolden/ipd</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl ifconfig.co</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/15/用“逐步排除”的方法定位Java服务线上“系统性”故障/" class="post-link">用“逐步排除”的方法定位Java服务线上“系统性”故障</a></h2><span class="post-time">2018年1月15日</span><div class="post-content"><ul>
+<li><a href="http://techblog.youdao.com/?p=961" target="_blank" rel="external">用“逐步排除”的方法定位Java服务线上“系统性”故障</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/12/MySQL几种索引类型/" class="post-link">MySQL几种索引类型</a></h2><span class="post-time">2018年1月12日</span><div class="post-content"><ul>
+<li>FULLTEXT</li>
+<li>HASH</li>
+<li>BTREE</li>
+<li>RTREE</li>
+</ul>
+<ul>
+<li><a href="http://blog.csdn.net/endlu/article/details/51720299" target="_blank" rel="external">BTree和B+Tree详解</a></li>
+</ul>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/12/Squid-代理/" class="post-link">Squid 代理</a></h2><span class="post-time">2018年1月12日</span><div class="post-content"><h3 id="Squid-配置-通用配置"><a href="#Squid-配置-通用配置" class="headerlink" title="Squid 配置(通用配置)"></a>Squid 配置(通用配置)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install squid</div><div class="line">service squid start</div></pre></td></tr></table></figure>
+<p>默认squid监听的端口是3128，可根据需要修改，配置文件存储在 <code>/etc/squid/squid.conf</code>。<br>squid 需配置仅使用代理功能，不使用cache，配置文件中需禁用缓存,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cache deny all.</div></pre></td></tr></table></figure>
+<p>设置高匿代理，禁止 <code>X-Forwarded-For</code> 和 <code>Via</code> 的HTTP头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 配置高匿，不允许设置任何多余头信息，保持原请求header。</div><div class="line">request_header_access Via deny all</div><div class="line">request_header_access X-Forwarded-For deny all</div></pre></td></tr></table></figure>
+<p>详情配置说明可参考官方文档。</p>
+</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2018/01/11/排查Java程序CPU占用过高的线程/" class="post-link">排查Java程序CPU占用过高的线程</a></h2><span class="post-time">2018年1月11日</span><div class="post-content"><p>基本思路是找到线程占用CPU过高的那个线程ID，然后通过dump的线程栈来搜索想要的线程。</p>
+<ul>
 <li>jstack -l 10086 &gt; 10086.stack</li>
 <li>使用top -H -p PID 命令查看对应进程是哪个线程占用CPU过高。如果有htop，也可以通过htop查询占有CPU高的线程id</li>
 <li>将线程的pid 转成16进制，比如8618 = 0x21aa</li>
@@ -21,78 +67,7 @@
 <ul>
 <li><code>$GOARCH</code> 目标平台（编译后的目标平台）的处理器架构（386、amd64、arm）</li>
 <li><code>$GOOS</code> 目标平台（编译后的目标平台）的操作系统（darwin、freebsd、linux、windows）</li>
-</ul></div><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/20/Zookeeper的maxClientCnxns配置错误导致的拒绝服务/" class="post-link">Zookeeper的maxClientCnxns配置错误导致的拒绝服务</a></h2><span class="post-time">2017年12月20日</span><div class="post-content"><p>在最近的一个项目中，遇到一个问题，就是一边是连接Zookeeper做服务发现、一边是连接Zookeeper做Kafka的消费者。因为设计的时候，客户端会监听N多的Topic，在最初测试的时候，没有发现什么异常，但是一导入线上数据就初出问题。总是会发现无法连接到Zookeeper，导致不能正常启动Kafka consumer 的情况。经过排查各种配置之后，发现了 <code>maxClientCnxns</code> 这一项配置。</p>
-<p>注意，这里是指单IP的限制！</p>
-<blockquote>
-<p>Limits the number of concurrent connections (at the socket level) that a single client, identified by IP address, may make to a single member of the ZooKeeper ensemble. This is used to prevent certain classes of DoS attacks, including file descriptor exhaustion. The default is 60. Setting this to 0 entirely removes the limit on concurrent connections.</p>
-</blockquote>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/18/IDEA-Mybatis-Plugin-3-21-破解方法/" class="post-link">IDEA Mybatis Plugin 3.21 破解方法</a></h2><span class="post-time">2017年12月18日</span><div class="post-content"><p>有钱还是买正版的吧！</p>
-<p>这里看看别人的思路。</p>
-<ul>
-<li><a href="https://www.awei.org/2017/11/08/idea-mybatis-plugin-3-21-po-jie-fang-fa/" target="_blank" rel="external">IDEA Mybatis Plugin 3.21 破解方法</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/05/Apache-Kylin/" class="post-link">Apache Kylin</a></h2><span class="post-time">2017年12月5日</span><div class="post-content"><p>Kylin的依赖于Hive、Hbase、Hadoop的。所以配置起来相对是最复杂的。</p>
-<ul>
-<li><a href="http://blog.csdn.net/se7en_q/article/details/47258007">http://blog.csdn.net/se7en_q/article/details/47258007</a></li>
-<li><a href="https://www.cnblogs.com/lzxlfly/p/7221890.html">https://www.cnblogs.com/lzxlfly/p/7221890.html</a></li>
-<li><a href="https://www.cnblogs.com/hunttown/p/5803341.html">https://www.cnblogs.com/hunttown/p/5803341.html</a></li>
-<li><a href="https://www.cnblogs.com/hmy-blog/p/6506417.html">https://www.cnblogs.com/hmy-blog/p/6506417.html</a></li>
-<li><a href="http://blog.csdn.net/wzy0623/article/details/50685966">http://blog.csdn.net/wzy0623/article/details/50685966</a></li>
-<li><a href="http://blog.csdn.net/wulantian/article/details/46341043">hadoop能用到的系统端口</a></li>
-</ul>
-<p>遇到问题需要清楚Job生成的数据，这里官方文档写的没更新，用这个类执行。</p>
-<pre><code>hbase org.apache.hadoop.util.RunJar lib/kylin-job-2.2.0.jar org.apache.kylin.storage.hbase.util.StorageCleanupJob --delete false
-</code></pre></div><a href="/2017/12/05/Apache-Kylin/" class="read-more">Read more..</a></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/05/metabase/" class="post-link">metabase</a></h2><span class="post-time">2017年12月5日</span><div class="post-content"><p>官网：</p>
-<ul>
-<li><a href="https://hub.docker.com/r/metabase/metabase" target="_blank" rel="external">https://hub.docker.com/r/metabase/metabase</a></li>
-<li><a href="https://www.metabase.com" target="_blank" rel="external">https://www.metabase.com</a></li>
-<li><a href="https://www.metabase.com/docs/latest/" target="_blank" rel="external">https://www.metabase.com/docs/latest/</a></li>
-</ul>
-<p>官方文档写的很详细，几乎没有什么异常的配置，metabase 使用 Cojure和React 实现。</p>
-<p>在使用过程中，出现了新增数据源，但是在新增Question的时候不能显示出来，但是过了一段时间后又显示出来了，可能是某个地方的缓存吧。</p>
-<p>正常使用也非常简单，新增Question，然后选择数据源、过滤条件、聚合函数，保存Question后可以添加到Dashboard去。</p>
-<p><img src="https://github.com/metabase/metabase/raw/master/docs/metabase-product-screenshot.png" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># The Zen of Metabase</div><div class="line"></div><div class="line">- Give the user value as soon as possible</div><div class="line"></div><div class="line">- Structure things so that we can automagically infer things for the user</div><div class="line"></div><div class="line">- Don’t ask the user for information the system should already know</div><div class="line"></div><div class="line">- Make it easy for the user to do the right thing</div><div class="line"></div><div class="line">- Don’t leave the user booby traps</div><div class="line"></div><div class="line">- Go the extra mile to make the user experience pleasant</div></pre></td></tr></table></figure></div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/12/05/superset/" class="post-link">superset</a></h2><span class="post-time">2017年12月5日</span><div class="post-content"><pre><code># docker 安装
-https://hub.docker.com/r/amancevice/superset/
-
-# 创建管理员用户名和密码 
-fabmanager create-admin --app superset 
-
-# 初始化Superset 
-superset db upgrade 
-
-# 装载初始化样例数据 
-superset load_examples 
-
-# 创建默认角色和权限 
-superset init 
-
-# 启动Superset 
-superset runserver 
-</code></pre><p>可能遇到的问题:</p>
-<ul>
-<li>生成分布柱状图的时候，x轴默认被排序了，目前没好的方案。</li>
-<li>乱码问题，设置连接的编码，格式参考SqlAlchemy格式。如：mysql://root:XXXXXXXXXX@127.0.0.1:3306/info?charset=utf8</li>
-<li>参考链接，<a href="http://www.jianshu.com/p/d5978b439080" target="_blank" rel="external">http://www.jianshu.com/p/d5978b439080</a></li>
-<li>GitHub官方，<a href="https://github.com/apache/incubator-superset" target="_blank" rel="external">https://github.com/apache/incubator-superset</a></li>
-</ul>
-<p><img src="https://cloud.githubusercontent.com/assets/130878/20234704/0f40778c-a835-11e6-9556-983a62ea061b.png" alt=""></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/11/07/SSH原理与应用/" class="post-link">SSH原理与应用</a></h2><span class="post-time">2017年11月7日</span><div class="post-content"><ul>
-<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="external">远程登录</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html" target="_blank" rel="external">远程操作与端口转发</a></li>
-</ul>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/31/valid-number-at-leetcode/" class="post-link">valid-number at leetcode</a></h2><span class="post-time">2017年8月31日</span><div class="post-content"><p>有穷状态自动机 DFA 解题、提供一个新的思路来判断是不是一个数字。</p>
-<ul>
-<li><a href="https://leetcode.com/problems/valid-number/description/" target="_blank" rel="external">Leetcode Description</a></li>
-<li><a href="https://leetcode.com/problems/valid-number/discuss/" target="_blank" rel="external">Leetcode Discuss</a></li>
-<li><a href="http://blog.csdn.net/yukuninfoaxiom/article/details/6057736" target="_blank" rel="external">NFA/DFA算法</a></li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">isNumber</span><span class="params">(self, s)</span>:</span></div><div class="line">      <span class="string">"""</span></div><div class="line">      :type s: str</div><div class="line">      :rtype: bool</div><div class="line">      """</div><div class="line">      <span class="comment">#define a DFA</span></div><div class="line">      state = [&#123;&#125;, </div><div class="line">              &#123;<span class="string">'blank'</span>: <span class="number">1</span>, <span class="string">'sign'</span>: <span class="number">2</span>, <span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">4</span>&#125;, </div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">4</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">3</span>, <span class="string">'.'</span>:<span class="number">5</span>, <span class="string">'e'</span>:<span class="number">6</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">5</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">5</span>, <span class="string">'e'</span>:<span class="number">6</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'sign'</span>:<span class="number">7</span>, <span class="string">'digit'</span>:<span class="number">8</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">8</span>&#125;,</div><div class="line">              &#123;<span class="string">'digit'</span>:<span class="number">8</span>, <span class="string">'blank'</span>:<span class="number">9</span>&#125;,</div><div class="line">              &#123;<span class="string">'blank'</span>:<span class="number">9</span>&#125;]</div><div class="line">      currentState = <span class="number">1</span></div><div class="line">      <span class="keyword">for</span> c <span class="keyword">in</span> s:</div><div class="line">          <span class="keyword">if</span> c &gt;= <span class="string">'0'</span> <span class="keyword">and</span> c &lt;= <span class="string">'9'</span>:</div><div class="line">              c = <span class="string">'digit'</span></div><div class="line">          <span class="keyword">if</span> c == <span class="string">' '</span>:</div><div class="line">              c = <span class="string">'blank'</span></div><div class="line">          <span class="keyword">if</span> c <span class="keyword">in</span> [<span class="string">'+'</span>, <span class="string">'-'</span>]:</div><div class="line">              c = <span class="string">'sign'</span></div><div class="line">          <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> state[currentState].keys():</div><div class="line">              <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">          currentState = state[currentState][c]</div><div class="line">      <span class="keyword">if</span> currentState <span class="keyword">not</span> <span class="keyword">in</span> [<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">9</span>]:</div><div class="line">          <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
-<p><img src="http://normanyahq.github.io/static/files/valid_number_dfa.svg" alt=""></p>
-</div></article></li><li class="post-item"><article class="post"><h2 class="post-title"><a href="/2017/08/30/背包问题/" class="post-link">背包问题</a></h2><span class="post-time">2017年8月30日</span><div class="post-content"><ul>
-<li><a href="http://www.importnew.com/13072.html" target="_blank" rel="external">01背包</a></li>
-</ul>
-</div></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</ul></div><a href="/2018/01/04/Golang-交叉编译跨平台的可执行程序-Mac、Linux、Windows/" class="read-more">Read more..</a></article></li></ul><div class="paginator"><a href="/page/2/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div></section><footer><div class="social"><a href="mailto:mailto:yuerguang.cl#gmail.com" class="iconfont icon-email"> </a><a href="https://github.com/yuercl" class="iconfont icon-github"> </a><a href="/atom.xml" class="iconfont icon-rss"> </a></div><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

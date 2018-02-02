@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-11T12:01:02.418Z</updated>
+  <updated>2018-02-02T03:24:01.215Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,298 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>磨刀</title>
+    <link href="http://yoursite.com/2018/02/02/%E7%A3%A8%E5%88%80/"/>
+    <id>http://yoursite.com/2018/02/02/磨刀/</id>
+    <published>2018-02-02T02:55:04.000Z</published>
+    <updated>2018-02-02T03:24:01.215Z</updated>
+    
+    <content type="html"><![CDATA[<p>刀使用久了会钝，是需要磨的，在很久以前，觉得磨刀是一件没什么学问的事情。</p>
+<p>拿着刀，在磨刀石上面蹭蹭蹭就可以了。后来才发现，其实不是那么简单的。</p>
+<p>刀的核心东西还是材质，只有好的材质才能开出好的刃，和朽木不可雕也，是一个道理。</p>
+<h1 id="磨刀石的目数"><a href="#磨刀石的目数" class="headerlink" title="磨刀石的目数"></a>磨刀石的目数</h1><p>简单说，就是指每平方厘米的磨石表面有多少颗粒。</p>
+<p>五金市场常见的那种双面磨石，一般是200/400目或者600/800目之类的。</p>
+<p>目数越高，从刀刃上剥落的金属越小越细，宏观上看就是刀刃越光滑。</p>
+<p>低目数的磨石用来粗磨，高目数的修刃，再高点的抛光，不能混用。</p>
+<p><img src="/assets/images/磨刀石.jpg" alt=""> </p>
+<p>所以一般磨刀的话，先从低目数开始打磨，之后慢慢增加目数，比如说，可以先用300目、800目、1200目、2000目这样上去。</p>
+<p>之前看到有一个磨刀视频，不知道在哪儿去了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;刀使用久了会钝，是需要磨的，在很久以前，觉得磨刀是一件没什么学问的事情。&lt;/p&gt;
+&lt;p&gt;拿着刀，在磨刀石上面蹭蹭蹭就可以了。后来才发现，其实不是那么简单的。&lt;/p&gt;
+&lt;p&gt;刀的核心东西还是材质，只有好的材质才能开出好的刃，和朽木不可雕也，是一个道理。&lt;/p&gt;
+&lt;h1 id=
+    
+    </summary>
+    
+      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="磨刀" scheme="http://yoursite.com/tags/%E7%A3%A8%E5%88%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式领域CAP理论</title>
+    <link href="http://yoursite.com/2018/02/02/%E5%88%86%E5%B8%83%E5%BC%8F%E9%A2%86%E5%9F%9FCAP%E7%90%86%E8%AE%BA/"/>
+    <id>http://yoursite.com/2018/02/02/分布式领域CAP理论/</id>
+    <published>2018-02-02T02:19:30.000Z</published>
+    <updated>2018-02-02T02:54:06.628Z</updated>
+    
+    <content type="html"><![CDATA[<p>分布式领域CAP理论 </p>
+<ul>
+<li>Consistency(一致性), 数据一致更新, 所有数据变动都是同步的</li>
+<li>Availability(可用性), 好的响应性能</li>
+<li>Partition tolerance(分区容忍性), 可靠性</li>
+</ul>
+<a id="more"></a>
+<h1 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h1><blockquote>
+<p>任何分布式系统只可同时满足二点，没法三者兼顾。</p>
+</blockquote>
+<p>不要将精力浪费在如何设计能满足三者的完美分布式系统，而是应该相应的取舍。</p>
+<h1 id="ACID模型"><a href="#ACID模型" class="headerlink" title="ACID模型"></a>ACID模型</h1><p>关系数据库的ACID模型拥有高一致性 + 可用性 ，但是很难进行分区：</p>
+<ul>
+<li>Atomicity 原子性：一个事务中所有操作都必须全部完成，要么全部不完成。</li>
+<li>Consistency 一致性： 在事务开始或结束时，数据库应该在一致状态。</li>
+<li>Isolation 隔离性：事务将假定只有它自己在操作数据库，彼此不知晓。</li>
+<li>Durability：耐久性，一旦事务完成，就不能返回。</li>
+</ul>
+<p>跨数据库两段提交事务：2PC (two-phase commit)， 2PC is the anti-scalability pattern (Pat Helland) 是 <code>反可伸缩模式</code> 的，JavaEE中的JTA事务可以支持2PC。因为2PC是反模式，尽量不要使用2PC，使用 <code>BASE</code> 来回避。</p>
+<h1 id="BASE模型"><a href="#BASE模型" class="headerlink" title="BASE模型"></a>BASE模型</h1><p>BASE模型反ACID模型，完全不同ACID模型，牺牲高一致性，获得可用性或可靠性：</p>
+<ul>
+<li>Basically Available 基本可用, 支持分区失败(e.g. sharding碎片划分数据库)</li>
+<li>Soft state 软状态, 状态可以有一段时间不同步，异步。</li>
+<li>Eventually consistent 最终一致, 最终数据是一致的就可以了, 而不是时时高一致。</li>
+</ul>
+<p>BASE思想的主要实现有</p>
+<ul>
+<li>按功能划分数据库</li>
+<li>Sharding 分片 </li>
+</ul>
+<p>BASE思想主要强调基本的可用性，如果你需要很高的可用性，也就是纯粹的高性能，那么就要以一致性或容忍性为牺牲，BASE思想的方案在性能上还是有潜力可挖的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;分布式领域CAP理论 &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Consistency(一致性), 数据一致更新, 所有数据变动都是同步的&lt;/li&gt;
+&lt;li&gt;Availability(可用性), 好的响应性能&lt;/li&gt;
+&lt;li&gt;Partition tolerance(分区容忍性), 可靠性&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="CAP" scheme="http://yoursite.com/tags/CAP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sharding-jdbc</title>
+    <link href="http://yoursite.com/2018/02/01/sharding-jdbc/"/>
+    <id>http://yoursite.com/2018/02/01/sharding-jdbc/</id>
+    <published>2018-02-01T09:48:19.000Z</published>
+    <updated>2018-02-02T03:19:04.896Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><ul>
+<li><a href="https://github.com/shardingjdbc/sharding-jdbc" target="_blank" rel="external">https://github.com/shardingjdbc/sharding-jdbc</a></li>
+<li><a href="http://shardingjdbc.io/docs/00-overview" target="_blank" rel="external">官方文档</a></li>
+<li><a href="https://www.cnblogs.com/zwt1990/p/6762135.html" target="_blank" rel="external">sharding-jdbc结合mybatis实现分库分表功能</a></li>
+<li><a href="https://www.cnblogs.com/yjmyzz/p/sharding-jdbc-turotial.html" target="_blank" rel="external">利用sharding-jdbc分库分表</a></li>
+<li>官方的example，提供了注解、Spring namespace、MyBatis、代码等配置情况。</li>
+</ul>
+<p>sharding-jdbc 是一个优秀的分库分表的工具类。同样的分库分表的数据库中间件有mycat。</p>
+<p>sharding-jdbc 接管连接池、分析SQL来达到在程序内的sharding功能；而mycat 更像是一个中间件产品，对程序来讲，是认为mycat就是mysql。</p>
+<a id="more"></a>
+<h2 id="特别需要注意的地方有几个："><a href="#特别需要注意的地方有几个：" class="headerlink" title="特别需要注意的地方有几个："></a>特别需要注意的地方有几个：</h2><p>配置文件配置的时候，inline的 placeholder 会和 Spring 的placeholder冲突，需要配置 Spring 忽略不可解析 ignore-unresolvable </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:app.properties"</span> <span class="attr">ignore-unresolvable</span>=<span class="string">"true"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>inline 解析表规则的时候，官方的example中只有最简单的求余，下面我需要的是按日期年月来分表的逻辑。注意，当真是表不存在的事情，在具体sharding的时候会提示表xxx 不存在的错误。需要注意下时间的操作逻辑。解析inline表名可以参考源码。如果不放心，可以写一个测试用例。 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;sharding:data-source id="shardingDataSource"&gt;</div><div class="line">    &lt;sharding:sharding-rule data-source-names="dataSource"&gt;</div><div class="line">        &lt;sharding:table-rules&gt;</div><div class="line">            &lt;sharding:table-rule logic-table="fuel_daily"</div><div class="line">                                 actual-data-nodes="dataSource.fuel_daily_$&#123;2017..2030&#125;$&#123;['01','02','03','04','05','06','07','08','09','10','11','12']&#125;"</div><div class="line">&lt;!-- 这里会笛卡尔积解析成所有的真实表。 --&gt;                                 </div><div class="line">                                 table-strategy-ref="stattimeShardingStrategy"/&gt;</div><div class="line">        &lt;/sharding:table-rules&gt;</div><div class="line">        &lt;sharding:binding-table-rules&gt;</div><div class="line">            &lt;sharding:binding-table-rule logic-tables="fuel_daily"/&gt;</div><div class="line">        &lt;/sharding:binding-table-rules&gt;</div><div class="line">    &lt;/sharding:sharding-rule&gt;</div><div class="line">&lt;/sharding:data-source&gt;</div></pre></td></tr></table></figure>
+<p>在某些函数支持的不是很好，比如说在sharding的时候做sum，我遇到了返回多个返回值的情况，我想到的解决方法是手动去sum，不用在SQL中做。</p>
+<p>在引包的时候，注意如果Spring 的namespace无法找打，清合适下是否Spring的namespace包被引入了。我找了源码最后才确定了包名。</p>
+<p>insert into values (“”, “”) 多个时候，会导致不能正确的选择分片执行。所以最好的方式是手动维护Map来决定怎么批量insert。</p>
+<p>最后，如果实在不放心的时候，清注意写好测试用例来验证。</p>
+<p>希望sharing-jdbc 越来越好。</p>
+<p><img src="/assets/images/sharding-jdbc.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;正文&quot;&gt;&lt;a href=&quot;#正文&quot; class=&quot;headerlink&quot; title=&quot;正文&quot;&gt;&lt;/a&gt;正文&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/shardingjdbc/sharding-jdbc&quot;&gt;https://github.com/shardingjdbc/sharding-jdbc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://shardingjdbc.io/docs/00-overview&quot;&gt;官方文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/zwt1990/p/6762135.html&quot;&gt;sharding-jdbc结合mybatis实现分库分表功能&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/yjmyzz/p/sharding-jdbc-turotial.html&quot;&gt;利用sharding-jdbc分库分表&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;官方的example，提供了注解、Spring namespace、MyBatis、代码等配置情况。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;sharding-jdbc 是一个优秀的分库分表的工具类。同样的分库分表的数据库中间件有mycat。&lt;/p&gt;
+&lt;p&gt;sharding-jdbc 接管连接池、分析SQL来达到在程序内的sharding功能；而mycat 更像是一个中间件产品，对程序来讲，是认为mycat就是mysql。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Cloud not resolve placeholder … in string value</title>
+    <link href="http://yoursite.com/2018/01/28/Cloud-not-resolve-placeholder-%E2%80%A6-in-string-value/"/>
+    <id>http://yoursite.com/2018/01/28/Cloud-not-resolve-placeholder-…-in-string-value/</id>
+    <published>2018-01-28T07:09:06.000Z</published>
+    <updated>2018-01-28T07:10:42.225Z</updated>
+    
+    <content type="html"><![CDATA[<p>sharding jdbc中的inline表达式，Spring Property 冲突。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;context:property-placeholder location=<span class="string">"classpath:property/*.properties"</span> ignore-unresolvable=<span class="string">"true"</span> /&gt;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;sharding jdbc中的inline表达式，Spring Property 冲突。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/d
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ifconfig</title>
+    <link href="http://yoursite.com/2018/01/22/ifconfig/"/>
+    <id>http://yoursite.com/2018/01/22/ifconfig/</id>
+    <published>2018-01-22T07:56:05.000Z</published>
+    <updated>2018-01-22T08:01:31.766Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="https://github.com/mpolden/ipd" target="_blank" rel="external">https://github.com/mpolden/ipd</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl ifconfig.co</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/mpolden/ipd&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/mpolden/ipd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+      <category term="ifconfig" scheme="http://yoursite.com/tags/ifconfig/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用“逐步排除”的方法定位Java服务线上“系统性”故障</title>
+    <link href="http://yoursite.com/2018/01/15/%E7%94%A8%E2%80%9C%E9%80%90%E6%AD%A5%E6%8E%92%E9%99%A4%E2%80%9D%E7%9A%84%E6%96%B9%E6%B3%95%E5%AE%9A%E4%BD%8DJava%E6%9C%8D%E5%8A%A1%E7%BA%BF%E4%B8%8A%E2%80%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E2%80%9D%E6%95%85%E9%9A%9C/"/>
+    <id>http://yoursite.com/2018/01/15/用“逐步排除”的方法定位Java服务线上“系统性”故障/</id>
+    <published>2018-01-15T09:58:42.000Z</published>
+    <updated>2018-01-15T09:59:20.728Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://techblog.youdao.com/?p=961" target="_blank" rel="external">用“逐步排除”的方法定位Java服务线上“系统性”故障</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://techblog.youdao.com/?p=961&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;用“逐步排除”的方法定位Java服务线上“系统性”故障&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+    
+    </summary>
+    
+      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL几种索引类型</title>
+    <link href="http://yoursite.com/2018/01/12/MySQL%E5%87%A0%E7%A7%8D%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://yoursite.com/2018/01/12/MySQL几种索引类型/</id>
+    <published>2018-01-12T07:27:12.000Z</published>
+    <updated>2018-01-12T07:28:46.489Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li>FULLTEXT</li>
+<li>HASH</li>
+<li>BTREE</li>
+<li>RTREE</li>
+</ul>
+<ul>
+<li><a href="http://blog.csdn.net/endlu/article/details/51720299" target="_blank" rel="external">BTree和B+Tree详解</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;FULLTEXT&lt;/li&gt;
+&lt;li&gt;HASH&lt;/li&gt;
+&lt;li&gt;BTREE&lt;/li&gt;
+&lt;li&gt;RTREE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/endlu/article/details/517202
+    
+    </summary>
+    
+      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Squid 代理</title>
+    <link href="http://yoursite.com/2018/01/12/Squid-%E4%BB%A3%E7%90%86/"/>
+    <id>http://yoursite.com/2018/01/12/Squid-代理/</id>
+    <published>2018-01-12T07:16:41.000Z</published>
+    <updated>2018-01-12T07:28:48.806Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Squid-配置-通用配置"><a href="#Squid-配置-通用配置" class="headerlink" title="Squid 配置(通用配置)"></a>Squid 配置(通用配置)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install squid</div><div class="line">service squid start</div></pre></td></tr></table></figure>
+<p>默认squid监听的端口是3128，可根据需要修改，配置文件存储在 <code>/etc/squid/squid.conf</code>。<br>squid 需配置仅使用代理功能，不使用cache，配置文件中需禁用缓存,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cache deny all.</div></pre></td></tr></table></figure>
+<p>设置高匿代理，禁止 <code>X-Forwarded-For</code> 和 <code>Via</code> 的HTTP头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 配置高匿，不允许设置任何多余头信息，保持原请求header。</div><div class="line">request_header_access Via deny all</div><div class="line">request_header_access X-Forwarded-For deny all</div></pre></td></tr></table></figure>
+<p>详情配置说明可参考官方文档。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Squid-配置-通用配置&quot;&gt;&lt;a href=&quot;#Squid-配置-通用配置&quot; class=&quot;headerlink&quot; title=&quot;Squid 配置(通用配置)&quot;&gt;&lt;/a&gt;Squid 配置(通用配置)&lt;/h3&gt;&lt;figure class=&quot;highlight pl
+    
+    </summary>
+    
+      <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="Squid" scheme="http://yoursite.com/tags/Squid/"/>
+    
+      <category term="代理" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>排查Java程序CPU占用过高的线程</title>
@@ -440,7 +732,7 @@ fabmanager create-admin --app superset
     <link href="http://yoursite.com/2017/08/22/ElasticSearch-%E9%BB%98%E8%AE%A4size%E4%B8%BA10/"/>
     <id>http://yoursite.com/2017/08/22/ElasticSearch-默认size为10/</id>
     <published>2017-08-22T09:48:00.000Z</published>
-    <updated>2017-08-22T09:55:07.000Z</updated>
+    <updated>2018-01-12T07:31:42.510Z</updated>
     
     <content type="html"><![CDATA[<p>在ElasticSearch中，默认的搜索个数是10条数据。</p>
 <p>在没有传递size的时候，如果有聚合函数，最后返回后的size也是10条，所以就导致返回了部分数据的情况。</p>
@@ -461,273 +753,6 @@ fabmanager create-admin --app superset
     
     
       <category term="ElasticSearch" scheme="http://yoursite.com/tags/ElasticSearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java里的Arrays.asList不能用add和remove方法</title>
-    <link href="http://yoursite.com/2017/08/14/Java%E9%87%8C%E7%9A%84Arrays-asList%E4%B8%8D%E8%83%BD%E7%94%A8add%E5%92%8Cremove%E6%96%B9%E6%B3%95/"/>
-    <id>http://yoursite.com/2017/08/14/Java里的Arrays-asList不能用add和remove方法/</id>
-    <published>2017-08-14T06:25:09.000Z</published>
-    <updated>2017-08-14T06:35:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    list.add(<span class="number">4</span>);</div><div class="line">    System.out.print(list.toString());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; list = Lists.newArrayList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    list.add(<span class="number">5</span>);</div><div class="line">    System.out.print(list.toString());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的代码test会throw UnsupportedOperationException。test2使用了Guava工具类，正常输出数组内容。</p>
-<p>查看源代码，Arrays.asList 创建的ArrayList是一个内部类，继承自AbstractList同时实现了RandomAccess和Serializable接口。而在抽象类AbstractList中，set add remove的定义是空的，默认<code>throw new UnsupportedOperationException();</code>。</p>
-<p>所以呢，在Arrays.asList出来的List是一个只读的列表，不支持新增、删除、设置。</p>
-<p><img src="/assets/images/Arrays.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="集合类" scheme="http://yoursite.com/tags/%E9%9B%86%E5%90%88%E7%B1%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式之装饰器模式</title>
-    <link href="http://yoursite.com/2017/08/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/08/12/设计模式之装饰器模式/</id>
-    <published>2017-08-11T16:00:00.000Z</published>
-    <updated>2017-08-11T15:16:33.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>装饰器模式的典型应用就是JAVA的IO操作里面。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;废话&quot;&gt;&lt;a href=&quot;#废话&quot; class=&quot;headerlink&quot; title=&quot;废话&quot;&gt;&lt;/a&gt;废话&lt;/h1&gt;&lt;p&gt;装饰器模式的典型应用就是JAVA的IO操作里面。&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="装饰器模式" scheme="http://yoursite.com/tags/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>曾经折腾的黑客工具</title>
-    <link href="http://yoursite.com/2017/08/11/%E6%9B%BE%E7%BB%8F%E6%8A%98%E8%85%BE%E7%9A%84%E9%BB%91%E5%AE%A2%E5%B7%A5%E5%85%B7/"/>
-    <id>http://yoursite.com/2017/08/11/曾经折腾的黑客工具/</id>
-    <published>2017-08-11T15:01:31.000Z</published>
-    <updated>2017-08-11T15:10:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>那些年折腾过的黑客工具</p>
-<ul>
-<li>Google hack</li>
-<li>nc(Netcat)</li>
-<li>who am i</li>
-<li>ping </li>
-<li>nmap </li>
-<li>Acunetix</li>
-<li>wireshark </li>
-<li>BurpSuite</li>
-<li>sqlmap</li>
-<li>Metasploit</li>
-<li>中国菜刀</li>
-<li>Aircrack-ng</li>
-<li>vim</li>
-<li>hsf(http file system)开源的</li>
-<li>灰鸽子</li>
-<li>dig/nslookup</li>
-<li>Havij pro</li>
-<li>…</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;那些年折腾过的黑客工具&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Google hack&lt;/li&gt;
-&lt;li&gt;nc(Netcat)&lt;/li&gt;
-&lt;li&gt;who am i&lt;/li&gt;
-&lt;li&gt;ping &lt;/li&gt;
-&lt;li&gt;nmap &lt;/li&gt;
-&lt;li&gt;Acunetix&lt;/li&gt;
-&lt;li&gt;wires
-    
-    </summary>
-    
-      <category term="安全" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8/"/>
-    
-    
-      <category term="安全" scheme="http://yoursite.com/tags/%E5%AE%89%E5%85%A8/"/>
-    
-      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-      <category term="黑客" scheme="http://yoursite.com/tags/%E9%BB%91%E5%AE%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>卡方分布与卡方检验</title>
-    <link href="http://yoursite.com/2017/08/11/%E5%8D%A1%E6%96%B9%E5%88%86%E5%B8%83%E4%B8%8E%E5%8D%A1%E6%96%B9%E6%A3%80%E9%AA%8C/"/>
-    <id>http://yoursite.com/2017/08/11/卡方分布与卡方检验/</id>
-    <published>2017-08-11T10:36:23.000Z</published>
-    <updated>2017-08-11T10:46:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>若 $k$ 个独立的随机变量 $ Z_1 Z_2 … Z_k $，且符合标准正态分布$N(0,1)$，则这 $k$ 个随机变量的平方和 </p>
-<p>$$ X = \sum_{i=1}^k Z_i^2 $$</p>
-<p>为服从自由度为 $k$ 的卡方分布，记为： </p>
-<p>$ X \sim \chi^2(k) $ 也可以记为 $ X \sim \chi_k^2 $</p>
-<p>卡方分布的期望与方差分为为：$E(χ2)=n$，$D(χ2)=2n$，其中 $n$ 为卡方分布的自由度。</p>
-<p>有一个计算的例子可以参考链接。</p>
-<ul>
-<li><a href="http://blog.csdn.net/bitcarmanlee/article/details/52279907" target="_blank" rel="external">卡方分布与卡方检验</a></li>
-<li><a href="http://www.cnblogs.com/baiboy/p/tjx11.html" target="_blank" rel="external">卡方分布的应用</a></li>
-<li><a href="http://guoze.me/2015/09/07/chi-square/" target="_blank" rel="external">卡方检验原理及应用</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;若 $k$ 个独立的随机变量 $ Z_1 Z_2 … Z_k $，且符合标准正态分布$N(0,1)$，则这 $k$ 个随机变量的平方和 &lt;/p&gt;
-&lt;p&gt;$$ X = \sum_{i=1}^k Z_i^2 $$&lt;/p&gt;
-&lt;p&gt;为服从自由度为 $k$ 的卡方分布，记为： &lt;/p
-    
-    </summary>
-    
-      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
-    
-    
-      <category term="统计学" scheme="http://yoursite.com/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>坐标系旋转矩阵</title>
-    <link href="http://yoursite.com/2017/08/09/%E5%9D%90%E6%A0%87%E7%B3%BB%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/"/>
-    <id>http://yoursite.com/2017/08/09/坐标系旋转矩阵/</id>
-    <published>2017-08-09T03:19:28.000Z</published>
-    <updated>2017-08-11T10:55:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>$$ \left[<br>    \begin{array}{cc}<br>      cos(α) &amp; -sin(α) \\<br>      sin(α) &amp; cos(α)<br>    \end{array}<br>\right] $$</p>
-<p>$$<br>\left[<br>    \begin{array}{c}<br>      x’ \\<br>      y’<br>    \end{array}<br>\right]<br> =<br>\left[<br>    \begin{array}{cc}<br>      cos(α) &amp; -sin(α) \\<br>      sin(α) &amp; cos(α)<br>    \end{array}<br>\right]<br>\left[<br>    \begin{array}{c}<br>      x \\<br>      y<br>    \end{array}<br>\right]<br>$$</p>
-<ul>
-<li><a href="http://blog.csdn.net/tom_00001/article/details/62054572" target="_blank" rel="external">坐标系旋转矩阵推导过程</a></li>
-<li><a href="http://blog.miskcoo.com/2016/12/rotation-in-3d-space" target="_blank" rel="external">三维空间中的旋转：旋转矩阵、欧拉角</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;$$ \left[&lt;br&gt;    \begin{array}{cc}&lt;br&gt;      cos(α) &amp;amp; -sin(α) \\&lt;br&gt;      sin(α) &amp;amp; cos(α)&lt;br&gt;    \end{array}&lt;br&gt;\right] $$&lt;/p&gt;
-&lt;p&gt;
-    
-    </summary>
-    
-      <category term="数学" scheme="http://yoursite.com/categories/%E6%95%B0%E5%AD%A6/"/>
-    
-    
-      <category term="旋转矩阵" scheme="http://yoursite.com/tags/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RocketMQ</title>
-    <link href="http://yoursite.com/2017/08/08/RocketMQ/"/>
-    <id>http://yoursite.com/2017/08/08/RocketMQ/</id>
-    <published>2017-08-08T09:39:10.000Z</published>
-    <updated>2017-08-11T14:56:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://blog.csdn.net/lovesomnus/article/details/51754820" target="_blank" rel="external">RocketMQ介绍</a></li>
-<li><a href="http://blog.csdn.net/lovesomnus/article/details/51769977" target="_blank" rel="external">RocketMQ集群配置</a></li>
-<li><a href="http://www.jianshu.com/p/453c6e7ff81c" target="_blank" rel="external">分布式开放消息系统(RocketMQ)的原理与实践</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/lovesomnus/article/details/51754820&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;RocketMQ介绍&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;
-    
-    </summary>
-    
-      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="RocketMQ" scheme="http://yoursite.com/tags/RocketMQ/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ElasticSearch</title>
-    <link href="http://yoursite.com/2017/08/08/ElasticSearch/"/>
-    <id>http://yoursite.com/2017/08/08/ElasticSearch/</id>
-    <published>2017-08-08T08:34:57.000Z</published>
-    <updated>2017-09-05T07:53:57.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li><a href="http://www.wklken.me/posts/2016/06/29/deploy-es.html#9-zheng-shi-qi-dong" target="_blank" rel="external">ELASTICSEARCH集群部署文档</a></li>
-<li><a href="http://www.wklken.me/posts/2016/05/24/elk-mysql-slolog.html" target="_blank" rel="external">LOGSTASH+ELASTICSEARCH处理MYSQL慢查询日志</a></li>
-</ul>
-<p>ElasticSearch 的 mapping修改比较坑，需要新建、迁移数据、删除老索引。</p>
-<ul>
-<li><a href="http://www.cnblogs.com/Creator/p/3722408.html" target="_blank" rel="external">记录一次mapping field修改过程</a></li>
-<li><a href="http://blog.csdn.net/napoay/article/details/52119957" target="_blank" rel="external">删除文档的field以及field的属性</a></li>
-</ul>
-<p>可以参考下面的demo</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"order"</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">"template"</span>: <span class="string">"truck_*"</span>,</div><div class="line">    <span class="attr">"settings"</span>: &#123;</div><div class="line">        <span class="attr">"index"</span>: &#123;</div><div class="line">            <span class="attr">"number_of_shards"</span>: <span class="string">"5"</span>,</div><div class="line">            <span class="attr">"number_of_replicas"</span>: <span class="string">"1"</span>,</div><div class="line">            <span class="attr">"store"</span>: &#123;</div><div class="line">                <span class="attr">"compress"</span>: &#123;</div><div class="line">                    <span class="attr">"tv"</span>: <span class="string">"true"</span>,</div><div class="line">                    <span class="attr">"stored"</span>: <span class="string">"false"</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"mappings"</span>: &#123;</div><div class="line">        <span class="attr">"mileage"</span>: &#123;</div><div class="line">            <span class="attr">"_source"</span>: &#123;</div><div class="line">                <span class="attr">"enabled"</span>: <span class="literal">false</span></div><div class="line">            &#125;,</div><div class="line">            <span class="attr">"_all"</span>: &#123;</div><div class="line">                <span class="attr">"enabled"</span>: <span class="literal">false</span></div><div class="line">            &#125;,</div><div class="line">            <span class="attr">"properties"</span>: &#123;</div><div class="line">                <span class="attr">"id"</span>: &#123;</div><div class="line">                    <span class="attr">"index"</span>: <span class="string">"not_analyzed"</span>,</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"string"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"gps_id"</span>: &#123;</div><div class="line">                    <span class="attr">"index"</span>: <span class="string">"not_analyzed"</span>,</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"string"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"distance"</span>: &#123;</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"integer"</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">"start_time_ms"</span>: &#123;</div><div class="line">                    <span class="attr">"type"</span>: <span class="string">"date"</span>,</div><div class="line">                    <span class="attr">"format"</span>: <span class="string">"epoch_millis"</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"aliases"</span>: &#123;</div><div class="line">        <span class="attr">"truck_location"</span>: &#123;&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.wklken.me/posts/2016/06/29/deploy-es.html#9-zheng-shi-qi-dong&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ELASTICSEARCH集群部署
-    
-    </summary>
-    
-      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="ElasticSearch" scheme="http://yoursite.com/tags/ElasticSearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UPDATE 单列和多列效率对比</title>
-    <link href="http://yoursite.com/2017/08/03/UPDATE-%E5%8D%95%E5%88%97%E5%92%8C%E5%A4%9A%E5%88%97%E6%95%88%E7%8E%87%E5%AF%B9%E6%AF%94/"/>
-    <id>http://yoursite.com/2017/08/03/UPDATE-单列和多列效率对比/</id>
-    <published>2017-08-03T07:59:10.000Z</published>
-    <updated>2017-08-11T14:53:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>UPDATE 单列和多列效率对比，比如说</p>
-<ul>
-<li>update student set name=’foo’ where id = 1</li>
-<li>update student set name=’foo’ , age = 10 where id = 1</li>
-</ul>
-<p>考虑索引数量和重构索引的逻辑。</p>
-<p>数据库更新数据是怎么做的？先删除后新增</p>
-<p><a href="http://use-the-index-luke.com/sql/dml/update" target="_blank" rel="external">http://use-the-index-luke.com/sql/dml/update</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;UPDATE 单列和多列效率对比，比如说&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;update student set name=’foo’ where id = 1&lt;/li&gt;
-&lt;li&gt;update student set name=’foo’ , age = 10 where id =
-    
-    </summary>
-    
-      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   

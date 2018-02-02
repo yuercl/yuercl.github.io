@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="正文https://github.com/shardingjdbc/sharding-jdbc官方文档sharding-jdbc结合mybatis实现分库分表功能利用sharding-jdbc分库分表官方的example，提供了注解、Springnamespace、M"><meta name="keywords" content="java"><title>sharding-jdbc · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2018/02/01/sharding-jdbc/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">sharding-jdbc</h1><span class="post-time">2018年2月1日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正文"><span class="toc-text">正文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特别需要注意的地方有几个："><span class="toc-text">特别需要注意的地方有几个：</span></a></li></ol></div><div class="post-content"><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><ul>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><li><a href="https://github.com/shardingjdbc/sharding-jdbc" target="_blank" rel="external">https://github.com/shardingjdbc/sharding-jdbc</a></li>
+<li><a href="http://shardingjdbc.io/docs/00-overview" target="_blank" rel="external">官方文档</a></li>
+<li><a href="https://www.cnblogs.com/zwt1990/p/6762135.html" target="_blank" rel="external">sharding-jdbc结合mybatis实现分库分表功能</a></li>
+<li><a href="https://www.cnblogs.com/yjmyzz/p/sharding-jdbc-turotial.html" target="_blank" rel="external">利用sharding-jdbc分库分表</a></li>
+<li>官方的example，提供了注解、Spring namespace、MyBatis、代码等配置情况。</li>
+</ul>
+<p>sharding-jdbc 是一个优秀的分库分表的工具类。同样的分库分表的数据库中间件有mycat。</p>
+<p>sharding-jdbc 接管连接池、分析SQL来达到在程序内的sharding功能；而mycat 更像是一个中间件产品，对程序来讲，是认为mycat就是mysql。</p>
+<a id="more"></a>
+<h2 id="特别需要注意的地方有几个："><a href="#特别需要注意的地方有几个：" class="headerlink" title="特别需要注意的地方有几个："></a>特别需要注意的地方有几个：</h2><p>配置文件配置的时候，inline的 placeholder 会和 Spring 的placeholder冲突，需要配置 Spring 忽略不可解析 ignore-unresolvable </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:app.properties"</span> <span class="attr">ignore-unresolvable</span>=<span class="string">"true"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>inline 解析表规则的时候，官方的example中只有最简单的求余，下面我需要的是按日期年月来分表的逻辑。注意，当真是表不存在的事情，在具体sharding的时候会提示表xxx 不存在的错误。需要注意下时间的操作逻辑。解析inline表名可以参考源码。如果不放心，可以写一个测试用例。 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;sharding:data-source id="shardingDataSource"&gt;</div><div class="line">    &lt;sharding:sharding-rule data-source-names="dataSource"&gt;</div><div class="line">        &lt;sharding:table-rules&gt;</div><div class="line">            &lt;sharding:table-rule logic-table="fuel_daily"</div><div class="line">                                 actual-data-nodes="dataSource.fuel_daily_$&#123;2017..2030&#125;$&#123;['01','02','03','04','05','06','07','08','09','10','11','12']&#125;"</div><div class="line">&lt;!-- 这里会笛卡尔积解析成所有的真实表。 --&gt;                                 </div><div class="line">                                 table-strategy-ref="stattimeShardingStrategy"/&gt;</div><div class="line">        &lt;/sharding:table-rules&gt;</div><div class="line">        &lt;sharding:binding-table-rules&gt;</div><div class="line">            &lt;sharding:binding-table-rule logic-tables="fuel_daily"/&gt;</div><div class="line">        &lt;/sharding:binding-table-rules&gt;</div><div class="line">    &lt;/sharding:sharding-rule&gt;</div><div class="line">&lt;/sharding:data-source&gt;</div></pre></td></tr></table></figure>
+<p>在某些函数支持的不是很好，比如说在sharding的时候做sum，我遇到了返回多个返回值的情况，我想到的解决方法是手动去sum，不用在SQL中做。</p>
+<p>在引包的时候，注意如果Spring 的namespace无法找打，清合适下是否Spring的namespace包被引入了。我找了源码最后才确定了包名。</p>
+<p>insert into values (“”, “”) 多个时候，会导致不能正确的选择分片执行。所以最好的方式是手动维护Map来决定怎么批量insert。</p>
+<p>最后，如果实在不放心的时候，清注意写好测试用例来验证。</p>
+<p>希望sharing-jdbc 越来越好。</p>
+<p><img src="/assets/images/sharding-jdbc.png" alt=""></p>
+</div></article><div class="tags"><a href="/tags/java/">java</a></div><div class="paginator"><a href="/2018/02/02/分布式领域CAP理论/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2018/01/28/Cloud-not-resolve-placeholder-…-in-string-value/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2018/02/01/sharding-jdbc/';
+    this.page.identifier = '2018/02/01/sharding-jdbc/';
+    this.page.title = 'sharding-jdbc';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>

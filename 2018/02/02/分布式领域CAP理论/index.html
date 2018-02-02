@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="小龙哥"><meta name="description" content="分布式领域CAP理论Consistency(一致性),数据一致更新,所有数据变动都是同步的Availability(可用性),好的响应性能Partitiontolerance(分区容忍性),可靠性"><meta name="keywords" content="CAP"><title>分布式领域CAP理论 · Simple</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2018/02/02/分布式领域CAP理论/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript"><!-- hexo-inject:begin --><!-- hexo-inject:end -->var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e1cf5ee473c38c35cc639c1d42b75995";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="main"><header><a href="/." class="logo">Simple</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">分布式领域CAP理论</h1><span class="post-time">2018年2月2日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#定理"><span class="toc-text">定理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ACID模型"><span class="toc-text">ACID模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BASE模型"><span class="toc-text">BASE模型</span></a></li></ol></div><div class="post-content"><p>分布式领域CAP理论 </p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li>Consistency(一致性), 数据一致更新, 所有数据变动都是同步的</li>
+<li>Availability(可用性), 好的响应性能</li>
+<li>Partition tolerance(分区容忍性), 可靠性</li>
+</ul>
+<a id="more"></a>
+<h1 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h1><blockquote>
+<p>任何分布式系统只可同时满足二点，没法三者兼顾。</p>
+</blockquote>
+<p>不要将精力浪费在如何设计能满足三者的完美分布式系统，而是应该相应的取舍。</p>
+<h1 id="ACID模型"><a href="#ACID模型" class="headerlink" title="ACID模型"></a>ACID模型</h1><p>关系数据库的ACID模型拥有高一致性 + 可用性 ，但是很难进行分区：</p>
+<ul>
+<li>Atomicity 原子性：一个事务中所有操作都必须全部完成，要么全部不完成。</li>
+<li>Consistency 一致性： 在事务开始或结束时，数据库应该在一致状态。</li>
+<li>Isolation 隔离性：事务将假定只有它自己在操作数据库，彼此不知晓。</li>
+<li>Durability：耐久性，一旦事务完成，就不能返回。</li>
+</ul>
+<p>跨数据库两段提交事务：2PC (two-phase commit)， 2PC is the anti-scalability pattern (Pat Helland) 是 <code>反可伸缩模式</code> 的，JavaEE中的JTA事务可以支持2PC。因为2PC是反模式，尽量不要使用2PC，使用 <code>BASE</code> 来回避。</p>
+<h1 id="BASE模型"><a href="#BASE模型" class="headerlink" title="BASE模型"></a>BASE模型</h1><p>BASE模型反ACID模型，完全不同ACID模型，牺牲高一致性，获得可用性或可靠性：</p>
+<ul>
+<li>Basically Available 基本可用, 支持分区失败(e.g. sharding碎片划分数据库)</li>
+<li>Soft state 软状态, 状态可以有一段时间不同步，异步。</li>
+<li>Eventually consistent 最终一致, 最终数据是一致的就可以了, 而不是时时高一致。</li>
+</ul>
+<p>BASE思想的主要实现有</p>
+<ul>
+<li>按功能划分数据库</li>
+<li>Sharding 分片 </li>
+</ul>
+<p>BASE思想主要强调基本的可用性，如果你需要很高的可用性，也就是纯粹的高性能，那么就要以一致性或容忍性为牺牲，BASE思想的方案在性能上还是有潜力可挖的。</p>
+</div></article><div class="tags"><a href="/tags/CAP/">CAP</a></div><div class="paginator"><a href="/2018/02/02/磨刀/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2018/02/01/sharding-jdbc/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2018/02/02/分布式领域CAP理论/';
+    this.page.identifier = '2018/02/02/分布式领域CAP理论/';
+    this.page.title = '分布式领域CAP理论';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p>&copy;2018<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">小龙哥</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
