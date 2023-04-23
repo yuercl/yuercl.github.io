@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="原文：Linux 计划任务 — crontab 作者：singleseeker cron 简介cron 是 UNIX, SOLARIS，LINUX 下的一个十分有用的工具。通过 cron 脚本能使计划任务定期地在系统后台自动运行。 cron 命令 crontab -e – 编辑该用户的 crontab，当指定 crontab 不存在时新建。 crontab -l – 列出该用户的 crontab。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 计划任务 — crontab">
+<meta property="og:url" content="http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="原文：Linux 计划任务 — crontab 作者：singleseeker cron 简介cron 是 UNIX, SOLARIS，LINUX 下的一个十分有用的工具。通过 cron 脚本能使计划任务定期地在系统后台自动运行。 cron 命令 crontab -e – 编辑该用户的 crontab，当指定 crontab 不存在时新建。 crontab -l – 列出该用户的 crontab。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-09-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.454Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="cron">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux 计划任务 — crontab</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2013/10/31/curl_sed_awk%E5%88%9D%E6%8E%A2%E4%B9%8B%E6%B8%85%E6%B0%B4%E6%B2%B3%E7%95%94%E7%99%BB%E5%BD%95%E8%84%9A%E6%9C%AC/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2013/07/03/linux-redis-publish&subscribe-php/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&text=Linux 计划任务 — crontab"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&is_video=false&description=Linux 计划任务 — crontab"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 计划任务 — crontab&body=Check out this article: http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&name=Linux 计划任务 — crontab&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&t=Linux 计划任务 — crontab"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cron-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">cron 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cron-%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">cron 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-Crontab-%E6%A0%BC%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">Linux Crontab 格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cron-%E5%AE%9E%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">cron 实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E6%89%A7%E8%A1%8C"><span class="toc-number">4.1.</span> <span class="toc-text">1. 特定时间执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%89%E6%8E%92%E5%A4%9A%E4%B8%AA%E5%AE%9E%E4%BE%8B%EF%BC%88%E6%AF%94%E5%A6%82%E4%B8%80%E5%A4%A9%E6%89%A7%E8%A1%8C%E4%B8%A4%E6%AC%A1%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">2. 安排多个实例（比如一天执行两次）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%A9%E4%BB%BB%E5%8A%A1%E5%8F%AA%E5%9C%A8%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E6%89%A7%E8%A1%8C%EF%BC%88%E6%AF%94%E5%A6%82%E4%BB%85%E5%BD%93%E5%B7%A5%E4%BD%9C%E6%97%A5%E6%97%B6%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">3. 让任务只在特定时间执行（比如仅当工作日时执行）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B-cron-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.4.</span> <span class="toc-text">4. 如何查看 cron 定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A6%82%E4%BD%95%E7%BC%96%E8%BE%91-cron-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.5.</span> <span class="toc-text">5. 如何编辑 cron 定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%AE%89%E6%8E%92%E6%AF%8F%E5%88%86%E9%92%9F%E9%83%BD%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.6.</span> <span class="toc-text">6. 安排每分钟都执行定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%AE%89%E6%8E%92%E5%90%8E%E5%8F%B0%E6%AF%8F%E5%8D%81%E5%88%86%E9%92%9F%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.7.</span> <span class="toc-text">7. 安排后台每十分钟执行定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%AF%8F%E4%B8%80%E5%B9%B4%E7%9A%84%E7%AC%AC%E4%B8%80%E5%88%86%E9%92%9F%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-yearly%EF%BC%89"><span class="toc-number">4.8.</span> <span class="toc-text">8. 每一年的第一分钟执行定时任务（@yearly）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E6%AF%8F%E6%9C%88%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-mothly%EF%BC%89"><span class="toc-number">4.9.</span> <span class="toc-text">9. 每月执行定时任务（@mothly）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E6%AF%8F%E5%A4%A9%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-daily%EF%BC%89"><span class="toc-number">4.10.</span> <span class="toc-text">10. 每天执行定时任务（@daily）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%AF%8F%E6%AC%A1%E9%87%8D%E5%90%AF%E6%97%B6%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-reboot%EF%BC%89"><span class="toc-number">4.11.</span> <span class="toc-text">11. 每次重启时执行定时任务（@reboot）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%A6%82%E4%BD%95%E7%94%A8-mail-%E5%85%B3%E9%94%AE%E5%AD%97%E7%A6%81%E6%AD%A2-x2F-%E9%87%8D%E5%AE%9A%E5%90%91-cron-%E7%9A%84%E9%82%AE%E4%BB%B6"><span class="toc-number">4.12.</span> <span class="toc-text">12. 如何用 mail 关键字禁止&#x2F;重定向 cron 的邮件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E5%A6%82%E4%BD%95%E7%B3%BB%E7%A7%92%E6%AF%8F%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.13.</span> <span class="toc-text">13. 如何系秒每执行一个定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-cron-%E4%B8%AD%E7%9A%84-PATH-%E5%8F%98%E9%87%8F"><span class="toc-number">4.14.</span> <span class="toc-text">14. cron 中的 PATH 变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E4%BB%8E-cron-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AE%9A%E4%B9%89-cron-%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.15.</span> <span class="toc-text">15. 从 cron 文件中定义 cron 任务</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux 计划任务 — crontab
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2013-09-21T16:00:00.000Z" class="dt-published" itemprop="datePublished">2013-09-22</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/cron/" rel="tag">cron</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>原文：<a target="_blank" rel="noopener" href="http://letcodefly.com/article/1">Linux 计划任务 — crontab</a></p>
+<p>作者：<a target="_blank" rel="noopener" href="http://weibo.com/singleseeker">singleseeker</a></p>
+<h2 id="cron-简介"><a href="#cron-简介" class="headerlink" title="cron 简介"></a>cron 简介</h2><p><code>cron</code> 是 UNIX, SOLARIS，LINUX 下的一个十分有用的工具。通过 <code>cron</code> 脚本能使计划任务定期地在系统后台自动运行。</p>
+<h2 id="cron-命令"><a href="#cron-命令" class="headerlink" title="cron 命令"></a>cron 命令</h2><ul>
+<li><code>crontab -e</code> – 编辑该用户的 crontab，当指定 crontab 不存在时新建。</li>
+<li><code>crontab -l</code> – 列出该用户的 crontab。</li>
+<li><code>crontab -r</code> – 删除该用户的 crontab。</li>
+<li><code>crontab -u&lt;用户名称&gt;</code> – 指定要设定 crontab 的用户名称。</li>
+</ul>
+<h2 id="Linux-Crontab-格式"><a href="#Linux-Crontab-格式" class="headerlink" title="Linux Crontab 格式"></a>Linux Crontab 格式</h2><p>表格: Crontab 字段与允许的值 (Linux Crontab)</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>描述</th>
+<th>允许的值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分钟</td>
+<td>一小时的第几分</td>
+<td>0-59</td>
+</tr>
+<tr>
+<td>小时</td>
+<td>一天的第几小时</td>
+<td>0-23</td>
+</tr>
+<tr>
+<td>日期</td>
+<td>一个月的的第几天</td>
+<td>1-31</td>
+</tr>
+<tr>
+<td>月份</td>
+<td>一年的第几个月</td>
+<td>1-12</td>
+</tr>
+<tr>
+<td>周几</td>
+<td>一周的第几天</td>
+<td>0-6</td>
+</tr>
+<tr>
+<td>命令</td>
+<td>命令</td>
+<td>可以被执行的任何命令</td>
+</tr>
+</tbody></table>
+<h2 id="cron-实例"><a href="#cron-实例" class="headerlink" title="cron 实例"></a>cron 实例</h2><h3 id="1-特定时间执行"><a href="#1-特定时间执行" class="headerlink" title="1. 特定时间执行"></a>1. 特定时间执行</h3><p>cron 的基本用法是在特定的时间执行一项任务，如下是 6 月 10 上午 8:30 执行 Full backup shell script。<br><strong>要注意的是时间字段采用的是 24 小时制，如果是下午 8 点，则改写为 20 点</strong></p>
+<pre><code>30 08 10 06 * /home/ramesh/full-backup
+</code></pre>
+<ul>
+<li><code>30</code> – 第 30 分钟</li>
+<li><code>08</code> – 早上 8 点</li>
+<li><code>10</code> – 10 号</li>
+<li><code>06</code> – 第 6 个月 (6 月)</li>
+<li><code>*</code> – 一周的任何一天</li>
+</ul>
+<h3 id="2-安排多个实例（比如一天执行两次）"><a href="#2-安排多个实例（比如一天执行两次）" class="headerlink" title="2. 安排多个实例（比如一天执行两次）"></a>2. 安排多个实例（比如一天执行两次）</h3><p>下面的增量备份脚本每天执行两次。</p>
+<p>每天于 11:00, 16:00 执行，逗号两侧的时间都会执行。</p>
+<pre><code>00 11,16 * * * /home/ramesh/bin/incremental-backup
+</code></pre>
+<ul>
+<li><code>00</code> – 第 0 分钟 (每小时开时)</li>
+<li><code>11,16</code> – 早上 11 点与下午 4 点</li>
+<li><code>*</code> – 每天</li>
+<li><code>*</code> – 每个月</li>
+<li><code>*</code> – 一周的任何一天</li>
+</ul>
+<h3 id="3-让任务只在特定时间执行（比如仅当工作日时执行）"><a href="#3-让任务只在特定时间执行（比如仅当工作日时执行）" class="headerlink" title="3. 让任务只在特定时间执行（比如仅当工作日时执行）"></a>3. 让任务只在特定时间执行（比如仅当工作日时执行）</h3><p>下面这个例子是每天 9:00-16:00 检查数据库状态（包括周六）</p>
+<pre><code>00 09-18 * * * /home/ramesh/bin/check-db-status
+</code></pre>
+<ul>
+<li><code>00</code> – 第 0 分钟 (每小时开时)</li>
+<li><code>09-18</code> – 9 点, 10 点, 11 点, 12 点, 下午 1 点, 下午 2 点, 下午 3 点, 下午 4 点, 下午 5 点, 下午 6 点</li>
+<li><code>*</code> – 每天</li>
+<li><code>*</code> – 每个月</li>
+<li><code>*</code> – 一周的任何一天</li>
+</ul>
+<p>如果只想工作日执行此操作</p>
+<pre><code>00 09-18 * * 1-5 /home/ramesh/bin/check-db-status
+</code></pre>
+<ul>
+<li><code>00</code> – 第 0 分钟 (每小时开时)</li>
+<li><code>09-18</code> – 9 点, 10 点, 11 点, 12 点, 下午 1 点, 下午 2 点, 下午 3 点, 下午 4 点, 下午 5 点, 下午 6 点</li>
+<li><code>*</code> – 每天</li>
+<li><code>*</code> – 每个月</li>
+<li><code>1-5</code> – 周一, 周二, 周三, 周四和周五 (工作日)</li>
+</ul>
+<h3 id="4-如何查看-cron-定时任务"><a href="#4-如何查看-cron-定时任务" class="headerlink" title="4. 如何查看 cron 定时任务"></a>4. 如何查看 cron 定时任务</h3><p>查看当前用户定时任务</p>
+<pre><code>ramesh@dev-db$ crontab -l
+</code></pre>
+<p>查看 ROOT 用户定时任务，用root登入su root，再执行 <code>crontab -l</code></p>
+<pre><code>root@dev-db# crontab -l
+no crontab for root
+</code></pre>
+<p>查看其它用户定时任务</p>
+<pre><code>root@dev-db# crontab -u sathiya -l
+@monthly /home/sathiya/monthly-backup
+00 09-18 * * * /home/sathiya/check-db-status
+</code></pre>
+<h3 id="5-如何编辑-cron-定时任务"><a href="#5-如何编辑-cron-定时任务" class="headerlink" title="5. 如何编辑 cron 定时任务"></a>5. 如何编辑 cron 定时任务</h3><pre><code>ramesh@dev-db$ crontab -e
+</code></pre>
+<h3 id="6-安排每分钟都执行定时任务"><a href="#6-安排每分钟都执行定时任务" class="headerlink" title="6. 安排每分钟都执行定时任务"></a>6. 安排每分钟都执行定时任务</h3><p>理论情况下，没有每分钟都要执行的 shell，但下面这个例子，让我们更好的了解 crontab</p>
+<pre><code>* * * * * 命令
+</code></pre>
+<p><code>*</code> 代表着所有可能取到的值，除了直接用 <code>*</code> 外，下面的几个例子也较为常用</p>
+<ul>
+<li>当指定 <code>*/5</code> 在分钟字段，代表每五分钟。</li>
+<li>当指定 <code>0-10/2</code> 在分钟字段，代表在前十分钟的每两分钟</li>
+</ul>
+<p>上面的例子对于其它四个字段同样试用</p>
+<h3 id="7-安排后台每十分钟执行定时任务"><a href="#7-安排后台每十分钟执行定时任务" class="headerlink" title="7. 安排后台每十分钟执行定时任务"></a>7. 安排后台每十分钟执行定时任务</h3><pre><code>*/10 * * * * /home/ramesh/check-disk-space
+</code></pre>
+<p>有一些特殊的例子，可以用关键字替代上述五个字段– <code>reboot</code>, <code>midnight</code>, <code>yearly</code>, <code>hourly</code></p>
+<p>Table: Cron special keywords and its meaning</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Equivalent</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@yearly</td>
+<td>0 0 1 1 *</td>
+</tr>
+<tr>
+<td>@daily</td>
+<td>0 0 * * *</td>
+</tr>
+<tr>
+<td>@hourly</td>
+<td>0 * * * *</td>
+</tr>
+<tr>
+<td>@reboot</td>
+<td>重启时运行</td>
+</tr>
+</tbody></table>
+<h3 id="8-每一年的第一分钟执行定时任务（-yearly）"><a href="#8-每一年的第一分钟执行定时任务（-yearly）" class="headerlink" title="8. 每一年的第一分钟执行定时任务（@yearly）"></a>8. 每一年的第一分钟执行定时任务（@yearly）</h3><p>下面的例子将在每一年的 1 月 1 日 0:00 执行</p>
+<pre><code>@yearly /home/ramesh/red-hat/bin/annual-maintenance
+</code></pre>
+<h3 id="9-每月执行定时任务（-mothly）"><a href="#9-每月执行定时任务（-mothly）" class="headerlink" title="9. 每月执行定时任务（@mothly）"></a>9. 每月执行定时任务（@mothly）</h3><p>下面的例子将在每月 1 日 0:00 执行</p>
+<pre><code>@monthly /home/ramesh/suse/bin/tape-backup
+</code></pre>
+<h3 id="10-每天执行定时任务（-daily）"><a href="#10-每天执行定时任务（-daily）" class="headerlink" title="10. 每天执行定时任务（@daily）"></a>10. 每天执行定时任务（@daily）</h3><p>下面的例子将在每天 0:00 执行</p>
+<pre><code>@daily /home/ramesh/arch-linux/bin/cleanup-logs &quot;day started&quot;
+</code></pre>
+<h3 id="11-每次重启时执行定时任务（-reboot）"><a href="#11-每次重启时执行定时任务（-reboot）" class="headerlink" title="11. 每次重启时执行定时任务（@reboot）"></a>11. 每次重启时执行定时任务（@reboot）</h3><pre><code>@reboot CMD
+</code></pre>
+<h3 id="12-如何用-mail-关键字禁止-x2F-重定向-cron-的邮件"><a href="#12-如何用-mail-关键字禁止-x2F-重定向-cron-的邮件" class="headerlink" title="12. 如何用 mail 关键字禁止&#x2F;重定向 cron 的邮件"></a>12. 如何用 mail 关键字禁止&#x2F;重定向 cron 的邮件</h3><p>默认情况下，crontab 将向布置定时任务的管理员发送邮件，如果想重定向此用户，添加并更新 MAIL</p>
+<pre><code>ramesh@dev-db$ crontab -l
+MAIL=&quot;ramesh&quot;
+
+@yearly /home/ramesh/annual-maintenance
+*/10 * * * * /home/ramesh/check-disk-space
+</code></pre>
+<p>如果不想任何人接收，则直接将 MAIL 置空</p>
+<h3 id="13-如何系秒每执行一个定时任务"><a href="#13-如何系秒每执行一个定时任务" class="headerlink" title="13. 如何系秒每执行一个定时任务"></a>13. 如何系秒每执行一个定时任务</h3><p>无法安排每秒执行，因为最小处理单元是分钟，另一方面，没有什么理由让我们每秒都执行一任务</p>
+<h3 id="14-cron-中的-PATH-变量"><a href="#14-cron-中的-PATH-变量" class="headerlink" title="14. cron 中的 PATH 变量"></a>14. cron 中的 PATH 变量</h3><p>上面的例子都是用绝对的路径</p>
+<p>如果你想用相对的路径，设置环境变量可以在 crontab 增加</p>
+<pre><code>ramesh@dev-db$ crontab -l
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/home/ramesh
+
+@yearly annual-maintenance
+*/10 * * * * check-disk-space
+</code></pre>
+<h3 id="15-从-cron-文件中定义-cron-任务"><a href="#15-从-cron-文件中定义-cron-任务" class="headerlink" title="15. 从 cron 文件中定义 cron 任务"></a>15. 从 cron 文件中定义 cron 任务</h3><p>除了直接编辑外，你也可以先在一个文件中编辑好任务，再导入</p>
+<pre><code>ramesh@dev-db$ crontab -l
+no crontab for ramesh
+
+$ cat cron-file.txt
+@yearly /home/ramesh/annual-maintenance
+*/10 * * * * /home/ramesh/check-disk-space
+
+ramesh@dev-db$ crontab cron-file.txt
+
+ramesh@dev-db$ crontab -l
+@yearly /home/ramesh/annual-maintenance
+
+*/10 * * * * /home/ramesh/check-disk-space
+</code></pre>
+<p>应用时要注意，此操作会删除原有的cron任务。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cron-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">cron 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cron-%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">cron 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-Crontab-%E6%A0%BC%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">Linux Crontab 格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cron-%E5%AE%9E%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">cron 实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E6%89%A7%E8%A1%8C"><span class="toc-number">4.1.</span> <span class="toc-text">1. 特定时间执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%89%E6%8E%92%E5%A4%9A%E4%B8%AA%E5%AE%9E%E4%BE%8B%EF%BC%88%E6%AF%94%E5%A6%82%E4%B8%80%E5%A4%A9%E6%89%A7%E8%A1%8C%E4%B8%A4%E6%AC%A1%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">2. 安排多个实例（比如一天执行两次）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%A9%E4%BB%BB%E5%8A%A1%E5%8F%AA%E5%9C%A8%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E6%89%A7%E8%A1%8C%EF%BC%88%E6%AF%94%E5%A6%82%E4%BB%85%E5%BD%93%E5%B7%A5%E4%BD%9C%E6%97%A5%E6%97%B6%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">3. 让任务只在特定时间执行（比如仅当工作日时执行）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B-cron-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.4.</span> <span class="toc-text">4. 如何查看 cron 定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A6%82%E4%BD%95%E7%BC%96%E8%BE%91-cron-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.5.</span> <span class="toc-text">5. 如何编辑 cron 定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%AE%89%E6%8E%92%E6%AF%8F%E5%88%86%E9%92%9F%E9%83%BD%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.6.</span> <span class="toc-text">6. 安排每分钟都执行定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%AE%89%E6%8E%92%E5%90%8E%E5%8F%B0%E6%AF%8F%E5%8D%81%E5%88%86%E9%92%9F%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.7.</span> <span class="toc-text">7. 安排后台每十分钟执行定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%AF%8F%E4%B8%80%E5%B9%B4%E7%9A%84%E7%AC%AC%E4%B8%80%E5%88%86%E9%92%9F%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-yearly%EF%BC%89"><span class="toc-number">4.8.</span> <span class="toc-text">8. 每一年的第一分钟执行定时任务（@yearly）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E6%AF%8F%E6%9C%88%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-mothly%EF%BC%89"><span class="toc-number">4.9.</span> <span class="toc-text">9. 每月执行定时任务（@mothly）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E6%AF%8F%E5%A4%A9%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-daily%EF%BC%89"><span class="toc-number">4.10.</span> <span class="toc-text">10. 每天执行定时任务（@daily）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%AF%8F%E6%AC%A1%E9%87%8D%E5%90%AF%E6%97%B6%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%EF%BC%88-reboot%EF%BC%89"><span class="toc-number">4.11.</span> <span class="toc-text">11. 每次重启时执行定时任务（@reboot）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%A6%82%E4%BD%95%E7%94%A8-mail-%E5%85%B3%E9%94%AE%E5%AD%97%E7%A6%81%E6%AD%A2-x2F-%E9%87%8D%E5%AE%9A%E5%90%91-cron-%E7%9A%84%E9%82%AE%E4%BB%B6"><span class="toc-number">4.12.</span> <span class="toc-text">12. 如何用 mail 关键字禁止&#x2F;重定向 cron 的邮件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E5%A6%82%E4%BD%95%E7%B3%BB%E7%A7%92%E6%AF%8F%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.13.</span> <span class="toc-text">13. 如何系秒每执行一个定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-cron-%E4%B8%AD%E7%9A%84-PATH-%E5%8F%98%E9%87%8F"><span class="toc-number">4.14.</span> <span class="toc-text">14. cron 中的 PATH 变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E4%BB%8E-cron-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AE%9A%E4%B9%89-cron-%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.15.</span> <span class="toc-text">15. 从 cron 文件中定义 cron 任务</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&text=Linux 计划任务 — crontab"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&is_video=false&description=Linux 计划任务 — crontab"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 计划任务 — crontab&body=Check out this article: http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&title=Linux 计划任务 — crontab"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&name=Linux 计划任务 — crontab&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2013/09/21/Linux%20%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%20%E2%80%94%20crontab/&t=Linux 计划任务 — crontab"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

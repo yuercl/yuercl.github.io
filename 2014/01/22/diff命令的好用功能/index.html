@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。 最常用的功能莫过于生成patch文件了： diff -urN old&#x2F; new&#x2F; &gt; mysoft.patch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="diff命令的好用功能">
+<meta property="og:url" content="http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。 最常用的功能莫过于生成patch文件了： diff -urN old&#x2F; new&#x2F; &gt; mysoft.patch">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-01-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.458Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="diff">
+<meta property="article:tag" content="patch">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>diff命令的好用功能</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2014/01/07/OpenCV%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%EF%BC%8C%E9%85%8D%E7%BD%AE%EF%BC%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&text=diff命令的好用功能"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&is_video=false&description=diff命令的好用功能"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=diff命令的好用功能&body=Check out this article: http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&name=diff命令的好用功能&description=&lt;p&gt;GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。&lt;/p&gt;
+&lt;p&gt;最常用的功能莫过于生成patch文件了：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;diff -urN old/ new/ &amp;gt; mysoft.patch
+&lt;/code&gt;&lt;/pre&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&t=diff命令的好用功能"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#patch%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">patch文件的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%A5%E4%B8%81%E5%A4%B4"><span class="toc-number">1.1.</span> <span class="toc-text">补丁头</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9D%97"><span class="toc-number">1.2.</span> <span class="toc-text">块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9D%97%E7%9A%84%E7%BC%A9%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">块的缩进</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        diff命令的好用功能
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2014-01-22T16:00:00.000Z" class="dt-published" itemprop="datePublished">2014-01-23</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/diff/" rel="tag">diff</a>, <a class="p-category" href="/tags/linux/" rel="tag">linux</a>, <a class="p-category" href="/tags/patch/" rel="tag">patch</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。</p>
+<p>最常用的功能莫过于生成patch文件了：</p>
+<pre><code>diff -urN old/ new/ &gt; mysoft.patch
+</code></pre>
+<span id="more"></span>
+
+<p>参数 <code>-u</code> 表示使用 <code>unified</code>格式，<code>-r</code> 表示比较目录，<code>-N</code> 表示将不存在的文件当作空文件处理， 这样新添加的文件也会出现在patch文件中。</p>
+<p>然后在需要应用patch的地方使用下述命令即可：</p>
+<pre><code>patch -p0 &lt; mysoft.patch
+</code></pre>
+<p>diff的 <code>-y</code> 命令（长格式为<code>--side-by-side</code>）可以将屏幕分成左右两部分，来比较两个文件之间的差异。<br>许多图形化的比较工具都有这个功能，但如果只能使用命令行，这个参数就相当有用了。 如果要改变左右各部分的宽度，可以通过<code> -W（--width）</code>参数来指定。  </p>
+<p>此外，<code>--strip-trailing-cr</code> 参数可以去除行尾的换行，这样DOS格式和Unix格式的文件互相比较时， 就不至于因为换行符不一致而出现大量的差异。</p>
+<p>patch</p>
+<pre><code>－－－－－－－－－－－－－－－－－－
+NAME
+   patch - apply a diff file to an original
+SYNOPSIS
+   patch [options] [originalfile [patchfile]]
+   but usually just
+   patch -pnum &lt;patchfile&gt;
+－－－－－－－－－－－－－－－－－－
+</code></pre>
+<p>简单的说，patch就是利用diff制作的补丁来实现源文件（夹）和目的文件（夹）的转换。这样说就意味着你可以有源文件（夹）–&gt; 目的文件（夹），也可以目的文件（夹）–&gt; 源文件（夹）。下面介绍几个最常用选项：</p>
+<pre><code>-p0 选项要从当前目录查找目的文件（夹）
+-p1 选项要忽略掉第一层目录，从当前目录开始查找。
+</code></pre>
+<h4 id="patch文件的结构"><a href="#patch文件的结构" class="headerlink" title="patch文件的结构"></a>patch文件的结构</h4><h5 id="补丁头"><a href="#补丁头" class="headerlink" title="补丁头"></a>补丁头</h5><p>补丁头是分别由—&#x2F;+++开头的两行，用来表示要打补丁的文件。—开头表示旧文件，+++开头表示新文件。</p>
+<p>一个补丁文件中的多个补丁</p>
+<p>一个补丁文件中可能包含以—&#x2F;+++开头的很多节，每一节用来打一个补丁。所以在一个补丁文件中可以包含好多个补丁。</p>
+<h5 id="块"><a href="#块" class="headerlink" title="块"></a>块</h5><p>块是补丁中要修改的地方。它通常由一部分不用修改的东西开始和结束。他们只是用来表示要修改的位置。他们通常以@@开始，结束于另一个块的开始或者一个新的补丁头。</p>
+<h5 id="块的缩进"><a href="#块的缩进" class="headerlink" title="块的缩进"></a>块的缩进</h5><p>块会缩进一列，而这一列是用来表示这一行是要增加还是要删除的。<br>块的第一列</p>
+<p>+号表示这一行是要加上的。</p>
+<p>-号表示这一行是要删除的。</p>
+<p>没有加号也没有减号表示这里只是引用的而不需要修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">   用法：diff [选项]... FILES</span><br><span class="line">逐行比较文件。</span><br><span class="line"></span><br><span class="line">  -i  --ignore-case  忽略文件内容大小写的区别。</span><br><span class="line">  --ignore-file-name-case  忽略文件名大小写的区别。</span><br><span class="line">  --no-ignore-file-name-case  不忽略文件名大小写的区别。</span><br><span class="line">  -E  --ignore-tab-expansion  忽略由制表符宽度造成的差异。</span><br><span class="line">  -b  --ignore-space-change  忽略由空格数不同造成的差异。</span><br><span class="line">  -w  --ignore-all-space   忽略所有空格。</span><br><span class="line">  -B  --ignore-blank-lines  忽略任何因空行而造成的差异。</span><br><span class="line">  -I RE  --ignore-matching-lines=RE  如果某行匹配正则表达式，则忽略由该行造成的差异。</span><br><span class="line">  --strip-trailing-cr  去除输入内容每行末端的 carriage <span class="built_in">return</span> 字符。</span><br><span class="line">  -a  --text  所有文件都以文本方式处理。</span><br><span class="line"></span><br><span class="line">  -c  -C 行数  --context[=行数]  显示指定&lt;行数&gt;(默认 3 行)copied 格式的上下文</span><br><span class="line">  -u  -U 行数  --unified[=行数]  显示指定&lt;行数&gt;(默认 3 行)unified 格式的上下文</span><br><span class="line">     --label 标识                       使用&lt;标识&gt;代替文件名称。</span><br><span class="line">     -p  --show-c-function           显示和每个差异有关的 C 函数名称。</span><br><span class="line">    -F RE  --show-function-line=RE  显示最接近而符合&lt;正则表示式&gt;的一行。</span><br><span class="line">  -q  --brief  只显示文件是否不同。</span><br><span class="line">  -e  --ed 以 ed script 方式输出。</span><br><span class="line">  --normal 以正常的 diff 方式输出。</span><br><span class="line">  -n  --rcs  以 RCS diff 格式输出。</span><br><span class="line">  -y  --side-by-side         以两列并排的方式显示。</span><br><span class="line">    -W NUM  --width=NUM      每行显示最多 NUM (默认 130) 个字符。</span><br><span class="line">    --left-column            当有两行相同时只显示左边的一行。</span><br><span class="line">    --suppress-common-lines  当有两行相同时不会显示。</span><br><span class="line">  -D NAME  --ifdef=NAME  输出的内容以‘<span class="comment">#ifdef NAME’方式标明差异。</span></span><br><span class="line">  --GTYPE-group-format=GFMT  效果类似，但会以 GFMT 格式处理 GTYPE 输入的行。</span><br><span class="line">  --line-format=LFMT  效果类似，但会以 LFMT 格式处理每一行资料。</span><br><span class="line">  --LTYPE-line-format=LFMT   效果类似，但会以 LFMT 格式处理 LTYPE 输入的行。</span><br><span class="line">    LTYPE 可以是‘old’、‘new’或‘unchanged’。GTYPE 可以是 LTYPE 的选择</span><br><span class="line">    或是‘changed’。</span><br><span class="line">    GFMT 可包括：</span><br><span class="line">      %&lt;  该组中每行属于 FILE1 的差异</span><br><span class="line">      %&gt;  该组中每行属于 FILE2 的差异</span><br><span class="line">      %=  该组中同时在 FILE1 和 FILE2 出现的每一行</span><br><span class="line">      %[-][宽度][.[精确度]]&#123;doxX&#125;字符  以 <span class="built_in">printf</span> 格式表示该&lt;字符&gt;代表的内容</span><br><span class="line">        大写&lt;字符&gt;表示属于新的文件，小写表示属于旧的文件。&lt;字符&gt;的意义如下：</span><br><span class="line">          F  行组中第一行的行号</span><br><span class="line">          L  行组中最后一行的行号</span><br><span class="line">          N  行数 ( =L-F+1 )</span><br><span class="line">          E  F-1</span><br><span class="line">          M  L+1</span><br><span class="line">    LFMT 可包括：</span><br><span class="line">      %L  该行的内容</span><br><span class="line">      %l  该行的内容，但不包括结束的 newline 字符</span><br><span class="line">      %[-][宽度][.[精确度]]&#123;doxX&#125;n  以 <span class="built_in">printf</span> 格式表示的输入资料行号</span><br><span class="line">    GFMT 或 LFMT 可包括：</span><br><span class="line">      %%        %</span><br><span class="line">      %c<span class="string">&#x27;C&#x27;</span>     字符 C</span><br><span class="line">      %c<span class="string">&#x27;\OOO&#x27;</span>  八进制数字OOO所代表的字符</span><br><span class="line"></span><br><span class="line">  -l  --paginate 将输出送至‘<span class="built_in">pr</span>’指令来分页。</span><br><span class="line">  -t  --expand-tabs  将输出中的 tab 转换成空格。</span><br><span class="line">  -T  --initial-tab  每行先加上 tab 字符，使 tab 字符可以对齐。</span><br><span class="line"></span><br><span class="line">  -r  --recursive  连同所有子目录一起比较。</span><br><span class="line">  -N  --new-file  不存在的文件以空文件方式处理。</span><br><span class="line">  --unidirectional-new-file  若第一文件案不存在，以空文件处理。</span><br><span class="line">  -s  --report-identical-files   当两个一样时仍然显示结果。</span><br><span class="line">  -x PAT  --exclude=PAT  排除匹配 PAT 的文件。</span><br><span class="line">  -X FILE  --exclude-from=FILE   排除所有匹配在 FILE 中列出的模式的文件。</span><br><span class="line">  -S FILE  --starting-file=FILE  当比较目录時，由 FILE 开始比较。</span><br><span class="line">  --from-file=FILE1  将 FILE1 和操作数中的所有文件/目录作比较。FILE1 可以是目录。</span><br><span class="line">  --to-file=FILE2    将操作数中的所有文件/目录和 FILE2 作比较。FILE2 可以是目录。</span><br><span class="line"></span><br><span class="line">  --horizon-lines=NUM      (此选项不做处理)</span><br><span class="line">  -d  --minimal  尽可能找出最小的差异。</span><br><span class="line">  --speed-large-files     假设文件十分大而且其中含有许多微小的差异。</span><br><span class="line"></span><br><span class="line">  -v  --version  输出版本信息。</span><br><span class="line">  --<span class="built_in">help</span>  输入本帮助。</span><br><span class="line"></span><br><span class="line">  FILES 的格式可以是‘FILE1 FILE2’、‘DIR1 DIR2’、‘DIR FILE...’或</span><br><span class="line">      ‘FILE... DIR’。</span><br><span class="line">如果使用 --from-file 或 --to-file 选项，FILES 的格式则不受限制。</span><br><span class="line">如果 FILE 是‘-’，则由标准输入读取内容。</span><br><span class="line"></span><br><span class="line">请向 &lt;bug-gnu-utils@gnu.org&gt; 报告错误。</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#patch%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">patch文件的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%A5%E4%B8%81%E5%A4%B4"><span class="toc-number">1.1.</span> <span class="toc-text">补丁头</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9D%97"><span class="toc-number">1.2.</span> <span class="toc-text">块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9D%97%E7%9A%84%E7%BC%A9%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">块的缩进</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&text=diff命令的好用功能"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&is_video=false&description=diff命令的好用功能"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=diff命令的好用功能&body=Check out this article: http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&title=diff命令的好用功能"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&name=diff命令的好用功能&description=&lt;p&gt;GNU diff有很多功能平时我们不常用到，但若知道，在急需时还真能派得上用场,尤其是他妈的说要更新线上代码的时候。&lt;/p&gt;
+&lt;p&gt;最常用的功能莫过于生成patch文件了：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;diff -urN old/ new/ &amp;gt; mysoft.patch
+&lt;/code&gt;&lt;/pre&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/&t=diff命令的好用功能"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

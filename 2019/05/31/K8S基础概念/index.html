@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="1、NodeNode作为集群中的工作节点，运行真正的应用程序，在Node上Kubernetes管理的最小运行单元是Pod。Node上运行着Kubernetes的Kubelet、kube-proxy服务进程，这些服务进程负责Pod的创建、启动、监控、重启、销毁、以及实现软件模式的负载均衡。 Node包含的信息：  Node地址：主机的IP地址，或Node ID。 Node的运行状态：Pending、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8S基础概念">
+<meta property="og:url" content="http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="1、NodeNode作为集群中的工作节点，运行真正的应用程序，在Node上Kubernetes管理的最小运行单元是Pod。Node上运行着Kubernetes的Kubelet、kube-proxy服务进程，这些服务进程负责Pod的创建、启动、监控、重启、销毁、以及实现软件模式的负载均衡。 Node包含的信息：  Node地址：主机的IP地址，或Node ID。 Node的运行状态：Pending、">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://notes.zgrep.me/assets/images/k8s-pod.jpg">
+<meta property="article:published_time" content="2019-05-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.454Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="DevOps">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://notes.zgrep.me/assets/images/k8s-pod.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>K8S基础概念</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/02/08/%E7%BB%8F%E6%B5%8E%E5%8F%91%E5%B1%95%E7%90%86%E8%AE%BA/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2019/05/31/Let's%20Encrypt%20%E5%85%8D%E8%B4%B9%E9%80%9A%E9%85%8D%E7%AC%A6%20SSL%20%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7%E6%95%99%E7%A8%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&text=K8S基础概念"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&is_video=false&description=K8S基础概念"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=K8S基础概念&body=Check out this article: http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&name=K8S基础概念&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&t=K8S基础概念"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Node"><span class="toc-number">1.</span> <span class="toc-text">1、Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Pod"><span class="toc-number">2.</span> <span class="toc-text">2、Pod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Service"><span class="toc-number">3.</span> <span class="toc-text">3、Service</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NodePort"><span class="toc-number">3.1.</span> <span class="toc-text">NodePort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81Volume"><span class="toc-number">4.</span> <span class="toc-text">4、Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81Label"><span class="toc-number">5.</span> <span class="toc-text">5、Label</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81RC%EF%BC%88Replication-Controller%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">6、RC（Replication Controller）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81mirror-of-kube-config"><span class="toc-number">7.</span> <span class="toc-text">7、mirror of kube-config</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        K8S基础概念
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-05-31T16:00:00.000Z" class="dt-published" itemprop="datePublished">2019-06-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/DevOps/">DevOps</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/DevOps/" rel="tag">DevOps</a>, <a class="p-category" href="/tags/Kubernetes/" rel="tag">Kubernetes</a>, <a class="p-category" href="/tags/k8s/" rel="tag">k8s</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h3 id="1、Node"><a href="#1、Node" class="headerlink" title="1、Node"></a>1、Node</h3><p>Node作为集群中的工作节点，运行真正的应用程序，在Node上Kubernetes管理的最小运行单元是Pod。Node上运行着Kubernetes的Kubelet、kube-proxy服务进程，这些服务进程负责Pod的创建、启动、监控、重启、销毁、以及实现软件模式的负载均衡。</p>
+<p>Node包含的信息：</p>
+<ul>
+<li>Node地址：主机的IP地址，或Node ID。</li>
+<li>Node的运行状态：Pending、Running、Terminated三种状态。</li>
+<li>Node Condition：…</li>
+<li>Node系统容量：描述Node可用的系统资源，包括CPU、内存、最大可调度Pod数量等。</li>
+<li>其他：内核版本号、Kubernetes版本等。</li>
+</ul>
+<p>查看Node信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、Pod"><a href="#2、Pod" class="headerlink" title="2、Pod"></a>2、Pod</h3><p>Pod是Kubernetes最基本的操作单元，包含一个或多个紧密相关的容器，一个Pod可以被一个容器化的环境看作应用层的“逻辑宿主机”；一个Pod中的多个容器应用通常是紧密耦合的，Pod在Node上被创建、启动或者销毁；每个Pod里运行着一个特殊的被称之为Pause的容器，其他容器则为业务容器，这些业务容器共享Pause容器的网络栈和Volume挂载卷，因此他们之间通信和数据交换更为高效，在设计时我们可以充分利用这一特性将一组密切相关的服务进程放入同一个Pod中。</p>
+<p>同一个Pod里的容器之间仅需通过localhost就能互相通信。</p>
+<p><img src="/assets/images/k8s-pod.jpg"></p>
+<p>一个Pod中的应用容器共享同一组资源：</p>
+<ul>
+<li>PID命名空间：Pod中的不同应用程序可以看到其他应用程序的进程ID；</li>
+<li>网络命名空间：Pod中的多个容器能够访问同一个IP和端口范围；</li>
+<li>IPC命名空间：Pod中的多个容器能够使用SystemV IPC或POSIX消息队列进行通信；</li>
+<li>UTS命名空间：Pod中的多个容器共享一个主机名；</li>
+<li>Volumes（共享存储卷）：Pod中的各个容器可以访问在Pod级别定义的Volumes；</li>
+</ul>
+<p>Pod的生命周期通过Replication Controller来管理；通过模板进行定义，然后分配到一个Node上运行，在Pod所包含容器运行结束后，Pod结束。</p>
+<p>Kubernetes为Pod设计了一套独特的网络配置，包括：为每个Pod分配一个IP地址，使用Pod名作为容器间通信的主机名等。</p>
+<h3 id="3、Service"><a href="#3、Service" class="headerlink" title="3、Service"></a>3、Service</h3><p>在Kubernetes的世界里，虽然每个Pod都会被分配一个单独的IP地址，但这个IP地址会随着Pod的销毁而消失，这就引出一个问题：如果有一组Pod组成一个集群来提供服务，那么如何来访问它呢？Service！</p>
+<p>一个Service可以看作一组提供相同服务的Pod的对外访问接口，Service作用于哪些Pod是通过Label Selector来定义的。</p>
+<ul>
+<li>拥有一个指定的名字（比如my-mysql-server）；</li>
+<li>拥有一个虚拟IP（Cluster IP、Service IP或VIP）和端口号，销毁之前不会改变，只能内网访问；</li>
+<li>能够提供某种远程服务能力；</li>
+<li>被映射到了提供这种服务能力的一组容器应用上；</li>
+<li>如果Service要提供外网服务，需指定公共IP和NodePort，或外部负载均衡器；</li>
+</ul>
+<h4 id="NodePort"><a href="#NodePort" class="headerlink" title="NodePort"></a>NodePort</h4><p>系统会在Kubernetes集群中的每个Node上打开一个主机的真实端口，这样，能够访问Node的客户端就能通过这个端口访问到内部的Service了</p>
+<h3 id="4、Volume"><a href="#4、Volume" class="headerlink" title="4、Volume"></a>4、Volume</h3><p>Volume是Pod中能够被多个容器访问的共享目录。</p>
+<h3 id="5、Label"><a href="#5、Label" class="headerlink" title="5、Label"></a>5、Label</h3><p>Label以key&#x2F;value的形式附加到各种对象上，如Pod、Service、RC、Node等，以识别这些对象，管理关联关系等，如Service和Pod的关联关系。</p>
+<h3 id="6、RC（Replication-Controller）"><a href="#6、RC（Replication-Controller）" class="headerlink" title="6、RC（Replication Controller）"></a>6、RC（Replication Controller）</h3><p>目标Pod的定义；</p>
+<ul>
+<li>目标Pod需要运行的副本数量；</li>
+<li>要监控的目标Pod标签（Lable）；</li>
+<li>Kubernetes通过RC中定义的Lable筛选出对应的Pod实例，并实时监控其状态和数量，如果实例数量少于定义的副本数量（Replicas），则会根据RC中定义的Pod模板来创建一个新的Pod，然后将此Pod调度到合适的Node上启动运行，直到Pod实例数量达到预定目标。</li>
+</ul>
+<h3 id="7、mirror-of-kube-config"><a href="#7、mirror-of-kube-config" class="headerlink" title="7、mirror of kube-config"></a>7、mirror of kube-config</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f http://mirror.faasx.com/kubernetes/heapster/deploy/kube-config/influxdb/influxdb.yaml</span><br><span class="line">kubectl create -f http://mirror.faasx.com/kubernetes/heapster/deploy/kube-config/influxdb/grafana.yaml</span><br><span class="line">kubectl create -f http://mirror.faasx.com/kubernetes/heapster/deploy/kube-config/influxdb/heapster.yaml</span><br><span class="line">kubectl create -f http://mirror.faasx.com/kubernetes/heapster/deploy/kube-config/rbac/heapster-rbac.yaml</span><br><span class="line"></span><br><span class="line">kubectl create -f https://raw.githubusercontent.com/kubernetes-retired/heapster/master/deploy/kube-config/influxdb/influxdb.yaml</span><br><span class="line">kubectl create -f https://raw.githubusercontent.com/kubernetes-retired/heapster/master/deploy/kube-config/influxdb/grafana.yaml</span><br><span class="line">kubectl create -f https://raw.githubusercontent.com/kubernetes-retired/heapster/master/deploy/kube-config/influxdb/heapster.yaml</span><br><span class="line">kubectl create -f https://raw.githubusercontent.com/kubernetes-retired/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Node"><span class="toc-number">1.</span> <span class="toc-text">1、Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Pod"><span class="toc-number">2.</span> <span class="toc-text">2、Pod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Service"><span class="toc-number">3.</span> <span class="toc-text">3、Service</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NodePort"><span class="toc-number">3.1.</span> <span class="toc-text">NodePort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81Volume"><span class="toc-number">4.</span> <span class="toc-text">4、Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81Label"><span class="toc-number">5.</span> <span class="toc-text">5、Label</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81RC%EF%BC%88Replication-Controller%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">6、RC（Replication Controller）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81mirror-of-kube-config"><span class="toc-number">7.</span> <span class="toc-text">7、mirror of kube-config</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&text=K8S基础概念"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&is_video=false&description=K8S基础概念"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=K8S基础概念&body=Check out this article: http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&title=K8S基础概念"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&name=K8S基础概念&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2019/05/31/K8S%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/&t=K8S基础概念"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

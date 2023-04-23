@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="废话自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) … 别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…  模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式之模版模式">
+<meta property="og:url" content="http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="废话自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) … 别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…  模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://notes.zgrep.me/assets/images/template.png">
+<meta property="article:published_time" content="2016-08-23T13:57:03.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.458Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="模版模式">
+<meta property="article:tag" content="Template">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://notes.zgrep.me/assets/images/template.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>设计模式之模版模式</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2016/08/23/%E6%B5%8B%E8%AF%95Mathjax/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&text=设计模式之模版模式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&is_video=false&description=设计模式之模版模式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=设计模式之模版模式&body=Check out this article: http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&name=设计模式之模版模式&description=&lt;h1 id=&#34;废话&#34;&gt;&lt;a href=&#34;#废话&#34; class=&#34;headerlink&#34; title=&#34;废话&#34;&gt;&lt;/a&gt;废话&lt;/h1&gt;&lt;p&gt;自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) …&lt;/p&gt;
+&lt;p&gt;别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板方法模式的用意。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;模版，顾名思义就是有一大堆共有的方法快，或者方法流程，比如说依次执行method_A,method_B…method_N ，里面有些方法是能抽象成一致的，仅方法不同。但是我们又不能在到处都写一样的代码，那怎么搞，那就把这些代码写到一块，不同部分来自定义，想想看，也就是抽象类比较适合了。所以策略模式用的是接口，模版模式用的是抽象类。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&t=设计模式之模版模式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%9F%E8%AF%9D"><span class="toc-number">1.</span> <span class="toc-text">废话</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E6%A8%A1%E6%9D%BF-Abstract-Template"><span class="toc-number">2.</span> <span class="toc-text">抽象模板(Abstract Template)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%A8%A1%E6%9D%BF-Concrete-Template"><span class="toc-number">3.</span> <span class="toc-text">具体模板(Concrete Template)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="toc-number">4.</span> <span class="toc-text">一个例子</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        设计模式之模版模式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2016-08-23T13:57:03.000Z" class="dt-published" itemprop="datePublished">2016-08-23</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Design-Pattern/">Design Pattern</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/Template/" rel="tag">Template</a>, <a class="p-category" href="/tags/%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/" rel="tag">模版模式</a>, <a class="p-category" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h1><p>自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) …</p>
+<p>别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…</p>
+<blockquote>
+<p>模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板方法模式的用意。</p>
+</blockquote>
+<p>模版，顾名思义就是有一大堆共有的方法快，或者方法流程，比如说依次执行method_A,method_B…method_N ，里面有些方法是能抽象成一致的，仅方法不同。但是我们又不能在到处都写一样的代码，那怎么搞，那就把这些代码写到一块，不同部分来自定义，想想看，也就是抽象类比较适合了。所以策略模式用的是接口，模版模式用的是抽象类。</p>
+<span id="more"></span>
+
+<ul>
+<li>代表这些具体逻辑步骤的方法称做基本方法(primitive method)；</li>
+<li>将这些基本方法汇总起来的方法叫做模板方法(template method)</li>
+<li>模板方法所代表的行为称为顶级行为，其逻辑称为顶级逻辑。</li>
+</ul>
+<p>模板方法模式的静态结构图如下所示：</p>
+<p><img src="/assets/images/template.png"></p>
+<h1 id="抽象模板-Abstract-Template"><a href="#抽象模板-Abstract-Template" class="headerlink" title="抽象模板(Abstract Template)"></a>抽象模板(Abstract Template)</h1><ul>
+<li>定义了一个或多个抽象操作，以便让子类实现。这些抽象操作叫做基本操作，它们是一个顶级逻辑的组成步骤。</li>
+<li>定义并实现了一个模板方法。这个模板方法一般是一个具体方法，它给出了一个顶级逻辑的骨架，而逻辑的组成步骤在相应的抽象操作中，推迟到子类实现。顶级逻辑也有可能调用一些具体方法。</li>
+</ul>
+<h1 id="具体模板-Concrete-Template"><a href="#具体模板-Concrete-Template" class="headerlink" title="具体模板(Concrete Template)"></a>具体模板(Concrete Template)</h1><ul>
+<li>实现父类所定义的一个或多个抽象方法，它们是一个顶级逻辑的组成步骤。</li>
+<li>每一个抽象模板角色都可以有任意多个具体模板角色与之对应，而每一个具体模板角色都可以给出这些抽象方法（也就是顶级逻辑的组成步骤）的不同实现，从而使得顶级逻辑的实现各不相同。</li>
+<li>子类可以置换掉父类的可变部分，但是子类却不可以改变模板方法所代表的顶级逻辑。</li>
+</ul>
+<h1 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h1><p>根据支付的类型不同，同步回调（立刻返回数据），异步回调（返回部分数据，另一部分再返回），因为在支付流程上是一致的，但是对返回的结果是不一致的，恰到好处。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">AbstractPay</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ApiPay apiResult;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ApiPay <span class="title function_">getApiResult</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> apiResult;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 同步回调</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">success</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 异步回调</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 失败调用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">fail</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String <span class="title function_">pay</span><span class="params">(ApiPay apiPay)</span> &#123;</span><br><span class="line">        apiResult = Application.context.getBean(PayDubboService.class).pay(apiPay);</span><br><span class="line">        <span class="type">String</span> <span class="variable">code</span> <span class="operator">=</span> apiResult.getResultCode();</span><br><span class="line">    	<span class="keyword">if</span>(code.equals(<span class="string">&quot;success&quot;</span>)) &#123;</span><br><span class="line">    		success();</span><br><span class="line">    	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (code.equals(<span class="string">&quot;accept&quot;</span>)) &#123;</span><br><span class="line">    		accept();</span><br><span class="line">    	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (code.equals(<span class="string">&quot;fail&quot;</span>)) &#123;</span><br><span class="line">    		fail();</span><br><span class="line">    	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	    	<span class="comment">//do something</span></span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ActivePay</span> <span class="keyword">extends</span> <span class="title class_">AbstractPay</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> ParkingPayment payment;</span><br><span class="line">    <span class="keyword">private</span> PaymentMapper paymentMapper;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ActivePay</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ActivePay</span><span class="params">(ParkingPayment payment)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.payment = payment;</span><br><span class="line">        <span class="built_in">this</span>.paymentMapper = Application.context.getBean(PaymentMapper.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">success</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//do something, when active pay , notification...</span></span><br><span class="line">        paymentMapper.update(payment);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">        paymentMapper.update(payment);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">fail</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//do something , send to Monitor</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PostpaidPay</span> <span class="keyword">extends</span> <span class="title class_">AbstractPay</span> &#123;</span><br><span class="line">	<span class="comment">//省略了，和AvtivePay类似，只是重写不同的方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//简直优雅的不要不要的～～</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">AvtivePay</span>(payment).pay(pay);</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%9F%E8%AF%9D"><span class="toc-number">1.</span> <span class="toc-text">废话</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E6%A8%A1%E6%9D%BF-Abstract-Template"><span class="toc-number">2.</span> <span class="toc-text">抽象模板(Abstract Template)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%A8%A1%E6%9D%BF-Concrete-Template"><span class="toc-number">3.</span> <span class="toc-text">具体模板(Concrete Template)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="toc-number">4.</span> <span class="toc-text">一个例子</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&text=设计模式之模版模式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&is_video=false&description=设计模式之模版模式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=设计模式之模版模式&body=Check out this article: http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&title=设计模式之模版模式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&name=设计模式之模版模式&description=&lt;h1 id=&#34;废话&#34;&gt;&lt;a href=&#34;#废话&#34; class=&#34;headerlink&#34; title=&#34;废话&#34;&gt;&lt;/a&gt;废话&lt;/h1&gt;&lt;p&gt;自我修养与自我提升～ , 抛弃重复代码 , 我们叫模版(Template) …&lt;/p&gt;
+&lt;p&gt;别问我为啥要用模版，因为在我的一个项目中，有好多好多种类别的支付，复制代码都不好意思了，而且更不好的就是有改动，很容易忘掉些没改。曾经的我复制粘贴，哎，都不好意思…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;模板方法模式是类的行为模式。准备一个抽象类，将部分逻辑以具体方法以及具体构造函数的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板方法模式的用意。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;模版，顾名思义就是有一大堆共有的方法快，或者方法流程，比如说依次执行method_A,method_B…method_N ，里面有些方法是能抽象成一致的，仅方法不同。但是我们又不能在到处都写一样的代码，那怎么搞，那就把这些代码写到一块，不同部分来自定义，想想看，也就是抽象类比较适合了。所以策略模式用的是接口，模版模式用的是抽象类。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E7%89%88%E6%A8%A1%E5%BC%8F/&t=设计模式之模版模式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。 默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器如vim可以参考stackoverflow的回答，https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;30853247&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyCat(Docker)">
+<meta property="og:url" content="http://notes.zgrep.me/2017/07/29/MyCat(Docker)/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。 默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器如vim可以参考stackoverflow的回答，https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;30853247&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-07-29T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.454Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="mycat">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>MyCat(Docker)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2017/07/29/%E5%88%A0%E9%99%A4CleanMyMac/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2017/07/23/Felix%20%E7%9B%B8%E5%85%B3/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&text=MyCat(Docker)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&is_video=false&description=MyCat(Docker)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MyCat(Docker)&body=Check out this article: http://notes.zgrep.me/2017/07/29/MyCat(Docker)/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&name=MyCat(Docker)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&t=MyCat(Docker)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        MyCat(Docker)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-07-29T02:00:00.000Z" class="dt-published" itemprop="datePublished">2017-07-29</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/docker/" rel="tag">docker</a>, <a class="p-category" href="/tags/mycat/" rel="tag">mycat</a>, <a class="p-category" href="/tags/mysql/" rel="tag">mysql</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>为了更好的使用mycat，又不想去研究本机系统开启多个mysql实例，故考虑使用docker来开启多个mysql，然后使用mycat做分库分表中间价。</p>
+<p>默认的mysql镜像中是不包含任何的编辑工具，设计的理由说是这样镜像会更小。那怎么在docker中使用编辑器如vim可以参考stackoverflow的回答，<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container">https://stackoverflow.com/questions/30853247/how-to-edit-file-after-i-shell-to-a-docker-container</a>。</p>
+<p>在Container重启后发现存在一个问题，之前修改的&#x2F;etc&#x2F;apt&#x2F;source.list 在重启后恢复了原样，不能找回之前修改后的地方，同样，如果是创建一个文件，但是当这个container退出以后，如果以同一个的image启动了另一个container，在这个container中是看不到之前那个container创建的文件的。</p>
+<p>如果想让后面的container看到之前那个container创建的文件，就要把之前那个container保存成一个镜像commit，然后基于这个镜像来启动后面的那个container。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">列举几个可能需要的命令</span><br><span class="line"></span><br><span class="line">docker pull mysql</span><br><span class="line">docker run -p 12345:3306 --name mysql -e MYSQL_ROOT_PASSWORD=x -d </span><br><span class="line">docker run -p 12346:3306 --name mysql_1 -e MYSQL_ROOT_PASSWORD=x -d </span><br><span class="line">docker.io/mysql</span><br><span class="line">docker ps -a</span><br><span class="line">docker <span class="built_in">rm</span> f mysql</span><br><span class="line">mysql -uroot -h127.0.0.1 -P12345 -px</span><br><span class="line">mysql -uroot -h127.0.0.1 -P12346 -px</span><br><span class="line">docker <span class="built_in">cp</span> <span class="built_in">source</span> romote</span><br><span class="line">docker <span class="built_in">cp</span> sources.list mysql_1:/etc/apt/sources.list</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install vim</span><br><span class="line">docker commit mysql mysql:1.0</span><br></pre></td></tr></table></figure>
+
+<p>参考链接</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://github.com/MyCATApache/Mycat-Server">http://github.com/MyCATApache/Mycat-Server</a></li>
+<li><a target="_blank" rel="noopener" href="http://dl.mycat.io/1.6-RELEASE/">http://dl.mycat.io/1.6-RELEASE/</a></li>
+<li><a target="_blank" rel="noopener" href="https://severalnines.com/blog/mysql-docker-containers-understanding-basics">https://severalnines.com/blog/mysql-docker-containers-understanding-basics</a></li>
+<li><a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/help/debian-security.html">中科大debian-security源</a></li>
+<li><a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/help/debian.html">中科大debian源</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/permike/article/details/51879578">docker常用命令详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://my.oschina.net/nyp/blog/735622">详解使用DockerHub官方的mysql镜像生成容器</a></li>
+<li><a target="_blank" rel="noopener" href="https://severalnines.com/blog/mysql-docker-containers-understanding-basics">MySQL Docker Containers: Understanding the basics</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&text=MyCat(Docker)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&is_video=false&description=MyCat(Docker)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MyCat(Docker)&body=Check out this article: http://notes.zgrep.me/2017/07/29/MyCat(Docker)/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&title=MyCat(Docker)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&name=MyCat(Docker)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2017/07/29/MyCat(Docker)/&t=MyCat(Docker)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

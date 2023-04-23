@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="在消息服务中实施端到端加密意味着任何给定消息的内容仅对您（发件人）和您的朋友（预期收件人）可用。如果没有 E2EE，您的消息在传输到服务器时可能会被加密，但服务器可能能够读取它。例如，某些服务提供商可能会这样做以生成更针对用户的广告。 使用 E2EE，您的消息在通过任何可能的中介时始终处于加密状态。除了预期的收件人之外，没有人拥有解密它的密钥。有了良好的 E2EE 协议，中介（消息应用程序服务器、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Signal Protocol概括">
+<meta property="og:url" content="http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="在消息服务中实施端到端加密意味着任何给定消息的内容仅对您（发件人）和您的朋友（预期收件人）可用。如果没有 E2EE，您的消息在传输到服务器时可能会被加密，但服务器可能能够读取它。例如，某些服务提供商可能会这样做以生成更针对用户的广告。 使用 E2EE，您的消息在通过任何可能的中介时始终处于加密状态。除了预期的收件人之外，没有人拥有解密它的密钥。有了良好的 E2EE 协议，中介（消息应用程序服务器、">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://notes.zgrep.me/assets/images/X3DH.png">
+<meta property="og:image" content="http://notes.zgrep.me/assets/images/double-ratchet.png">
+<meta property="article:published_time" content="2023-04-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.454Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="Signal Protocol">
+<meta property="article:tag" content="E2EE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://notes.zgrep.me/assets/images/X3DH.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Signal Protocol概括</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/04/06/%E4%BA%BA%E5%8A%9B%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%92%A8%E8%AF%A2%E4%BD%93%E7%B3%BB/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&text=Signal Protocol概括"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&is_video=false&description=Signal Protocol概括"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Signal Protocol概括&body=Check out this article: http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&name=Signal Protocol概括&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&t=Signal Protocol概括"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E8%BF%90%E8%A1%8C%E7%9A%84%EF%BC%81"><span class="toc-number">1.</span> <span class="toc-text">怎么运行的！</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Signal-%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E5%92%8C%E6%B3%A8%E5%86%8C"><span class="toc-number">1.1.</span> <span class="toc-text">使用 Signal 协议生成密钥和注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%BC%9A%E8%AF%9D"><span class="toc-number">1.2.</span> <span class="toc-text">开始会话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-number">1.3.</span> <span class="toc-text">发送消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">算法说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#X3DH%EF%BC%88%E5%AF%86%E9%92%A5%E5%8D%8F%E5%95%86%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">X3DH（密钥协商协议）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%A3%98%E8%BD%AE%E7%AE%97%E6%B3%95%EF%BC%88%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">双棘轮算法（密钥管理算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E6%B4%BE%E7%94%9F%E9%93%BE-KDF"><span class="toc-number">2.3.</span> <span class="toc-text">密钥派生链 (KDF)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Curve25519"><span class="toc-number">2.4.</span> <span class="toc-text">Curve25519</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AES-256%EF%BC%88%E9%AB%98%E7%BA%A7%E5%8A%A0%E5%AF%86%E6%A0%87%E5%87%86%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">AES-256（高级加密标准）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HMAC-SHA256%EF%BC%88%E5%9F%BA%E4%BA%8E%E5%93%88%E5%B8%8C%E7%9A%84%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81%EF%BC%89"><span class="toc-number">2.6.</span> <span class="toc-text">HMAC-SHA256（基于哈希的消息认证码）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">资料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Signal Protocol概括
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-04-07T16:00:00.000Z" class="dt-published" itemprop="datePublished">2023-04-08</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Others/">Others</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/E2EE/" rel="tag">E2EE</a>, <a class="p-category" href="/tags/Signal-Protocol/" rel="tag">Signal Protocol</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>在消息服务中实施端到端加密意味着任何给定消息的内容仅对您（发件人）和您的朋友（预期收件人）可用。如果没有 E2EE，您的消息在传输到服务器时可能会被加密，但服务器可能能够读取它。例如，某些服务提供商可能会这样做以生成更针对用户的广告。</p>
+<p>使用 E2EE，您的消息在通过任何可能的中介时始终处于加密状态。除了预期的收件人之外，没有人拥有解密它的密钥。有了良好的 E2EE 协议，中介（消息应用程序服务器、数据库）和任何有恶意的人都无法读取您发送的消息。</p>
+<p>由于我们可能通过文本&#x2F;即时消息共享大量敏感信息，这正成为一个重要问题。Signal 是 Open Whisper Systems (OWS) 开发的消息传递应用程序，每天都在世界各地的人们中越来越受欢迎，因为它为其顾客提供端到端加密。它使用同样由 OWS 开发的开源端到端加密协议 Signal Protocol。</p>
+<h2 id="怎么运行的！"><a href="#怎么运行的！" class="headerlink" title="怎么运行的！"></a>怎么运行的！</h2><h3 id="使用-Signal-协议生成密钥和注册"><a href="#使用-Signal-协议生成密钥和注册" class="headerlink" title="使用 Signal 协议生成密钥和注册"></a>使用 Signal 协议生成密钥和注册</h3><p>使用 Open Whisper System 的信号协议在两个用户之间建立端到端加密连接的第一步是生成一组长期身份密钥对、中期签名预密钥对和几个临时预密钥对。这些密钥在客户端生成并存储在本地安全的地方。第二步涉及将所有公钥和注册 ID 打包到一个对象（称为“密钥包”）中，并将其注册到密钥分发中心。为了让 Alice 向 Bob 发送消息，Alice 必须知道并有权访问 Bob 的注册 ID 和公钥以启动会话。因此，Alice 必须首先生成她自己的密钥并在密钥分发中心注册自己并请求 Bob 的密钥包。</p>
+<h3 id="开始会话"><a href="#开始会话" class="headerlink" title="开始会话"></a>开始会话</h3><p>一旦 Alice 从密钥分发中收到 Bob 的密钥包，她就会使用自己的身份和中期私钥以及 Bob 的私钥集来计算主共享秘密。然后使用此主密钥启动与 Bob 的会话。一旦爱丽丝计算出主共享秘密，她就会将其发送给鲍勃，以便他可以破译并验证它。在 Bob 的机器上验证主共享秘密后，两个用户中的任何一个都可以开始互相发送消息。</p>
+<h3 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h3><p>建立会话后，Alice 就可以开始向 Bob 发送消息。此过程在很大程度上依赖于 X3DH 密钥协议，并且使 Signal Protocol 能够提供前向保密和密码拒绝能力。这还有一个额外的好处，即异步性，因此可以在离线时发送消息。当会话处于活动状态时，Alice 使用主共享密钥和 Bob 的临时密钥加密消息并将其发送给 Bob。此步骤创建根密钥、相应的链密钥和消息链。这些对于维护前向保密和隐私至关重要。因此，发送的每条消息都会导致创建一组新的一次性会话（临时）密钥，然后使用这些密钥来加密&#x2F;解密任何未来的消息。</p>
+<h2 id="算法说明"><a href="#算法说明" class="headerlink" title="算法说明"></a>算法说明</h2><p>在更高的层次上，Signal Protocol 是一个强大的安全库。尽管它具有新颖性和日益重要的意义，但很少有人对该协议进行正式分析，尽管它一直是网络安全领域的推动力。那么，是什么让它如此强大？</p>
+<p>信号协议合并了扩展三重 Diffie-Hellman (X3DH) 密钥协商协议、双棘轮算法、预密钥，并使用 Curve25519、AES-256 和 HMAC-SHA256 作为加密原语。这些都是成熟的低级密码算法，经常用于构建计算机安全系统。</p>
+<p>让我们进一步分解，以便我们能够了解这些算法中的每一个所扮演的角色：</p>
+<h3 id="X3DH（密钥协商协议）"><a href="#X3DH（密钥协商协议）" class="headerlink" title="X3DH（密钥协商协议）"></a>X3DH（密钥协商协议）</h3><p>这通过在两方之间生成所有必要的密钥来进行通信来拉开序幕。它在相互认证的双方基于他们的公钥对建立关键的共享密钥。X3DH 还允许在一方“离线”的情况下进行密钥交换，而是通过第三方服务器进行交换。</p>
+<p>X3DH 涉及 3 个主要参与方：</p>
+<ul>
+<li>Alice</li>
+<li>Bob</li>
+<li>Server</li>
+</ul>
+<p>X3DH 有 3 个阶段：</p>
+<ul>
+<li>Bob 将他的身份密钥和预密钥注册到服务器</li>
+<li>Alice 从服务器检索 Bob 的“prekey bundle”——用它来启动会话并向 Bob 发送初始消息</li>
+<li>Bob 收到并解密 Alice 的消息</li>
+</ul>
+<p><img src="/assets/images/X3DH.png"></p>
+<h3 id="双棘轮算法（密钥管理算法）"><a href="#双棘轮算法（密钥管理算法）" class="headerlink" title="双棘轮算法（密钥管理算法）"></a>双棘轮算法（密钥管理算法）</h3><p>这被用作加密协议的一部分，以提供基于从 X3DH 派生的共享密钥的 E2EE。一旦双方通过 X3DH 就共享密钥达成一致，双方就可以使用双棘轮算法发送和接收加密消息。</p>
+<p><img src="/assets/images/double-ratchet.png"></p>
+<h3 id="密钥派生链-KDF"><a href="#密钥派生链-KDF" class="headerlink" title="密钥派生链 (KDF)"></a>密钥派生链 (KDF)</h3><p>X3DH 的密钥交换输出一个主密钥，后者又用于派生两个对称密钥：“根密钥”和“发送链密钥”。随着消息的发送和接收，这些附加到消息的密钥通过 KDF 不断变化。当 Alice 为 Bob 加密她的消息时，她将她的发送链向前推进了一步，派生出一个替换发送链密钥以及一个消息加密密钥。当她收到来自 Bob 的消息时，她推进她的接收链以生成解密密钥。根链在会话初始化时被推进，生成一个临时密钥（“棘轮密钥”）。然后她将其附加到她的消息中，这样每条消息都带有一个不断变化的临时密钥，从而使第三方窥探者无法解密以前和未来的消息。</p>
+<h3 id="Curve25519"><a href="#Curve25519" class="headerlink" title="Curve25519"></a>Curve25519</h3><p>给定 Bob 的 32 字节私钥，Curve25519 生成他的 32 字节公钥。给定 Bob 的 32 字节私钥和 Alice 的 32 字节公钥，Curve25519 生成双方共享的主密钥。该秘密随后用于验证和开始加密它们之间的消息。该算法经过精心设计，允许所有 32 字节的字符串作为 Diffie-Hellman 公钥。Signal 协议利用 Curve25519 进行所有非对称加密操作。</p>
+<h3 id="AES-256（高级加密标准）"><a href="#AES-256（高级加密标准）" class="headerlink" title="AES-256（高级加密标准）"></a>AES-256（高级加密标准）</h3><p>这是一种对称块密码，用于保护和加密敏感数据。此密码以 256 位的块为单位加密和解密数据。对称密码使用相同的密钥来加密和解密数据，因此 Bob 和 Alice 必须都知道并使用相同的密钥。总共有 14 轮 256 位密钥——一轮由几个处理步骤组成，包括替换、转置和随机混合明文（加密前）以输出密文（加密文本）。</p>
+<h3 id="HMAC-SHA256（基于哈希的消息认证码）"><a href="#HMAC-SHA256（基于哈希的消息认证码）" class="headerlink" title="HMAC-SHA256（基于哈希的消息认证码）"></a>HMAC-SHA256（基于哈希的消息认证码）</h3><p>这是一种特定类型的消息验证代码，涉及加密哈希函数和秘密加密密钥。它还验证数据完整性以及消息的身份验证。这种类型的键控哈希算法是从 SHA-256 哈希函数构建的。该算法将主密钥与消息数据混合，用哈希函数对结果进行哈希处理，然后再次将该哈希值与密钥混合，最后再次调用哈希函数。输出散列的长度为 256 位。</p>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@justinomora/demystifying-the-signal-protocol-for-end-to-end-encryption-e2ee-ad6a567e6cb4">demystifying-the-signal-protocol</a></li>
+<li><a target="_blank" rel="noopener" href="https://signal.org/docs/specifications/x3dh/">signal-specifications-x3dh</a></li>
+<li><a target="_blank" rel="noopener" href="https://signal.org/docs/specifications/doubleratchet/">signal-specifications-doubleratchet</a></li>
+<li><a target="_blank" rel="noopener" href="https://signal.org/docs/specifications/sesame/">signal-specifications-sesame</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E8%BF%90%E8%A1%8C%E7%9A%84%EF%BC%81"><span class="toc-number">1.</span> <span class="toc-text">怎么运行的！</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Signal-%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E5%92%8C%E6%B3%A8%E5%86%8C"><span class="toc-number">1.1.</span> <span class="toc-text">使用 Signal 协议生成密钥和注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%BC%9A%E8%AF%9D"><span class="toc-number">1.2.</span> <span class="toc-text">开始会话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-number">1.3.</span> <span class="toc-text">发送消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">算法说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#X3DH%EF%BC%88%E5%AF%86%E9%92%A5%E5%8D%8F%E5%95%86%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">X3DH（密钥协商协议）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%A3%98%E8%BD%AE%E7%AE%97%E6%B3%95%EF%BC%88%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">双棘轮算法（密钥管理算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E6%B4%BE%E7%94%9F%E9%93%BE-KDF"><span class="toc-number">2.3.</span> <span class="toc-text">密钥派生链 (KDF)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Curve25519"><span class="toc-number">2.4.</span> <span class="toc-text">Curve25519</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AES-256%EF%BC%88%E9%AB%98%E7%BA%A7%E5%8A%A0%E5%AF%86%E6%A0%87%E5%87%86%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">AES-256（高级加密标准）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HMAC-SHA256%EF%BC%88%E5%9F%BA%E4%BA%8E%E5%93%88%E5%B8%8C%E7%9A%84%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81%EF%BC%89"><span class="toc-number">2.6.</span> <span class="toc-text">HMAC-SHA256（基于哈希的消息认证码）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">资料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&text=Signal Protocol概括"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&is_video=false&description=Signal Protocol概括"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Signal Protocol概括&body=Check out this article: http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&title=Signal Protocol概括"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&name=Signal Protocol概括&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/&t=Signal Protocol概括"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

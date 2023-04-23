@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="作者：@lifesinger  最近淘宝网首页有个小小的 默认字体调整风波，中文默认字体远比我们想象中的复杂。以前主要关注 font-family 自身，忽略了 lang 属性和 charset 设置。今天做了个更详尽的测试： http:&#x2F;&#x2F;lifesinger.github.com&#x2F;lab&#x2F;2011&#x2F;default-fonts&#x2F; 在不同操作系统下，用各个浏览器打开，特别是 Firefox 和 O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最佳 Web 中文默认字体">
+<meta property="og:url" content="http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="作者：@lifesinger  最近淘宝网首页有个小小的 默认字体调整风波，中文默认字体远比我们想象中的复杂。以前主要关注 font-family 自身，忽略了 lang 属性和 charset 设置。今天做了个更详尽的测试： http:&#x2F;&#x2F;lifesinger.github.com&#x2F;lab&#x2F;2011&#x2F;default-fonts&#x2F; 在不同操作系统下，用各个浏览器打开，特别是 Firefox 和 O">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-04-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.458Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="字体">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>最佳 Web 中文默认字体</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2012/04/12/%E4%BD%A0%E4%BC%9A%E5%81%9AWeb%E4%B8%8A%E7%9A%84%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E5%90%97/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2012/03/30/Markdown%20%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&text=最佳 Web 中文默认字体"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&is_video=false&description=最佳 Web 中文默认字体"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=最佳 Web 中文默认字体&body=Check out this article: http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&name=最佳 Web 中文默认字体&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&t=最佳 Web 中文默认字体"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        最佳 Web 中文默认字体
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2012-04-12T16:00:00.000Z" class="dt-published" itemprop="datePublished">2012-04-13</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Web/">Web</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%AD%97%E4%BD%93/" rel="tag">字体</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>作者：<a target="_blank" rel="noopener" href="http://weibo.com/lifesinger">@lifesinger</a></p>
+<hr>
+<p>最近淘宝网首页有个小小的 默认字体调整风波，中文默认字体远比我们想象中的复杂。以前主要关注 font-family 自身，忽略了 lang 属性和 charset 设置。今天做了个更详尽的测试：</p>
+<p><a target="_blank" rel="noopener" href="http://lifesinger.github.com/lab/2011/default-fonts/">http://lifesinger.github.com/lab/2011/default-fonts/</a></p>
+<p>在不同操作系统下，用各个浏览器打开，特别是 Firefox 和 Opera，混乱的世界啊，真真的与浏览器斗，乐趣全无！</p>
+<p>虽然沮丧悲情愤，但分析研究的工作还是得继续：</p>
+<ul>
+<li>lang, charset 和 font-family 都会对默认字体产生影响，规律很复杂。</li>
+<li>浏览器偏好里的字体设置，对默认字体有直接影响，比如 WebKit 内核的 Chrome 浏览器。</li>
+<li>宋体转成 “\5b8b\4f53” 也不能通吃所有浏览器。比如在 Mac OS 的 Chrome 中，只认识 simsun.</li>
+<li><del>宋体其实是 serif 有衬线字体，后面跟 sans-serif, 逻辑上是错的。</del><br>（修正：并没有规定前面的 font name 要和最后的 general family 保持一致）</li>
+<li>不同操作系统下，各个浏览器默认的 sans-serif 中文字体，一般都是最佳选择或用户已调整为最佳，不能强制用户都用宋体。</li>
+</ul>
+<p>从目前用户反馈的情况来看，在以 12px 大小为主的网页设计中，<strong>最佳的中文默认字体方案是：Windows 下用宋体，其他操作系统下用雅黑等无衬线字体</strong>。未来随着电脑屏幕的变大和分辨率的提高，当字体的默认大小提高到 14px 以上时，或许所有操作系统下，最佳中文默认字体会统一为雅黑等无衬线字体。</p>
+<p>为了让所有网页在尽可能多的情况下，都用最佳中文字体渲染，需要特别考虑以下几点：</p>
+<ul>
+<li>在 Mac Chrome 等环境下，用 font-family: times, sans-serif 时，<br>中文字体并不会根据 sans-serif 渲染，而是会根据 times 的 serif 属性，<br>选择默认的 serif 中文字体来渲染。<br>比如在 Mac Chrome 下，默认 serif 中文字体是很接近宋体的一个字体，比较难看。<br>（修正：实际情况更为复杂，请参考评论中的讨论）</li>
+<li>在 Firefox 中，只要 font-family 中有宋体，中文必然就用宋体展现。<br>所以 font-family 中不能有宋体。</li>
+<li>当 lang&#x3D;“zh-CN”, charset&#x3D;“utf-8” 时，<br>font: arial 在 Mac Firefox 等环境下，默认中文字体是宋体。</li>
+<li>在英文 Win7 下，只要 charset&#x3D;“gbk”, 当 font-family 为 arial, sans-serif 时，<br><del>默认中文字体是很难看的 Microsoft Sans Serif Regular.</del><br>（修正：是 fallback 到了韩文字体 Dotum&#x2F;Gulim（gulim.ttc）来显示，<br>Dotum&#x2F;Gulim 没有的字符最终会 fallback 到 SimSun，暂时不知道日文字体是否夹在中间。<br>和 Microsoft Sans Serif 没有一点关系。）</li>
+<li>Opera 是个恐怖的世界，不要尝试分析其规律，最后测试一下就好。</li>
+</ul>
+<p>可以总结出：</p>
+<ol>
+<li><p>如果页面 charset 是 utf-8, 完美的默认字体方案是：</p>
+<pre><code> font-family: arial, sans-serif;
+</code></pre>
+</li>
+</ol>
+<p>  无论省略 lang 还是设置为 zh-CN, 在各种环境下都满足预期。</p>
+<ol start="2">
+<li><p>如果页面 charset 是 gbk, 推荐默认字体方案为：</p>
+<pre><code> font-family: arial;
+</code></pre>
+</li>
+</ol>
+<p>  Chrome OS 下未测试，根据陈成博客上的反馈，<br>  好像会因为没有 sans-serif 而导致中文字体很难看。<br>  不过考虑 Chrome OS 还未正式发布，目前可以先忽略。</p>
+<p>最后，个人推荐简体中文页面的最佳实践为：</p>
+<pre><code>html lang=zh-CN
+charset=utf-8
+font-family: arial, sans-serif;
+</code></pre>
+<p>测试环境说明：</p>
+<pre><code>Mac OS X 10.6.7
+Chrome 10.0.648.204
+Firefox 4.0
+Safari 5.0.4
+Opera 11.01
+
+Win7 Ultimate
+IE 9.0.8080.16413
+</code></pre>
+<p>补充：</p>
+<ol>
+<li>关于字体的默认大小和行高等信息，推荐博文：<a target="_blank" rel="noopener" href="http://justjavac.com/web/2012/04/13/default-web-font-style.html">默认 Web 字体样式</a></li>
+<li>关于字体的 fallback 等文本渲染信息，推荐博文：<a target="_blank" rel="noopener" href="http://justjavac.com/web/2012/04/13/how-do-browsers-render-text.html">浏览器如何渲染文本</a></li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&text=最佳 Web 中文默认字体"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&is_video=false&description=最佳 Web 中文默认字体"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=最佳 Web 中文默认字体&body=Check out this article: http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&title=最佳 Web 中文默认字体"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&name=最佳 Web 中文默认字体&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2012/04/12/%E6%9C%80%E4%BD%B3%20Web%20%E4%B8%AD%E6%96%87%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93/&t=最佳 Web 中文默认字体"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

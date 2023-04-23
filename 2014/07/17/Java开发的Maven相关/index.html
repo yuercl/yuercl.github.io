@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Java开发的Maven相关这里主要提到一下几方面  maven下载&#x2F;安装 maven配置 常用命令 使用 Maven 创建项目 根据archtype快速创建项目  Maven采用了一种被称之为project object model (POM)概念来管理项目，所有的项目配置信息都被定义在一个叫做POM.xml的文件中，通过该文件，Maven可以管理项目的整个声明周期，包括编译，构建，测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java开发的Maven相关">
+<meta property="og:url" content="http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="Java开发的Maven相关这里主要提到一下几方面  maven下载&#x2F;安装 maven配置 常用命令 使用 Maven 创建项目 根据archtype快速创建项目  Maven采用了一种被称之为project object model (POM)概念来管理项目，所有的项目配置信息都被定义在一个叫做POM.xml的文件中，通过该文件，Maven可以管理项目的整个声明周期，包括编译，构建，测">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://static.oschina.net/uploads/space/2013/0912/142441_b8hX_146430.png">
+<meta property="og:image" content="http://static.oschina.net/uploads/space/2013/0912/151847_6QDI_146430.png">
+<meta property="og:image" content="http://static.oschina.net/uploads/space/2013/0912/151859_Ce32_146430.png">
+<meta property="article:published_time" content="2014-07-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.454Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="Maven">
+<meta property="article:tag" content="构建">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://static.oschina.net/uploads/space/2013/0912/142441_b8hX_146430.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Java开发的Maven相关</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2015/01/02/2014%E5%B9%B4%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93(%E9%87%91%E8%9E%8D%E7%AF%87)/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2014/01/22/diff%E5%91%BD%E4%BB%A4%E7%9A%84%E5%A5%BD%E7%94%A8%E5%8A%9F%E8%83%BD/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&text=Java开发的Maven相关"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&is_video=false&description=Java开发的Maven相关"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java开发的Maven相关&body=Check out this article: http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&name=Java开发的Maven相关&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&t=Java开发的Maven相关"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">Java开发的Maven相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-x2F-%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">下载&#x2F;安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">Maven配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Maven-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.4.</span> <span class="toc-text">使用 Maven 创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AEarchtype%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.5.</span> <span class="toc-text">根据archtype快速创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8"><span class="toc-number">1.6.</span> <span class="toc-text">备注</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Java开发的Maven相关
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2014-07-17T16:00:00.000Z" class="dt-published" itemprop="datePublished">2014-07-18</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/Maven/" rel="tag">Maven</a>, <a class="p-category" href="/tags/%E6%9E%84%E5%BB%BA/" rel="tag">构建</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Java开发的Maven相关"><a href="#Java开发的Maven相关" class="headerlink" title="Java开发的Maven相关"></a>Java开发的Maven相关</h1><p>这里主要提到一下几方面</p>
+<ul>
+<li>maven下载&#x2F;安装</li>
+<li>maven配置</li>
+<li>常用命令</li>
+<li>使用 Maven 创建项目</li>
+<li>根据archtype快速创建项目</li>
+</ul>
+<p>Maven采用了一种被称之为project object model (POM)概念来管理项目，所有的项目配置信息都被定义在一个叫做POM.xml的文件中，通过该文件，Maven可以管理项目的整个声明周期，包括编译，构建，测试，发布，报告等等。Maven有一个好处就是不用将jar包上传到svn，当jar包很多的时候很更新较快。</p>
+<h2 id="下载-x2F-安装"><a href="#下载-x2F-安装" class="headerlink" title="下载&#x2F;安装"></a>下载&#x2F;安装</h2><p>如果需要使用到 Maven ，必须首先安装 Maven ， Maven 的下载地址在 <a target="_blank" rel="noopener" href="http://maven.apache.org/download.html">Apache Maven</a> 中有。或者去中科大镜像网站下载<a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/apache/maven/maven-3/3.2.2/binaries/" title="maven中科大镜像">http://mirrors.ustc.edu.cn/apache/maven/maven-3/3.2.2/binaries/</a>。</p>
+<p>下载好 Maven 后，需要简单安装下。将下载的 zip 或者 tar.gz  包解压到需要安装到的目录。 接下简单配置下环境变量：</p>
+<ol>
+<li>新建环境变量 <strong>M2_HOME</strong> ，输入值为 Maven 的安装目录</li>
+<li>新建环境变量 M2，输入值为:  <strong>%M2_HOME%\bin</strong></li>
+<li>将 M2 环境变量加入 Path 的最后，如：  <strong>;%M2%;</strong></li>
+</ol>
+<p>环境变量就这么简单配置下就可以了。打开命令行窗口输入  <strong>mvn -version</strong>  。可以看到如下输出：</p>
+<p><img src="http://static.oschina.net/uploads/space/2013/0912/142441_b8hX_146430.png"></p>
+<p>看到以上输出，您的 Maven 环境就已经搭建好了。 </p>
+<h2 id="Maven配置"><a href="#Maven配置" class="headerlink" title="Maven配置"></a>Maven配置</h2><p>默认的安装就算完成了，你还需要再eclipse&#x2F;intellij里面将内置的maven修改为刚才安装的那个Maven。</p>
+<p>进一步的配置需要修改MAVEN HOME下面的config&#x2F;settings.xml文件。</p>
+<p>Maven 在222上面搭建有nexus的私服，私服地址：<a target="_blank" rel="noopener" href="http://192.168.16.222:8081/nexus/index.html#welcome" title="Maven的Nexus私服">http://192.168.16.222:8081/nexus/index.html#welcome</a></p>
+<p>在 Maven 中使用 192.168.16.222 的 Maven 私有服务还需要简单配置一下 Maven，在 Maven 的安装目录下的 conf 文件下有个  settings.xml  文件，接下来我们需要对这个文件做简单的修改，修改前您可以简单备份下该文件。这里有一个适合的setting.xml文件，点击<a href="bin/settings.xml">这里</a>查看。打开  settings.xml  文件，按下面内容修改。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">settings</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;</span> </span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> </span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">	<span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>E:\.m2\repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">		<span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span>&gt;</span>releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span>&gt;</span>snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"> 		<span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">	<span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">	        <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">	            <span class="tag">&lt;<span class="name">id</span>&gt;</span>chinaroad<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	            <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.16.222:8081/nexus/content/groups/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">	                     <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.16.222:8081/nexus/content/repositories/snapshots<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">							<span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>interval:1<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">	            <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line">	            <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.16.222:8081/nexus/content/groups/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.16.222:8081/nexus/content/repositories/snapshots<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">	                        <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>interval:1<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">	                    <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">	                <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">	            <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">	        <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line">	        <span class="tag">&lt;<span class="name">activeProfile</span>&gt;</span>chinaroad<span class="tag">&lt;/<span class="name">activeProfile</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果您需要修改 Maven 的默认文件保存路径，需要在 settings.xml 文件中修改如下地方。该目录将保存maven依赖的jar和jar对应的源码包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>F:/Maven/repo/m2/<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>这里列举出Maven在使用过程中常用的命令</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype：create           创建Maven项目</span><br><span class="line">mvn compile                     编译源代码</span><br><span class="line">mvn deploy                      发布项目</span><br><span class="line">mvn test-compile                编译测试源代码</span><br><span class="line">mvn test                        运行应用程序中的单元测试</span><br><span class="line">mvn site                        生成项目相关信息的网站</span><br><span class="line">mvn clean                       清除项目目录中的生成结果</span><br><span class="line">mvn package                     根据项目生成的jar</span><br><span class="line">mvn install                     在本地Repository中安装jar</span><br><span class="line">mvn eclipse:eclipse             生成eclipse项目文件</span><br><span class="line">mvn jetty:run                   启动jetty服务</span><br><span class="line">mvn tomcat:run                  启动tomcat服务</span><br><span class="line">mvn clean package -Dmaven.test.skip=true  清除以前的包后重新打包，跳过单元测试</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-Maven-创建项目"><a href="#使用-Maven-创建项目" class="headerlink" title="使用 Maven 创建项目"></a>使用 Maven 创建项目</h2><p>您可以创建一个属于自己的 Maven 项目来简单测试一下 OSChina 的 Maven 库。创建 Maven 项目很简单，只需要简单一行命令就可以搞定。<br>下面是创建 Maven 项目的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:create -DgroupId=oschina -DartifactId=simple -DpackageName=net.oschina.simple  -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 <strong>-DarchetypeArtifactId&#x3D;maven-archetype-webapp</strong>  代表创建一个简单的 webapp 项目。至于其他参数的意思，您可以查看下 Maven 的相关文档。 在您需要创建 Maven 项目的文件夹下用命令行执行以上命令。可以看到如下输出：<br><img src="http://static.oschina.net/uploads/space/2013/0912/151847_6QDI_146430.png" alt="创建输出"></p>
+<p>如果顺利创建成功的话，你会看到如下输出:</p>
+<p><img src="http://static.oschina.net/uploads/space/2013/0912/151859_Ce32_146430.png" alt="创建成功"></p>
+<p>如果创建失败，就可能需要您去 Google 一下了。创建项目的时候，Maven 会下载一些需要用到的 Maven 插件。</p>
+<h2 id="根据archtype快速创建项目"><a href="#根据archtype快速创建项目" class="headerlink" title="根据archtype快速创建项目"></a>根据archtype快速创建项目</h2><p>配置好了Maven和Eclipse中的maven后，eclipse中不要选择内置的Maven，而用自己本机的Maven，配置文件setting.xml也一样。</p>
+<p>下面创建Maven的项目，<strong>Eclipse-&gt;New-&gt;Other-&gt;Maven-&gt;Maven Project</strong> ，选择保存的项目路径，在Select an Archtype中输入chinaroad过滤，选择最新的版本创建项目并自己想要的输入Group Id，Artifact Id，Version，Package 然后完成既可以创建项目原型。</p>
+<p>修改项目中的配置文件名称</p>
+<ul>
+<li>修改<strong>logback.xml</strong>中的日志文件名称</li>
+<li>修改<strong>config&#x2F;msgsrv.xml</strong>中的msgsrv中的信息</li>
+<li>修改<strong>config&#x2F;datasource.properties</strong>中关于数据库连接的信息</li>
+<li>修改<strong>pom.xml</strong>中的<strong>maven-jar-plugin</strong>中的<strong>mainClass</strong>为你的主函数路径，否则打包后无法找到Main函数</li>
+<li>修改src&#x2F;main&#x2F;resources&#x2F;com&#x2F;* 中关于mybatis配置路径，需要和src&#x2F;main&#x2F;java&#x2F;<strong>.persistence的路径名称一致，如：</strong>com.chinaroad.test.persistence** 包对应目录<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">resources</span><br><span class="line">   |-- com</span><br><span class="line">   |   `-- chinaroad</span><br><span class="line">   |       `-- <span class="built_in">test</span></span><br><span class="line">   |           `-- persistence</span><br><span class="line">   |               |-- UserMapper.xml</span><br></pre></td></tr></table></figure>
+  其中UserMapper.xml中的路径也要一致才行，否则无法找到该xml而报错</li>
+<li>注意在pom.xml文件中的<strong>targetPath</strong>设置，该设置将会影响到build中获取的配置文件path不对，在eclipse中应该设置为  <strong>.&#x2F;</strong>  ，在<strong>mvn package -Dmaven.test.skip&#x3D;true</strong>的时候需要设置为  <strong>..&#x2F;</strong>  这样在打包的时候才会将依赖包放到lib目录下，在cygwin下可以运行bin&#x2F;package.sh 来打包文件<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">sourceDirectory</span>&gt;</span>src/main/java<span class="tag">&lt;/<span class="name">sourceDirectory</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>./<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">exclude</span>&gt;</span>**/*.java<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ol>
+<li>在<a target="_blank" rel="noopener" href="http://192.168.16.222:8081/nexus/index.html">http://192.168.16.222:8081/nexus/index.html</a>上面常用的私有的jar包</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.chinaroad<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>quickstart-archetype<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.chinaroad<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redis4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>bin&#x2F;package.sh</strong>文件内容</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> [INFO] Package the jar <span class="keyword">in</span> target <span class="built_in">dir</span>.</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> pom.xml | sed <span class="string">&#x27;s/&lt;targetPath&gt;.\/&lt;\/targetPath&gt;/&lt;targetPath&gt;..\/&lt;\/targetPath&gt;/g&#x27;</span>  &gt; pom.xml.package</span><br><span class="line"><span class="built_in">mv</span> pom.xml pom.old</span><br><span class="line"><span class="built_in">mv</span> pom.xml.package pom.xml</span><br><span class="line"><span class="built_in">echo</span> <span class="built_in">set</span> targetPath = ../ <span class="keyword">for</span> mvn package</span><br><span class="line"></span><br><span class="line">mvn clean package -Dmaven.test.skip=<span class="literal">true</span></span><br><span class="line"><span class="built_in">rm</span> pom.xml</span><br><span class="line"><span class="built_in">mv</span> pom.old pom.xml</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> target</span><br><span class="line"><span class="built_in">echo</span> jar file builed found</span><br><span class="line">find ./ -maxdepth 1 -name <span class="string">&#x27;*.jar&#x27;</span> -<span class="built_in">type</span> f</span><br><span class="line"><span class="built_in">echo</span> rename jar file with parckage <span class="built_in">date</span>...</span><br><span class="line">JARTIME=`<span class="built_in">date</span> +%F<span class="string">&quot;-&quot;</span>%H%M%S | sed <span class="string">&#x27;s/-//g&#x27;</span> | awk <span class="string">&#x27;&#123;print $1&quot;.jar&quot;&#125;&#x27;</span>`</span><br><span class="line"></span><br><span class="line">FILENAMES=`find ./ -maxdepth 1 -name <span class="string">&#x27;*.jar&#x27;</span> -<span class="built_in">type</span> f`</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$FILENAMES</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  jarName=`<span class="built_in">echo</span> <span class="variable">$file</span> | sed <span class="string">&#x27;s/jar//g&#x27;</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>`</span><br><span class="line">  jarName=$jarName<span class="variable">$JARTIME</span></span><br><span class="line">  <span class="built_in">mv</span> <span class="variable">$file</span> <span class="variable">$jarName</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> rename jar end...</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">Java开发的Maven相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-x2F-%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">下载&#x2F;安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">Maven配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Maven-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.4.</span> <span class="toc-text">使用 Maven 创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AEarchtype%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.5.</span> <span class="toc-text">根据archtype快速创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8"><span class="toc-number">1.6.</span> <span class="toc-text">备注</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&text=Java开发的Maven相关"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&is_video=false&description=Java开发的Maven相关"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java开发的Maven相关&body=Check out this article: http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&title=Java开发的Maven相关"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&name=Java开发的Maven相关&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2014/07/17/Java%E5%BC%80%E5%8F%91%E7%9A%84Maven%E7%9B%B8%E5%85%B3/&t=Java开发的Maven相关"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

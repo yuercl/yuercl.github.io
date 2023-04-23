@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="最近将老版本程序的单机版定时任务调度调整到了Quartz，理由在于Spring在集群调度上并不是很适合，Quartz更适合，在这么一迁移后，可以将以前任务相关部分的代码解藕出来，逻辑会更为清晰。再者，接口程序目前已支持多开，但是任务这块尚未支持多开下保证同一类程序有且只有一台执行。 这次需要合并的达到最终效果是这样：  Application A～N 使用相同的Quartz数据库 Applicat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quartz集群调度坑">
+<meta property="og:url" content="http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="最近将老版本程序的单机版定时任务调度调整到了Quartz，理由在于Spring在集群调度上并不是很适合，Quartz更适合，在这么一迁移后，可以将以前任务相关部分的代码解藕出来，逻辑会更为清晰。再者，接口程序目前已支持多开，但是任务这块尚未支持多开下保证同一类程序有且只有一台执行。 这次需要合并的达到最终效果是这样：  Application A～N 使用相同的Quartz数据库 Applicat">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-08-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.454Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="Quartz">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Quartz集群调度坑</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2016/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2016/08/18/%E4%B8%BA%E4%BB%80%E4%B9%88zgrep/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&text=Quartz集群调度坑"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&is_video=false&description=Quartz集群调度坑"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quartz集群调度坑&body=Check out this article: http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&name=Quartz集群调度坑&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&t=Quartz集群调度坑"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Quartz集群调度坑
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2016-08-21T16:00:00.000Z" class="dt-published" itemprop="datePublished">2016-08-22</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/Quartz/" rel="tag">Quartz</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>最近将老版本程序的单机版定时任务调度调整到了Quartz，理由在于Spring在集群调度上并不是很适合，Quartz更适合，在这么一迁移后，可以将以前任务相关部分的代码解藕出来，逻辑会更为清晰。再者，接口程序目前已支持多开，但是任务这块尚未支持多开下保证同一类程序有且只有一台执行。</p>
+<p>这次需要合并的达到最终效果是这样：</p>
+<ul>
+<li>Application A～N 使用相同的Quartz数据库</li>
+<li>Application A 处理API任务</li>
+<li>Application B 处理结算方面任务</li>
+<li>Application C 统计任务</li>
+<li>….</li>
+</ul>
+<p>由于Application A和Application B 的job类是不同的，所以默认配置下，多个Application会使用相同的<code>SCHED_NAME</code>,会导致不停的misfire，最终配置需要将不同目的的Application 采用不同的 <code>SCHED_NAME</code>。参考下面配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Our &#x27;AutowiringSpringBeanJobFactory&#x27; implemented in the previous section: --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;quartzJobFactory&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.chinaroad.settleserver.quartz.AutowiringSpringBeanJobFactory&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- I will not explain this setting, just use it as shown: --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;ignoredUnknownProperties&quot;</span> <span class="attr">value</span>=<span class="string">&quot;applicationContext&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.scheduling.quartz.SchedulerFactoryBean&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Quartz requires a separate &#x27;quartz.properties&#x27; file --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;configLocation&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:config/quartz.properties&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;transactionManager&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- reference to our &#x27;autowiring job factory bean&#x27;, defined above: --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jobFactory&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;quartzJobFactory&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Boolean controlling whether you want to override the job definitions in the DB on the app start up. We&#x27;ll talk about it more in the next section. --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;overwriteExistingJobs&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- I will not explain the next three properties, just use it as shown: --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;autoStartup&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 需要保证每个目的的设置为不同的schedulerName --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;schedulerName&quot;</span> <span class="attr">value</span>=<span class="string">&quot;RobotQuartzScheduler&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;applicationContextSchedulerContextKey&quot;</span> <span class="attr">value</span>=<span class="string">&quot;applicationContext&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Controls whether to wait for jobs completion on app shutdown, we use &#x27;true&#x27; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;waitForJobsToCompleteOnShutdown&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line"><span class="comment"># Configure Main Scheduler Properties</span></span><br><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line">org.quartz.scheduler.instanceName=RobotQuartzScheduler</span><br><span class="line">org.quartz.scheduler.instanceId=AUTO</span><br><span class="line">org.quartz.scheduler.skipUpdateCheck=<span class="literal">true</span></span><br><span class="line">org.quartz.scheduler.misfirePolicy=doNothing</span><br><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line"><span class="comment"># Configure ThreadPool</span></span><br><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line">org.quartz.threadPool.<span class="keyword">class</span>:org.quartz.simpl.SimpleThreadPool</span><br><span class="line">org.quartz.threadPool.threadCount:<span class="number">5</span></span><br><span class="line">org.quartz.threadPool.threadPriority:<span class="number">5</span></span><br><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line"><span class="comment"># Configure JobStore</span></span><br><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line">org.quartz.jobStore.misfireThreshold=<span class="number">60000</span></span><br><span class="line"><span class="comment"># Quartz的集群模式需要设置数据库，所以jobStore设置为有jdbc的</span></span><br><span class="line">org.quartz.jobStore.<span class="keyword">class</span>=org.quartz.impl.jdbcjobstore.JobStoreTX</span><br><span class="line">org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span><br><span class="line">org.quartz.jobStore.useProperties=<span class="literal">false</span></span><br><span class="line">org.quartz.jobStore.dataSource=mysql</span><br><span class="line">org.quartz.jobStore.tablePrefix=QRTZ_</span><br><span class="line">org.quartz.jobStore.isClustered=<span class="literal">true</span></span><br><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line"><span class="comment"># Configure Datasources</span></span><br><span class="line"><span class="comment">#============================================================================</span></span><br><span class="line">org.quartz.dataSource.mysql.driver:com.mysql.jdbc.Driver</span><br><span class="line">org.quartz.dataSource.mysql.URL:jdbc:mysql:<span class="comment">//db.pp.net:3306/quartz?useUnicode=true&amp;characterEncoding=utf-8</span></span><br><span class="line">org.quartz.dataSource.mysql.user:root</span><br><span class="line">org.quartz.dataSource.mysql.password:</span><br><span class="line">org.quartz.dataSource.mysql.maxConnections:<span class="number">5</span></span><br><span class="line">org.quartz.dataSource.mysql.validationQuery:select <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>Quartz需要初始化数据库表，查看的Github中的初始化代码 <a target="_blank" rel="noopener" href="https://github.com/elventear/quartz-scheduler/blob/master/distribution/src/main/assembly/root/docs/dbTables/tables_mysql.sql">tables_mysql.sql</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&text=Quartz集群调度坑"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&is_video=false&description=Quartz集群调度坑"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quartz集群调度坑&body=Check out this article: http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&title=Quartz集群调度坑"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&name=Quartz集群调度坑&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2016/08/21/Quartz%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E5%9D%91/&t=Quartz集群调度坑"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Queue、BlockingQueue 以及利用 BlockingQueue 实现生产者&#x2F;消费者模型 集合框架 Queue—BlockingQueue 详解  BlockingQueue，如果 BlockingQueue 是空的，从 BlockingQueue 取东西的操作将会被阻断进入等待状态，直到 BlockingQueue 进了东西才会被唤醒，同样，如果 BlockingQueu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BlockingQueue">
+<meta property="og:url" content="http://notes.zgrep.me/2017/05/10/BlockingQueue/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="Queue、BlockingQueue 以及利用 BlockingQueue 实现生产者&#x2F;消费者模型 集合框架 Queue—BlockingQueue 详解  BlockingQueue，如果 BlockingQueue 是空的，从 BlockingQueue 取东西的操作将会被阻断进入等待状态，直到 BlockingQueue 进了东西才会被唤醒，同样，如果 BlockingQueu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-05-10T03:35:48.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.450Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="并发">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>BlockingQueue</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2017/05/10/Python%E8%B0%83%E7%94%A8%E9%80%9A%E8%BE%BE%E4%BF%A1%E4%BA%A4%E6%98%93%E5%AE%A2%E6%88%B7%E7%AB%AF/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2017/05/09/Maven%E9%A1%B9%E7%9B%AE%E9%BB%98%E8%AE%A4JDK%E7%89%88%E6%9C%AC/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2017/05/10/BlockingQueue/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&text=BlockingQueue"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&is_video=false&description=BlockingQueue"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=BlockingQueue&body=Check out this article: http://notes.zgrep.me/2017/05/10/BlockingQueue/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&name=BlockingQueue&description=&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cnblogs.com/szlbm/p/5588518.html&#34;&gt;Queue、BlockingQueue 以及利用 BlockingQueue 实现生产者&amp;#x2F;消费者模型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.csdn.net/longeremmy/article/details/8225989&#34;&gt;集合框架 Queue—BlockingQueue 详解&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;BlockingQueue，如果 BlockingQueue 是空的，从 BlockingQueue 取东西的操作将会被阻断进入等待状态，直到 BlockingQueue 进了东西才会被唤醒，同样，如果 BlockingQueue 是满的，任何试图往里存东西的操作也会被阻断进入等待状态，直到 BlockingQueue 里有空间时才会被唤醒继续操作。Queue 不是线程安全的。因此可以将 Blockingqueue 用于用于生产者-使用者队列。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2017/05/10/BlockingQueue/&t=BlockingQueue"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BlockingQueue-%E5%AE%9A%E4%B9%89%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">BlockingQueue 定义的常用方法如下：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BlockingQueue-%E6%9C%89%E5%9B%9B%E4%B8%AA%E5%85%B7%E4%BD%93%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB%EF%BC%8C%E6%A0%B9%E6%8D%AE%E4%B8%8D%E5%90%8C%E9%9C%80%E6%B1%82%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">BlockingQueue 有四个具体的实现类，根据不同需求，选择不同的实现类：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        BlockingQueue
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-05-10T03:35:48.000Z" class="dt-published" itemprop="datePublished">2017-05-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/Java/" rel="tag">Java</a>, <a class="p-category" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/szlbm/p/5588518.html">Queue、BlockingQueue 以及利用 BlockingQueue 实现生产者&#x2F;消费者模型</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/longeremmy/article/details/8225989">集合框架 Queue—BlockingQueue 详解</a></li>
+</ul>
+<p>BlockingQueue，如果 BlockingQueue 是空的，从 BlockingQueue 取东西的操作将会被阻断进入等待状态，直到 BlockingQueue 进了东西才会被唤醒，同样，如果 BlockingQueue 是满的，任何试图往里存东西的操作也会被阻断进入等待状态，直到 BlockingQueue 里有空间时才会被唤醒继续操作。Queue 不是线程安全的。因此可以将 Blockingqueue 用于用于生产者-使用者队列。</p>
+<span id="more"></span>
+
+<h4 id="BlockingQueue-定义的常用方法如下："><a href="#BlockingQueue-定义的常用方法如下：" class="headerlink" title="BlockingQueue 定义的常用方法如下："></a>BlockingQueue 定义的常用方法如下：</h4><ul>
+<li><font color='red'><strong>add(object)</strong></font>：把 object 加到 BlockingQueue 里，如果 BlockingQueue 可以容纳，则返回 true，否则抛出异常。</li>
+<li><font color='red'><strong>offer(object)</strong></font>：表示如果可能的话，将 object 加到 BlockingQueue 里，即如果 BlockingQueue 可以容纳，则返回 true，否则返回 false。</li>
+<li><font color='red'><strong>put(object)</strong></font>：把 object 加到 BlockingQueue 里，如果 BlockingQueue 没有空间，则调用此方法的线程被阻断直到 BlockingQueue 里有空间再继续。</li>
+<li><font color='red'><strong>poll(time)</strong></font>：取走 BlockingQueue 里排在首位的对象，若不能立即取出，则可以等 time 参数规定的时间，取不到时返回 null。</li>
+<li><font color='red'><strong>take()</strong></font>：取走 BlockingQueue 里排在首位的对象，若 BlockingQueue 为空，阻断进入等待状态直到 BlockingQueue 有新的对象被加入为止。</li>
+</ul>
+<h4 id="BlockingQueue-有四个具体的实现类，根据不同需求，选择不同的实现类："><a href="#BlockingQueue-有四个具体的实现类，根据不同需求，选择不同的实现类：" class="headerlink" title="BlockingQueue 有四个具体的实现类，根据不同需求，选择不同的实现类："></a>BlockingQueue 有四个具体的实现类，根据不同需求，选择不同的实现类：</h4><ul>
+<li><font color='red'><strong>ArrayBlockingQueue</strong></font>：规定大小的 BlockingQueue，其构造函数必须带一个 int 参数来指明其大小。其所含的对象是以 FIFO（先入先出）顺序排序</li>
+<li><font color='red'><strong>LinkedBlockingQueue</strong></font>：大小不定的 BlockingQueue，若其构造函数带一个规定大小的参数，生成的 BlockingQueue 有大小限制，若不带大小参数，所生成的 BlockingQueue 的大小由 Integer.MAX_VALUE 来决定。其所含的对象是以 FIFO 顺序排序的。</li>
+<li><font color='red'><strong>PriorityBlockingQueue</strong></font>：类似于**<code>LinkedBlockingQueue</code>**,但其所含对象的排序不是 FIFO，而是依据对象的自然排序顺序或者是构造函数所带的 Comparator 决定的顺序。</li>
+<li><font color='red'><strong>SynchronousQueue</strong></font>：特殊的 BlockingQueue，对其的操作必须是放和取交替完成的。<br>LinkedBlockingQueue 和 ArrayBlockingQueue 比较起来，它们背后所用的数据结构不一样，导致 LinkedBlockingQueue 的数据吞吐量要大于 ArrayBlockingQueue，但在线程数量很大时其性能的可预见性低于 ArrayBlockingQueue。</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BlockingQueue-%E5%AE%9A%E4%B9%89%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">BlockingQueue 定义的常用方法如下：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BlockingQueue-%E6%9C%89%E5%9B%9B%E4%B8%AA%E5%85%B7%E4%BD%93%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB%EF%BC%8C%E6%A0%B9%E6%8D%AE%E4%B8%8D%E5%90%8C%E9%9C%80%E6%B1%82%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">BlockingQueue 有四个具体的实现类，根据不同需求，选择不同的实现类：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2017/05/10/BlockingQueue/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&text=BlockingQueue"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&is_video=false&description=BlockingQueue"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=BlockingQueue&body=Check out this article: http://notes.zgrep.me/2017/05/10/BlockingQueue/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&title=BlockingQueue"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2017/05/10/BlockingQueue/&name=BlockingQueue&description=&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cnblogs.com/szlbm/p/5588518.html&#34;&gt;Queue、BlockingQueue 以及利用 BlockingQueue 实现生产者&amp;#x2F;消费者模型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.csdn.net/longeremmy/article/details/8225989&#34;&gt;集合框架 Queue—BlockingQueue 详解&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;BlockingQueue，如果 BlockingQueue 是空的，从 BlockingQueue 取东西的操作将会被阻断进入等待状态，直到 BlockingQueue 进了东西才会被唤醒，同样，如果 BlockingQueue 是满的，任何试图往里存东西的操作也会被阻断进入等待状态，直到 BlockingQueue 里有空间时才会被唤醒继续操作。Queue 不是线程安全的。因此可以将 Blockingqueue 用于用于生产者-使用者队列。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2017/05/10/BlockingQueue/&t=BlockingQueue"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

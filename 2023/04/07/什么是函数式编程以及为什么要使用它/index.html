@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="什么是函数式编程？函数式编程 (FP) 是一种软件开发方法，它使用纯函数来创建可维护的软件。换句话说，通过应用和组合函数来构建程序。 函数式编程通过将函数用作变量、参数和返回值来利用语言支持——在此过程中创建优雅和干净的代码。FP 还使用不可变数据并避免共享状态等概念。这与使用可变数据和共享状态的面向对象编程 (OOP) 形成对比。 函数式编程语言专注于声明和表达式，而不是语句的执行。函数也被视为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是函数式编程以及为什么要使用它？">
+<meta property="og:url" content="http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="什么是函数式编程？函数式编程 (FP) 是一种软件开发方法，它使用纯函数来创建可维护的软件。换句话说，通过应用和组合函数来构建程序。 函数式编程通过将函数用作变量、参数和返回值来利用语言支持——在此过程中创建优雅和干净的代码。FP 还使用不可变数据并避免共享状态等概念。这与使用可变数据和共享状态的面向对象编程 (OOP) 形成对比。 函数式编程语言专注于声明和表达式，而不是语句的执行。函数也被视为">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.458Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="函数式编程">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>什么是函数式编程以及为什么要使用它？</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/04/08/%E7%81%B5%E6%84%9F%E9%9B%86%20%C2%B7%20Inspiration%20Set/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/04/07/crypto/Signal%20Protocol%E6%A6%82%E6%8B%AC/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&text=什么是函数式编程以及为什么要使用它？"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&is_video=false&description=什么是函数式编程以及为什么要使用它？"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=什么是函数式编程以及为什么要使用它？&body=Check out this article: http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&name=什么是函数式编程以及为什么要使用它？&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&t=什么是函数式编程以及为什么要使用它？"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是函数式编程？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">纯函数式编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%BA%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">不纯函数式编程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%BE%88%E9%87%8D%E8%A6%81"><span class="toc-number">2.</span> <span class="toc-text">为什么函数式编程很重要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">函数式编程的优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%B8%AA%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">7 个核心函数式编程概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">纯函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E7%BA%A7%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">一级函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">高阶函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%98%E6%80%A7"><span class="toc-number">3.4.</span> <span class="toc-text">不变性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-number">3.5.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E7%BB%84%E5%90%88"><span class="toc-number">3.6.</span> <span class="toc-text">功能组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%80%8F%E6%98%8E%E5%BA%A6"><span class="toc-number">3.7.</span> <span class="toc-text">参考透明度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">面向对象编程与函数式编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">资料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        什么是函数式编程以及为什么要使用它？
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-04-07T16:00:00.000Z" class="dt-published" itemprop="datePublished">2023-04-08</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Others/">Others</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="什么是函数式编程？"><a href="#什么是函数式编程？" class="headerlink" title="什么是函数式编程？"></a>什么是函数式编程？</h2><p>函数式编程 (FP) 是一种软件开发方法，它使用纯函数来创建可维护的软件。换句话说，通过应用和组合函数来构建程序。</p>
+<p>函数式编程通过将函数用作变量、参数和返回值来利用语言支持——在此过程中创建优雅和干净的代码。FP 还使用不可变数据并避免共享状态等概念。这与使用可变数据和共享状态的面向对象编程 (OOP) 形成对比。</p>
+<p>函数式编程语言专注于声明和表达式，而不是语句的执行。函数也被视为一等公民——这意味着它们可以作为参数传递、从其他函数返回并附加到名称上。</p>
+<p>FP 关注结果，而不是过程，同时不支持循环语句和条件语句（例如，If-Else）等迭代。</p>
+<p>FP 从 lambda 演算 ( λ -calculus)演变而来，它是数学家 Alonzo Church 在 1930 年代开发的一种简单的函数和应用符号。许多编程语言和方言都使用函数范式，包括 Scheme、Common Lisp (CL) 和 Elixir。</p>
+<p>许多当今的顶级编程语言——包括 C#、Java、JavaScript、PHP 和 Python——都支持函数式编程或使用 FP 中的功能。</p>
+<h3 id="纯函数式编程"><a href="#纯函数式编程" class="headerlink" title="纯函数式编程"></a>纯函数式编程</h3><p>纯函数式编程是 FP 的一个子集，它将所有函数都视为确定性数学函数或纯函数。</p>
+<p>在确定性数学函数中，系统未来状态的发展不允许任何随机性。与此同时，纯函数对于相同的参数具有相同的函数返回值。函数应用程序也没有副作用（即，它不会修改其本地环境之外的状态变量值）。</p>
+<p>当您将外部代码插入您的函数时，程序中会出现副作用。这会阻止函数正确执行其任务。相反，不纯函数包含一种或多种副作用。</p>
+<p>要查看纯函数的运行情况，请参阅以下 JavaScript 代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">updateMyAddress</span>(<span class="params">newAddress</span>) &#123;</span><br><span class="line">   <span class="keyword">const</span> myAddress = [“<span class="title class_">ChurchSt</span>”, “<span class="title class_">CovingtonCross</span>”];</span><br><span class="line">   myAddresses[myAddresses.<span class="property">length</span>] = newAddress;</span><br><span class="line">   <span class="keyword">return</span> myAddresses;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>updateMyAddress() 不需要任何外部代码即可完成其任务。这意味着它是一个纯函数。</p>
+<h3 id="不纯函数式编程"><a href="#不纯函数式编程" class="headerlink" title="不纯函数式编程"></a>不纯函数式编程</h3><p>要查看不纯函数的运行情况，请查看这段 JavaScript 代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">​​<span class="keyword">const</span> myAddresses = [“<span class="title class_">ChurchSt</span>.”, “<span class="title class_">CovingtonCross</span>”];</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">updateMyAddress</span>(<span class="params">newAddress</span>) &#123;</span><br><span class="line">  myAddresses.<span class="title function_">push</span>(newAddress);</span><br><span class="line">  <span class="keyword">return</span> myAddresses;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>updateMyAddress() 是一个不纯的函数，因为它包含代码 (myAddress)。这段代码改变了一个外部状态，这给 updateMyAddress() 带来了一些副作用。</p>
+<h2 id="为什么函数式编程很重要"><a href="#为什么函数式编程很重要" class="headerlink" title="为什么函数式编程很重要"></a>为什么函数式编程很重要</h2><p>虽然 FP 通常不如面向对象编程受欢迎，但近年来由于机器学习和大数据的兴起，它越来越受欢迎。函数式编程以其高效并行化纯函数的能力而著称。使用函数式编程范例，数据分析工作流和任务的代码更易于分析、测试和维护。</p>
+<p>由于其纯粹的性质，FP 非常适合分析大量数据集和机器学习。纯函数将始终产生相同的结果，没有外部值影响最终结果。</p>
+<p>使用 FP 创建的算法也可以快速识别和纠正错误。许多程序员和软件开发人员宁愿使用一种易于调试的编程范式，因为它具有纯功能。</p>
+<p>正如格拉斯哥大学的 John Hughes 发表的一篇论文中强调的那样，函数式编程因其模块化而在未来的技术发展中发挥着至关重要的作用。模块化将大型复杂项目分解为更简单的模块。您可以单独测试模块，从而减少单元测试和调试所花费的时间。</p>
+<p>“函数式编程语言提供了两种新的粘合剂——高阶函数和惰性求值。使用这些胶水，人们可以以新的和有用的方式模块化程序，”休斯在他的论文中指出。</p>
+<h3 id="函数式编程的优点"><a href="#函数式编程的优点" class="headerlink" title="函数式编程的优点"></a>函数式编程的优点</h3><table>
+<thead>
+<tr>
+<th>函数式编程</th>
+<th>面向对象</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>使用不可变数据。</td>
+<td>使用可变数据。</td>
+</tr>
+<tr>
+<td>遵循声明式编程模型。</td>
+<td>遵循命令式编程模型。</td>
+</tr>
+<tr>
+<td>重点是：“你在做什么”</td>
+<td>重点是“你做得怎么样”</td>
+</tr>
+<tr>
+<td>支持并行编程</td>
+<td>不适合并行编程</td>
+</tr>
+<tr>
+<td>其功能无副作用</td>
+<td>它的方法会产生严重的副作用。</td>
+</tr>
+<tr>
+<td>流量控制是使用函数调用和递归函数调用完成的</td>
+<td>流量控制是使用循环和条件语句完成的。</td>
+</tr>
+<tr>
+<td>它使用“递归”概念来迭代集合数据。</td>
+<td>它使用“循环”概念来迭代集合数据。例如：Java 中的 For-each 循环</td>
+</tr>
+<tr>
+<td>语句的执行顺序并不那么重要。</td>
+<td>语句的执行顺序非常重要。</td>
+</tr>
+<tr>
+<td>支持“对数据的抽象”和“对行为的抽象”。</td>
+<td>仅支持“数据抽象”。</td>
+</tr>
+</tbody></table>
+<h2 id="7-个核心函数式编程概念"><a href="#7-个核心函数式编程概念" class="headerlink" title="7 个核心函数式编程概念"></a>7 个核心函数式编程概念</h2><p>为了帮助您更好地理解函数式编程可以解决的问题，让我们看一下函数式编程的七个核心概念。</p>
+<h3 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h3><p>我们已经确定纯函数是确定性的并且没有副作用。然而，正如 Victor Cordova 在 Hackernoon 上发表的一篇文章中指出的那样，目标不是创建完全没有副作用的代码。</p>
+<p>“了解我们不想消除所有副作用很重要，因为所有程序都需要执行某种副作用，例如调用 API 或打印到某些标准输出。我们想要的是尽量减少副作用，这样我们程序的行为就更容易预测和测试，”Cordova 说。</p>
+<p>在 Cordova 编写的以下代码中，副作用 (sessionIsActive) 修改了其范围之外的变量。这会给函数调用者带来问题。</p>
+<h3 id="一级函数"><a href="#一级函数" class="headerlink" title="一级函数"></a>一级函数</h3><p>first-class functions 的另一个关键好处是对函数的使用方式没有任何限制和限制。换句话说，它们的行为与任何其他变量一样。</p>
+<p>一级函数为其他修改奠定了基础，例如柯里化、高阶函数和闭包。</p>
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><p>高阶函数将函数作为参数或返回函数。除了模块化程序之外，您还可以使用高阶函数使函数多态（即，允许多次使用单个代码）。</p>
+<h3 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h3><p>不可变对象不会改变。在 FP 中，您可以在不更改它们的值或状态的情况下初始化和实现对象和值。如有必要，您可以创建新的对象和值，但不能修改现有对象或值的状态。</p>
+<p>函数式编程的不变性符合数学的一个关键原则——对象不能改变它们的状态。即使在最基本的数学公式中，这一原则也很明显。</p>
+<p>不变性可防止问题在您的代码中出现和传播。在多线程应用程序中，一个线程可以在不改变其他线程的情况下对不可变对象进行操作，因为没有人在修改该对象。在并发应用程序中，这可以防止代码中出现错误。</p>
+<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>递归发生在函数调用自身时。递归函数执行代码并重复运行该函数，直到它满足退出条件。您可以在标准循环中找到此模式：循环声明一个初始变量并执行要使用该变量完成的代码。这一直持续到它满足停止或退出条件。</p>
+<p>您可以使用递归而不是循环。但是，循环永远不能代替递归。</p>
+<p>在对树结构（即节点关系）进行排序时，递归通常可以正确完成工作。<br>如果您发现自己反复在循环中嵌套循环，递归函数可以帮助您提取数据并将该函数重复用于不同的树。</p>
+<h3 id="功能组合"><a href="#功能组合" class="headerlink" title="功能组合"></a>功能组合</h3><p>函数组合允许您组合纯函数来创建更复杂的函数。同样的原则也适用于数学：一个函数的结果继续作为下一个函数的参数，最后一个函数的结果是整体的结果。</p>
+<p>在编码中，我们可以将多个步骤合并到一个代码行或一个新函数中。</p>
+<h3 id="参考透明度"><a href="#参考透明度" class="headerlink" title="参考透明度"></a>参考透明度</h3><p>引用透明性允许一个值替换它在程序中的表达式（或任何具有相同值的东西）。这在不改变程序结果的情况下发生。此逻辑规定方法应始终为给定参数返回相同的值，而不会产生额外的影响。</p>
+<p>引用透明性使程序推理成为一个更直接的过程。它使每个子程序独立，从而极大地简化了重构和单元测试。</p>
+<h2 id="面向对象编程与函数式编程"><a href="#面向对象编程与函数式编程" class="headerlink" title="面向对象编程与函数式编程"></a>面向对象编程与函数式编程</h2><p>虽然面向对象编程和函数式编程之间存在几个关键区别，但其中一个是 <code>命令式编程模型</code> 与 <code>声明式编程模型</code>。</p>
+<p>OOP 使用命令式编程模型，这意味着函数总是在解决问题所需的每个步骤中进行编码。您使用指定如何解决问题的代码本身对每个操作进行编码。该模型要求程序员知道解决问题需要哪些函数，而不是依赖可以解决问题的模型。</p>
+<p>FP 使用声明式编程模型，这意味着它依赖于编程语言的基本概念来执行必要的步骤以达到预定的结果。</p>
+<blockquote>
+<p>命令式程序关注解决问题的逐步过程，而声明式程序关注解决问题的结果。</p>
+</blockquote>
+<p>另一个关键区别是可变性：OOP 使用可变数据，而 FP 使用不可变数据。您可以在创建后更改（或变异）可变对象，而不能用于不可变对象。在 FP 中，您需要制作对象的副本并使用该副本来编写其余代码。</p>
+<p>总体而言，不可变代码更易于更新、更有效地管理以及更易于测试和调试。而且由于变量是常量，因此生成的代码更容易理解和推理。许多程序员和软件开发人员更喜欢使用 FP 模型。</p>
+<p>OOP 最适合标准化和直接的项目，而 FP 最适合需要可扩展性和灵活性的项目。</p>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.codingdojo.com/blog/what-is-functional-programming">what-is-functional-programming</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是函数式编程？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">纯函数式编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%BA%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">不纯函数式编程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%BE%88%E9%87%8D%E8%A6%81"><span class="toc-number">2.</span> <span class="toc-text">为什么函数式编程很重要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">函数式编程的优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%B8%AA%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">7 个核心函数式编程概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">纯函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E7%BA%A7%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">一级函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">高阶函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%98%E6%80%A7"><span class="toc-number">3.4.</span> <span class="toc-text">不变性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-number">3.5.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E7%BB%84%E5%90%88"><span class="toc-number">3.6.</span> <span class="toc-text">功能组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%80%8F%E6%98%8E%E5%BA%A6"><span class="toc-number">3.7.</span> <span class="toc-text">参考透明度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">面向对象编程与函数式编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">资料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&text=什么是函数式编程以及为什么要使用它？"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&is_video=false&description=什么是函数式编程以及为什么要使用它？"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=什么是函数式编程以及为什么要使用它？&body=Check out this article: http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&title=什么是函数式编程以及为什么要使用它？"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&name=什么是函数式编程以及为什么要使用它？&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2023/04/07/%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83/&t=什么是函数式编程以及为什么要使用它？"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

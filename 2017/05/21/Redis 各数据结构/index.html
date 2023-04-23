@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Redis 命令文档 http:&#x2F;&#x2F;doc.redisfans.com https:&#x2F;&#x2F;redis.io&#x2F;commands  Redis的六种数据结构 Strings Hashs Lists Sets Sorted Sets Pub&#x2F;Sub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 各数据结构">
+<meta property="og:url" content="http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="虚与空">
+<meta property="og:description" content="Redis 命令文档 http:&#x2F;&#x2F;doc.redisfans.com https:&#x2F;&#x2F;redis.io&#x2F;commands  Redis的六种数据结构 Strings Hashs Lists Sets Sorted Sets Pub&#x2F;Sub">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-05-21T01:19:27.000Z">
+<meta property="article:modified_time" content="2023-04-23T13:55:45.454Z">
+<meta property="article:author" content="Long &amp; Kelly">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Redis 各数据结构</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ3V7WFGZX"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZ3V7WFGZX');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2017/05/29/%E4%B8%8A%E4%BC%A0%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2017/05/19/Curator%20%E7%89%88%E6%9C%AC%E6%8A%98%E8%85%BE/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&text=Redis 各数据结构"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&is_video=false&description=Redis 各数据结构"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis 各数据结构&body=Check out this article: http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&name=Redis 各数据结构&description=&lt;h2 id=&#34;Redis-命令文档&#34;&gt;&lt;a href=&#34;#Redis-命令文档&#34; class=&#34;headerlink&#34; title=&#34;Redis 命令文档&#34;&gt;&lt;/a&gt;Redis 命令文档&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://doc.redisfans.com/&#34;&gt;http://doc.redisfans.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://redis.io/commands&#34;&gt;https://redis.io/commands&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;Redis的六种数据结构&#34;&gt;&lt;a href=&#34;#Redis的六种数据结构&#34; class=&#34;headerlink&#34; title=&#34;Redis的六种数据结构&#34;&gt;&lt;/a&gt;Redis的六种数据结构&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Strings&lt;/li&gt;
+&lt;li&gt;Hashs&lt;/li&gt;
+&lt;li&gt;Lists&lt;/li&gt;
+&lt;li&gt;Sets&lt;/li&gt;
+&lt;li&gt;Sorted Sets&lt;/li&gt;
+&lt;li&gt;Pub&amp;#x2F;Sub&lt;/li&gt;
+&lt;/ul&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&t=Redis 各数据结构"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%91%BD%E4%BB%A4%E6%96%87%E6%A1%A3"><span class="toc-number">1.</span> <span class="toc-text">Redis 命令文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E7%9A%84%E5%85%AD%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">Redis的六种数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Strings"><span class="toc-number">2.1.</span> <span class="toc-text">Strings</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hashs"><span class="toc-number">2.2.</span> <span class="toc-text">Hashs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lists"><span class="toc-number">2.3.</span> <span class="toc-text">Lists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sets"><span class="toc-number">2.4.</span> <span class="toc-text">Sets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sorted-Sets"><span class="toc-number">2.5.</span> <span class="toc-text">Sorted Sets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pub-x2F-Sub"><span class="toc-number">2.6.</span> <span class="toc-text">Pub&#x2F;Sub</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Redis 各数据结构
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Long & Kelly</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-05-21T01:19:27.000Z" class="dt-published" itemprop="datePublished">2017-05-21</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Redis/">Redis</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="p-category" href="/tags/Redis/" rel="tag">Redis</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Redis-命令文档"><a href="#Redis-命令文档" class="headerlink" title="Redis 命令文档"></a>Redis 命令文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://doc.redisfans.com/">http://doc.redisfans.com</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands">https://redis.io/commands</a></li>
+</ul>
+<h2 id="Redis的六种数据结构"><a href="#Redis的六种数据结构" class="headerlink" title="Redis的六种数据结构"></a>Redis的六种数据结构</h2><ul>
+<li>Strings</li>
+<li>Hashs</li>
+<li>Lists</li>
+<li>Sets</li>
+<li>Sorted Sets</li>
+<li>Pub&#x2F;Sub</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h3><p>Strings 数据结构是简单的key-value类型，value其实不仅是String，也可以是数字。可以使用在常规计数方面，比如说：<strong>微博数、粉丝数、key-value数据</strong></p>
+<h3 id="Hashs"><a href="#Hashs" class="headerlink" title="Hashs"></a>Hashs</h3><p>在Memcached中，我们经常将一些结构化的信息打包成hashmap，在客户端序列化后存储为一个字符串的值，比如用户的昵称、年龄、性别、积分等，这时候在需要修改其中某一项时，通常需要将所有值取出反序列化后，修改某一项的值，再序列化存储回去。这样不仅增大了开销，也不适用于一些可能并发操作的场合（比如两个并发的操作都需要修改积分）。</p>
+<p>Redis的Hash结构可以使你像在数据库中Update一个属性一样只修改某一项属性值。</p>
+<p>它是一个String类型的field和value的映射表，它的添加和删除都是平均的，hash特别适合用于存储对象，对于将对象存储成字符串而言，hash会占用更少的内存，并且可以更方便的存取整个对象。它和java的HashMap完全类似。</p>
+<p>通常用在，<strong>存储部分变更数据，如用户信息</strong>等。</p>
+<h3 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h3><p>Lists 就是链表，可以轻松地实现最新消息排序等功能。Lists的另一个应用就是消息队列，可以利用Lists的PUSH操作，将任务存在Lists中，然后工作线程再用POP操作将任务取出进行执行。Redis还提供了操作Lists中某一段的api，你可以直接查询，删除Lists中某一段的元素。</p>
+<p>Redis的list是每个子元素都是String类型的双向链表，可以通过push和pop操作从列表的头部或者尾部添加或者删除元素，这样<font color='red'><strong>List即可以作为栈，也可以作为队列</strong></font>。</p>
+<p>一般情况Lists 会是一个<strong>消息队列系统</strong>，使用list可以构建队列系统，使用sorted set甚至可以构建有优先级的队列系统。比如：将Redis用作日志收集器队列，多个端点将日志信息写入Redis，然后一个worker统一将所有日志写到磁盘。</p>
+<p><strong>取最新N个数据的操作</strong>、记录前N个最新登陆的用户Id列表，超出的范围可以从数据库中获得。</p>
+<h3 id="Sets"><a href="#Sets" class="headerlink" title="Sets"></a>Sets</h3><p>Sets 就是一个集合，集合的概念就是一堆不重复值的组合。利用Redis提供的Sets数据结构，可以存储一些集合性的数据，提供交集，并集，差集操作。Set是集合，是String类型的无序集合，set是通过hashtable实现的，概念和数学中个的集合基本类似，可以交集，并集，差集等等，set中的元素是没有顺序的。</p>
+<p>案例：</p>
+<p><strong>在微博应用中，可以将一个用户所有的关注人存在一个集合中，将其所有粉丝存在一个集合</strong>。</p>
+<p>Redis还为集合提供了求交集、并集、差集等操作，可以非常方便的实现如共同关注、共同喜好、二度好友等功能，对上面的所有集合操作，你还可以使用不同的命令选择将结果返回给客户端还是存集到一个新的集合中。</p>
+<p>使用案例：<strong>获取某段时间所有数据去重值</strong></p>
+<h3 id="Sorted-Sets"><a href="#Sorted-Sets" class="headerlink" title="Sorted Sets"></a>Sorted Sets</h3><p>和Sets相比，Sorted Sets增加了一个权重参数score，使得集合中的元素能够按score进行有序排列，比如一个存储全班同学成绩的Sorted Sets，其集合value可以是同学的学号，而score就可以是其考试得分，这样在数据插入集合的时候，就已经进行了天然的排序。可以用Sorted Sets来做带权重的队列，比如普通消息的score为1，重要消息的score为2，然后工作线程可以选择按score的倒序来获取工作任务。让重要的任务优先执行。</p>
+<p>使用案例：<strong>排行榜应用，取TOP N操作</strong></p>
+<p>这个需求与上面需求的不同之处在于，前面操作以时间为权重，这个是以某个条件为权重，比如按顶的次数排序，这时候就需要我们的sorted set出马了，将你要排序的值设置成sorted set的score，将具体的数据设置成相应的value，每次只需要执行一条ZADD命令即可。</p>
+<h3 id="Pub-x2F-Sub"><a href="#Pub-x2F-Sub" class="headerlink" title="Pub&#x2F;Sub"></a>Pub&#x2F;Sub</h3><p>Pub&#x2F;Sub 从字面上理解就是发布（Publish）与订阅（Subscribe），在Redis中，你可以设定对某一个key值进行消息发布及消息订阅，当一个key值上进行了消息发布后，所有订阅它的客户端都会收到相应的消息。这一功能最明显的用法就是<strong>用作实时消息系统</strong>，比如普通的<strong>即时聊天，群聊</strong>等功能。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%91%BD%E4%BB%A4%E6%96%87%E6%A1%A3"><span class="toc-number">1.</span> <span class="toc-text">Redis 命令文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E7%9A%84%E5%85%AD%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">Redis的六种数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Strings"><span class="toc-number">2.1.</span> <span class="toc-text">Strings</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hashs"><span class="toc-number">2.2.</span> <span class="toc-text">Hashs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lists"><span class="toc-number">2.3.</span> <span class="toc-text">Lists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sets"><span class="toc-number">2.4.</span> <span class="toc-text">Sets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sorted-Sets"><span class="toc-number">2.5.</span> <span class="toc-text">Sorted Sets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pub-x2F-Sub"><span class="toc-number">2.6.</span> <span class="toc-text">Pub&#x2F;Sub</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&text=Redis 各数据结构"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&is_video=false&description=Redis 各数据结构"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis 各数据结构&body=Check out this article: http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&title=Redis 各数据结构"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&name=Redis 各数据结构&description=&lt;h2 id=&#34;Redis-命令文档&#34;&gt;&lt;a href=&#34;#Redis-命令文档&#34; class=&#34;headerlink&#34; title=&#34;Redis 命令文档&#34;&gt;&lt;/a&gt;Redis 命令文档&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://doc.redisfans.com/&#34;&gt;http://doc.redisfans.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://redis.io/commands&#34;&gt;https://redis.io/commands&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;Redis的六种数据结构&#34;&gt;&lt;a href=&#34;#Redis的六种数据结构&#34; class=&#34;headerlink&#34; title=&#34;Redis的六种数据结构&#34;&gt;&lt;/a&gt;Redis的六种数据结构&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Strings&lt;/li&gt;
+&lt;li&gt;Hashs&lt;/li&gt;
+&lt;li&gt;Lists&lt;/li&gt;
+&lt;li&gt;Sets&lt;/li&gt;
+&lt;li&gt;Sorted Sets&lt;/li&gt;
+&lt;li&gt;Pub&amp;#x2F;Sub&lt;/li&gt;
+&lt;/ul&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://notes.zgrep.me/2017/05/21/Redis%20%E5%90%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/&t=Redis 各数据结构"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2013-2023
+    Long &amp; Kelly
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/yuercl">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2a4e88b0ad8edd09fa5a8abf06b52600";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
